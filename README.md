@@ -1,3 +1,5 @@
+![BazzBasic logo"](https://github.com/EkBass/BazzBasic/blob/main/img/bazzbasic-colors.png))
+
 # BazzBasic
 
 A BASIC interpreter written in FreeBASIC. Features user-defined functions, associative arrays, and modern error handling.
