@@ -1,4 +1,4 @@
-![BazzBasic logo"](https://github.com/EkBass/BazzBasic/blob/main/img/bazzbasic-colors.png))
+![BazzBasic logo"](https://github.com/EkBass/BazzBasic/blob/main/img/bazzbasic-colors-small.png))
 
 # BazzBasic
 
