@@ -8,4 +8,4 @@ A BASIC interpreter written in FreeBASIC. Features user-defined functions, assoc
 
 # Wiki
 
-See [EkBass/BazzBasic/wiki]([https://duckduckgo.com](https://github.com/EkBass/BazzBasic/wiki)) for more.
+See [EkBass/BazzBasic/wiki](https://github.com/EkBass/BazzBasic/wiki) for more.
