@@ -16,5 +16,8 @@
     <Description>BASIC interpreter written in C#</Description>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="NAudio" Version="2.2.1" />
+  </ItemGroup>
 
 </Project>

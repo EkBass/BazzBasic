@@ -5,6 +5,7 @@
 
 using BazzBasic.Lexer;
 using BazzBasic.Parser;
+using BazzBasic.Sound;
 
 namespace BazzBasic.Interpreter;
 
@@ -54,6 +55,9 @@ public partial class Interpreter
     
     // Random number generator
     private readonly Random _random = new();
+    
+    // Sound manager
+    private readonly SoundManager _soundManager = new();
 
     public Interpreter(List<Token> tokens)
     {
@@ -258,6 +262,21 @@ public partial class Interpreter
             case TokenType.TOK_REMOVESHAPE:
                 ExecuteRemoveshape();
                 break;
+            case TokenType.TOK_SOUNDONCE:
+                ExecuteSoundOnce();
+                break;
+            case TokenType.TOK_SOUNDREPEAT:
+                ExecuteSoundRepeat();
+                break;
+            case TokenType.TOK_SOUNDSTOP:
+                ExecuteSoundStop();
+                break;
+            case TokenType.TOK_SOUNDSTOPALL:
+                ExecuteSoundStopAll();
+                break;
+            case TokenType.TOK_SOUNDONCEWAIT:
+                ExecuteSoundOnceWait();
+                break;
             case TokenType.TOK_END:
                 _pos++;
                 if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_IF)
@@ -321,20 +340,39 @@ public partial class Interpreter
             return;
         }
         
-        if (!Expect(TokenType.TOK_EQUALS)) return;
-        
-        Value value = EvaluateExpression();
-        
-        if (varName.EndsWith('#'))
+        // Check if there's an assignment (=)
+        if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_EQUALS)
         {
-            if (!_variables.SetConstant(varName, value))
+            _pos++; // Skip =
+            Value value = EvaluateExpression();
+            
+            if (varName.EndsWith('#'))
             {
-                Error($"Cannot redefine constant '{varName}'");
+                if (!_variables.SetConstant(varName, value))
+                {
+                    Error($"Cannot redefine constant '{varName}'");
+                }
+            }
+            else
+            {
+                _variables.SetVariable(varName, value);
             }
         }
-        else
+        else if (isNewDeclaration)
         {
-            _variables.SetVariable(varName, value);
+            // LET var without assignment - create empty/zero variable
+            if (varName.EndsWith('$'))
+            {
+                _variables.SetVariable(varName, Value.Empty);
+            }
+            else if (varName.EndsWith('#'))
+            {
+                Error($"Constants must be initialized with a value");
+            }
+            else
+            {
+                _variables.SetVariable(varName, Value.Zero);
+            }
         }
     }
 

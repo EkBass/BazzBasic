@@ -305,6 +305,8 @@ public partial class Interpreter
                 return EvaluateMouseyFunc();
             case TokenType.TOK_MOUSEB:
                 return EvaluateMousebFunc();
+            case TokenType.TOK_LOADSOUND:
+                return EvaluateLoadSound();
             case TokenType.TOK_FN:
                 return EvaluateUserFunction();
                 

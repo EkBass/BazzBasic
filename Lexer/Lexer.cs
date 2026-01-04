@@ -62,6 +62,14 @@ public class Lexer
         ["SCREENLOCK"] = TokenType.TOK_SCREENLOCK,
         ["SHOWSHAPE"] = TokenType.TOK_SHOWSHAPE,
 
+        // Sound
+        ["LOADSOUND"] = TokenType.TOK_LOADSOUND,
+        ["SOUNDONCE"] = TokenType.TOK_SOUNDONCE,
+        ["SOUNDONCEWAIT"] = TokenType.TOK_SOUNDONCEWAIT,
+        ["SOUNDREPEAT"] = TokenType.TOK_SOUNDREPEAT,
+        ["SOUNDSTOP"] = TokenType.TOK_SOUNDSTOP,
+        ["SOUNDSTOPALL"] = TokenType.TOK_SOUNDSTOPALL,
+
         // Math functions
         ["ABS"] = TokenType.TOK_ABS,
         ["ATAN"] = TokenType.TOK_ATAN,

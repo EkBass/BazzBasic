@@ -1,0 +1,611 @@
+# ============================================================================
+# BazzBasic Project Context - AI Assistant Quick Reference
+# ============================================================================
+# This file provides rapid project understanding for AI assistants
+# Optimized for: Fast context loading, pattern recognition, workflow clarity
+# ============================================================================
+
+project:
+  name: "BazzBasic"
+  language: "C# .NET 10"
+  type: "BASIC Interpreter"
+  root: "C:\\Users\\ekvir\\source\\repos\\BazzBasic"
+  
+architecture:
+  pipeline: "Lexer → Parser → Interpreter"
+  execution_model: "Token-based direct interpretation"
+  design_philosophy: "Strict semantics, early error detection, O(1) lookups"
+  
+  phases:
+    lexer:
+      purpose: "Source text → Token stream"
+      file: "Lexer/Lexer.cs"
+      key_features:
+        - "O(1) keyword lookup via Dictionary<string, TokenType>"
+        - "Numbered token system (TOK_PRINT = 15, etc)"
+        - "Case-insensitive keyword matching"
+        - "Escape sequence handling in strings"
+    
+    parser:
+      purpose: "Token validation and AST-like Value objects"
+      file: "Parser/Value.cs"
+      key_features:
+        - "Tagged union: Value { Number | String }"
+        - "Factory methods: Value.FromNumber(), Value.FromString()"
+        - "No traditional AST - direct interpretation"
+    
+    interpreter:
+      purpose: "Token stream → Execution"
+      file: "Interpreter/Interpreter.cs"
+      key_features:
+        - "Partial class split by functionality"
+        - "Recursive descent expression evaluator"
+        - "Position-based token cursor (_pos)"
+        - "Direct execution - no intermediate IR"
+
+# ============================================================================
+# Directory Structure & File Organization
+# ============================================================================
+
+directory_structure:
+  source_files:
+    lexer:
+      path: "Lexer/"
+      files:
+        - name: "Lexer.cs"
+          contains: "Main lexer, keyword dictionary, tokenization"
+        - name: "TokenType.cs"
+          contains: "All token type enums (TOK_*)"
+          pattern: "enum TokenType { TOK_PRINT, TOK_IF, ... }"
+    
+    parser:
+      path: "Parser/"
+      files:
+        - name: "Value.cs"
+          contains: "Runtime value type (Number/String tagged union)"
+          critical_methods:
+            - "Value.FromNumber(double)"
+            - "Value.FromString(string)"
+            - "AsNumber() / AsString()"
+    
+    interpreter:
+      path: "Interpreter/"
+      strategy: "Partial class split by feature domain"
+      files:
+        - "Interpreter.cs": "Main loop, initialization, state"
+        - "Interpreter.Expression.cs": "EvaluateExpression(), all functions"
+        - "Interpreter.Control.cs": "IF/WHILE/FOR control flow"
+        - "Interpreter.IO.cs": "PRINT, INPUT, CLS, COLOR, LOCATE"
+        - "Interpreter.Math.cs": "SIN, COS, SQR, RND, etc"
+        - "Interpreter.String.cs": "LEFT, MID, INSTR, TRIM, etc"
+        - "Interpreter.Arrays.cs": "Array operations, HASKEY, DELKEY"
+        - "Interpreter.Graphics.cs": "SCREEN, LINE, CIRCLE, PSET, shapes"
+        - "Interpreter.Sound.cs": "LOADSOUND, SOUNDONCE, SOUNDREPEAT"
+        - "Interpreter.Jump.cs": "GOTO, GOSUB, RETURN"
+        - "Variables.cs": "Variable storage and scope management"
+    
+    graphics:
+      path: "Graphics/"
+      files:
+        - "GraphicsManager.cs": "SDL2-based rendering"
+    
+    sound:
+      path: "Sound/"
+      files:
+        - "SoundManager.cs": "NAudio-based audio playback"
+    
+    preprocessor:
+      path: "Preprocessor/"
+      files:
+        - "Files related to INCLUDE directive handling"
+  
+  test_files:
+    path: "examples/"
+    purpose: "Test .bas files for feature verification"
+
+# ============================================================================
+# Token System - Core Mechanism
+# ============================================================================
+
+token_system:
+  paradigm: "Numbered enum for O(1) switch dispatch"
+  
+  token_definition_workflow:
+    step_1:
+      file: "Lexer/TokenType.cs"
+      action: "Add enum value in appropriate section"
+      example: |
+        // Sound Keywords
+        TOK_LOADSOUND,
+        TOK_SOUNDONCE,
+        TOK_SOUNDREPEAT,
+    
+    step_2:
+      file: "Lexer/Lexer.cs"
+      action: "Add to keyword dictionary"
+      location: "Dictionary<string, TokenType> _keywords"
+      example: |
+        ["LOADSOUND"] = TokenType.TOK_LOADSOUND,
+        ["SOUNDONCE"] = TokenType.TOK_SOUNDONCE,
+    
+    step_3:
+      file: "Interpreter/Interpreter.Expression.cs OR Interpreter/*.cs"
+      action: "Implement handler"
+      example_function: |
+        case TokenType.TOK_LOADSOUND:
+            return EvaluateLoadSound();
+      example_statement: |
+        case TokenType.TOK_SOUNDONCE:
+            ExecuteSoundOnce();
+            break;
+  
+  token_categories:
+    control_flow: "TOK_IF, TOK_WHILE, TOK_FOR, TOK_GOSUB, TOK_GOTO"
+    io: "TOK_PRINT, TOK_INPUT, TOK_CLS, TOK_COLOR, TOK_LOCATE"
+    graphics: "TOK_SCREEN, TOK_LINE, TOK_CIRCLE, TOK_PSET, TOK_PAINT"
+    sound: "TOK_LOADSOUND, TOK_SOUNDONCE, TOK_SOUNDREPEAT"
+    math_functions: "TOK_SIN, TOK_COS, TOK_SQR, TOK_ABS, TOK_RND"
+    string_functions: "TOK_LEFT, TOK_MID, TOK_INSTR, TOK_LEN"
+    operators: "TOK_PLUS, TOK_MINUS, TOK_MULTIPLY, TOK_EQUALS"
+    literals: "TOK_NUMBER, TOK_STRING, TOK_VARIABLE, TOK_CONSTANT"
+
+# ============================================================================
+# Adding New Features - Complete Workflow
+# ============================================================================
+
+feature_addition_workflow:
+  
+  case_1_statement_command:
+    description: "Adding a statement like SOUNDONCE (executes, returns nothing)"
+    steps:
+      - step: "Add token to TokenType.cs"
+        file: "Lexer/TokenType.cs"
+        code: "TOK_SOUNDONCE,"
+      
+      - step: "Register keyword in Lexer"
+        file: "Lexer/Lexer.cs"
+        code: '["SOUNDONCE"] = TokenType.TOK_SOUNDONCE,'
+      
+      - step: "Create handler method"
+        file: "Interpreter/Interpreter.<Domain>.cs"
+        code: |
+          private void ExecuteSoundOnce()
+          {
+              _pos++; // Skip token
+              Require(TokenType.TOK_LPAREN, "Expected '('");
+              string soundId = EvaluateExpression().AsString();
+              Require(TokenType.TOK_RPAREN, "Expected ')'");
+              _soundManager.PlayOnce(soundId);
+          }
+      
+      - step: "Add case to main interpreter loop"
+        file: "Interpreter/Interpreter.cs"
+        location: "ExecuteLine() switch statement"
+        code: |
+          case TokenType.TOK_SOUNDONCE:
+              ExecuteSoundOnce();
+              break;
+  
+  case_2_function:
+    description: "Adding a function like LOADSOUND (returns a Value)"
+    steps:
+      - step: "Add token to TokenType.cs"
+        file: "Lexer/TokenType.cs"
+        code: "TOK_LOADSOUND,"
+      
+      - step: "Register keyword in Lexer"
+        file: "Lexer/Lexer.cs"
+        code: '["LOADSOUND"] = TokenType.TOK_LOADSOUND,'
+      
+      - step: "Create evaluation method"
+        file: "Interpreter/Interpreter.<Domain>.cs"
+        code: |
+          private Value EvaluateLoadSound()
+          {
+              _pos++; // Skip token
+              Require(TokenType.TOK_LPAREN, "Expected '('");
+              string path = EvaluateExpression().AsString();
+              Require(TokenType.TOK_RPAREN, "Expected ')'");
+              string id = _soundManager.LoadSound(path);
+              return Value.FromString(id);  // CRITICAL: Use factory method!
+          }
+      
+      - step: "Add case to expression evaluator"
+        file: "Interpreter/Interpreter.Expression.cs"
+        location: "EvaluatePrimary() switch statement"
+        code: |
+          case TokenType.TOK_LOADSOUND:
+              return EvaluateLoadSound();
+  
+  case_3_new_subsystem:
+    description: "Adding entirely new functionality (Graphics, Sound, etc)"
+    steps:
+      - step: "Create manager class"
+        location: "New folder: <Subsystem>/<Subsystem>Manager.cs"
+        example: "Sound/SoundManager.cs"
+      
+      - step: "Add NuGet dependency if needed"
+        file: "BazzBasic.csproj"
+        code: '<PackageReference Include="NAudio" Version="2.2.1" />'
+      
+      - step: "Create interpreter partial class"
+        file: "Interpreter/Interpreter.<Subsystem>.cs"
+        example: "Interpreter/Interpreter.Sound.cs"
+      
+      - step: "Add manager instance to Interpreter.cs"
+        file: "Interpreter/Interpreter.cs"
+        code: "private readonly SoundManager _soundManager = new();"
+      
+      - step: "Implement all tokens following case_1/case_2 patterns"
+
+# ============================================================================
+# Critical Design Patterns
+# ============================================================================
+
+design_patterns:
+  
+  value_creation:
+    rule: "NEVER use 'new Value()' directly"
+    correct: |
+      return Value.FromNumber(42);
+      return Value.FromString("hello");
+      return Value.Zero;  // 0
+      return Value.Empty; // ""
+    incorrect: |
+      return new Value(42);        // COMPILE ERROR
+      return new Value("hello");   // COMPILE ERROR
+  
+  token_consumption:
+    rule: "Always advance _pos after reading token type"
+    pattern: |
+      private void ExecuteSomething()
+      {
+          _pos++; // Skip the TOK_SOMETHING token
+          // ... rest of implementation
+      }
+  
+  expression_parsing:
+    rule: "Use EvaluateExpression() for any sub-expression"
+    example: |
+      // CORRECT: Parse any expression
+      Value arg = EvaluateExpression();
+      
+      // WRONG: Manual token reading
+      if (_tokens[_pos].Type == TokenType.TOK_NUMBER) { ... }
+  
+  parameter_handling:
+    pattern_with_parens: |
+      Require(TokenType.TOK_LPAREN, "Expected '('");
+      Value arg1 = EvaluateExpression();
+      Require(TokenType.TOK_COMMA, "Expected ','");
+      Value arg2 = EvaluateExpression();
+      Require(TokenType.TOK_RPAREN, "Expected ')'");
+    
+    pattern_optional_parens: |
+      if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_LPAREN)
+      {
+          _pos++; // Skip '('
+          Require(TokenType.TOK_RPAREN, "Expected ')'");
+      }
+  
+  error_handling:
+    rule: "Always include line number context"
+    pattern: |
+      throw new Exception($"Error at line {_tokens[_pos].LineNumber}: message");
+    
+    helper_method: |
+      private void Require(TokenType expected, string message)
+      {
+          if (_pos >= _tokens.Count || _tokens[_pos].Type != expected)
+              throw new Exception($"Line {GetCurrentLine()}: {message}");
+          _pos++;
+      }
+
+# ============================================================================
+# Common Pitfalls & Solutions
+# ============================================================================
+
+common_mistakes:
+  
+  mistake_1:
+    problem: "Value construction with 'new Value()'"
+    symptom: "CS1729: 'Value' does not contain a constructor that takes 1 arguments"
+    solution: "Use Value.FromNumber() or Value.FromString()"
+    fix: |
+      // WRONG
+      return new Value(result);
+      
+      // CORRECT
+      return Value.FromNumber(result);
+  
+  mistake_2:
+    problem: "Forgetting to add 'using BazzBasic.Parser;'"
+    symptom: "CS0246: The type or namespace name 'Value' could not be found"
+    solution: "Add using directive to interpreter files"
+    fix: |
+      using BazzBasic.Lexer;
+      using BazzBasic.Parser;  // REQUIRED for Value type
+  
+  mistake_3:
+    problem: "Not advancing _pos after reading token"
+    symptom: "Infinite loop or unexpected token errors"
+    solution: "Always _pos++ after checking token type"
+    fix: |
+      private void ExecuteCommand()
+      {
+          _pos++; // CRITICAL: Consume the token!
+          // ... rest
+      }
+  
+  mistake_4:
+    problem: "Manual token reading instead of EvaluateExpression()"
+    symptom: "Complex expressions fail, operators not handled"
+    solution: "Use EvaluateExpression() for all sub-expressions"
+    fix: |
+      // WRONG: Manual parsing
+      Value x = new Value(_tokens[_pos].NumValue);
+      
+      // CORRECT: Use expression evaluator
+      Value x = EvaluateExpression();
+  
+  mistake_5:
+    problem: "Forgetting to add case to interpreter switch"
+    symptom: "Token defined but never executed"
+    solution: "Add case in Interpreter.cs ExecuteLine() or EvaluatePrimary()"
+    checklist:
+      - "Token in TokenType.cs?"
+      - "Keyword in Lexer.cs dictionary?"
+      - "Case in Interpreter.cs switch?"
+      - "Handler method implemented?"
+  
+  mistake_6:
+    problem: "Mixing statement and function tokens"
+    symptom: "\"should be used as a function\" error or vice versa"
+    solution: "Statements go in ExecuteLine(), functions in EvaluatePrimary()"
+    rule: |
+      // Statements (no return value): TOK_PRINT, TOK_SOUNDONCE
+      case TOK_SOUNDONCE:
+          ExecuteSoundOnce();
+          break;
+      
+      // Functions (return Value): TOK_SIN, TOK_LOADSOUND
+      case TOK_LOADSOUND:
+          return EvaluateLoadSound();
+
+# ============================================================================
+# Testing Patterns
+# ============================================================================
+
+testing:
+  
+  test_file_creation:
+    location: "examples/"
+    naming: "<feature>_test.bas"
+    structure: |
+      REM ============================================
+      REM Test: <Feature Name>
+      REM ============================================
+      
+      PRINT "Testing <feature>..."
+      
+      REM Test 1: Basic functionality
+      <test code>
+      
+      REM Test 2: Edge cases
+      <test code>
+      
+      REM Test 3: Error conditions
+      <test code>
+      
+      PRINT "All tests passed!"
+      END
+  
+  compilation_test:
+    command: "dotnet build BazzBasic.csproj"
+    location: "C:\\Users\\ekvir\\source\\repos\\BazzBasic"
+  
+  execution_test:
+    command: "dotnet run -- examples/<test_file>.bas"
+    location: "C:\\Users\\ekvir\\source\\repos\\BazzBasic"
+  
+  typical_test_cases:
+    - "Basic functionality with simple inputs"
+    - "Multiple parameters and combinations"
+    - "Edge cases (empty strings, zero, negative numbers)"
+    - "Type conversion (string to number, number to string)"
+    - "Error conditions (missing files, invalid parameters)"
+    - "Integration with other features"
+
+# ============================================================================
+# Language Semantics - Important Rules
+# ============================================================================
+
+language_rules:
+  
+  variable_system:
+    types:
+      numeric: "Variables ending in nothing (e.g., x, count)"
+      string: "Variables ending in $ (e.g., name$, text$)"
+      constant: "Variables ending in # (e.g., PI#, MAX#)"
+    
+    declaration:
+      required: true
+      rule: "All variables must be declared with DIM before use"
+      example: |
+        DIM x          ' Numeric variable
+        DIM name$      ' String variable
+        DIM PI# = 3.14 ' Constant (immutable)
+    
+    scope:
+      global: "Variables declared in main program"
+      local: "Variables in function scope (isolated, cannot access globals)"
+  
+  array_system:
+    features:
+      - "Dynamic arrays (no fixed size)"
+      - "String keys supported (associative arrays)"
+      - "Mixed numeric/string indexing"
+    
+    example: |
+      DIM arr(10)        ' Numeric index
+      DIM dict$("key")   ' String key
+      DIM mixed(0)       ' Can use both types
+      mixed(5) = 100
+      mixed("name") = "John"
+  
+  control_flow:
+    if_statement:
+      one_line: "IF condition THEN statement"
+      multi_line: |
+        IF condition THEN
+            statements
+        ELSEIF condition THEN
+            statements  
+        ELSE
+            statements
+        ENDIF
+    
+    loops:
+      for: |
+        FOR var = start TO end STEP increment
+            statements
+        NEXT
+      
+      while: |
+        WHILE condition
+            statements
+        WEND
+  
+  functions:
+    user_defined:
+      syntax: |
+        DEF FN name(param1, param2)
+            statements
+            RETURN value
+        END DEF
+      
+      rules:
+        - "Isolated scope - cannot access global variables"
+        - "Must return a value"
+        - "Parameters passed by value"
+
+# ============================================================================
+# External Dependencies
+# ============================================================================
+
+dependencies:
+  nuget_packages:
+    - name: "NAudio"
+      version: "2.2.1"
+      purpose: "Sound playback (LOADSOUND, SOUNDONCE, etc)"
+      usage: "Sound/SoundManager.cs"
+  
+  planned_dependencies:
+    - name: "SDL2-CS"
+      purpose: "Graphics rendering"
+      status: "Planned for graphics system"
+  
+  framework:
+    target: ".NET 10"
+    features_used:
+      - "C# 12 features"
+      - "Native AOT compilation (optional)"
+      - "Partial classes for organization"
+
+# ============================================================================
+# Quick Command Reference
+# ============================================================================
+
+commands:
+  build:
+    command: "dotnet build BazzBasic.csproj"
+    directory: "C:\\Users\\ekvir\\source\\repos\\BazzBasic"
+  
+  run:
+    command: "dotnet run -- <file.bas>"
+    directory: "C:\\Users\\ekvir\\source\\repos\\BazzBasic"
+    example: "dotnet run -- examples/sound_test.bas"
+  
+  search_codebase:
+    tool: "Desktop Commander MCP"
+    examples:
+      - "start_search with pattern TOK_<keyword>"
+      - "start_search with pattern Execute<Command>"
+      - "start_search with searchType=content"
+
+# ============================================================================
+# Key Files Quick Reference
+# ============================================================================
+
+key_files:
+  main_entry: "Program.cs"
+  
+  lexer_core: "Lexer/Lexer.cs"
+  tokens: "Lexer/TokenType.cs"
+  
+  value_type: "Parser/Value.cs"
+  
+  interpreter_main: "Interpreter/Interpreter.cs"
+  interpreter_expressions: "Interpreter/Interpreter.Expression.cs"
+  interpreter_control: "Interpreter/Interpreter.Control.cs"
+  
+  project_file: "BazzBasic.csproj"
+  solution_file: "BazzBasic.NET.sln"
+
+# ============================================================================
+# AI Assistant Usage Tips
+# ============================================================================
+
+ai_assistant_tips:
+  when_adding_feature:
+    - "Read this file first for workflow"
+    - "Follow appropriate case_1/case_2/case_3 pattern"
+    - "Check common_mistakes before implementing"
+    - "Create test file in examples/"
+    - "Build and test incrementally"
+  
+  when_debugging:
+    - "Check common_mistakes section first"
+    - "Verify all 4 steps: TokenType → Lexer → Interpreter case → Handler"
+    - "Look for missing 'using' directives"
+    - "Confirm Value factory method usage"
+  
+  when_learning_codebase:
+    - "Start with architecture section"
+    - "Review token_system for core mechanism"
+    - "Study one feature_addition_workflow case"
+    - "Look at existing Interpreter.*.cs files as examples"
+  
+  search_patterns:
+    find_token_usage: "Search for 'TOK_<name>'"
+    find_implementation: "Search for 'Execute<Name>' or 'Evaluate<Name>'"
+    find_examples: "Look in examples/ directory"
+    find_similar_feature: "Search existing Interpreter.*.cs files"
+
+# ============================================================================
+# Version History & Migration Notes
+# ============================================================================
+
+version_history:
+  original:
+    language: "Node.js"
+    status: "Proof of concept, abandoned"
+  
+  v1:
+    language: "FreeBASIC"
+    status: "Working but deprecated"
+    reason: "FreeBASIC stagnant, Windows 11 issues"
+  
+  v2_current:
+    language: "C# .NET 10"
+    status: "Active development"
+    completed_features:
+      - "Core BASIC language"
+      - "Arrays with string keys"
+      - "User-defined functions (DEF FN)"
+      - "Control flow (IF/WHILE/FOR/GOSUB/GOTO)"
+      - "Math functions"
+      - "String functions"
+      - "Graphics system (SDL2)"
+      - "Sound system (NAudio)"
+      - "Include directive preprocessor"
