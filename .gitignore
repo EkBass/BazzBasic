@@ -1,0 +1,34 @@
+# Visual Studio / .NET
+.vs/
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider / JetBrains
+.idea/
+*.sln.iml
+
+# Build outputs
+*.exe
+*.dll
+*.pdb
+*.cache
+*.log
+
+# NuGet
+*.nupkg
+packages/
+
+# VSCode
+.vscode/
+
+# OS
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# long-lived runtime folders
+runtimes/
