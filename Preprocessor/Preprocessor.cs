@@ -55,13 +55,13 @@ public class Preprocessor
                 // Resolve file path
                 string filePath = ResolveFilePath(filename, currentFile);
 
-                if (!File.Exists(filePath))
+                if (!System.IO.File.Exists(filePath))
                 {
                     throw new Exception($"INCLUDE file not found: {filename} (resolved to: {filePath})");
                 }
 
                 // Read and recursively process included file
-                string includedSource = File.ReadAllText(filePath);
+                string includedSource = System.IO.File.ReadAllText(filePath);
                 string processedInclude = Process(includedSource, filePath);
 
                 // Add comment showing where include came from
@@ -104,7 +104,7 @@ public class Preprocessor
             if (!string.IsNullOrEmpty(dir))
             {
                 string relativePath = Path.Combine(dir, filename);
-                if (File.Exists(relativePath))
+                if (System.IO.File.Exists(relativePath))
                 {
                     return Path.GetFullPath(relativePath);
                 }
@@ -113,7 +113,7 @@ public class Preprocessor
 
         // Try relative to base path
         string basePath = Path.Combine(_basePath, filename);
-        if (File.Exists(basePath))
+        if (System.IO.File.Exists(basePath))
         {
             return Path.GetFullPath(basePath);
         }

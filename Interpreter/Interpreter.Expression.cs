@@ -307,6 +307,10 @@ public partial class Interpreter
                 return EvaluateMousebFunc();
             case TokenType.TOK_LOADSOUND:
                 return EvaluateLoadSound();
+            case TokenType.TOK_FILEREAD:
+                return EvaluateFileRead();
+            case TokenType.TOK_FILEEXISTS:
+                return EvaluateFileExists();
             case TokenType.TOK_FN:
                 return EvaluateUserFunction();
                 

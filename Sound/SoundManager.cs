@@ -26,7 +26,7 @@ public class SoundManager
     // ========================================================================
     public string LoadSound(string filePath)
     {
-        if (!File.Exists(filePath))
+        if (!System.IO.File.Exists(filePath))
         {
             throw new Exception($"Sound file not found: {filePath}");
         }

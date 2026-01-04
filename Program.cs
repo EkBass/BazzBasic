@@ -47,7 +47,7 @@ static void RunProgram(string source, string basePath = "", string? filename = n
         
         var lexer = new Lexer(processedSource);
         var tokens = lexer.Tokenize();
-        var interpreter = new Interpreter(tokens);
+        var interpreter = new Interpreter(tokens, basePath);
         interpreter.Run();
     }
     finally

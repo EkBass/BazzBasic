@@ -70,6 +70,13 @@ public class Lexer
         ["SOUNDSTOP"] = TokenType.TOK_SOUNDSTOP,
         ["SOUNDSTOPALL"] = TokenType.TOK_SOUNDSTOPALL,
 
+        // File operations
+        ["FILEREAD"] = TokenType.TOK_FILEREAD,
+        ["FILEEXISTS"] = TokenType.TOK_FILEEXISTS,
+        ["FILEWRITE"] = TokenType.TOK_FILEWRITE,
+        ["FILEAPPEND"] = TokenType.TOK_FILEAPPEND,
+        ["FILEDELETE"] = TokenType.TOK_FILEDELETE,
+
         // Math functions
         ["ABS"] = TokenType.TOK_ABS,
         ["ATAN"] = TokenType.TOK_ATAN,

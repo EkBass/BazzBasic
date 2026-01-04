@@ -6,6 +6,7 @@
 using BazzBasic.Lexer;
 using BazzBasic.Parser;
 using BazzBasic.Sound;
+using BazzBasic.File;
 
 namespace BazzBasic.Interpreter;
 
@@ -58,8 +59,11 @@ public partial class Interpreter
     
     // Sound manager
     private readonly SoundManager _soundManager = new();
+    
+    // File manager
+    private readonly FileManager _fileManager;
 
-    public Interpreter(List<Token> tokens)
+    public Interpreter(List<Token> tokens, string basePath = "")
     {
         _tokens = tokens;
         _variables = new Variables();
@@ -67,6 +71,16 @@ public partial class Interpreter
         _builtinConstants = InitBuiltinConstants();
         _pos = 0;
         _running = false;
+        
+        // Initialize file manager with base path
+        if (string.IsNullOrEmpty(basePath))
+        {
+            basePath = Directory.GetCurrentDirectory();
+        }
+        _fileManager = new FileManager(basePath);
+        
+        // Set ROOT# constant
+        _variables.SetConstant("ROOT#", Value.FromString(basePath));
         
         ScanLabels();
     }
@@ -276,6 +290,15 @@ public partial class Interpreter
                 break;
             case TokenType.TOK_SOUNDONCEWAIT:
                 ExecuteSoundOnceWait();
+                break;
+            case TokenType.TOK_FILEWRITE:
+                ExecuteFileWrite();
+                break;
+            case TokenType.TOK_FILEAPPEND:
+                ExecuteFileAppend();
+                break;
+            case TokenType.TOK_FILEDELETE:
+                ExecuteFileDelete();
                 break;
             case TokenType.TOK_END:
                 _pos++;
