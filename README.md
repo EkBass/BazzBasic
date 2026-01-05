@@ -54,7 +54,7 @@ LET num$ = 42            ' Number
 LET text$ = "Hello"      ' String
 LET mixed$ = "123"       ' String (quoted)
 ```
-[Variables-and-Constants9(https://github.com/EkBass/BazzBasic/wiki/b.-Variables-and-Constants)
+[Variables-and-Constants](https://github.com/EkBass/BazzBasic/wiki/b.-Variables-and-Constants)
 
 ### Tons of classic and modern BASIC features.
 
