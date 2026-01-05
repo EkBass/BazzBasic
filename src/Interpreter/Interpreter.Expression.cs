@@ -298,6 +298,8 @@ public partial class Interpreter
             // Other functions
             case TokenType.TOK_INKEY:
                 return EvaluateInkeyFunc();
+            case TokenType.TOK_GETCONSOLE:
+                return EvaluateGetConsoleFunc();
             case TokenType.TOK_RGB:
                 return EvaluateRgbFunc();
             case TokenType.TOK_HASKEY:
