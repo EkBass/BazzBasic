@@ -58,4 +58,4 @@ LET mixed$ = "123"       ' String (quoted)
 
 ### Tons of classic and modern BASIC features.
 
-Have a look at the [wiki](https://github.com/EkBass/BazzBasic/wiki)
+Have a look at the [wiki](https://github.com/EkBass/BazzBasic/wiki) or study [example programs](https://github.com/EkBass/BazzBasic/tree/main/Examples)
