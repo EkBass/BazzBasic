@@ -8,7 +8,7 @@ It supports many of the features of BASIC interpreters from the 80s, but also of
 
 **Updated:** 5th Jan 2026  
 **Current version:** 0.4  
-**Platform:** win  
+**Platform:** win x64  
 **Zip archive size:** 31.7Mb  
 _Binary file includes ALL dependencies_
 
