@@ -1,6 +1,6 @@
 // ============================================================================
 // BazzBasic - Interpreter (Array Operations)
-// DIM, DELKEY, HASKEY
+// DIM, DELKEY, DELARRAY, HASKEY
 // ============================================================================
 
 using BazzBasic.Lexer;
@@ -79,6 +79,28 @@ public partial class Interpreter
         
         string key = string.Join(",", indices);
         _variables.DeleteKey(arrName, key);
+    }
+
+    private void ExecuteDelArray()
+    {
+        _pos++;
+        
+        if (_pos >= _tokens.Count || _tokens[_pos].Type != TokenType.TOK_VARIABLE)
+        {
+            Error("Expected array name after DELARRAY");
+            return;
+        }
+        
+        string arrName = _tokens[_pos].StringValue ?? "";
+        _pos++;
+        
+        if (!_variables.ArrayExists(arrName))
+        {
+            Error($"Array not found: {arrName}");
+            return;
+        }
+        
+        _variables.DeleteArray(arrName);
     }
 
     private Value EvaluateHaskeyFunc()

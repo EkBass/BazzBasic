@@ -216,6 +216,9 @@ public partial class Interpreter
             case TokenType.TOK_DELKEY:
                 ExecuteDelKey();
                 break;
+            case TokenType.TOK_DELARRAY:
+                ExecuteDelArray();
+                break;
             case TokenType.TOK_DEF:
                 ExecuteDefFn();
                 break;
@@ -344,58 +347,143 @@ public partial class Interpreter
     {
         if (_pos >= _tokens.Count) return;
 
-        Token varToken = _tokens[_pos];
-        if (varToken.Type != TokenType.TOK_VARIABLE && varToken.Type != TokenType.TOK_CONSTANT)
-            return;
+        // For LET with multiple variables: LET a$, b$, c# = 3.14
+        // Variables before = get default values, last one (or all if no =) gets value or default
+        var pendingVars = new List<string>();
         
-        string varName = varToken.StringValue ?? "";
-        _pos++;
-        
-        if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_LPAREN)
+        while (_pos < _tokens.Count)
         {
-            ExecuteArrayAssignment(varName);
-            return;
-        }
-        
-        if (!isNewDeclaration && !varName.EndsWith('#') && !_variables.VariableExists(varName))
-        {
-            Error($"Undefined variable: {varName} (use LET for first assignment)");
-            return;
-        }
-        
-        // Check if there's an assignment (=)
-        if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_EQUALS)
-        {
-            _pos++; // Skip =
-            Value value = EvaluateExpression();
+            Token varToken = _tokens[_pos];
+            if (varToken.Type != TokenType.TOK_VARIABLE && varToken.Type != TokenType.TOK_CONSTANT)
+                break;
             
-            if (varName.EndsWith('#'))
+            string varName = varToken.StringValue ?? "";
+            _pos++;
+            
+            // Check for array assignment (only for single variable case)
+            if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_LPAREN)
             {
-                if (!_variables.SetConstant(varName, value))
+                // Initialize any pending variables first
+                foreach (var pending in pendingVars)
                 {
-                    Error($"Cannot redefine constant '{varName}'");
+                    InitializeVariable(pending, isNewDeclaration);
                 }
+                ExecuteArrayAssignment(varName);
+                return;
             }
-            else
+            
+            // Check if there's an assignment (=) after this variable
+            if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_EQUALS)
             {
-                _variables.SetVariable(varName, value);
+                // Initialize all pending variables with defaults first
+                foreach (var pending in pendingVars)
+                {
+                    InitializeVariable(pending, isNewDeclaration);
+                }
+                
+                _pos++; // Skip =
+                Value value = EvaluateExpression();
+                
+                // Assign value to the current variable
+                AssignValueToVariable(varName, value, isNewDeclaration);
+                
+                // Check for more comma-separated assignments after the value
+                while (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_COMMA)
+                {
+                    _pos++; // Skip comma
+                    if (_pos >= _tokens.Count) break;
+                    
+                    varToken = _tokens[_pos];
+                    if (varToken.Type != TokenType.TOK_VARIABLE && varToken.Type != TokenType.TOK_CONSTANT)
+                        break;
+                    
+                    varName = varToken.StringValue ?? "";
+                    _pos++;
+                    
+                    if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_EQUALS)
+                    {
+                        _pos++; // Skip =
+                        value = EvaluateExpression();
+                        AssignValueToVariable(varName, value, isNewDeclaration);
+                    }
+                    else
+                    {
+                        InitializeVariable(varName, isNewDeclaration);
+                    }
+                }
+                return;
             }
+            
+            // Check for comma (more variables follow)
+            if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_COMMA)
+            {
+                pendingVars.Add(varName);
+                _pos++; // Skip comma
+                continue;
+            }
+            
+            // No comma, no equals - this is the last variable, check if it needs existing check
+            if (!isNewDeclaration && !varName.EndsWith('#') && !_variables.VariableExists(varName))
+            {
+                Error($"Undefined variable: {varName} (use LET for first assignment)");
+                return;
+            }
+            
+            // Initialize all pending variables
+            foreach (var pending in pendingVars)
+            {
+                InitializeVariable(pending, isNewDeclaration);
+            }
+            
+            // Initialize this last variable
+            InitializeVariable(varName, isNewDeclaration);
+            return;
         }
-        else if (isNewDeclaration)
+        
+        // Initialize any remaining pending variables
+        foreach (var pending in pendingVars)
         {
-            // LET var without assignment - create empty/zero variable
+            InitializeVariable(pending, isNewDeclaration);
+        }
+    }
+    
+    private void InitializeVariable(string varName, bool isNewDeclaration)
+    {
+        if (isNewDeclaration)
+        {
             if (varName.EndsWith('$'))
             {
                 _variables.SetVariable(varName, Value.Empty);
             }
             else if (varName.EndsWith('#'))
             {
-                Error($"Constants must be initialized with a value");
+                Error($"Constants must be initialized with a value: {varName}");
             }
             else
             {
                 _variables.SetVariable(varName, Value.Zero);
             }
+        }
+    }
+    
+    private void AssignValueToVariable(string varName, Value value, bool isNewDeclaration)
+    {
+        if (!isNewDeclaration && !varName.EndsWith('#') && !_variables.VariableExists(varName))
+        {
+            Error($"Undefined variable: {varName} (use LET for first assignment)");
+            return;
+        }
+        
+        if (varName.EndsWith('#'))
+        {
+            if (!_variables.SetConstant(varName, value))
+            {
+                Error($"Cannot redefine constant '{varName}'");
+            }
+        }
+        else
+        {
+            _variables.SetVariable(varName, value);
         }
     }
 

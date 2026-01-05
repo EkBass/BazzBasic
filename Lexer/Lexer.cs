@@ -122,7 +122,6 @@ public class Lexer
         // Input/Mouse
         ["INKEY"] = TokenType.TOK_INKEY,
         ["RGB"] = TokenType.TOK_RGB,
-        ["POINT"] = TokenType.TOK_POINT,
         ["MOUSEX"] = TokenType.TOK_MOUSEX,
         ["MOUSEY"] = TokenType.TOK_MOUSEY,
         ["MOUSEB"] = TokenType.TOK_MOUSEB,
@@ -130,6 +129,7 @@ public class Lexer
         // Array functions
         ["HASKEY"] = TokenType.TOK_HASKEY,
         ["DELKEY"] = TokenType.TOK_DELKEY,
+        ["DELARRAY"] = TokenType.TOK_DELARRAY,
         
         // Logic
         ["AND"] = TokenType.TOK_AND,

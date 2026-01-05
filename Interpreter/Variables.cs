@@ -201,6 +201,12 @@ public class Variables
         return array.Remove(index);
     }
 
+    public bool DeleteArray(string arrayName)
+    {
+        string key = arrayName.ToUpperInvariant();
+        return _arrays.Remove(key);
+    }
+
     public int GetArrayLength(string arrayName)
     {
         string key = arrayName.ToUpperInvariant();

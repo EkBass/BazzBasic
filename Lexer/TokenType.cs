@@ -132,10 +132,10 @@ public enum TokenType
     TOK_MOUSEB,
     TOK_MOUSEX,
     TOK_MOUSEY,
-    TOK_POINT,
     TOK_RGB,
 
     // Array functions
+    TOK_DELARRAY,
     TOK_DELKEY,
     TOK_HASKEY,
 

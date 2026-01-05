@@ -68,6 +68,7 @@ public partial class Interpreter
         
         string prompt = "? ";
         
+        // Check for optional prompt string
         if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_STRING)
         {
             prompt = _tokens[_pos].StringValue ?? "";
@@ -75,26 +76,70 @@ public partial class Interpreter
             Require(TokenType.TOK_COMMA);
         }
         
-        if (_pos >= _tokens.Count || _tokens[_pos].Type != TokenType.TOK_VARIABLE)
+        // Collect all variable names
+        var varNames = new List<string>();
+        
+        while (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_VARIABLE)
+        {
+            varNames.Add(_tokens[_pos].StringValue ?? "");
+            _pos++;
+            
+            // Check for comma (more variables follow)
+            if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_COMMA)
+            {
+                _pos++;
+            }
+            else
+            {
+                break;
+            }
+        }
+        
+        if (varNames.Count == 0)
         {
             Error("Expected variable after INPUT");
             return;
         }
         
-        string varName = _tokens[_pos].StringValue ?? "";
-        _pos++;
-        
         Console.Write(prompt);
         string? input = Console.ReadLine() ?? "";
         
-        if (double.TryParse(input, System.Globalization.NumberStyles.Any, 
-            System.Globalization.CultureInfo.InvariantCulture, out double numVal))
+        // Split input by comma or whitespace
+        // First try comma, if no commas found, use whitespace
+        string[] values;
+        if (input.Contains(','))
         {
-            _variables.SetVariable(varName, Value.FromNumber(numVal));
+            values = input.Split(',', StringSplitOptions.TrimEntries);
         }
         else
         {
-            _variables.SetVariable(varName, Value.FromString(input));
+            values = input.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+        }
+        
+        // Assign values to variables
+        for (int i = 0; i < varNames.Count; i++)
+        {
+            string varName = varNames[i];
+            string value = i < values.Length ? values[i] : "";
+            
+            // Check if variable is string type (ends with $)
+            if (varName.EndsWith('$'))
+            {
+                _variables.SetVariable(varName, Value.FromString(value));
+            }
+            else
+            {
+                // Try to parse as number
+                if (double.TryParse(value, System.Globalization.NumberStyles.Any, 
+                    System.Globalization.CultureInfo.InvariantCulture, out double numVal))
+                {
+                    _variables.SetVariable(varName, Value.FromNumber(numVal));
+                }
+                else
+                {
+                    _variables.SetVariable(varName, Value.FromString(value));
+                }
+            }
         }
     }
 

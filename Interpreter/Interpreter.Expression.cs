@@ -383,14 +383,35 @@ public partial class Interpreter
 
     private int CompareValues(Value left, Value right)
     {
-        if (left.Type != right.Type)
+        // Both same type - straightforward comparison
+        if (left.Type == right.Type)
         {
-            Error("Type mismatch in comparison");
-            return 0;
+            if (left.Type == BazzValueType.Number)
+                return left.NumValue.CompareTo(right.NumValue);
+            return string.Compare(left.AsString(), right.AsString(), StringComparison.OrdinalIgnoreCase);
         }
         
-        if (left.Type == BazzValueType.Number)
-            return left.NumValue.CompareTo(right.NumValue);
+        // Mixed types - try numeric comparison first
+        // Try to convert string to number
+        double leftNum, rightNum;
+        bool leftIsNum = left.Type == BazzValueType.Number || 
+            double.TryParse(left.AsString(), System.Globalization.NumberStyles.Any,
+                System.Globalization.CultureInfo.InvariantCulture, out _);
+        bool rightIsNum = right.Type == BazzValueType.Number ||
+            double.TryParse(right.AsString(), System.Globalization.NumberStyles.Any,
+                System.Globalization.CultureInfo.InvariantCulture, out _);
+        
+        if (leftIsNum && rightIsNum)
+        {
+            // Both can be treated as numbers
+            leftNum = left.Type == BazzValueType.Number ? left.NumValue : 
+                double.Parse(left.AsString(), System.Globalization.CultureInfo.InvariantCulture);
+            rightNum = right.Type == BazzValueType.Number ? right.NumValue :
+                double.Parse(right.AsString(), System.Globalization.CultureInfo.InvariantCulture);
+            return leftNum.CompareTo(rightNum);
+        }
+        
+        // Fall back to string comparison
         return string.Compare(left.AsString(), right.AsString(), StringComparison.OrdinalIgnoreCase);
     }
 }
