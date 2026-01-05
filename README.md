@@ -14,7 +14,7 @@ _Binary file includes ALL dependencies_
 
 ### Source or binary
 
-See source at [github](https://github.com/EkBass/BazzBasic) or download binary from [Google Drive](https://drive.google.com/drive/folders/1mG5ZieRwvzSewP4mxJ_O_mgCdP-Kfx_r?usp=drive_link)
+See source at [github](https://github.com/EkBass/BazzBasic) or download binary from [Google Drive](https://drive.google.com/drive/folders/1vlOtfd6COIowDwRcK4IprBMPK1uCU3U7?usp=sharing)
 
 ## Main functionalities
 
