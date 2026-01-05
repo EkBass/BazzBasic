@@ -4,6 +4,18 @@ BazzBasic is a BASIC interpreter built to work with the .NET10 Framework.
 
 It supports many of the features of BASIC interpreters from the 80s, but also offers something modern.
 
+### Version
+
+**Updated:** 5th Jan 2026  
+**Current version:** 0.4  
+**Platform:** win  
+**Zip archive size:** 31.7Mb  
+_Binary file includes ALL dependencies_
+
+### Source or binary
+
+See source at [github](https://github.com/EkBass/BazzBasic) or download binary from [Google Drive](https://drive.google.com/file/d/1mxW3JG2y7whF0dtz6ho4gTrs7SaGlc-Z/view?usp=drive_link)
+
 ## Main functionalities
 
 ### User-Defined Functions
