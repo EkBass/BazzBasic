@@ -24,8 +24,8 @@
             <Keywords name="Operators1">+ - * / = &lt; &gt; ( ) , ; :</Keywords>
             <Keywords name="Operators2"></Keywords>
             
-            <!-- Comments: REM keyword and ' line comment -->
-            <Keywords name="Comments">00REM 01 02 03&apos; 04 05 06 07 08 09</Keywords>
+            <!-- Comments: REM (00-01) and ' (02-03) as line comments -->
+            <Keywords name="Comments">00REM 00&apos; 01 02 03 04</Keywords>
             
             <!-- Keywords1: Control Flow -->
             <Keywords name="Keywords1">DEF DIM END ENDIF ELSE ELSEIF FN FOR GOSUB GOTO IF INCLUDE LET NEXT RETURN STEP THEN TO WEND WHILE</Keywords>

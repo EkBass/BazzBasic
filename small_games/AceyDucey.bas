@@ -1,10 +1,10 @@
 ' ============================================
 ' ACEY DUCEY - BazzBasic Edition
-' Alkuperäinen: Creative Computing
-' Siivottu versio: Krisu 2025
+' Original: Creative Computing
+' This: https://github.com/EkBass/BazzBasic
 ' ============================================
 
-' Funktio pitää määritellä ennen käyttöä!
+
 DEF FN cardName$(v$)
     IF v$ = 11 THEN RETURN "J"
     IF v$ = 12 THEN RETURN "Q"
@@ -20,27 +20,27 @@ DIM deck$
 GOSUB [initGame]
 
 [mainLoop]
-    ' Tarkista rahat
+    ' Check money
     IF money$ <= 0 THEN GOTO [broke]
     
-    ' Tarkista pakka (tarvitaan vähintään 3 korttia)
+    ' Check deck. Min. 3 cards
     IF deckPos$ > 49 THEN
-        PRINT "\nPakka loppui! Sekoitetaan uusi..."
+        PRINT "\nDeck run out. Shuffling new..."
         GOSUB [shuffleDeck]
     END IF
     
     COLOR 15, 0
     PRINT "\n-----------------------------"
-    PRINT "Rahaa: $"; money$
+    PRINT "Money: $"; money$
     PRINT "-----------------------------"
     
-    ' Vedä kaksi korttia
+    ' Draw 2 cards
     LET card1$ = deck$(deckPos$)
     deckPos$ = deckPos$ + 1
     LET card2$ = deck$(deckPos$)
     deckPos$ = deckPos$ + 1
     
-    ' Varmista järjestys (pienempi ensin)
+    ' Smaller first
     IF card1$ > card2$ THEN
         LET temp$ = card1$
         card1$ = card2$
@@ -48,50 +48,50 @@ GOSUB [initGame]
     END IF
     
     COLOR 14, 0
-    PRINT "\nKortit: "; FN cardName$(card1$); " ja "; FN cardName$(card2$)
+    PRINT "\nCards: "; FN cardName$(card1$); " and "; FN cardName$(card2$)
     
     ' Sama kortti = uusi jako
     IF card1$ = card2$ THEN
         COLOR 7, 0
-        PRINT "Sama kortti - uusi jako!"
+        PRINT "Same card, new deal!"
         GOTO [mainLoop]
     END IF
     
     COLOR 15, 0
-    INPUT "\nPanoksesi (0 = passaa): ", bet$
+    INPUT "\nYour bet (0 = pass): ", bet$
     
     IF bet$ = 0 THEN
         COLOR 8, 0
-        PRINT "Pelkuri! Uusi jako..."
+        PRINT "Chicken! New deal..."
         GOTO [mainLoop]
     END IF
     
     IF bet$ > money$ THEN
         COLOR 12, 0
-        PRINT "Ei riitä rahat! Sinulla on vain $"; money$
+        PRINT "Not enough money. You have only $"; money$
         GOTO [mainLoop]
     END IF
     
     IF bet$ < 0 THEN
-        PRINT "Positiivinen luku, kiitos."
+        PRINT "Value of a card please."
         GOTO [mainLoop]
     END IF
     
-    ' Vedä kolmas kortti
+    ' Draw third
     LET card3$ = deck$(deckPos$)
     deckPos$ = deckPos$ + 1
     
     COLOR 11, 0
-    PRINT "Kolmas kortti: "; FN cardName$(card3$)
+    PRINT "Third card: "; FN cardName$(card3$)
     
-    ' Voitto: kortti VÄLISSÄ (ei sama kuin reunat)
+    ' Win
     IF card3$ > card1$ AND card3$ < card2$ THEN
         COLOR 10, 0
-        PRINT "*** VOITIT $"; bet$; "! ***"
+        PRINT "*** You win $"; bet$; "! ***"
         money$ = money$ + bet$
     ELSE
         COLOR 12, 0
-        PRINT "Hävisit $"; bet$
+        PRINT "You lost $"; bet$
         money$ = money$ - bet$
     END IF
     
@@ -100,22 +100,22 @@ GOSUB [initGame]
 [broke]
     COLOR 4, 0
     PRINT "\n================================"
-    PRINT "  RAHAT LOPPU! GAME OVER!"
+    PRINT "  OUT OF MONEY! GAME OVER!"
     PRINT "================================"
     
     COLOR 15, 0
-    INPUT "\nUusi peli? (k/e): ", again$
-    IF UCASE(LEFT(again$, 1)) = "K" THEN
+    INPUT "\nNew game? (y/n): ", again$
+    IF UCASE(LEFT(again$, 1)) = "Y" THEN
         money$ = 100
         GOSUB [shuffleDeck]
         GOTO [mainLoop]
     END IF
     
-    PRINT "\nKiitos pelistä!"
+    PRINT "\nCheers!"
     END
 
 ' ============================================
-' ALUSTUS
+' INIT
 ' ============================================
 [initGame]
     COLOR 14, 0
@@ -126,15 +126,14 @@ GOSUB [initGame]
     PRINT " "; REPEAT("*", 28)
     
     COLOR 7, 0
-    PRINT "\n Arvataan osuuko kolmas kortti"
-    PRINT " kahden ensimmäisen väliin."
-    PRINT "\n Ässä on korkein (14)."
+    PRINT "\n You bet does third card have a value between two first cards"
+    PRINT "\n Ace is 14."
     
     GOSUB [shuffleDeck]
     RETURN
 
 ' ============================================
-' SEKOITA PAKKA (Fisher-Yates)
+' Fisher-Yates
 ' ============================================
 [shuffleDeck]
     LET idx$ = 0
@@ -154,5 +153,5 @@ GOSUB [initGame]
     
     deckPos$ = 0
     COLOR 8, 0
-    PRINT "Pakka sekoitettu."
+    PRINT "Deck shuffled."
     RETURN
