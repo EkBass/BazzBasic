@@ -10,6 +10,7 @@ It supports many of the features of BASIC interpreters from the 80s, but also of
 **Current version:** 0.4  
 **Platform:** win x64  
 **Zip archive size:** 31.7Mb  
+**License:** MIT  
 _Binary file includes ALL dependencies_
 
 ### Source or binary
@@ -37,6 +38,8 @@ PRINT FN factorial$(10) ' Output: 3628800
 
 BazzBasic already offers a reasonable sampling of SDL2 features and I intend to add more.
 
+If your BazzBasic program uses graphic features, the SDL2.dll file must be in the same directory.  
+This does not apply to programs running on the console.  
 [Graphics-Documentation](https://github.com/EkBass/BazzBasic/wiki/h.-Graphics-Documentation)
 
 ### Sounds
@@ -50,7 +53,7 @@ BazzBasic includes a comprehensive sound system built on NAudio, supporting audi
 
 With the INCLUDE function, you can split the source code into different files and folders.
 
-[Source-Control](https://github.com/EkBass/BazzBasic/wiki/a.-Source-Control)
+[Source-Control](https://github.com/EkBass/BazzBasic/wiki/a.-Source-Controll)
 
 ### Arrays
 
