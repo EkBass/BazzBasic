@@ -362,7 +362,8 @@ public partial class Interpreter
     private const int STD_OUTPUT_HANDLE = -11;
     
     /// <summary>
-    /// GETCONSOLE(x, y, mode)
+    /// GETCONSOLE(row, column, mode)
+    /// Uses same (row, column) order as LOCATE for consistency
     /// mode 0 = character at position
     /// mode 1 = foreground color
     /// mode 2 = background color
@@ -371,9 +372,9 @@ public partial class Interpreter
     {
         _pos++;
         Require(TokenType.TOK_LPAREN);
-        int x = (int)EvaluateExpression().AsNumber();
+        int row = (int)EvaluateExpression().AsNumber();
         Require(TokenType.TOK_COMMA);
-        int y = (int)EvaluateExpression().AsNumber();
+        int column = (int)EvaluateExpression().AsNumber();
         Require(TokenType.TOK_COMMA);
         int mode = (int)EvaluateExpression().AsNumber();
         Require(TokenType.TOK_RPAREN);
@@ -385,8 +386,9 @@ public partial class Interpreter
         }
         
         // Convert from 1-based (BASIC) to 0-based (Windows API)
+        // COORD is (X, Y) = (column, row) in Windows API
         IntPtr handle = GetStdHandle(STD_OUTPUT_HANDLE);
-        COORD coord = new COORD((short)(x - 1), (short)(y - 1));
+        COORD coord = new COORD((short)(column - 1), (short)(row - 1));
         
         switch (mode)
         {
