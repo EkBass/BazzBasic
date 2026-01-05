@@ -43,6 +43,7 @@ public enum TokenType
     // ========================================================================
     TOK_CLS,
     TOK_COLOR,
+    TOK_GETCONSOLE,
     TOK_INPUT,
     TOK_LOCATE,
     TOK_SLEEP,

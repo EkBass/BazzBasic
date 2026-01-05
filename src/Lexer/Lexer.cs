@@ -43,6 +43,7 @@ public class Lexer
         // I/O
         ["CLS"] = TokenType.TOK_CLS,
         ["COLOR"] = TokenType.TOK_COLOR,
+        ["GETCONSOLE"] = TokenType.TOK_GETCONSOLE,
         ["INPUT"] = TokenType.TOK_INPUT,
         ["LOCATE"] = TokenType.TOK_LOCATE,
         ["SLEEP"] = TokenType.TOK_SLEEP,

@@ -10,6 +10,7 @@
 
 using BazzBasic.Lexer;
 using BazzBasic.Parser;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace BazzBasic.Interpreter;
@@ -324,5 +325,97 @@ public partial class Interpreter
         
         Graphics.Graphics.UpdateMouse();
         return Value.FromNumber(Graphics.Graphics.MouseButtons);
+    }
+
+    // ========================================================================
+    // Console Reading Functions
+    // ========================================================================
+    
+    // Windows API imports for reading console
+    [DllImport("kernel32.dll", SetLastError = true)]
+    private static extern IntPtr GetStdHandle(int nStdHandle);
+    
+    [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+    private static extern bool ReadConsoleOutputCharacter(
+        IntPtr hConsoleOutput,
+        [Out] char[] lpCharacter,
+        int nLength,
+        COORD dwReadCoord,
+        out int lpNumberOfCharsRead);
+    
+    [DllImport("kernel32.dll", SetLastError = true)]
+    private static extern bool ReadConsoleOutputAttribute(
+        IntPtr hConsoleOutput,
+        [Out] ushort[] lpAttribute,
+        int nLength,
+        COORD dwReadCoord,
+        out int lpNumberOfAttrsRead);
+    
+    [StructLayout(LayoutKind.Sequential)]
+    private struct COORD
+    {
+        public short X;
+        public short Y;
+        public COORD(short x, short y) { X = x; Y = y; }
+    }
+    
+    private const int STD_OUTPUT_HANDLE = -11;
+    
+    /// <summary>
+    /// GETCONSOLE(x, y, mode)
+    /// mode 0 = character at position
+    /// mode 1 = foreground color
+    /// mode 2 = background color
+    /// </summary>
+    private Value EvaluateGetConsoleFunc()
+    {
+        _pos++;
+        Require(TokenType.TOK_LPAREN);
+        int x = (int)EvaluateExpression().AsNumber();
+        Require(TokenType.TOK_COMMA);
+        int y = (int)EvaluateExpression().AsNumber();
+        Require(TokenType.TOK_COMMA);
+        int mode = (int)EvaluateExpression().AsNumber();
+        Require(TokenType.TOK_RPAREN);
+        
+        // Graphics mode - not supported yet
+        if (Graphics.Graphics.IsInitialized)
+        {
+            return Value.FromNumber(0);
+        }
+        
+        // Convert from 1-based (BASIC) to 0-based (Windows API)
+        IntPtr handle = GetStdHandle(STD_OUTPUT_HANDLE);
+        COORD coord = new COORD((short)(x - 1), (short)(y - 1));
+        
+        switch (mode)
+        {
+            case 0: // Character
+                char[] chars = new char[1];
+                if (ReadConsoleOutputCharacter(handle, chars, 1, coord, out _))
+                {
+                    return Value.FromNumber(chars[0]);
+                }
+                return Value.FromNumber(0);
+                
+            case 1: // Foreground color
+                ushort[] attrs1 = new ushort[1];
+                if (ReadConsoleOutputAttribute(handle, attrs1, 1, coord, out _))
+                {
+                    return Value.FromNumber(attrs1[0] & 0x0F);
+                }
+                return Value.FromNumber(0);
+                
+            case 2: // Background color
+                ushort[] attrs2 = new ushort[1];
+                if (ReadConsoleOutputAttribute(handle, attrs2, 1, coord, out _))
+                {
+                    return Value.FromNumber((attrs2[0] >> 4) & 0x0F);
+                }
+                return Value.FromNumber(0);
+                
+            default:
+                return Value.FromNumber(0);
+        }
     }
 }
