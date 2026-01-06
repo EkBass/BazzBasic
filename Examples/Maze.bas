@@ -9,7 +9,9 @@ GOSUB [menuText]
 
 
 [start-play]
-	GOSUB [print-game]
+	CLS
+	PRINT MAZE#
+	GOSUB [show-player]
 	LET move$
 	
 	[game-loop]
@@ -20,7 +22,6 @@ GOSUB [menuText]
 			GOSUB [check-move]
 			IF Player$("moved") = TRUE THEN
 				GOSUB [did-win]
-				GOSUB [print-game]
 				Player$("moved") = FALSE
 			ENDIF
 			
@@ -40,6 +41,9 @@ END
 
 ' If player uses arrow key, we end up here
 [check-move]
+	' lets hide the player from console
+	GOSUB [hide-player]
+
 	' left
 	IF move$ = KEY_LEFT# AND GETCONSOLE(Player$("cur_y"), Player$("cur_x") - 1, 0) = PATH# THEN
 		Player$("cur_x") = Player$("cur_x") - 1
@@ -60,8 +64,21 @@ END
 		Player$("cur_y") = Player$("cur_y") + 1
 		Player$("moved") = TRUE
 	ENDIF
+	
+	' and draw player back to field
+	GOSUB [show-player]
 RETURN
 	
+[hide-player]
+	LOCATE Player$("cur_y"), Player$("cur_x")
+	PRINT " "
+return
+
+[show-player]
+	LOCATE Player$("cur_y"), Player$("cur_x")
+	COLOR Player$("color"), BLACK#
+	PRINT Player$("char");
+RETURN
 
 ' some basic stuff	
 [initConst]
@@ -117,17 +134,6 @@ RETURN
 		ENDIF
 	ENDIF
 RETURN 
-
-
-[print-game]
-	CLS
-	COLOR MazeCo#, BLACK#
-	PRINT MAZE#
-	LOCATE Player$("cur_y"), Player$("cur_x")
-	COLOR Player$("color"), BLACK#
-	PRINT Player$("char");
-RETURN
-
 
 [menuText]
 	CLS
