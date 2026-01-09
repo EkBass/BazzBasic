@@ -8,6 +8,7 @@
  Licence: MIT
 */
 
+using System.Diagnostics;
 using BazzBasic.Lexer;
 using BazzBasic.Parser;
 using BazzBasic.Sound;
@@ -67,6 +68,9 @@ public partial class Interpreter
     
     // File
     private readonly FileManager _fileManager;
+    
+    // Time
+    private readonly Stopwatch _programTimer = Stopwatch.StartNew();
 
     public Interpreter(List<Token> tokens, string basePath = "")
     {

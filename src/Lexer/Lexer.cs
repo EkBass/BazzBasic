@@ -135,6 +135,10 @@ public class Lexer
         ["HASKEY"] = TokenType.TOK_HASKEY,
         ["DELKEY"] = TokenType.TOK_DELKEY,
         ["DELARRAY"] = TokenType.TOK_DELARRAY,
+
+        // Time functions
+        ["TICKS"] = TokenType.TOK_TICKS,
+        ["TIME"] = TokenType.TOK_TIME,
         
         // Logic
         ["AND"] = TokenType.TOK_AND,

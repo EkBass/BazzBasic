@@ -322,6 +322,12 @@ public partial class Interpreter
                 return EvaluateFileExists();
             case TokenType.TOK_FN:
                 return EvaluateUserFunction();
+            
+            // Time functions
+            case TokenType.TOK_TIME:
+                return EvaluateTimeFunc();
+            case TokenType.TOK_TICKS:
+                return EvaluateTicksFunc();
                 
             default:
                 return Value.Zero;
