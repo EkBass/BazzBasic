@@ -10,7 +10,7 @@ I'm building this project as a hobby, out of a love for 80s BASIC interpreters, 
 
 ### Version
 
-**Updated:** 5th Jan 2026  
+**Updated:** 9th Jan 2026  
 **Current version:** 0.4  
 **Platform:** win x64  
 **Zip archive size:** 31.7Mb  
