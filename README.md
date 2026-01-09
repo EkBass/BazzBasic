@@ -15,7 +15,7 @@ I'm building this project as a hobby, out of a love for 80s BASIC interpreters, 
 **Platform:** win x64  
 **Zip archive size:** 31.7Mb  
 **License:** MIT  
-_Binary file includes ALL dependencies_
+_Binary file includes ALL dependencies except SDL2_
 
 ### Source or binary
 
