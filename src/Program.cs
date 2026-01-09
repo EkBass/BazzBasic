@@ -69,8 +69,8 @@ static void LoadInfo()
 {
     // This originally run code written here, but now just shows usage info
     // Not finest solution but works for now
-    Console.WriteLine("BazzBasic Version 0.4");
-    Console.WriteLine("Release date 5th Jan 2026");
+    Console.WriteLine("BazzBasic Version 0.5");
+    Console.WriteLine("Release date 9th Jan 2026");
     Console.WriteLine("https://github.com/EkBass/BazzBasic");
     Console.WriteLine("Usage: bazzbasic <filename.bas>");
 }
