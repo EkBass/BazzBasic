@@ -4,6 +4,10 @@ BazzBasic is a BASIC interpreter built to work with the .NET10 Framework.
 
 It supports many of the features of BASIC interpreters from the 80s, but also offers something modern.
 
+## About
+
+I'm building this project as a hobby, out of a love for 80s BASIC interpreters, and my own joy of learning.
+
 ### Version
 
 **Updated:** 5th Jan 2026  
