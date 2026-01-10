@@ -4,4 +4,4 @@
 
 **10th Jan 26**  
 Generated __vsix__ file to add BazzBasic syntaxes for VS Code.  
-See 
+See https://github.com/EkBass/BazzBasic/blob/main/extras/readme.md
