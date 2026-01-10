@@ -27,7 +27,7 @@
 
 ## bazzbasic-0.5.0.vsix
 **Desc:** BazzBasic syntac colors for [VS Code](https://code.visualstudio.com/)
-**Url:** https://github.com/EkBass/BazzBasic/blob/main/extras/bazzbasic-0.5.0.vsix
+**Url:** [[https://github.com/EkBass/BazzBasic/blob/main/extras/bazzbasic-0.5.0.vsix](https://github.com/EkBass/BazzBasic/blob/main/extras/bazzbasic-0.5.0.vsix)](https://github.com/EkBass/BazzBasic/blob/main/extras/bazzbasic-0.5.0.vsix)
 
 **How-to:**
 1. Download file to your computer
