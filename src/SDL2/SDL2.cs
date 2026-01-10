@@ -7,8 +7,8 @@
 
  Licence: MIT
 
- NOTE: This was damn hard, had some help from flibitijibibo's SDL2-CS project
- NOTE2: And even then this was still hard, SDL is a massive library with tons of stuff
+ NOTE:Had some help from flibitijibibo's SDL2-CS project
+ 
 
 **************************************************************
        Bases on SDL2-CS by Ethan Lee (flibitijibibo)
