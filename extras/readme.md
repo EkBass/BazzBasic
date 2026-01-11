@@ -26,7 +26,7 @@
 3. Restart Geany if open
 
 ## bazzbasic-0.5.0.vsix
-**Desc:** BazzBasic syntac colors for [VS Code](https://code.visualstudio.com/)
+**Desc:** BazzBasic syntac colors for [VS Code](https://code.visualstudio.com/)  
 **Url:** https://github.com/EkBass/BazzBasic/blob/main/extras/bazzbasic-0.5.0.vsix
 
 **How-to:**
