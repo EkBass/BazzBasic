@@ -6,7 +6,10 @@ It supports many of the features of BASIC interpreters from the 80s, but also of
 
 ## About
 
-I'm building this project as a hobby, out of a love for 80s BASIC interpreters, and my own joy of learning.
+BazzBasic is my vision of how to achieve the same feelings today as I did long ago when I was writing hundreds of lines of code on a Spectravideo 328.
+
+BazzBasic does not allow line numbers, which I think is a bit outdated ways of programming, but it allows [label] tags, which make the familiar GOTO and GOSUB successful.  
+This is my view, not a call to argue.
 
 ### Version
 
