@@ -1,3 +1,7 @@
+' GETCONSOLE_Example.bas
+' BazzBasic version. krisu.virtanen@gmail.com
+' https://github.com/EkBass/BazzBasic
+
 CLS
 COLOR 11, 1
 PRINT "abcdefghi"
