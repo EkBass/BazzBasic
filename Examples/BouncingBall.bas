@@ -1,3 +1,7 @@
+' Makes single yellow ball to bounce around screen
+' BazzBasic version. krisu.virtanen@gmail.com
+' https://github.com/EkBass/BazzBasic
+
 SCREEN 12, 640, 480, "Bouncing Ball"
 CLS
 
