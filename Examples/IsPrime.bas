@@ -1,6 +1,6 @@
-REM Is Prime number code
-REM BazzBasic variation
-REM https://github.com/EkBass/BazzBasic
+' Is Prime number code
+' BazzBasic variation
+' https://github.com/EkBass/BazzBasic
 
 DEF FN isPrime$(n$)
     IF n$ < 2 THEN
