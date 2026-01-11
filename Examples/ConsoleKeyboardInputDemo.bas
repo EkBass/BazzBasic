@@ -1,3 +1,7 @@
+' Move "@" around the screen with arrow keys
+' BazzBasic version. krisu.virtanen@gmail.com
+' https://github.com/EkBass/BazzBasic
+
 CLS
 PRINT "Press arrow keys to move @, ESC to exit"
 PRINT ""
