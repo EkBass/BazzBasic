@@ -1,4 +1,7 @@
 REM Simple gumber guessing game with console
+REM BazzBasic variation
+REM https://github.com/EkBass/BazzBasic
+
 LET secret# = INT(RND(100)) + 1
 LET guesses$ = 0
 
