@@ -1,3 +1,7 @@
+REM Temp converter
+REM BazzBasic variation
+REM https://github.com/EkBass/BazzBasic
+
 DEF FN celsiusToFahrenheit$(c$)
     RETURN c$ * 9 / 5 + 32
 END DEF
