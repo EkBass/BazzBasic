@@ -1,3 +1,6 @@
+' Factorial demo
+' BazzBasic
+
 DEF FN factorial$(n$)
     IF n$ <= 1 THEN
         RETURN 1
