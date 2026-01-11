@@ -1,3 +1,7 @@
+REM Is Prime number code
+REM BazzBasic variation
+REM https://github.com/EkBass/BazzBasic
+
 DEF FN isPrime$(n$)
     IF n$ < 2 THEN
         RETURN 0
