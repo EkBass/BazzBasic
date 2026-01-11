@@ -1,5 +1,6 @@
 REM ============================================
 REM Test: TIME and TICKS functions
+REM https://github.com/EkBass/BazzBasic
 REM ============================================
 
 PRINT "Testing TIME and TICKS functions"
