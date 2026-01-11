@@ -1,3 +1,7 @@
+' BazzBasic; Rotating shapes demo
+' https://github.com/EkBass/BazzBasic
+
+
 SCREEN 12, 640, 480, "Rotating Shapes Demo"
 CLS
 
