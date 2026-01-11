@@ -1,4 +1,7 @@
-REM FizzBuzz
+' FizzBuzz
+' BazzBasic version. krisu.virtanen@gmail.com
+' https://github.com/EkBass/BazzBasic
+
 
 FOR i$ = 1 TO 100
     IF i$ % 15 = 0 THEN
