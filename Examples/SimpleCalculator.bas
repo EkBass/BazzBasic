@@ -1,3 +1,6 @@
+' BazzBasic; Simple calculator demo
+' https://github.com/EkBass/BazzBasic
+
 PRINT "Simple Calculator"
 PRINT "================="
 
