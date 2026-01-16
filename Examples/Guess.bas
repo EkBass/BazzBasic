@@ -21,3 +21,5 @@ PRINT "I'm thinking of a number between 1 and 100"
     END IF
     
     GOTO [guess]
+
+END
