@@ -2,8 +2,8 @@
     --header-bg: #0b7a2a; /* vihreä */
     --header-fg: #ffd84a; /* keltainen */
 
-    --main-bg: #ffffff; /* valkoinen */
-    --main-fg: #0d2b5a; /* tummansininen */
+    --main-bg: #E0E0E0; /* valkoinen */
+    --main-fg: #000066; /* tummansininen */
 
     --story-bg: #000000; /* musta */
     --story-fg: #ffffff; /* valkoinen */
@@ -100,7 +100,7 @@ body {
 }
 
     .main-grid > section {
-        border: 1px solid rgba(13, 43, 90, 0.15);
+        border: 3px solid rgba(13, 43, 90, 0.15);
         border-radius: 14px;
         padding: 18px;
     }
