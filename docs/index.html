@@ -4,10 +4,94 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>BazzBasic</title>
+    <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
-    <h1>BazzBasic</h1>
-    <p>Feed your curiosity.</p>
-    <p><a href="https://github.com/EkBass/BazzBasic">GitHub-repo</a></p>
+    <!-- HEADER -->
+    <header class="site-header">
+        <div class="container header-grid">
+            <div class="header-left">
+                <div class="brand">
+                    <h1 class="brand-title">BazzBasic</h1>
+                    <p class="brand-slogan">Release your curiosity</p>
+                </div>
+            </div>
+
+            <nav class="header-right" aria-label="Primary navigation">
+                <a class="nav-link" href="https://github.com/EkBass/BazzBasic/wiki/Download-binaries">Download</a>
+                <a class="nav-link" href="https://github.com/EkBass/BazzBasic/wiki">Learn</a>
+                <a class="nav-link" href="https://github.com/EkBass/BazzBasic/tree/main">Source</a>
+                <a class="nav-link is-disabled" href="#community" aria-disabled="true" tabindex="-1">Community</a>
+            </nav>
+        </div>
+    </header>
+    <!-- /HEADER -->
+    <!-- MAIN -->
+    <main class="site-main">
+        <div class="container main-grid">
+            <section class="main-left" id="download">
+                <h2>ABOUT</h2>
+                <p>Unlike many programming languages, BazzBasic does not aim to be the most powerful or versatile tool.</p>
+                <p>It is also not a clone or plagiarism of any previous BASIC programming language.</p>
+                <p>It is intended to be easy, fun, and provide those small but significant moments of success that early BASIC programming languages ​​offered decades ago.</p>
+                <p>But with a slightly more modern twist.</p>
+            </section>
+
+            <section class="main-middle" id="learn">
+                <h2>BASIC</h2>
+                <p>After more than six decades, BASIC is still one of the easiest ways to reveal your curiosity.</p>
+                <p>It's easy to get started with and offers a rewarding experience with little effort.</p>
+                <p>Simple syntax, modern features, and you'll be creating your first little game in a couple of evenings, hours perhaps.</p>
+                <p>Check this few lines long <a href="https://github.com/EkBass/BazzBasic/blob/main/Examples/Guess.bas">example game</a>, to see it yourself!</p>
+            </section>
+
+            <section class="main-right" id="source">
+                <h2>CURIOSITY</h2>
+                <p>Many of today's experienced programmers started in the 80s by familiarizing themselves with the BASIC interpreters that came with home computers of the time.</p>
+                <p>The movement of a yellow ball on the screen, a program that printed lottery numbers, a handwritten text adventure... the list is endless.</p>
+                <p>All fueled by one thing:<br />
+                    <b>Curiosity.</b><br />
+                </p>
+            </section>
+        </div>
+    </main>
+    <!-- /MAIN -->
+    <!-- STORY -->
+    <section class="site-story">
+        <div class="container story-grid">
+            <div class="story-left">
+                <h2>STORY</h2>
+                <p>Although over the years, as my own skills have grown, I have moved on to more versatile and modern languages, BASIC has always been something that has been fun to try out many different things with.</p>
+                <p>Sometimes it's great to just make a simple adventure game again, a lottery machine, a quiz, or even just those balls bouncing on the screen.</p>
+                <p>BazzBasic was created with this in mind.</p>
+                <p>I wanted to create a language that makes it easy for you to give free rein to your curiosity and program something.</p>
+                <p>And when you finish your first little game, you may crave something bigger and better.</p>
+                <p>Maybe one day you will move on to another programming language, but then BazzBasic will have succeeded in doing what it was intended for.</p>
+                <p>To arouse your curiosity.</p>
+            </div>
+
+            <div class="story-right">
+                <h2>Example</h2>
+                <a href="https://github.com/EkBass/BazzBasic/blob/main/Examples/Guess.bas">
+                    <img src="example-code.png" alt="BazzBasic example: Guess.bas" loading="lazy" />
+                </a>
+            </div>
+
+        </div>
+    </section>
+    <!-- /STORY -->
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <p>© <span id="year"></span> BazzBasic. All rights reserved.</p>
+            <p class="footer-small">Made with BASIC-flavored stubbornness.</p>
+        </div>
+    </footer>
+    <!-- /FOOTER -->
+
+    <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
 </body>
 </html>

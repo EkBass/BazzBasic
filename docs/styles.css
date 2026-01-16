@@ -1,0 +1,199 @@
+﻿:root {
+    --header-bg: #0b7a2a; /* vihreä */
+    --header-fg: #ffd84a; /* keltainen */
+
+    --main-bg: #ffffff; /* valkoinen */
+    --main-fg: #0d2b5a; /* tummansininen */
+
+    --story-bg: #000000; /* musta */
+    --story-fg: #ffffff; /* valkoinen */
+
+    --footer-bg: #2b2b2b; /* tummanharmaa */
+    --footer-fg: #ffffff; /* valkoinen */
+
+    --container: 1100px;
+    --gap: 24px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font: 16px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    color: #111;
+    background: #fff;
+}
+
+.container {
+    width: min(var(--container), calc(100% - 32px));
+    margin: 0 auto;
+}
+
+/* HEADER */
+.site-header {
+    background: var(--header-bg);
+    color: var(--header-fg);
+}
+
+.header-grid {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: var(--gap);
+    padding: 18px 0;
+}
+
+.brand-title {
+    margin: 0;
+    font-size: 34px;
+    letter-spacing: 0.5px;
+}
+
+.brand-slogan {
+    margin: 4px 0 0 0;
+    opacity: 0.95;
+}
+
+.header-right {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.nav-link {
+    color: var(--header-fg);
+    text-decoration: none;
+    padding: 8px 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 216, 74, 0.35);
+    transition: transform 120ms ease, background 120ms ease;
+}
+
+    .nav-link:hover {
+        background: rgba(255, 216, 74, 0.12);
+        transform: translateY(-1px);
+    }
+
+    .nav-link.is-disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+/* MAIN */
+.site-main {
+    background: var(--main-bg);
+    color: var(--main-fg);
+    padding: 32px 0;
+}
+
+.main-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--gap);
+}
+
+    .main-grid > section {
+        border: 1px solid rgba(13, 43, 90, 0.15);
+        border-radius: 14px;
+        padding: 18px;
+    }
+
+/* STORY */
+.site-story {
+    background: var(--story-bg);
+    color: var(--story-fg);
+    padding: 36px 0;
+}
+
+.story-grid {
+    display: grid;
+    grid-template-columns: calc(50% - (var(--gap) / 2)) calc(50% - (var(--gap) / 2));
+    gap: var(--gap);
+    align-items: start;
+}
+
+/* Story: anna grid-itemien oikeasti kutistua */
+.story-grid > * {
+    min-width: 0;
+}
+
+.story-right img {
+    width: 100%;
+    height: 360px;
+    object-fit: contain;
+    border-radius: 14px;
+    display: block;
+}
+
+
+
+/* Jos haluat että kuva "täyttää laatikon" eikä jää pieneksi */
+.story-right a {
+    display: block;
+}
+
+
+/* Skaalaa media aina sarakkeen leveyteen (paitsi img, jota säädetään erikseen) */
+.site-story video,
+.site-story iframe,
+.site-story svg,
+.site-story canvas {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+
+
+.code-block {
+    margin: 12px 0 0 0;
+    padding: 14px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.08);
+    overflow: auto;
+}
+
+/* FOOTER */
+.site-footer {
+    background: var(--footer-bg);
+    color: var(--footer-fg);
+    padding: 22px 0;
+}
+
+.footer-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.footer-small {
+    margin: 0;
+    opacity: 0.8;
+    font-size: 13px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+    .main-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .story-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .header-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .header-right {
+        justify-content: flex-start;
+    }
+}
