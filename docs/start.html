@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<!-- META & TITLE -->
+	<link rel="stylesheet" href="styles.css">
+	<link rel="icon" href="img/icon.png" type="image/png">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="krisu.virtanen@gmail.com">
+    <meta name="keywords" content="BazzBasic, QBasic, GWBasic, MSX, Atari, Spectrum">
+    <meta name="description" content="BazzBasic homepage">
+    <title>
+		BazzBasic
+	</title>
+</head>
+
+<body>
+    <!-- HEADER -->
+    <header class="site-header">
+        <div class="container header-grid">
+            <div class="header-left">
+                <div class="brand">
+                    <h1 class="brand-title">BazzBasic</h1>
+                    <p class="brand-slogan">Release your curiosity</p>
+                </div>
+            </div>
+
+            <nav class="header-right" aria-label="Primary navigation">
+			    <a class="nav-link" href="index.html">About</a>
+				<a class="nav-link" href="start.html">Start Guide</a>
+				<a class="nav-link" target="_blank" rel="noopener" href="https://github.com/EkBass/BazzBasic/wiki">Wiki</a>
+                <a class="nav-link" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/1vlOtfd6COIowDwRcK4IprBMPK1uCU3U7?usp=drive_link">Download</a>
+                <a class="nav-link" target="_blank" rel="noopener" href="https://github.com/EkBass/BazzBasic/tree/main">Source</a>
+                <a class="nav-link is-disabled" href="#community" aria-disabled="true" tabindex="-1">Community</a>
+            </nav>
+        </div>
+    </header>
+    <!-- /HEADER -->
+	
+    <!-- MAIN -->
+    <main class="site-main">
+		Use with the built-in IDE.<br><br>
+        <div class="container main-grid">
+		    <section class="main-left" id="download">
+                <h2>1.</h2>
+                <p>- Download BazzBasic binary from <a target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/1vlOtfd6COIowDwRcK4IprBMPK1uCU3U7?usp=drive_link">Google Drive</a>.</p>
+				<p>- Extract the <i>".zip"</i> package to a folder of your choice.</p>
+				<p>- If your firewall warns you about BazzBasic, you can ignore it. You may need to set an exception in some cases.</p>
+            </section>
+
+            <section class="main-middle" id="learn">
+                <h2>2.</h2>
+                <p>Browse to folder where you downloaded <i>bazzbasic.exe</i></p>
+				<p>Double-click <i>bazzbasic.exe</i> and IDE opens.</p>
+				<p>Study subfolder <i>Examples</i> to start the fun.</p>
+            </section>
+
+            <section class="main-right" id="source">
+                <h2>3.</h2>
+                <p>- The integrated IDE which comes with BazzBasic is very basic and simple.</p>
+				<p>- But it allows you to let your curiosity be awakened in the easiest way possible.</p>
+				<p>- BazzBasic syntax highlighting is also available for notepad++, Geany and Visual Studio.</p>
+				<p>- Read more <a href="https://github.com/EkBass/BazzBasic/tree/main/extras">at here</a></p>
+                </p>
+            </section>
+        </div>
+    </main>
+    <!-- /MAIN -->
+	
+    <!-- STORY -->
+    <section class="site-story">
+        <div class="container story-grid">
+            <div class="story-left">
+                <h2>ISSUES WITH FIREWALL?</h2>
+                <p>While developing BazzBasic, I have noticed that Avast Security at least scans it almost every time I have compiled the BazzBasic source code into a binary.<p>
+				<p>Don't worry though. The BazzBasic source code is <a target="_blank" rel="noopener" href="https://github.com/EkBass/BazzBasic/tree/main">available to everyone</a> and you can check for yourself that it doesn't do anything illegal on your machine.</p>
+				<p>BazzBasic is released under the MIT license, which allows it to be used and modified in many different ways.</p>
+				<p>You can read more about the MIT license <a target="_blank" rel="noopener" href="https://github.com/EkBass/BazzBasic/blob/main/LICENSE.txt">here.</a></p>
+            </div>
+
+            <div class="story-right">
+                <h2>Example</h2>
+                <a href="https://github.com/EkBass/BazzBasic/blob/main/Examples/Guess.bas">
+                    <img src="img/ide-example.png" alt="BazzBasic IDE: boxing.bas" loading="lazy">
+                </a>
+            </div>
+
+        </div>
+    </section>
+    <!-- /STORY -->
+	
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <p>© <span id="year"></span> BazzBasic. All rights reserved.</p>
+            <p class="footer-small">Made with BASIC-flavored stubbornness.</p>
+        </div>
+    </footer>
+    <!-- /FOOTER -->
+
+    <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
