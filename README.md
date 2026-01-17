@@ -13,10 +13,9 @@ This is my view, not a call to argue.
 
 ### Version
 
-**Updated:** 9th Jan 2026  
-**Current version:** 0.4  
+**Updated:** 17th Jan 2026  
+**Current version:** 0.5
 **Platform:** win x64  
-**Zip archive size:** 31.7Mb  
 **License:** MIT  
 _Binary file includes ALL dependencies except SDL2_
 
