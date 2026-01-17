@@ -92,7 +92,6 @@ body {
     color: var(--main-fg);
     padding: 32px 0;
 }
-
 .main-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -110,6 +109,25 @@ body {
     background: var(--story-bg);
     color: var(--story-fg);
     padding: 36px 0;
+
+.site-link {
+    color: var(--header-fg);
+    text-decoration: none;
+    padding: 8px 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 216, 74, 0.35);
+    transition: transform 120ms ease, background 120ms ease;
+}
+
+    .nav-link:hover {
+        background: rgba(255, 216, 74, 0.12);
+        transform: translateY(-1px);
+    }
+
+    .nav-link.is-disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
 }
 
 .story-grid {
@@ -145,6 +163,20 @@ body {
     display: block;
 }
 
+/* STORY linkit vaaleansinisiksi */
+.site-story a{
+  color: #7dd3fc;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.site-story a:visited{
+  color: #a78bfa;
+}
+
+.site-story a:hover{
+  color: #bfe9ff;
+}
 
 
 .code-block {
