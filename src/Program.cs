@@ -1,25 +1,41 @@
-﻿/*
+/*
  BazzBasic project
  Url: https://github.com/EkBass/BazzBasic
  
  File: Program.cs
- BazzBasic - BASIC Interpreter
+ BazzBasic - BASIC Interpreter with integrated IDE
 
  Licence: MIT
 */
 
+using System.Runtime.InteropServices;
 using BazzBasic.Lexer;
 using BazzBasic.Interpreter;
 using BazzBasic.Preprocessor;
-using BazzBasic.Graphics;
+using BazzBasic.IDE;
+
+// Win32 API for console management
+[DllImport("kernel32.dll")]
+static extern bool FreeConsole();
 
 // Check command line arguments
 if (args.Length == 0)
 {
-    LoadInfo();
+    // No arguments - launch IDE on STA thread
+    FreeConsole();
+    
+    var thread = new Thread(() =>
+    {
+        ApplicationConfiguration.Initialize();
+        Application.Run(new MainForm());
+    });
+    thread.SetApartmentState(ApartmentState.STA);
+    thread.Start();
+    thread.Join();
 }
 else
 {
+    // File argument - run interpreter (console stays attached)
     string filename = args[0];
     if (!File.Exists(filename))
     {
@@ -57,20 +73,10 @@ static void RunProgram(string source, string basePath = "", string? filename = n
     }
     finally
     {
-        // Always shutdown graphics on edit
-        if (Graphics.IsInitialized)
+        // Always shutdown graphics on exit
+        if (BazzBasic.Graphics.Graphics.IsInitialized)
         {
-            Graphics.Shutdown();
+            BazzBasic.Graphics.Graphics.Shutdown();
         }
     }
-}
-
-static void LoadInfo()
-{
-    // This originally run code written here, but now just shows usage info
-    // Not finest solution but works for now
-    Console.WriteLine("BazzBasic Version 0.5");
-    Console.WriteLine("Release date 9th Jan 2026");
-    Console.WriteLine("https://github.com/EkBass/BazzBasic");
-    Console.WriteLine("Usage: bazzbasic <filename.bas>");
 }

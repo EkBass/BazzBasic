@@ -1,26 +1,32 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net10.0</TargetFramework>
+    <TargetFramework>net10.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PublishAot>false</PublishAot>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <UseWindowsForms>true</UseWindowsForms>
+    <NoWarn>IDE0130</NoWarn>
     
     <!-- Assembly info -->
     <AssemblyName>BazzBasic</AssemblyName>
     <RootNamespace>BazzBasic</RootNamespace>
-    <Version>2.0.0</Version>
+    <Version>0.6.0</Version>
     <Authors>Kristian Virtanen</Authors>
-    <Description>BASIC interpreter written in C#</Description>
+    <Description>BASIC interpreter with integrated IDE</Description>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="NAudio" Version="2.2.1" />
+    <PackageReference Include="Scintilla5.NET" Version="5.6.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="SDL2.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
