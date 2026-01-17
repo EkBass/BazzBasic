@@ -3,6 +3,12 @@
 ## Jan 2026
 
 ### 17th Jan 26
+Fixed a bug that prevented to use custom resolution with SCREEN 0  
+Terminal now closes if no errors when running via IDE  
+Small gap between IDE line numbers and user code.
+
+
+### 17th Jan 26
 BazzBasic has now in-built simple IDE.  
 Start _bazzbasic.exe_ with out params to open it.  
 If opened with params, the .bas file is interpreted normally.  

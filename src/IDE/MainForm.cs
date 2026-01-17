@@ -310,11 +310,12 @@ public partial class MainForm : Form
         
         try
         {
-            // Run in separate console window that stays open
+            // Run in separate console window
+            // Window closes on success, stays open on error (|| pause)
             var startInfo = new ProcessStartInfo
             {
                 FileName = "cmd.exe",
-                Arguments = $"/k \"\"{Application.ExecutablePath}\" \"{tab.FilePath}\"\"",
+                Arguments = $"/c \"\"{Application.ExecutablePath}\" \"{tab.FilePath}\" || pause\"",
                 WorkingDirectory = IOPath.GetDirectoryName(tab.FilePath),
                 UseShellExecute = true
             };
@@ -337,9 +338,20 @@ public partial class MainForm : Form
     {
         var editor = new Scintilla();
         
-        // Basic settings
-        editor.Margins[0].Width = 40; // Line numbers
+        //Why on shit this not working.......
+        // Line number margin (margin 0)
+        editor.Margins[0].Width = 45;
         editor.Margins[0].Type = MarginType.Number;
+        editor.Margins[0].BackColor = Color.FromArgb(224, 224, 224); // Light gray background
+        
+        // Small separator margin (margin 1) - creates gap between line numbers and code
+        editor.Margins[1].Width = 8;
+        editor.Margins[1].Type = MarginType.Symbol;
+        editor.Margins[1].BackColor = Color.FromArgb(224, 224, 224); // Match line number background
+        
+        // Style for line numbers
+        editor.Styles[Style.LineNumber].ForeColor = Color.FromArgb(100, 100, 100); // Dark gray text
+        editor.Styles[Style.LineNumber].BackColor = Color.FromArgb(240, 240, 240); // Light gray background
         
         // Configure lexer for BASIC-like syntax
         ConfigureBazzBasicSyntax(editor);
