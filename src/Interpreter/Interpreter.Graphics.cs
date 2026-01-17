@@ -26,6 +26,7 @@ public partial class Interpreter
         int width = 640;
         int height = 480;
         string title = "BazzBasic Graphics";
+        bool customDimensions = false;
         
         if (!IsEndOfStatement())
         {
@@ -35,6 +36,7 @@ public partial class Interpreter
             {
                 _pos++;
                 width = (int)EvaluateExpression().AsNumber();
+                customDimensions = true;
                 
                 if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_COMMA)
                 {
@@ -50,38 +52,41 @@ public partial class Interpreter
             }
         }
 
-        // classic 80s modes
-        // Not sure with what dialect modes I should go with, so using some common ones
-        switch (mode)
+        // Classic 80s modes - only apply if no custom dimensions were provided
+        // When custom dimensions are given (e.g., SCREEN 0, 800, 600), use those instead
+        if (!customDimensions)
         {
-            case 0:
-                width = 640;
-                height = 400;
-                break;
-            case 1:
-                width = 320;
-                height = 200;
-                break;
-            case 2:
-                width = 640;
-                height = 350;
-                break;
-            case 7:
-                width = 320;
-                height = 200;
-                break;
-            case 9:
-                width = 640;
-                height = 350;
-                break;
-            case 12:
-                width = 640;
-                height = 480;
-                break;
-            case 13:
-                width = 320;
-                height = 200;
-                break;
+            switch (mode)
+            {
+                case 0:
+                    width = 640;
+                    height = 400;
+                    break;
+                case 1:
+                    width = 320;
+                    height = 200;
+                    break;
+                case 2:
+                    width = 640;
+                    height = 350;
+                    break;
+                case 7:
+                    width = 320;
+                    height = 200;
+                    break;
+                case 9:
+                    width = 640;
+                    height = 350;
+                    break;
+                case 12:
+                    width = 640;
+                    height = 480;
+                    break;
+                case 13:
+                    width = 320;
+                    height = 200;
+                    break;
+            }
         }
         
         try
