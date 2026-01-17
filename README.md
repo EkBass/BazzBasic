@@ -11,14 +11,6 @@ BazzBasic is my vision of how to achieve the same feelings today as I did long a
 BazzBasic does not allow line numbers, which I think is a bit outdated ways of programming, but it allows [label] tags, which make the familiar GOTO and GOSUB successful.  
 This is my view, not a call to argue.
 
-### Version
-
-**Updated:** 17th Jan 2026  
-**Current version:** 0.5
-**Platform:** win x64  
-**License:** MIT  
-_Binary file includes ALL dependencies except SDL2_
-
 ### Source or binary
 
 See source at [github](https://github.com/EkBass/BazzBasic) or download binary from [Google Drive](https://drive.google.com/drive/folders/1vlOtfd6COIowDwRcK4IprBMPK1uCU3U7?usp=sharing)
