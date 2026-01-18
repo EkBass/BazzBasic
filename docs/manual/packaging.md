@@ -8,15 +8,8 @@ BazzBasic can package your BASIC program into a standalone .exe file.
 bazzbasic.exe -exe yourprogram.bas
 ```
 
-This creates `yourprogram.exe` in the same folder as the .bas file.
+This creates *yourprogram.exe* in the same folder as the .bas file.
 
-### Example
-
-```
-bazzbasic.exe -exe C:\Games\mygame.bas
-```
-
-Creates: `C:\Games\mygame.exe`
 
 ### Required Files for Distribution
 
@@ -40,7 +33,7 @@ NAudio (sound library) is bundled inside BazzBasic.exe, so no additional DLLs ar
 
 ```
 mygame/
-├── mygame.exe
+├── yourprogram.exe
 └── SDL2.dll
 ```
 
@@ -48,7 +41,7 @@ mygame/
 
 ```
 mygame/
-├── mygame.exe
+├── yourprogram.exe
 ├── SDL2.dll
 ├── images/
 │   ├── player.png
