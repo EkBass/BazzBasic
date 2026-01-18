@@ -24,8 +24,8 @@ The standalone exe needs only one additional file:
 
 | File | Required | Purpose |
 |------|----------|---------|
-| `yourprogram.exe` | Yes | Your packaged program |
-| `SDL2.dll` | Yes | Graphics and input |
+| yourprogram.exe | Yes | Your packaged program |
+| SDL2.dll | Yes | Graphics and input |
 
 NAudio (sound library) is bundled inside BazzBasic.exe, so no additional DLLs are needed for sound.
 
@@ -33,8 +33,8 @@ NAudio (sound library) is bundled inside BazzBasic.exe, so no additional DLLs ar
 
 | File | Required | Purpose |
 |------|----------|---------|
-| `*.png`, `*.bmp` | If used | Image files |
-| `*.wav`, `*.mp3` | If used | Sound files |
+| *.png, *.bmp | If used | Image files |
+| *.wav, *.mp3 | If used | Sound files |
 
 ### Minimal Distribution
 
@@ -76,10 +76,8 @@ Copy SDL2.dll alongside your packaged exe.
 
 ### Console Window
 
-The standalone exe runs with a console window visible. This is intentional for:
-- Displaying PRINT output
-- Allowing INPUT commands
-- Showing error messages
+The standalone exe runs with a console window visible. This is intentional for showing error messages.  
+A feature with what to hide console is coming on version 0.7
 
 ### Notes
 
