@@ -3,6 +3,21 @@
 ## Jan 2026
 
 ### 18th Jan 2026
+With all the previous add-ons, BazzBasic ver. 0.6 is not available as binary and source.
+
+
+### 18th Jan 2026
+Merging BazzBasic and basic code into a single executable file is now possible.
+
+_bazzbasic.exe -exe filename.bas_ produces the _filename.exe_ file.
+
+BazzBasic does not compile the BASIC code, but rather includes it as part of itself.
+
+Read more https://ekbass.github.io/BazzBasic/manual/#/packaging
+
+
+
+### 18th Jan 2026
 Finished working with PNG and Alpha-color supports.  
 LOCATE in graphical screen now overdraws old text instead of just writing new top of it.  
 
