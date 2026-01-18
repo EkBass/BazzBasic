@@ -4,6 +4,7 @@
 - [Version](version.md)
 - **Getting Started**
   - [Installation](installation.md)
+  - [Creating Standalone EXE](packaging.md)
 - **Language Basics**
   - [Variables & Constants](variables-and-constants.md)
   - [Arrays](arrays.md)
