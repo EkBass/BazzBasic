@@ -8,10 +8,13 @@ LOCATE in graphical screen now overdraws old text instead of just writing new to
 
 **Supported Formats**
 
-|Format|Transparency|Notes|
-|------|-----------|-------------|
-|PNG|Full alpha (0-255)|Recommended for sprites|
-|BMP|None|Legacy support|
+**Format:** PNG  
+Transparency: Full alpha (0-255)  
+Recomended  
+
+**Format**: BMP  
+Transparency: None  
+Legacy support
 
 ---
 
