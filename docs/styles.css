@@ -104,6 +104,15 @@ body {
         padding: 18px;
     }
 
+.main-news{
+  grid-column: 1 / -1; /* koko rivin leveys */
+  border: 1px solid rgba(13, 43, 90, 0.15);
+  border-radius: 14px;
+  padding: 18px;
+  background-color: #FFE4B5;
+}
+
+
 /* STORY */
 .site-story {
     background: var(--story-bg);
