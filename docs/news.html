@@ -8,10 +8,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="krisu.virtanen@gmail.com">
     <meta name="keywords" content="BazzBasic, QBasic, GWBasic, MSX, Atari, Spectrum">
-    <meta name="description" content="BazzBasic homepage">
-    <title>
-		BazzBasic
-	</title>
+    <meta name="description" content="BazzBasic News and Changes">
+    <title>BazzBasic - News</title>
+    <style>
+        /* News content styling */
+        #news-content h1 { color: var(--main-fg); margin-bottom: 1em; }
+        #news-content h2 { color: var(--header-bg); margin-top: 1.5em; border-bottom: 2px solid var(--header-bg); padding-bottom: 0.3em; }
+        #news-content h3 { color: #333; margin-top: 1em; }
+        #news-content p { margin: 0.5em 0; }
+        #news-content ul { margin: 0.5em 0; padding-left: 1.5em; }
+        #news-content code { background: #f0f0f0; padding: 0.2em 0.4em; border-radius: 3px; }
+        #news-content a { color: var(--header-bg); }
+        .loading { color: #666; font-style: italic; }
+        .error { color: #c00; }
+    </style>
 </head>
 
 <body>
@@ -41,19 +51,11 @@
 	
     <!-- MAIN -->
     <main class="site-main">
-        <div class="container main-grid">
-			<section class="main-news" id="news">
-				<h2>18th Jan 2026</h2>
-				<p>BazzBasic is now in version 0.5c<br>
-					It can already be used for many things, but it still lacks a few particularly important things that I would like to have released with version 0.6.</p>
-					<ul>
-						<li>Bundling the BASIC code and BazzBasic together. After this, you can distribute your code as an <i>".exe"</i> file.</li>
-						<li>ALPHA color. At the moment, the so-called "green screen" technique is not possible.</li>
-						<li>POINT x, y. That is, reading the color from a certain coordinate on a graphic display is not possible.</li>
-					</ul>
-					</p>The goal is for version 0.6 to be released during January 2026.</p>
+        <div class="container">
+			<section class="main-news" id="news-content">
+				<p class="loading">Loading changes...</p>
 			</section>
-		<div>
+		</div>
 	</main>
 	
     <!-- FOOTER -->
@@ -65,8 +67,25 @@
     </footer>
     <!-- /FOOTER -->
 
+    <!-- Marked.js for Markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
     <script>
     document.getElementById("year").textContent = new Date().getFullYear();
+    
+    // Fetch and render changes.md
+    fetch('https://raw.githubusercontent.com/EkBass/BazzBasic/main/changes.md')
+        .then(response => {
+            if (!response.ok) throw new Error('Failed to load');
+            return response.text();
+        })
+        .then(markdown => {
+            document.getElementById('news-content').innerHTML = marked.parse(markdown);
+        })
+        .catch(error => {
+            document.getElementById('news-content').innerHTML = 
+                '<p class="error">Could not load changes. <a href="https://github.com/EkBass/BazzBasic/blob/main/changes.md">View on GitHub</a></p>';
+        });
     </script>
 </body>
 </html>
