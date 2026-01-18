@@ -32,7 +32,6 @@
                 <div class="brand">
                     <h1 class="brand-title">BazzBasic</h1>
                     <p class="brand-slogan">Release your curiosity</p>
-					<p>Last update: <a class="nav-link" target="_blank" rel="noopener" href="https://github.com/EkBass/BazzBasic/blob/main/changes.md">17th Jan. 2026</a></p>
                 </div>
             </div>
 
@@ -74,7 +73,7 @@
     document.getElementById("year").textContent = new Date().getFullYear();
     
     // Fetch and render changes.md
-    fetch('https://raw.githubusercontent.com/EkBass/BazzBasic/main/changes.md')
+    fetch('../changes.md')
         .then(response => {
             if (!response.ok) throw new Error('Failed to load');
             return response.text();

@@ -59,6 +59,7 @@ public class Lexer
         ["LOADSHAPE"] = TokenType.TOK_LOADSHAPE,
         ["MOVESHAPE"] = TokenType.TOK_MOVESHAPE,
         ["PAINT"] = TokenType.TOK_PAINT,
+        ["POINT"] = TokenType.TOK_POINT,
         ["PSET"] = TokenType.TOK_PSET,
         ["REMOVESHAPE"] = TokenType.TOK_REMOVESHAPE,
         ["ROTATESHAPE"] = TokenType.TOK_ROTATESHAPE,

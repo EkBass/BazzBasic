@@ -339,7 +339,7 @@ public static class Graphics
             int x = cursorColumn * charWidth;
             int y = cursorRow * charHeight;
             
-            BitmapFont.DrawChar(renderer, c, x, y, currentR, currentG, currentB);
+            BitmapFont.DrawChar(renderer, c, x, y, currentR, currentG, currentB, bgR, bgG, bgB);
             cursorColumn++;
         }
         
@@ -466,5 +466,74 @@ public static class Graphics
     public static void Delay(int milliseconds)
     {
         SDL.SDL_Delay((uint)milliseconds);
+    }
+    
+    // ========================================================================
+    // POINT command - Read pixel color at x, y (lazy approach)
+    // ========================================================================
+    
+    /// <summary>
+    /// Read pixel color at specified coordinates.
+    /// Returns color as 24-bit RGB value (0xRRGGBB).
+    /// Note: This uses SDL_RenderReadPixels which is relatively slow,
+    /// but POINT is rarely used in performance-critical code nowadays.
+    /// </summary>
+    public static int GetPixelColor(int x, int y)
+    {
+        if (!initialized) return 0;
+        
+        // Bounds check
+        if (x < 0 || x >= screenWidth || y < 0 || y >= screenHeight)
+            return 0;
+        
+        // Allocate buffer for single pixel (4 bytes for ARGB)
+        byte[] pixelData = new byte[4];
+        
+        // Create rect for single pixel
+        SDL.SDL_Rect rect = new SDL.SDL_Rect { x = x, y = y, w = 1, h = 1 };
+        
+        // Pin the byte array and get pointer
+        System.Runtime.InteropServices.GCHandle handle = 
+            System.Runtime.InteropServices.GCHandle.Alloc(pixelData, System.Runtime.InteropServices.GCHandleType.Pinned);
+        
+        try
+        {
+            IntPtr pixelPtr = handle.AddrOfPinnedObject();
+            IntPtr rectPtr = System.Runtime.InteropServices.Marshal.AllocHGlobal(
+                System.Runtime.InteropServices.Marshal.SizeOf<SDL.SDL_Rect>());
+            
+            try
+            {
+                System.Runtime.InteropServices.Marshal.StructureToPtr(rect, rectPtr, false);
+                
+                int result = SDL.SDL_RenderReadPixels(
+                    renderer,
+                    rectPtr,
+                    SDL.SDL_PIXELFORMAT_ARGB8888,
+                    pixelPtr,
+                    4  // pitch = 4 bytes per pixel
+                );
+                
+                if (result != 0)
+                    return 0;
+                
+                // pixelData is ARGB format: [A, R, G, B] or [B, G, R, A] depending on endianness
+                // SDL_PIXELFORMAT_ARGB8888: Alpha at highest byte, then R, G, B
+                // On little-endian (Windows): bytes are B, G, R, A
+                int r = pixelData[2];
+                int g = pixelData[1];
+                int b = pixelData[0];
+                
+                return (r << 16) | (g << 8) | b;
+            }
+            finally
+            {
+                System.Runtime.InteropServices.Marshal.FreeHGlobal(rectPtr);
+            }
+        }
+        finally
+        {
+            handle.Free();
+        }
     }
 }

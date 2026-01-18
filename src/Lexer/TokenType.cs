@@ -61,6 +61,7 @@ public enum TokenType
     TOK_LOADSHAPE,
     TOK_MOVESHAPE,
     TOK_PAINT,
+    TOK_POINT,      // Read pixel color at x,y
     TOK_PSET,
     TOK_REMOVESHAPE,
     TOK_ROTATESHAPE,

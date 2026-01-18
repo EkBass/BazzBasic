@@ -269,4 +269,74 @@ public static class SDL
     // Timer stuff
     [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
     public static extern void SDL_Delay(uint ms);
+
+    // ========================================================================
+    // PNG/Alpha support - Create textures from pixel data
+    // ========================================================================
+    
+    // Pixel format constants
+    public const uint SDL_PIXELFORMAT_ARGB8888 = 0x16362004;
+    public const uint SDL_PIXELFORMAT_RGBA8888 = 0x16462004;
+    public const uint SDL_PIXELFORMAT_ABGR8888 = 0x16762004;
+    
+    // Texture access modes
+    public const int SDL_TEXTUREACCESS_STATIC = 0;
+    public const int SDL_TEXTUREACCESS_STREAMING = 1;
+    public const int SDL_TEXTUREACCESS_TARGET = 2;
+    
+    // Blend modes
+    public enum SDL_BlendMode : int
+    {
+        SDL_BLENDMODE_NONE = 0x00000000,
+        SDL_BLENDMODE_BLEND = 0x00000001,
+        SDL_BLENDMODE_ADD = 0x00000002,
+        SDL_BLENDMODE_MOD = 0x00000004
+    }
+    
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr SDL_CreateTexture(
+        IntPtr renderer,
+        uint format,
+        int access,
+        int w,
+        int h
+    );
+    
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int SDL_UpdateTexture(
+        IntPtr texture,
+        IntPtr rect,  // null for entire texture
+        IntPtr pixels,
+        int pitch
+    );
+    
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int SDL_SetTextureBlendMode(
+        IntPtr texture,
+        SDL_BlendMode blendMode
+    );
+    
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int SDL_SetRenderDrawBlendMode(
+        IntPtr renderer,
+        SDL_BlendMode blendMode
+    );
+    
+    // For POINT command - read pixels from renderer
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int SDL_RenderReadPixels(
+        IntPtr renderer,
+        IntPtr rect,  // null for entire renderer
+        uint format,
+        IntPtr pixels,
+        int pitch
+    );
+    
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int SDL_RenderCopy(
+        IntPtr renderer,
+        IntPtr texture,
+        IntPtr srcrect,
+        ref SDL_Rect dstrect
+    );
 }

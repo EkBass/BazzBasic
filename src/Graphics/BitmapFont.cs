@@ -312,7 +312,10 @@ public static class BitmapFont
     };
     
     // Draw/write/whatever a single character at specified position
-    public static void DrawChar(IntPtr renderer, char c, int x, int y, byte r, byte g, byte b)
+    // Now includes background color to properly clear previous characters
+    public static void DrawChar(IntPtr renderer, char c, int x, int y, 
+                                byte r, byte g, byte b,
+                                byte bgR = 0, byte bgG = 0, byte bgB = 0)
     {
         int index = c;
         
@@ -322,7 +325,7 @@ public static class BitmapFont
         
         byte[] charData = fontData[index];
         
-        // Draw pixels of character
+        // Draw pixels of character (including background)
         for (int row = 0; row < CHAR_HEIGHT; row++)
         {
             byte rowData = charData[row];
@@ -332,9 +335,15 @@ public static class BitmapFont
                 // Read bits from LEFT to RIGHT (MSB first) - standard font format
                 if ((rowData & (0x80 >> col)) != 0)
                 {
+                    // Foreground color (character pixel)
                     SDL.SDL_SetRenderDrawColor(renderer, r, g, b, 255);
-                    SDL.SDL_RenderDrawPoint(renderer, x + col, y + row);
                 }
+                else
+                {
+                    // Background color (clears previous content)
+                    SDL.SDL_SetRenderDrawColor(renderer, bgR, bgG, bgB, 255);
+                }
+                SDL.SDL_RenderDrawPoint(renderer, x + col, y + row);
             }
         }
     }

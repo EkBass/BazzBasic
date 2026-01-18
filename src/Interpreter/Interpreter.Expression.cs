@@ -308,6 +308,8 @@ public partial class Interpreter
                 return EvaluateLoadimageFunc();
             case TokenType.TOK_LOADSHAPE:
                 return EvaluateLoadshapeFunc();
+            case TokenType.TOK_POINT:
+                return EvaluatePoint();
             case TokenType.TOK_MOUSEX:
                 return EvaluateMousexFunc();
             case TokenType.TOK_MOUSEY:

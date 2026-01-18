@@ -545,4 +545,28 @@ public partial class Interpreter
         string id = EvaluateExpression().AsString();
         Graphics.ShapeManager.RemoveShape(id);
     }
+    
+    // ========================================================================
+    // POINT function - Read pixel color at x, y
+    // ========================================================================
+    
+    private Value EvaluatePoint()
+    {
+        _pos++; // Skip POINT token
+        
+        Require(TokenType.TOK_LPAREN);
+        int x = (int)EvaluateExpression().AsNumber();
+        Require(TokenType.TOK_COMMA);
+        int y = (int)EvaluateExpression().AsNumber();
+        Require(TokenType.TOK_RPAREN);
+        
+        if (!Graphics.Graphics.IsInitialized)
+        {
+            Error("Graphics mode not initialized. Use SCREEN first.");
+            return Value.FromNumber(0);
+        }
+        
+        int color = Graphics.Graphics.GetPixelColor(x, y);
+        return Value.FromNumber(color);
+    }
 }

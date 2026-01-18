@@ -7,7 +7,7 @@
     <PublishAot>false</PublishAot>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <UseWindowsForms>true</UseWindowsForms>
-    <NoWarn>IDE0130</NoWarn>
+    <NoWarn>IDE0130;NU1510</NoWarn>
     
     <!-- Assembly info -->
     <AssemblyName>BazzBasic</AssemblyName>
@@ -20,6 +20,7 @@
   <ItemGroup>
     <PackageReference Include="NAudio" Version="2.2.1" />
     <PackageReference Include="Scintilla5.NET" Version="5.6.0" />
+    <PackageReference Include="System.Drawing.Common" Version="9.0.5" />
   </ItemGroup>
 
   <ItemGroup>

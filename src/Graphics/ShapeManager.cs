@@ -8,6 +8,9 @@
  Licence: MIT
 */
 using SDL2;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Runtime.InteropServices;
 
 namespace BazzBasic.Graphics;
 
@@ -27,36 +30,107 @@ public static class ShapeManager
     }
     
     // Load an image from file/create shape out of it
+    // Supports BMP and PNG (with alpha transparency)
     public static string LoadImageShape(string filepath, IntPtr renderer)
     {
-        // Load .BMP file
-        IntPtr surface = SDL.SDL_LoadBMP(filepath);
-        if (surface == IntPtr.Zero)
+        string extension = System.IO.Path.GetExtension(filepath).ToLowerInvariant();
+        IntPtr texture;
+        int width, height;
+        
+        if (extension == ".png")
         {
-            throw new Exception($"Failed to load image: {filepath}");
+            // Load PNG with alpha support using System.Drawing
+            (texture, width, height) = LoadPngTexture(filepath, renderer);
         }
-        
-        // create texture
-        IntPtr texture = SDL.SDL_CreateTextureFromSurface(renderer, surface);
-        SDL.SDL_FreeSurface(surface); // free surface after
-        
-        if (texture == IntPtr.Zero)
+        else
         {
-            throw new Exception($"Failed to create texture from: {filepath}");
+            // Load BMP using SDL (legacy support)
+            IntPtr surface = SDL.SDL_LoadBMP(filepath);
+            if (surface == IntPtr.Zero)
+            {
+                throw new Exception($"Failed to load image: {filepath}");
+            }
+            
+            texture = SDL.SDL_CreateTextureFromSurface(renderer, surface);
+            SDL.SDL_FreeSurface(surface);
+            
+            if (texture == IntPtr.Zero)
+            {
+                throw new Exception($"Failed to create texture from: {filepath}");
+            }
+            
+            SDL.SDL_QueryTexture(texture, out _, out _, out width, out height);
         }
-        
-        // QueryTexture dimensions
-        SDL.SDL_QueryTexture(texture, out _, out _, out int w, out int h);
         
         // Create shape
         string id = $"SHAPE{nextId++}";
-        var shape = new Shape(id, ShapeType.Image, w, h, 0)
+        var shape = new Shape(id, ShapeType.Image, width, height, 0)
         {
             ImageTexture = texture,
             ImagePath = filepath
         };
         shapes[id] = shape;
         return id;
+    }
+    
+    // Load PNG file and create SDL texture with alpha support
+    private static (IntPtr texture, int width, int height) LoadPngTexture(string filepath, IntPtr renderer)
+    {
+        if (!System.IO.File.Exists(filepath))
+        {
+            throw new Exception($"File not found: {filepath}");
+        }
+        
+        using var bitmap = new Bitmap(filepath);
+        int width = bitmap.Width;
+        int height = bitmap.Height;
+        
+        // Lock bitmap bits for fast access
+        var bitmapData = bitmap.LockBits(
+            new Rectangle(0, 0, width, height),
+            ImageLockMode.ReadOnly,
+            PixelFormat.Format32bppArgb  // ARGB format
+        );
+        
+        try
+        {
+            // Create SDL texture with alpha support
+            IntPtr texture = SDL.SDL_CreateTexture(
+                renderer,
+                SDL.SDL_PIXELFORMAT_ARGB8888,
+                SDL.SDL_TEXTUREACCESS_STATIC,
+                width,
+                height
+            );
+            
+            if (texture == IntPtr.Zero)
+            {
+                throw new Exception($"Failed to create texture: {SDL.SDL_GetErrorString()}");
+            }
+            
+            // Enable alpha blending for this texture
+            SDL.SDL_SetTextureBlendMode(texture, SDL.SDL_BlendMode.SDL_BLENDMODE_BLEND);
+            
+            // Copy pixel data to texture
+            int result = SDL.SDL_UpdateTexture(
+                texture,
+                IntPtr.Zero,           // Update entire texture
+                bitmapData.Scan0,      // Pointer to pixel data
+                bitmapData.Stride      // Bytes per row
+            );
+            
+            if (result != 0)
+            {
+                SDL.SDL_DestroyTexture(texture);
+                throw new Exception($"Failed to update texture: {SDL.SDL_GetErrorString()}");
+            }
+            
+            return (texture, width, height);
+        }
+        finally
+        {
+            bitmap.UnlockBits(bitmapData);
+        }
     }
     
     // Shape by ID
