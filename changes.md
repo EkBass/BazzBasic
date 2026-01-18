@@ -2,6 +2,13 @@
 
 ## Jan 2026
 
+### 18th Jan 2026
+Generated a manual with Docify. 
+BazzBasic homepage now links to it.
+
+Major idea is, that github wiki becomesa as development wiki and this docify as user wiki.
+
+
 ### 17th Jan 26
 Fixed a bug that prevented to use custom resolution with SCREEN 0  
 Terminal now closes if no errors when running via IDE  

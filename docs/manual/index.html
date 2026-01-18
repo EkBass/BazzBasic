@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BazzBasic Manual</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="icon.png" type="image/png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">
+  <style>
+    :root {
+      /* BazzBasic colors */
+      --theme-color: #0b7a2a;              /* Vihreä */
+      --theme-color-light: #0d9932;
+      
+      /* Sidebar */
+      --sidebar-background: #0b7a2a;       /* Vihreä tausta */
+      --sidebar-name-color: #ffd84a;       /* Keltainen otsikko */
+      --sidebar-nav-link-color: #ffffff;   /* Valkoinen teksti */
+      --sidebar-nav-link-color--active: #ffd84a;  /* Keltainen aktiivinen */
+      --sidebar-nav-link-color--hover: #ffd84a;
+      --sidebar-border-color: #096b24;
+      
+      /* Content area */
+      --base-background-color: #f5f5f5;
+      --base-color: #000066;               /* Tummansininen teksti */
+      --link-color: #0b7a2a;
+      --link-color--hover: #0d9932;
+      
+      /* Headings */
+      --heading-color: #0b7a2a;
+      
+      /* Code blocks */
+      --code-theme-background: #2b2b2b;
+      --code-theme-text: #f8f8f2;
+      --code-inline-background: #e8e8e8;
+      
+      /* Search */
+      --search-input-background-color: #ffffff;
+    }
+    
+    /* Sidebar title link */
+    .sidebar .app-name-link {
+      color: #ffd84a !important;
+    }
+    
+    /* Fix sidebar link visibility */
+    .sidebar-nav a {
+      color: rgba(255, 255, 255, 0.85) !important;
+    }
+    .sidebar-nav a:hover,
+    .sidebar-nav a.active {
+      color: #ffd84a !important;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">Loading...</div>
+  <script>
+    window.$docsify = {
+      name: 'BazzBasic Manual',
+      repo: 'https://github.com/EkBass/BazzBasic',
+      loadSidebar: true,
+      subMaxLevel: 3,
+      search: {
+        placeholder: 'Search...',
+        noData: 'No results',
+        depth: 3
+      },
+      auto2top: true
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-basic.min.js"></script>
+</body>
+</html>

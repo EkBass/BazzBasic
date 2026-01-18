@@ -1,0 +1,18 @@
+**About**
+- [Home](README.md)
+- [Contact & License](contact.md)
+- [Version](version.md)
+- **Getting Started**
+  - [Installation](installation.md)
+- **Language Basics**
+  - [Variables & Constants](variables-and-constants.md)
+  - [Arrays](arrays.md)
+  - [Control Flow](control-flow.md)
+  - [User Defined Functions](user‐defined‐functions.md)
+  - [Source control](source-control.md)
+  - [Input & Output](input-and-output.md)
+  - [Build-in functions](build-in-functions.md)
+  - [File handling](file.md)
+  - [Sounds](sounds.md)
+  - [Graphics](graphics.md)
+  - [Image support](image.md)
