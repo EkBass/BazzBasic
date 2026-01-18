@@ -433,7 +433,7 @@ public partial class MainForm : Form
             "if then else elseif endif while wend for to step next " +
             "dim let goto gosub return end def fn " +
             "print input cls color locate screen " +
-            "and or not mod rem");
+            "and or not mod rem mouseb mousex mouseb");
         
         // Built-in functions
         editor.SetKeywords(1,
