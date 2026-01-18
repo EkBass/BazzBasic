@@ -73,7 +73,7 @@
     document.getElementById("year").textContent = new Date().getFullYear();
     
     // Fetch and render changes.md
-    fetch('https://github.com/EkBass/BazzBasic/blob/main/changes.md')
+    fetch('https://raw.githubusercontent.com/EkBass/BazzBasic/refs/heads/main/changes.md')
         .then(response => {
             if (!response.ok) throw new Error('Failed to load');
             return response.text();
