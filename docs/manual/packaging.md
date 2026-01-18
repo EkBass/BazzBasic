@@ -60,6 +60,12 @@ mygame/
 
 ### Where to Find SDL2.dll
 
+**Binary download:**
+
+If you downloaded the binary file, __bazzbasic.exe__ the required SDL2.dll in in the same folder.
+
+**If you build from the source:**
+
 After building BazzBasic, SDL2.dll is in:
 
 ```
