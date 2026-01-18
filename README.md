@@ -4,6 +4,8 @@ BazzBasic is a BASIC interpreter built to work with the .NET10 Framework.
 
 It supports many of the features of BASIC interpreters from the 80s, but also offers something modern.
 
+Website locates at: [ekbass.github.io/BazzBasic](https://ekbass.github.io/BazzBasic/)
+
 ## About
 
 BazzBasic is my vision of how to achieve the same feelings today as I did long ago when I was writing hundreds of lines of code on a Spectravideo 328.
@@ -38,26 +40,26 @@ BazzBasic already offers a reasonable sampling of SDL2 features and I intend to 
 
 If your BazzBasic program uses graphic features, the SDL2.dll file must be in the same directory.  
 This does not apply to programs running on the console.  
-[Graphics-Documentation](https://github.com/EkBass/BazzBasic/wiki/h.-Graphics-Documentation)
+[Graphics-Documentation](https://ekbass.github.io/BazzBasic/manual/#/graphics))
 
 ### Sounds
 
 BazzBasic includes a comprehensive sound system built on NAudio, supporting audio playback with both background and blocking modes.
 
-[Sounds](https://github.com/EkBass/BazzBasic/wiki/l.-Sounds)
+[Sounds](https://ekbass.github.io/BazzBasic/manual/#/sounds)
 
 
 ### Source Control
 
 With the INCLUDE function, you can split the source code into different files and folders.
 
-[Source-Control](https://github.com/EkBass/BazzBasic/wiki/a.-Source-Controll)
+[Source-Control](https://ekbass.github.io/BazzBasic/manual/#/source-control)
 
 ### Arrays
 
 BazzBasic arrays are fully dynamic and support numeric, string, or mixed indexing.
 
-[Arrays](https://github.com/EkBass/BazzBasic/wiki/c.-Arrays)
+[Arrays](https://ekbass.github.io/BazzBasic/manual/#/arrays)
 
 ### Typeless variables and Constants
 Variables automatically hold either numbers or strings:
@@ -67,11 +69,11 @@ LET num$ = 42            ' Number
 LET text$ = "Hello"      ' String
 LET mixed$ = "123"       ' String (quoted)
 ```
-[Variables-and-Constants](https://github.com/EkBass/BazzBasic/wiki/b.-Variables-and-Constants)
+[Variables-and-Constants](https://ekbass.github.io/BazzBasic/manual/#/variables-and-constants)
 
 ### Tons of classic and modern BASIC features.
 
-Have a look at the [wiki](https://github.com/EkBass/BazzBasic/wiki) or study [example programs](https://github.com/EkBass/BazzBasic/tree/main/Examples)
+Have a look at the [manual](https://ekbass.github.io/BazzBasic/manual/#/) or study [example programs](https://github.com/EkBass/BazzBasic/tree/main/Examples)
 
 ## BazzBasic size
 
