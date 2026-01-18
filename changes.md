@@ -1,4 +1,4 @@
-# Changes log
+# News and changes
 
 ## Jan 2026
 
@@ -6,7 +6,7 @@
 Generated a manual with Docify. 
 BazzBasic homepage now links to it.
 
-Major idea is, that github wiki becomesa as development wiki and this docify as user wiki.
+Major idea is, that github wiki becomes a as development wiki and this docify as user wiki.
 
 
 ### 17th Jan 26
