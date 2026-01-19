@@ -68,9 +68,8 @@ public class FindReplaceDialog : Form
         replaceButton = new Button();
         replaceAllButton = new Button();
         SuspendLayout();
-        // 
+
         // findLabel
-        // 
         findLabel.AutoSize = true;
         findLabel.Location = new Point(15, 18);
         findLabel.Name = "findLabel";
@@ -111,7 +110,7 @@ public class FindReplaceDialog : Form
         matchCaseCheckBox.Size = new Size(166, 36);
         matchCaseCheckBox.TabIndex = 4;
         matchCaseCheckBox.Text = "Match case";
-        // 
+
         // findNextButton
         // 
         findNextButton.Location = new Point(521, 18);
