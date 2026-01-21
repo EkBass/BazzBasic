@@ -3,7 +3,7 @@
 ## Jan 2026
 
 ### 18th Jan 2026
-With all the previous add-ons, BazzBasic ver. 0.6 is not available as binary and source.
+With all the previous add-ons, BazzBasic ver. 0.6 is now available as binary and source.
 
 
 ### 18th Jan 2026
