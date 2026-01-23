@@ -160,5 +160,5 @@ NEXT
 
 After learning the basics of variables and constants, you should next read following tutorial.
 
-[Introducion to arrays](introduction-to-arrays.md)
+[Introdutcion to arrays](introduction-to-arrays.md)
 
