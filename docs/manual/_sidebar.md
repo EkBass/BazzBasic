@@ -28,4 +28,3 @@
 **About**
 - [Version / Changelog](version.md)
 - [Contact & License](contact.md)
-- [Source Control](source-control.md)
