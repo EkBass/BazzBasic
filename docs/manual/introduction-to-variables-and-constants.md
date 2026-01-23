@@ -158,7 +158,7 @@ NEXT
 
 ## What next?
 
-After learning the basics of variables and constants, you should next read following tutorials.
+After learning the basics of variables and constants, you should next read following tutorial.
 
 [Introducion to arrays](introduction-to-arrays.md)
 
