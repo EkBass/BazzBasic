@@ -1,4 +1,4 @@
-* Manual
+**Manual**
 - [Home](README.md)
 
 **Getting Started**
