@@ -18,14 +18,14 @@ In early BASIC interpreters, there was no need to declare them at all. Modern st
 
 BazzBasic requires variables to be declared before they can be used. It is also important to use '$' as suffix when naming it.
 
-```basic
+```vb
 LET foo$ ' Declares variable with a name 'foo$'
 ```
 After declaring this, BazzBasic knows that there is a variable called 'foo$' and is ready to put data into it whenever the code wants to do so.
 
 It is allowed to declare several variables on the same line, as long as they are separated by a comma.
 
-```basic
+```vb
 LET foo$, bar$, name$, age$ ' Declares variables 'foo$', 'bar$', 'name$' and 'age$'
 ```
 
@@ -35,20 +35,20 @@ BazzBasic is typeless - the same variable can hold both numbers and strings.
 
 Once variable is declared, adjusting its value comes easy.
 
-```basic
+```vb
 LET foo$
 foo$ = "Hello World" ' Declares variable with a name 'foo$' and value 'Hello World'
 ```
 
 Declaration can be done at same time with value.
 
-```basic
+```vb
 LET foo$ = "Hello World" ' Declares variable with a name 'foo$' and value 'Hello World'
 ```
 
 Now, every time you point to a variable 'foo$', you are actually pointing to its value 'Hello World'.
 
-```basic
+```vb
 LET foo$ = "Hello World", bar$ = 1
 PRINT foo$ ' Output: Hello World
 PRINT bar$ ' Output: 1
@@ -56,7 +56,7 @@ PRINT bar$ ' Output: 1
 
 If you want to change the value of variable, you use '='.
 
-```basic
+```vb
 LET foo$ = "Hello World"
 PRINT foo$ ' Output: Hello World
 foo$ = "BazzBasic"
@@ -67,7 +67,7 @@ PRINT foo$ ' Output: BazzBasic
 
 Variables can be compared in same way as normal numbers.
 
-```basic
+```vb
 LET foo$ = 1, bar$ = 2
 
 IF foo$ > bar$ THEN
@@ -84,7 +84,7 @@ ENDIF
 
 You can do same math calculations with variables as with numbers.
 
-```basic
+```vb
 LET foo$ = 2, bar$ = 5
 PRINT foo$ + bar$ ' Output: 7
 PRINT foo$ * bar$ ' Output: 10
@@ -94,7 +94,7 @@ PRINT foo$ * bar$ ' Output: 10
 
 While you can compare or add two string variables together, naturally dividing string from a string is not possible.
 
-```basic
+```vb
 LET foo$ = "Hello", bar$ = "World"
 IF foo$ = bar$ THEN
 	PRINT "foo$ and bar$ has same data"
@@ -112,14 +112,14 @@ There are three significant differences between a constant and a variable.
 2. A constant is available throughout the program, a variable only in the part of the program where it is declared. This is called 'Scope' and more about it in a tutorial dedicated to it.
 3. Constant requires '#' as suffix.
 
-```basic
+```vb
 LET VERSION# = "1.0"
 LET MAX_ROUNDS# = 100
 ```
 
 Unlike with variables, it is important to give the value at same time as it is declared.
 
-```basic
+```vb
 LET VERSION#
 VERSION# = "1.0" ' This will not work, value should have been given in previous line.
 ' Output: Syntax error
@@ -131,7 +131,7 @@ Operating with constant works same way as with variables. Numerical or string.
 
 You can also compare constants to variables and vice versa.
 
-```basic
+```vb
 LET FOO# = 1, bar$ = 2
 
 IF FOO# > bar$ THEN
@@ -148,7 +148,7 @@ ENDIF
 
 BazzBasic allows you to declare variable or a constant when you use 'INPUT' or 'FOR...NEXT' with it.
 
-```basic
+```vb
 INPUT "What is your name", name$ ' allowed way
 
 FOR i$ = 1 TO 100	' allowed too
