@@ -6,11 +6,12 @@ It supports many of the features of BASIC interpreters from the 80s, but also of
 
 ## Source or binary
 
-See source at [github](https://github.com/EkBass/BazzBasic) or download binary from [Google Drive](https://drive.google.com/drive/folders/1vlOtfd6COIowDwRcK4IprBMPK1uCU3U7?usp=sharing)
+See source at [GitHub](https://github.com/EkBass/BazzBasic) or download binary from [Google Drive](https://drive.google.com/drive/folders/1vlOtfd6COIowDwRcK4IprBMPK1uCU3U7?usp=sharing)
 
 ## Main functionalities
 
 ### User-Defined Functions
+
 With or without recursion.
 
 ```basic
@@ -25,34 +26,34 @@ PRINT FN factorial$(5) ' Output: 120
 PRINT FN factorial$(10) ' Output: 3628800
 ```
 
-### SDL2
+### SDL2 Graphics
 
-BazzBasic already offers a reasonable sampling of SDL2 features and I intend to add more.
+BazzBasic offers a reasonable sampling of SDL2 features.
 
-If your BazzBasic program uses graphic features, the SDL2.dll file must be in the same directory.  
-This does not apply to programs running on the console.  
-[Graphics-Documentation](Graphics-Documentation)
+If your program uses graphic features, SDL2.dll must be in the same directory. This does not apply to console-only programs.
+
+See [Graphics Commands](graphics.md)
 
 ### Sounds
 
-BazzBasic includes a comprehensive sound system built on NAudio, supporting audio playback with both background and blocking modes.
+BazzBasic includes a sound system built on NAudio, supporting audio playback with both background and blocking modes.
 
-[Sounds](Sounds)
-
+See [Sound Commands](sounds.md)
 
 ### Source Control
 
 With the INCLUDE function, you can split the source code into different files and folders.
 
-[Source-Control](Source-Control)
+See [Preprocessor](preprocessor.md)
 
 ### Arrays
 
 BazzBasic arrays are fully dynamic and support numeric, string, or mixed indexing.
 
-[Arrays](Arrays)
+See [Arrays](arrays.md)
 
-### Typeless variables and Constants
+### Typeless Variables and Constants
+
 Variables automatically hold either numbers or strings:
 
 ```basic
@@ -60,16 +61,24 @@ LET num$ = 42            ' Number
 LET text$ = "Hello"      ' String
 LET mixed$ = "123"       ' String (quoted)
 ```
-[Variables-and-Constants](Variables-and-Constants)
 
-### Tons of classic and modern BASIC features.
+See [Variables & Constants](variables-and-constants.md)
 
-Have a look at the [wiki](https://github.com/EkBass/BazzBasic/wiki) or study [example programs](https://github.com/EkBass/BazzBasic/tree/main/Examples)
+## Getting Started
+
+- [Installation](installation.md)
+- [IDE Usage](ide-usage.md)
+- [Hello World Tutorial](tutorial-hello-world.md)
+
+## More Resources
+
+- [Example programs on GitHub](https://github.com/EkBass/BazzBasic/tree/main/Examples)
+- [BazzBasic Homepage](https://ekbass.github.io/BazzBasic/)
 
 ## BazzBasic size
 
 Currently BazzBasic requires about 70 megabytes + SDL2.dll
 
-_PublishTrimmed=true_ would halve its size, but I won't do it before thorough testing.
+_PublishTrimmed=true_ would halve its size, but thorough testing is needed first.
 
-It's good to note that BazzBasic includes .NET 10 assemblies during compilation, and even when trimmed, this easily makes the finished BazzBasic interpreter a few tens of megabytes.
+BazzBasic includes .NET 10 assemblies during compilation, which contributes to the file size.
