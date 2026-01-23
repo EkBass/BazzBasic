@@ -4,7 +4,7 @@
 Variables and Constants form the "backbone" of all programs.  
 If there is no data, there is nothing that needs functions, conditionals, printing, etc.
 
-Tables can also be counted on this same spine. But for clarity, I will cover them in the separate guide.
+Arrays can also be counted on this same spine. But for clarity, I will cover them in the separate guide.
 
 ## What is a variable?
 
