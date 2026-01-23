@@ -16,13 +16,13 @@ index:         0           1           2
 
 Arrays are declared using the `DIM` keyword:
 
-```basic
+```vb
 DIM fruits$ ' Declares an array called 'fruits$'
 ```
 
 You can declare multiple arrays on the same line:
 
-```basic
+```vb
 DIM fruits$, numbers$, names$
 ```
 
@@ -30,7 +30,7 @@ DIM fruits$, numbers$, names$
 
 BazzBasic arrays are dynamic - they grow automatically when you add new elements.
 
-```basic
+```vb
 DIM fruits$
 fruits$(0) = "Apple"
 fruits$(1) = "Banana"
@@ -43,7 +43,7 @@ PRINT fruits$(1) ' Output: Banana
 
 One of BazzBasic's powerful features is that arrays can use strings as keys, not just numbers. This creates what other languages call a "dictionary" or "hash map".
 
-```basic
+```vb
 DIM person$
 person$("name") = "John"
 person$("age") = 30
@@ -57,7 +57,7 @@ PRINT person$("age")  ' Output: 30
 
 The same array can use both numeric and string keys:
 
-```basic
+```vb
 DIM data$
 data$(0) = "First item"
 data$(1) = "Second item"
@@ -71,7 +71,7 @@ PRINT data$("label") ' Output: My Data
 
 BazzBasic supports arrays with multiple dimensions. Simply use comma-separated indices:
 
-```basic
+```vb
 DIM grid$
 
 FOR row$ = 0 TO 2
@@ -87,7 +87,7 @@ PRINT grid$(2, 2) ' Output: 8
 
 This works for any number of dimensions:
 
-```basic
+```vb
 DIM cube$
 cube$(0, 0, 0) = "Origin"
 cube$(1, 2, 3) = "Deep inside"
@@ -97,7 +97,7 @@ cube$(1, 2, 3) = "Deep inside"
 
 Use `HASKEY` to check whether a specific key exists in an array:
 
-```basic
+```vb
 DIM inventory$
 inventory$("sword") = 1
 inventory$("shield") = 1
@@ -115,7 +115,7 @@ ENDIF
 
 Use `DELKEY` to remove an element from an array:
 
-```basic
+```vb
 DIM inventory$
 inventory$("sword") = 1
 inventory$("shield") = 1
@@ -131,7 +131,7 @@ ENDIF
 
 When using numeric indices, you can loop through an array with `FOR...NEXT`:
 
-```basic
+```vb
 DIM numbers$
 FOR i$ = 0 TO 4
     numbers$(i$) = (i$ + 1) * 10
@@ -144,7 +144,7 @@ NEXT
 
 ## Practical example: A simple phonebook
 
-```basic
+```vb
 DIM phone$
 phone$("Alice") = "555-1234"
 phone$("Bob") = "555-5678"
