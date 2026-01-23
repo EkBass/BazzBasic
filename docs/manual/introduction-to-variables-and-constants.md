@@ -12,7 +12,7 @@ In the simplest terms, a variable is a place in the computer's memory where it s
 
 Variable declaration, initialization and processing are handled slightly differently in different languages.
 
-In early BASIC interpreters, there was no need to declare them at all. Modern style, however, prefers that they be declared already for the sake of clarity of the program, but also to find possible typos, etc.
+In early BASIC interpreters, there was no need to declare them at all. Modern style, however, prefers that they be declared for the sake of clarity of the program, but also to find possible typos, etc.
 
 ## How do I declare it?
 
