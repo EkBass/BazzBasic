@@ -4,15 +4,6 @@ BazzBasic is a BASIC interpreter built to work with the .NET10 Framework.
 
 It supports many of the features of BASIC interpreters from the 80s, but also offers something modern.
 
-## About
-
-BazzBasic is my vision of how to achieve the same feelings today as I did long ago when I was writing hundreds of lines of code on a Spectravideo 328.
-
-BazzBasic does not allow line numbers, which I think is a bit outdated ways of programming, but it allows _[label]_ tags, which make the familiar __GOTO__ and __GOSUB__ usefull.
-
-_This is my view, not a call to argue._
-
-
 ## Source or binary
 
 See source at [github](https://github.com/EkBass/BazzBasic) or download binary from [Google Drive](https://drive.google.com/drive/folders/1vlOtfd6COIowDwRcK4IprBMPK1uCU3U7?usp=sharing)
@@ -24,10 +15,10 @@ With or without recursion.
 
 ```basic
 DEF FN factorial$(n$) 
-IF n$ <= 1 THEN 
-RETURN 1 
-END IF 
-RETURN n$ * FN factorial$(n$ - 1)
+	IF n$ <= 1 THEN 
+		RETURN 1 
+	END IF 
+	RETURN n$ * FN factorial$(n$ - 1)
 END DEF
 
 PRINT FN factorial$(5) ' Output: 120

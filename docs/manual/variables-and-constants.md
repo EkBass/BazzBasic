@@ -7,8 +7,8 @@
 
 - Variables and constants must be initialized with `LET` before they can be used
 - BazzBasic variables are not typed, but work the same way as in JavaScript, for example.
-- A variable needs the suffix *'$'.*
-- A constant needs the suffix *'#'*
+- A variable needs the suffix **$**
+- A constant needs the suffix **#**
 
 ## Variables
 ```basic

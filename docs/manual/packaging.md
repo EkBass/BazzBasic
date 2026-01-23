@@ -76,7 +76,7 @@ Copy SDL2.dll alongside your packaged exe.
 ### Console Window
 
 The standalone exe runs with a console window visible. This is intentional for showing error messages.  
-A feature with what to hide console is coming on version 0.7
+A feature with what to hide console is coming on version 1.0
 
 ### Notes
 

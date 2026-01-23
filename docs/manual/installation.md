@@ -12,7 +12,6 @@
 - Browse to folder where you extracted _bazzbasic.exe_
 - Double-click _bazzbasic.exe_ and IDE opens.
 - The integrated IDE which comes with BazzBasic is very basic and simple.
-- But it allows you to let your curiosity be awakened in the easiest way possible.
 
 In order you to run your BazzBasic code with built-in IDE, you must save your file first and then press _F5_ to run it.
 

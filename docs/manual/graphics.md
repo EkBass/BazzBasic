@@ -196,9 +196,12 @@ LET orange$ = RGB(255, 165, 0)
 CIRCLE (320, 240), 50, orange$
 ```
 
-### POINT
+### POINT - Read pixel color from screen
+Returns a RGP color value from certain point of the screen.
+```basic
+LET c$ = POINT(100, 100)
+```
 
-Generating POINT with SDL2 would make it stupid slow. Not supported currently.
 
 ## Shape System (Sprites)
 
@@ -471,3 +474,90 @@ ENDIF
    ```basic
    SLEEP 16  ' ~60 FPS (1000ms / 60 ≈ 16ms)
    ```
+
+
+---
+
+## Image Support
+
+### LOADIMAGE Function
+
+Load images as shapes that can be moved, rotated, and scaled.
+
+#### Supported Formats
+
+| Format | Transparency | Notes |
+|--------|--------------|-------|
+| **PNG** | Full alpha (0-255) | Recommended for sprites |
+| **BMP** | None | Legacy support |
+
+#### Usage
+
+```basic
+id$ = LOADIMAGE("filepath")
+```
+
+**Parameters:**
+- `filepath` - Path to image file (PNG or BMP)
+
+**Returns:**
+- Shape ID string (use with MOVESHAPE, ROTATESHAPE, etc.)
+
+#### Example
+
+```basic
+SCREEN 12, 640, 480, "Image Demo"
+
+REM Load PNG image with transparency
+DIM sprite$
+LET sprite$ = LOADIMAGE("player.png")
+
+REM Position and transform
+MOVESHAPE sprite$, 320, 240
+ROTATESHAPE sprite$, 45
+SCALESHAPE sprite$, 2.0
+
+REM Draw
+DRAWSHAPE sprite$
+FLIP
+
+SLEEP 3000
+
+REM Cleanup when done
+REMOVESHAPE sprite$
+```
+
+### PNG Transparency (Alpha Channel)
+
+PNG images support full alpha transparency. Each pixel can have an alpha value from 0 to 255:
+
+| Alpha Value | Result |
+|-------------|--------|
+| 255 | Fully opaque (solid) |
+| 128 | 50% transparent |
+| 0 | Fully transparent |
+
+Transparency is read directly from the PNG file - no color key needed.
+
+### Image Transformations
+
+Once loaded, images work exactly like other shapes:
+
+```basic
+DIM img$
+LET img$ = LOADIMAGE("logo.png")
+
+MOVESHAPE img$, x, y           ' Position (center point)
+ROTATESHAPE img$, angle        ' Rotate (degrees)
+SCALESHAPE img$, scale         ' Scale (1.0 = original size)
+SHOWSHAPE img$                 ' Make visible
+HIDESHAPE img$                 ' Make invisible
+DRAWSHAPE img$                 ' Render to screen
+REMOVESHAPE img$               ' Delete and free memory
+```
+
+### Notes
+
+- Images are positioned by their **center point**
+- PNG is recommended for all new projects
+- Larger images use more memory
