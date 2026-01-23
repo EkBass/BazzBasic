@@ -14,27 +14,41 @@ Create a game where:
 
 ```basic
 REM Guessing Game
-LET secret$
-LET guess$
-LET attempts$
 
-secret$ = INT(RND(100)) + 1
-attempts$ = 0
+REM Necessary variables
+LET secret$		' here is the secret number
+LET guess$		' players last guess
+LET attempts$	' how many times player has tried
+
+secret$ = INT(RND(100)) + 1	' randomize a number between 1 - 100
+' + 1
+' Computers see numbers a little differently than humans.
+'
+' If I ask you to count to ten, you count "one, two. three...nine ten."
+' 
+' The computer again starts from the number zero.
+' "zero, one, two...eight and nine".
+'
+' So RND(100) returns a value between 0 and 99. That's why we add +1 to it to get a value between 1 and 100
+
+
+attempts$ = 0 ' this is 0 at start of course
 
 PRINT "I'm thinking of a number between 1 and 100"
 PRINT ""
 
-WHILE guess$ <> secret$
+WHILE guess$ <> secret$				' loop until player guess and secret number are same
     INPUT "Your guess: ", guess$
-    attempts$ = attempts$ + 1
+    attempts$ = attempts$ + 1		' increase player attemps each rounf
     
-    IF guess$ < secret$ THEN
+    IF guess$ < secret$ THEN		' If player guess is smaller than secret number
         PRINT "Too low!"
-    ELSEIF guess$ > secret$ THEN
+    ELSEIF guess$ > secret$ THEN	' and if its higher
         PRINT "Too high!"
     ENDIF
-WEND
+WEND								' From here, we jump back to begin of the loop as long as "guess$ <> secret$"
 
+' this happens only when WHILE...WEND loop ends
 PRINT ""
 PRINT "Correct! You got it in "; attempts$; " attempts!"
 ```
