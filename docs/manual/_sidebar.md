@@ -19,7 +19,7 @@
 - [Sound Commands](sounds.md)
 - [Preprocessor](preprocessor.md)
 
-**Tutorials**
+**Quick Tutorials**
 - [Hello World](tutorial-hello-world.md)
 - [Guessing Game](tutorial-guessing-game.md)
 - [Ball Animation](tutorial-ball-animation.md)
