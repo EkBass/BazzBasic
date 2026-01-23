@@ -1,5 +1,5 @@
 # Introduction to Variables and Constants
-*Written by E.K.Bass*
+*Written by EKBass*
 
 Variables and Constants form the "backbone" of all programs.  
 If there is no data, there is nothing that needs functions, conditionals, printing, etc.
