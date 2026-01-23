@@ -173,5 +173,4 @@ ENDIF
 
 Now that you understand arrays, you might want to explore:
 
-Link to introduction-to-user-defined-functions-and-scope.md
-Link to introduction-to-control-flow.md
+[Introduction to user-defined functions and scope.md](introduction-to-user-defined-functions-and-scope.md)
