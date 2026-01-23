@@ -428,6 +428,43 @@ IF buttons$ AND MOUSE_RIGHT# THEN PRINT "Right clicked"
 ```
 
 
+## Color Functions
+
+
+### RGB(r, g, b)
+
+Creates a color value from red, green, and blue components.
+
+**Parameters:**
+- `r` - Red component (0-255)
+- `g` - Green component (0-255)
+- `b` - Blue component (0-255)
+
+**Returns:** A combined color value for use with graphics commands.
+
+```basic
+LET red$ = RGB(255, 0, 0)
+LET green$ = RGB(0, 255, 0)
+LET blue$ = RGB(0, 0, 255)
+LET white$ = RGB(255, 255, 255)
+LET black$ = RGB(0, 0, 0)
+LET purple$ = RGB(128, 0, 128)
+
+' Use with graphics commands
+PSET 100, 100, RGB(255, 128, 0)   ' Orange pixel
+LINE (0, 0)-(100, 100), RGB(0, 255, 0)  ' Green line
+CIRCLE 200, 200, 50, RGB(255, 0, 0)     ' Red circle
+```
+
+**Tip:** Store frequently used colors in constants for better performance:
+
+```basic
+LET COLOR_PLAYER# = RGB(0, 128, 255)
+LET COLOR_ENEMY# = RGB(255, 64, 64)
+LET COLOR_BACKGROUND# = RGB(32, 32, 48)
+```
+
+
 ## Logical Values
 
 
