@@ -20,7 +20,8 @@
 - [Preprocessor](preprocessor.md)
 
 **Learn BazzBasic**
-- [Introducion to variables and constants](introduction-to-variables-and-constants.md)
+- [Introdutcion to variables and constants](introduction-to-variables-and-constants.md)
+- [Introduction to arrays](introduction-to-arrays.md)
 
 **Quick Tutorials**
 - [Hello World](tutorial-hello-world.md)
