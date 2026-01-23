@@ -1,12 +1,12 @@
-**Manual**
+## Manual
 - [Home](README.md)
 
-**Getting Started**
+## Getting Started
 - [Installation](installation.md)
 - [IDE Usage](ide-usage.md)
 - [Creating EXE](packaging.md)
 
-**Language Reference**
+## Language Reference
 - [Variables & Constants](variables-and-constants.md)
 - [Arrays](arrays.md)
 - [Operators](operators.md)
@@ -19,13 +19,13 @@
 - [Sound Commands](sounds.md)
 - [Preprocessor](preprocessor.md)
 
-**Tutorials**
+## Quick Tutorials
 - [Hello World](tutorial-hello-world.md)
 - [Guessing Game](tutorial-guessing-game.md)
 - [Ball Animation](tutorial-ball-animation.md)
 - [Simple Sound Effects](tutorial-sounds.md)
 
-**About**
+## About
 - [Version / Changelog](version.md)
 - [Contact & License](contact.md)
 - [Source Control](source-control.md)
