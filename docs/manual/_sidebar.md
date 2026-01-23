@@ -19,6 +19,9 @@
 - [Sound Commands](sounds.md)
 - [Preprocessor](preprocessor.md)
 
+**Learn BazzBasic**
+- [Introducion to variables and constants](introduction-to-variables-and-constants.md)
+
 **Quick Tutorials**
 - [Hello World](tutorial-hello-world.md)
 - [Guessing Game](tutorial-guessing-game.md)
