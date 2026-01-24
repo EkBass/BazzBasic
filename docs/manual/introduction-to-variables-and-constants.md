@@ -104,6 +104,22 @@ ENDIF
 ' Output: foo$ and bar$ has not same data.
 ```
 
+```vb
+LET foo$ = "Hello", bar$ = "World"
+LET c$ = foo$ + bar$
+PRINT c$ ' Output: HelloWorld
+```
+
+### Error situations with string variables
+
+```vb
+LET foo$ = "Text"
+LET bar$ = foo$ * 2 ' Not possible. Use: LET bar$ = foo$ + foo$
+LET bar$ = foo$ - "t" ' Not possible. Study MID(), INSTR() functions
+LET bar$ = foo$ / 2 ' Not possible
+LET bar$ = "bar" + foo$ ' This is ok
+```
+
 ## Constants
 
 There are three significant differences between a constant and a variable.
