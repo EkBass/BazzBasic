@@ -22,6 +22,7 @@
 **Learn BazzBasic**
 - [Introdutcion to variables and constants](introduction-to-variables-and-constants.md)
 - [Introduction to arrays](introduction-to-arrays.md)
+- [Introduction to user defined functions and scope](introduction-to-user-defined-functions-and-scope.md)
 
 **Quick Tutorials**
 - [Hello World](tutorial-hello-world.md)
