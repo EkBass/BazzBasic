@@ -25,7 +25,7 @@ Of course you can place "result$ = RND(sides) + 1" numerous times in your code, 
 
 ```vb
 DEF FN DiceRoll$(sides$)
-	RETURN RND(sides$) + 1 ' returns random number between 1 and the requested dice
+	RETURN INT(RND(sides$)) + 1 ' returns random integer between 1 and the requested dice
 END DEF
 
 PRINT "3-sided dice: "; FN DiceRoll$(3)
@@ -37,8 +37,8 @@ Or maybe you need quick way to solve, did the attacker hit or not.
 
 ```vb
 DEF FN DidHit$(defence$, attack$)
-	LET defenceChance$ = RND(defence$) + 1
-	LET attackChance$ = RND(attack$) + 1
+	LET defenceChance$ = INT(RND(defence$)) + 1
+	LET attackChance$ = INT(RND(attack$)) + 1
 	
 	' If attackChance$ is higher, then attacker did hit
 	IF attackChance$ > defenceChance$ THEN
