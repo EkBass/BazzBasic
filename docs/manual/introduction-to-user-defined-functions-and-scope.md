@@ -132,4 +132,4 @@ PRINT FN addFive$(x$) ' Output: 6
 
 After you have learned about variables, constants, arrays, user-defined functions and the scope, the next part of this tutorial series is about how to name them so that it makes things easier.
 
-Tutorial about [Naming things](naming-things.md]
+Tutorial about [Naming things](naming-things.md)
