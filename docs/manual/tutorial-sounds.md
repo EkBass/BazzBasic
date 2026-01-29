@@ -11,20 +11,20 @@ Add sounds to your BazzBasic programs!
 
 ### Step 1: Load a Sound
 
-```basic
+```vb
 LET sound$
 sound$ = LOADSOUND("beep.wav")
 ```
 
 ### Step 2: Play Once
 
-```basic
+```vb
 PLAYSOUND sound$
 ```
 
 ### Step 3: Complete Example
 
-```basic
+```vb
 REM Sound Effects Demo
 
 LET beep$
@@ -71,7 +71,7 @@ PRINT "Done!"
 
 ## Example: Game Sounds
 
-```basic
+```vb
 REM Game with sound effects
 
 LET jumpSound$
