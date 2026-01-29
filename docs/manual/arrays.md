@@ -11,7 +11,7 @@ Arrays store collections of values. BazzBasic arrays are fully dynamic and suppo
 - BazzBasic arrays are not typed, but work the same way as in JavaScript, for example.
 - An array needs the suffix '$'.
 
-```basic
+```vb
 DIM scores$
 DIM names$
 DIM matrix$
@@ -19,7 +19,7 @@ DIM matrix$
 
 Multiple declarations:
 
-```basic
+```vb
 DIM a$, b$, c$
 ```
 
@@ -27,7 +27,7 @@ DIM a$, b$, c$
 
 Use numbers as indices (0-based):
 
-```basic
+```vb
 DIM scores$
 scores$(0) = 95
 scores$(1) = 87
@@ -40,7 +40,7 @@ PRINT scores$(0)         ' Output: 95
 
 Use strings as keys:
 
-```basic
+```vb
 DIM player$
 player$("name") = "Alice"
 player$("score") = 1500
@@ -53,7 +53,7 @@ PRINT player$("name")    ' Output: Alice
 
 Use multiple indices separated by commas:
 
-```basic
+```vb
 DIM matrix$
 matrix$(0, 0) = "A1"
 matrix$(0, 1) = "A2"
@@ -67,7 +67,7 @@ PRINT matrix$(1, 0)      ' Output: B1
 
 Combine numeric and string indices:
 
-```basic
+```vb
 DIM data$
 data$(1, "header") = "Name"
 data$(1, "value") = "Alice"
@@ -83,7 +83,7 @@ PRINT data$(1, "value")  ' Output: Alice
 
 Returns the number of elements in an array:
 
-```basic
+```vb
 DIM items$
 items$(0) = "apple"
 items$(1) = "banana"
@@ -98,7 +98,7 @@ Note the empty parentheses `()` after the array name.
 
 Returns 1 if the key exists, 0 otherwise:
 
-```basic
+```vb
 DIM config$
 config$("debug") = 1
 
@@ -115,7 +115,7 @@ END IF
 
 Removes an element from the array:
 
-```basic
+```vb
 DIM cache$
 cache$("temp") = "value"
 PRINT HASKEY(cache$("temp"))  ' Output: 1
@@ -128,7 +128,7 @@ PRINT HASKEY(cache$("temp"))  ' Output: 0
 
 Removes the entire array and all its elements:
 
-```basic
+```vb
 DIM arr$
 arr$("name") = "Test"
 arr$(0) = "Zero"
@@ -148,7 +148,7 @@ PRINT LEN(arr$())             ' Output: 0
 
 Arrays cannot be passed directly to functions. Instead, pass individual elements as values:
 
-```basic
+```vb
 DIM a$
 a$("name") = "Foo"
 a$("age") = 19
@@ -170,7 +170,7 @@ LET b$ = FN func$(a$("name"), a$("age"), a$(1))
 
 ### Simple List
 
-```basic
+```vb
 DIM fruits$
 LET count$ = 0
 
@@ -188,7 +188,7 @@ NEXT
 
 ### Dictionary / Map
 
-```basic
+```vb
 DIM translations$
 translations$("hello") = "hei"
 translations$("goodbye") = "nakemiin"
@@ -204,7 +204,7 @@ END IF
 
 ### 2D Grid
 
-```basic
+```vb
 DIM grid$
 
 ' Initialize 3x3 grid
@@ -239,14 +239,14 @@ X . .
 
 ### Array Not Declared
 
-```basic
+```vb
 scores$(0) = 95
 ' ERROR: Array not declared, use DIM first: scores$
 ```
 
 ### Element Not Initialized
 
-```basic
+```vb
 DIM data$
 PRINT data$(0)
 ' ERROR: Array element data$(0) not initialized
