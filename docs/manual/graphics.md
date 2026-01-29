@@ -4,7 +4,7 @@
 ### SCREEN - Initialize Graphics Mode
 Initialize SDL2 graphics window with specified resolution and title.
 
-```basic
+```vb
 SCREEN mode                      ' Standard BASIC mode
 SCREEN 0, width, height          ' Custom resolution
 SCREEN 0, width, height, "Title" ' Custom resolution with window title
@@ -23,7 +23,7 @@ SCREEN 0, width, height, "Title" ' Custom resolution with window title
 
 
 #### Examples
-```basic
+```vb
 SCREEN 12                        ' 640×480 VGA mode
 SCREEN 0, 800, 600               ' 800×600 custom size
 SCREEN 0, 1024, 768, "My Game"   ' 1024×768 with custom title
@@ -33,7 +33,7 @@ SCREEN 0, 1024, 768, "My Game"   ' 1024×768 with custom title
 ### CLS
 Clear entire screen to background color.  
 **Note:** See performance tips for graphics
-```basic
+```vb
 CLS                 ' Clear screen
 COLOR 0, 1          ' Set blue background
 CLS                 ' Clear to blue
@@ -42,7 +42,7 @@ CLS                 ' Clear to blue
 
 ### LOCATE
 Move text cursor to specified row and column (1-based).
-```basic
+```vb
 LOCATE row, column
 
 LOCATE 10, 20       ' Row 10, Column 20
@@ -55,7 +55,7 @@ PRINT "Header"
 
 ### COLOR
 Set foreground (text) and background colors.
-```basic
+```vb
 COLOR foreground, background
 
 COLOR 14, 1         ' Yellow text on blue background
@@ -91,7 +91,7 @@ row: row
 col: col
 type: 0 returns character, 1 foreground color and 2 background color  
 
-```basic
+```vb
 CLS
 COLOR 11, 1
 PRINT "abcdefghi"
@@ -107,7 +107,7 @@ PRINT "Row 1, col 3 background color is:" + GETCONSOLE(1,3,2) ' Output: 1
 
 ### SCREENLOCK
 Control when graphics are displayed to prevent flickering.
-```basic
+```vb
 SCREENLOCK ON       ' Lock screen (start buffering)
 SCREENLOCK OFF      ' Unlock and display (present buffer)
 SCREENLOCK          ' Same as SCREENLOCK ON
@@ -118,7 +118,7 @@ Without screen locking, each graphics command immediately updates the display, c
 
 #### Example - Smooth Animation
 
-```basic
+```vb
 SCREEN 12
 DIM angle$
 LET angle$ = 0
@@ -142,7 +142,7 @@ WEND
 
 ### PSET - Draw Pixel
 Draw a single pixel at coordinates (x, y).
-```basic
+```vb
 PSET (x, y), color
 
 PSET (100, 100), 15     ' White pixel
@@ -151,14 +151,14 @@ PSET (320, 240), 12     ' Red pixel at center
 
 ### LINE - Draw Lines and Boxes
 Draw lines or filled/unfilled rectangles.
-```basic
+```vb
 LINE (x1, y1)-(x2, y2), color           ' Line
 LINE (x1, y1)-(x2, y2), color, B        ' Box (outline)
 LINE (x1, y1)-(x2, y2), color, BF       ' Box Filled
 ```
 
 #### Examples
-```basic
+```vb
 LINE (10, 10)-(100, 50), 15             ' White line
 LINE (50, 50)-(150, 150), 12, B         ' Red box outline
 LINE (200, 100)-(300, 200), 9, BF       ' Blue filled box
@@ -166,7 +166,7 @@ LINE (200, 100)-(300, 200), 9, BF       ' Blue filled box
 
 ### CIRCLE - Draw Circle
 Draw circle or filled circle at center point.
-```basic
+```vb
 CIRCLE (centerX, centerY), radius, color
 CIRCLE (centerX, centerY), radius, color, filled
 
@@ -176,7 +176,7 @@ CIRCLE (100, 100), 30, 12, 1            ' Red filled circle
 
 ### PAINT - Fill Area
 Fill an enclosed area with color (flood fill).
-```basic
+```vb
 PAINT (x, y), fillColor, borderColor
 
 ' Draw and fill a box
@@ -186,7 +186,7 @@ PAINT (150, 150), 12, 15                ' Fill red inside white border
 
 ### RGB - Create Color Value
 Create custom RGB color (0-255 per channel).
-```basic
+```vb
 LET color$ = RGB(red, green, blue)
 
 LET purple$ = RGB(128, 0, 128)
@@ -198,7 +198,7 @@ CIRCLE (320, 240), 50, orange$
 
 ### POINT - Read pixel color from screen
 Returns a RGP color value from certain point of the screen.
-```basic
+```vb
 LET c$ = POINT(100, 100)
 ```
 
@@ -208,7 +208,7 @@ LET c$ = POINT(100, 100)
 ### LOADSHAPE - Create Shape
 
 Create or load a new shape and return its ID.
-```basic
+```vb
 id$ = LOADSHAPE(type$, width, height, color)
 ```
 
@@ -219,7 +219,7 @@ id$ = LOADSHAPE(type$, width, height, color)
 
 #### Examples
 
-```basic
+```vb
 DIM square$
 LET square$ = LOADSHAPE("RECTANGLE", 50, 50, RGB(255, 0, 0))
 
@@ -234,7 +234,7 @@ LET arrow$ = LOADSHAPE("TRIANGLE", 30, 40, RGB(0, 0, 255))
 
 Move shape to absolute screen position.
 
-```basic
+```vb
 MOVESHAPE id$, x, y
 
 MOVESHAPE square$, 320, 240     ' Center of 640×480 screen
@@ -245,7 +245,7 @@ MOVESHAPE ball$, 100, 100       ' Top-left area
 
 Rotate shape to specified angle in degrees.
 
-```basic
+```vb
 ROTATESHAPE id$, angle
 
 ROTATESHAPE square$, 45         ' 45 degrees
@@ -255,7 +255,7 @@ ROTATESHAPE triangle$, 270      ' 90 degrees counter-clockwise
 
 **Note:** Rotation is absolute, not cumulative. To spin continuously:
 
-```basic
+```vb
 DIM angle$
 LET angle$ = 0
 
@@ -273,7 +273,7 @@ WEND
 
 Scale shape by multiplier (1.0 = original size).
 
-```basic
+```vb
 SCALESHAPE id$, scale
 
 SCALESHAPE ball$, 0.5           ' Half size
@@ -283,7 +283,7 @@ SCALESHAPE triangle$, 1.5       ' 150% size
 
 **Pulsing effect:**
 
-```basic
+```vb
 DIM scale$
 DIM direction$
 LET scale$ = 1
@@ -305,7 +305,7 @@ WEND
 
 Draw shape to screen at current position/rotation/scale.
 
-```basic
+```vb
 DRAWSHAPE id$
 
 SCREENLOCK ON
@@ -322,7 +322,7 @@ SCREENLOCK OFF
 
 Show or hide shape without removing it.
 
-```basic
+```vb
 SHOWSHAPE id$
 HIDESHAPE id$
 
@@ -335,7 +335,7 @@ SHOWSHAPE enemy$                ' Show again
 
 Permanently remove shape from memory.
 
-```basic
+```vb
 REMOVESHAPE id$
 
 REMOVESHAPE square$             ' Delete and free memory
@@ -345,7 +345,7 @@ REMOVESHAPE square$             ' Delete and free memory
 
 ### LOADIMAGE
 **Note:** Images can be handled just as shapes
-```basic
+```vb
 SCREEN 12
 DIM sprite$
 LET sprite$ = LOADIMAGE("temp.bmp")
@@ -366,7 +366,7 @@ END
 ## Mouse Input
 
 ### MOUSE CONSTANTS
-```basic
+```vb
 MOUSE_LEFT#    ' Value: 1
 MOUSE_RIGHT#   ' Value: 2
 MOUSE_MIDDLE#  ' Value: 4
@@ -376,7 +376,7 @@ MOUSE_MIDDLE#  ' Value: 4
 
 Get current mouse coordinates.
 
-```basic
+```vb
 x$ = MOUSEX                     ' X coordinate (0 to screen width)
 y$ = MOUSEY                     ' Y coordinate (0 to screen height)
 
@@ -389,7 +389,7 @@ PSET (x$, y$), 15               ' Draw at mouse position
 
 Get mouse button state (bitwise flags).
 
-```basic
+```vb
 buttons$ = MOUSEB
 
 ' Button flags:
@@ -400,7 +400,7 @@ buttons$ = MOUSEB
 
 **Check specific buttons:**
 
-```basic
+```vb
 LET buttons$ = MOUSEB
 
 IF buttons$ AND MOUSE_LEFT# THEN
@@ -429,7 +429,7 @@ ENDIF
 ## Performance Tips
 
 1. **Always use SCREENLOCK for animation:**
-   ```basic
+   ```vb
    WHILE 1
    	' Math and logic here
    		
@@ -443,14 +443,14 @@ ENDIF
    ```
 
 2. **Clear only what you need:**
-   ```basic
+   ```vb
    ' Clear only draw area, not text
    COLOR 0, 0
    LINE (0, 50)-(640, 480), 0, BF
    ```
 
 3. **LINE... BF is much faster than CLS**
-   ```basic
+   ```vb
 	' Filling screen with LINE... BF is faster than CLS
 	' CLS works fine with console
     COLOR 0, 0
@@ -459,19 +459,19 @@ ENDIF
 
 
 4. **Remove unused shapes:**
-   ```basic
+   ```vb
    REMOVESHAPE oldShape$  ' Free memory
    ```
 
 5. **Use RGB() once, store value:**
-   ```basic
+   ```vb
    DIM myColor$
    LET myColor$ = RGB(128, 64, 200)
    ' Use myColor$ multiple times
    ```
 
 6. **Target 60 FPS with SLEEP 16:**
-   ```basic
+   ```vb
    SLEEP 16  ' ~60 FPS (1000ms / 60 ≈ 16ms)
    ```
 
@@ -493,7 +493,7 @@ Load images as shapes that can be moved, rotated, and scaled.
 
 #### Usage
 
-```basic
+```vb
 id$ = LOADIMAGE("filepath")
 ```
 
@@ -505,7 +505,7 @@ id$ = LOADIMAGE("filepath")
 
 #### Example
 
-```basic
+```vb
 SCREEN 12, 640, 480, "Image Demo"
 
 REM Load PNG image with transparency
@@ -543,7 +543,7 @@ Transparency is read directly from the PNG file - no color key needed.
 
 Once loaded, images work exactly like other shapes:
 
-```basic
+```vb
 DIM img$
 LET img$ = LOADIMAGE("logo.png")
 
