@@ -12,7 +12,7 @@ Create a game where:
 
 ## The Code
 
-```basic
+```vb
 REM Guessing Game
 
 REM Necessary variables
