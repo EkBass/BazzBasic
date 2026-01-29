@@ -14,13 +14,13 @@ BazzBasic takes a single filename as a parameter and extracts the code contained
 
 ### test.bas
 
-```basic
+```vb
 INCLUDE "test2.bas"
 PRINT a$
 ```
 
 ### test2.bas
-```basic
+```vb
 LET a$ = "Foo"
 LET b$ = "Bar"
 LET PI# = 3.14
@@ -29,7 +29,7 @@ LET PI# = 3.14
 ### Result
 BazzBasic reads these directly as a continuation of each other
 
-```basic
+```vb
 LET a$ = "Foo"
 LET b$ = "Bar"
 LET PI# = 3.14
