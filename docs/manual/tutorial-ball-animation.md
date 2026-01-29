@@ -18,7 +18,7 @@ Create a ball that:
 
 ## The Code
 
-```basic
+```vb
 REM Bouncing Ball Animation
 
 SCREEN 800, 600
