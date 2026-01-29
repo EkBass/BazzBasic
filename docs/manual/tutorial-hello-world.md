@@ -8,7 +8,7 @@ Open the BazzBasic IDE (run `BazzBasic.exe` without arguments) and create a new 
 
 ## Step 2: Write the Code
 
-```basic
+```vb
 REM My first BazzBasic program
 PRINT "Hello, World!"
 ```
@@ -23,7 +23,7 @@ Hello, World!
 
 ## Step 4: Make It Interactive
 
-```basic
+```vb
 REM Interactive greeting
 LET name$
 
