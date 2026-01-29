@@ -8,7 +8,7 @@ This is a reference of all BazzBasic statements (commands that perform actions).
 
 Clear the screen.
 
-```basic
+```vb
 CLS
 ```
 
@@ -20,11 +20,11 @@ See also: [Graphics Commands](graphics.md)
 
 Set text foreground and background colors.
 
-```basic
+```vb
 COLOR foreground, background
 ```
 
-```basic
+```vb
 COLOR 14, 1    ' Yellow text on blue background
 PRINT "Colorful!"
 ```
@@ -37,7 +37,7 @@ See also: [Graphics Commands](graphics.md)
 
 Terminates program execution.
 
-```basic
+```vb
 PRINT "Starting..."
 END
 PRINT "This never prints"
@@ -49,7 +49,7 @@ PRINT "This never prints"
 
 Call a subroutine and return.
 
-```basic
+```vb
 GOSUB [mysub]
 PRINT "Back from subroutine"
 END
@@ -65,7 +65,7 @@ RETURN
 
 Jump to a label.
 
-```basic
+```vb
 GOTO [skip]
 PRINT "This is skipped"
 [skip]
@@ -78,7 +78,7 @@ PRINT "Jumped here"
 
 Read user input into a variable.
 
-```basic
+```vb
 INPUT "Enter your name: ", name$
 INPUT "Enter x, y: ", x$, y$
 INPUT answer$    ' Uses "? " as default prompt
@@ -90,14 +90,14 @@ INPUT answer$    ' Uses "? " as default prompt
 
 Declare and assign a variable.
 
-```basic
+```vb
 LET x$ = 10
 LET name$ = "Alice"
 LET PI# = 3.14159    ' Constant (immutable)
 ```
 
 Note: `LET` keyword is optional after declaration:
-```basic
+```vb
 LET x$ = 10
 x$ = 20    ' OK after initial declaration
 ```
@@ -108,11 +108,11 @@ x$ = 20    ' OK after initial declaration
 
 Move cursor to specified position.
 
-```basic
+```vb
 LOCATE row, column
 ```
 
-```basic
+```vb
 LOCATE 10, 20
 PRINT "Positioned text"
 ```
@@ -125,7 +125,7 @@ See also: [Graphics Commands](graphics.md)
 
 Output text and values to the screen.
 
-```basic
+```vb
 PRINT "Hello, World!"
 PRINT 42
 PRINT "Value: "; x$
@@ -142,7 +142,7 @@ PRINT "X="; 10;        ' No newline at end
 | `\t` | Tab |
 | `\\` | Backslash |
 
-```basic
+```vb
 PRINT "He said, \"Hello\""
 PRINT "Line1\nLine2"
 ```
@@ -153,7 +153,7 @@ PRINT "Line1\nLine2"
 
 Comment (ignored by interpreter).
 
-```basic
+```vb
 REM This is a comment
 ' This is also a comment
 ```
@@ -164,7 +164,7 @@ REM This is a comment
 
 Pause execution for specified milliseconds.
 
-```basic
+```vb
 PRINT "Wait..."
 SLEEP 2000    ' Wait 2 seconds
 PRINT "Done!"
