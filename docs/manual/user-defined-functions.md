@@ -4,7 +4,7 @@
 **Note:** Name of user-defined function must have '$' as suffix
 
 
-```basic
+```vb
 DEF FN functionName$(param1$, param2$, ...)
     ' Function body
     RETURN value
@@ -13,7 +13,7 @@ END DEF
 
 ## Simple Function
 
-```basic
+```vb
 DEF FN double$(x$)
     RETURN x$ * 2
 END DEF
@@ -24,7 +24,7 @@ PRINT FN double$(5)     ' Output: 10
 
 ## Multiple Parameters
 
-```basic
+```vb
 DEF FN add$(a$, b$)
     RETURN a$ + b$
 END DEF
@@ -40,7 +40,7 @@ PRINT FN multiply$(3, 4)    ' Output: 12
 ## Array data as parameter
 **Note:** You cant pass a whole array as a parameter. Instead, you need to pass values from it.
 
-```basic
+```vb
 DIM a$
 a$("name") = "Foo"
 a$("age") = 19
@@ -62,7 +62,7 @@ LET b$ = FN func$(a$("name"), a$("age"), a$(1))
 
 ## String Functions
 
-```basic
+```vb
 DEF FN greet$(name$)
     RETURN "Hello, " + name$ + "!"
 END DEF
@@ -72,7 +72,7 @@ PRINT FN greet$("Alice")    ' Output: Hello, Alice!
 
 ## Functions with Logic
 
-```basic
+```vb
 DEF FN max$(a$, b$)
     IF a$ > b$ THEN
         RETURN a$
@@ -97,7 +97,7 @@ PRINT FN min$(10, 25)    ' Output: 10
 
 Functions can call themselves:
 
-```basic
+```vb
 DEF FN factorial$(n$)
     IF n$ <= 1 THEN
         RETURN 1
@@ -111,7 +111,7 @@ PRINT FN factorial$(10)   ' Output: 3628800
 
 ### Fibonacci
 
-```basic
+```vb
 DEF FN fib$(n$)
     IF n$ <= 1 THEN
         RETURN n$
@@ -134,7 +134,7 @@ User-defined functions have their own local scope that is completely isolated fr
 - Functions **cannot** access or modify global variables from the main program
 - Parameters are passed **by value** - changes to parameters don't affect the original variables
 
-```basic
+```vb
 LET b$ = 100              ' Global variable
 LET C# = "Foo"            ' Global constant
 DEF FN test$(a$)          ' Parameter a$ is local
@@ -158,7 +158,7 @@ END DEF
 
 Functions can have local labels for GOTO/GOSUB:
 
-```basic
+```vb
 DEF FN countdown$(n$)
     [loop]
     IF n$ <= 0 THEN
@@ -186,7 +186,7 @@ Done!
 
 GOTO and GOSUB inside a function **cannot** jump outside the function:
 
-```basic
+```vb
 [outside_label]
 PRINT "Outside"
 
@@ -204,7 +204,7 @@ This restriction ensures functions are self-contained and predictable.
 
 ### Clamp Value
 
-```basic
+```vb
 DEF FN clamp$(value$, minVal$, maxVal$)
     IF value$ < minVal$ THEN
         RETURN minVal$
@@ -222,7 +222,7 @@ PRINT FN clamp$(50, 0, 100)    ' Output: 50
 
 ### Distance Formula
 
-```basic
+```vb
 DEF FN distance$(x1$, y1$, x2$, y2$)
     LET dx$ = x2$ - x1$
     LET dy$ = y2$ - y1$
@@ -235,7 +235,7 @@ PRINT FN distance$(0, 0, 3, 4)   ' Output: 5
 
 ### Is Even/Odd
 
-```basic
+```vb
 DEF FN isEven$(n$)
     RETURN MOD(n$, 2) = 0
 END DEF
@@ -258,7 +258,7 @@ Before code can call a user-created function, it must be loaded from the source 
 
 ### Wrong
 Code below causes error: _Error: Line 1: 'ADD' is not a valid variable name (must end with $ or #) or keyword_
-```basic
+```vb
 ' incorrect way
 PRINT FN ADD$(1, 2)
 
@@ -269,7 +269,7 @@ END DEF
 
 ### Right
 Code below is valid
-```basic
+```vb
 ' correct way
 DEF FN ADD$(a$, b$)
 	RETURN a$ + b$
