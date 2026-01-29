@@ -31,12 +31,12 @@ Reads the entire contents of a text file and returns it as a string.
 **Returns:** String - Complete file contents, or empty string if file doesn't exist or error occurs
 
 **Syntax:**
-```basic
+```vb
 content$ = FileRead("path/to/file.txt")
 ```
 
 **Example:**
-```basic
+```vb
 LET config$
 config$ = FileRead("settings.txt")
 IF LEN(config$) > 0 THEN
@@ -61,12 +61,12 @@ Checks whether a file exists at the specified path.
 **Returns:** Number - 1 if file exists, 0 if not
 
 **Syntax:**
-```basic
+```vb
 LET exists# = FileExists("path/to/file.txt")
 ```
 
 **Example:**
-```basic
+```vb
 IF FileExists("highscore.txt") = 1 THEN
     PRINT "Loading existing scores..."
     LET scores$ = FileRead("highscore.txt")
@@ -91,12 +91,12 @@ ENDIF
 Writes content to a file, creating it if it doesn't exist or overwriting it completely if it does.
 
 **Syntax:**
-```basic
+```vb
 FileWrite filepath$, content$
 ```
 
 **Example:**
-```basic
+```vb
 LET score$ = 12345
 LET playerName$ = "Alice"
 LET saveData$ = playerName$ + "\n" + STR(score$)
@@ -118,12 +118,12 @@ PRINT "Game saved!"
 Appends content to the end of an existing file, or creates the file if it doesn't exist.
 
 **Syntax:**
-```basic
+```vb
 FileAppend filepath$, content$
 ```
 
 **Example:**
-```basic
+```vb
 LET timestamp$ = "2025-01-04 15:30:00"
 LET logEntry$ = timestamp$ + " - Game started\n"
 FileAppend "gamelog.txt", logEntry$
@@ -142,12 +142,12 @@ FileAppend "gamelog.txt", logEntry$
 Deletes a file from the file system.
 
 **Syntax:**
-```basic
+```vb
 FileDelete filepath$
 ```
 
 **Example:**
-```basic
+```vb
 REM Clean up temporary files
 IF FileExists("temp.dat") = 1 THEN
     FileDelete "temp.dat"
@@ -167,18 +167,18 @@ ENDIF
 ### Relative vs Absolute Paths
 
 **Relative Paths** (recommended for game files):
-```basic
+```vb
 FileWrite "highscore.txt", "1000"           REM Same directory as program
 FileWrite "data/settings.txt", "sound=on"   REM Subdirectory
 ```
 
 **Absolute Paths** (for system-wide access):
-```basic
+```vb
 FileWrite "C:/Users/Player/Documents/save.txt", "data"
 ```
 
 **Note:** Use forward slashes `/` or escaped backslashes `\\` to avoid escape sequence issues:
-```basic
+```vb
 REM CORRECT:
 FileWrite "data/file.txt", "content"
 FileWrite "data\\file.txt", "content"
@@ -192,7 +192,7 @@ FileWrite "data\file.txt", "content"  REM \f becomes form feed!
 BazzBasic provides a `ROOT#` constant containing the program's base directory path.
 
 **Example:**
-```basic
+```vb
 PRINT "Program root: "; ROOT#
 
 REM Build absolute paths
@@ -209,7 +209,7 @@ FileWrite savePath#, "Player data"
 
 ## Complete Example: Highscore System
 
-```basic
+```vb
 REM ============================================
 REM Highscore Save/Load System
 REM ============================================
@@ -254,7 +254,7 @@ END
 
 ## Complete Example: Game Settings
 
-```basic
+```vb
 REM ============================================
 REM Game Settings Manager
 REM ============================================
@@ -297,7 +297,7 @@ END
 
 ## Complete Example: Game Event Log
 
-```basic
+```vb
 REM ============================================
 REM Event Logging System
 REM ============================================
@@ -343,7 +343,7 @@ END
 
 ## Complete Example: Save Game System
 
-```basic
+```vb
 REM ============================================
 REM Simple Save Game System
 REM ============================================
@@ -425,7 +425,7 @@ END
 ## Best Practices
 
 1. **Check File Existence Before Reading**
-   ```basic
+   ```vb
    IF FileExists("data.txt") = TRUE THEN
        LET data$ = FileRead("data.txt")
    ELSE
@@ -434,14 +434,14 @@ END
    ```
 
 2. **Use Relative Paths for Game Files**
-   ```basic
+   ```vb
    REM Keep game files organized
    FileWrite "saves/slot1.dat", saveData$
    FileWrite "config/settings.txt", config$
    ```
 
 3. **Structure Your Save Data**
-   ```basic
+   ```vb
    REM Use clear format (one value per line)
    LET data$ = ""
    data$ = data$ + "PlayerName=" + name$ + "\n"
@@ -450,13 +450,13 @@ END
    ```
 
 4. **Use FileAppend for Logs**
-   ```basic
+   ```vb
    REM Accumulate log entries
    FileAppend "debug.log", "Error occurred\n"
    ```
 
 5. **Clean Up Temporary Files**
-   ```basic
+   ```vb
    REM At program exit
    IF FileExists("temp.dat") = 1 THEN
        FileDelete "temp.dat"
@@ -464,7 +464,7 @@ END
    ```
 
 6. **Escape Path Separators**
-   ```basic
+   ```vb
    REM CORRECT:
    FileWrite "data/save.txt", content$
    FileWrite "data\\save.txt", content$
@@ -478,7 +478,7 @@ END
 ## Common Patterns
 
 ### Save/Load Pattern
-```basic
+```vb
 REM Save
 FileWrite "game.sav", gameState$
 
@@ -489,7 +489,7 @@ ENDIF
 ```
 
 ### Config File Pattern
-```basic
+```vb
 REM Load or create default
 IF FileExists("config.txt") = 0 THEN
     FileWrite "config.txt", defaultConfig$
@@ -498,13 +498,13 @@ config$ = FileRead("config.txt")
 ```
 
 ### Incremental Log Pattern
-```basic
+```vb
 REM Add entries over time
 FileAppend "log.txt", timestamp$ + ": " + message$ + "\n"
 ```
 
 ### Multiple Save Slots
-```basic
+```vb
 LET slot$ = 1
 LET filename$ = "save" + STR(slot$) + ".dat"
 FileWrite filename$, data$
