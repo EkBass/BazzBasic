@@ -11,7 +11,7 @@
 - A constant needs the suffix **#**
 
 ## Variables
-```basic
+```vb
 ' Basic init for variables
 LET a$ = "Foo"
 PRINT a$ ' Output: "Foo"
@@ -20,7 +20,7 @@ PRINT b$ ' Output: 1
 ```
 
 ## Constants
-```basic
+```vb
 ' Basic init for constants'
 LET PI# = 3.14159
 LET MAX_PLAYERS# = 4
@@ -28,7 +28,7 @@ LET GAME_TITLE# = "Space Invaders"
 ```
 
 ## LET only when init
-```basic
+```vb
 ' Once variable is initialized, you do not need "LET" anymore
 LET a$ = 1
 a$ = 3
@@ -36,7 +36,7 @@ PRINT a$ ' Output: 3
 ```
 
 ## Unsigned data type
-```basic
+```vb
 ' Variable stores either a number or a text.
 ' It is ok to change the type of data.
 LET a$ = 1
@@ -46,7 +46,7 @@ PRINT a$ ' Output: Foo
 ```
 
 ## Versatile usage
-```basic
+```vb
 ' Math with variables and multiple inits in single line
 LET a$ = 1, b$ = 2
 LET c$ = a$ + b$
@@ -54,7 +54,7 @@ LET MyConst# = c$ * b$
 ```
 
 ## Error situation examples
-```basic
+```vb
 ' Some errors
 a$ = 1 ' error: a$ not initialized
 
@@ -63,7 +63,7 @@ b# = b# + 3 ' error: Constant b# had value 1 when initialized, not allowed to ch
 ```
 
 ## Init with out a value
-```basic
+```vb
 ' If you want just to init var and not give value yet
 LET a$ ' declares variable
 a$ = 1 ' inits value 1 to variable
@@ -76,7 +76,7 @@ LET b# ' works, but is a bit stupid since now b# is constant with value of nothi
 
 When a variable is introduced with a `FOR...NEXT` or `INPUT` command, it does not need to be initialized with `LET`:
 
-```basic
+```vb
 REM Ok to use without prior LET
 INPUT "What is your name? ", name$
 
@@ -92,7 +92,7 @@ A comparison is true if:
 - two number variables are equal
 - the value of the number in the string variable is the same as the number variable
 
-```basic
+```vb
 LET a$, b$
 a$ = "123"              ' a$ has now value "123"
 b$ = 123                ' b$ has now value 123
@@ -130,7 +130,7 @@ A comparison between a numeric and string variable is only made if the data type
 BazzBasic provides a few automatically initialized constants
 
 **Keyboard:**
-```basic
+```vb
 KEY_UP#, KEY_DOWN#, KEY_LEFT#, KEY_RIGHT#
 KEY_ENTER#, KEY_ESC#, KEY_SPACE#
 KEY_TAB#, KEY_BACKSPACE#
@@ -140,14 +140,14 @@ KEY_INSERT#, KEY_DELETE#
 ```
 
 **Mouse:**
-```basic
+```vb
 MOUSE_LEFT#    ' Value: 1
 MOUSE_RIGHT#   ' Value: 2
 MOUSE_MIDDLE#  ' Value: 4
 ```
 
 **Example:**
-```basic
+```vb
 [loop]
     LET key$ = INKEY
     IF key$ = KEY_ESC# THEN END
@@ -163,7 +163,7 @@ MOUSE_MIDDLE#  ' Value: 4
 4. Case-insensitive
 
 ### Valid names:
-```basic
+```vb
 LET score$
 LET player1_name$
 LET MAX_VALUE#
@@ -171,7 +171,7 @@ LET x$
 ```
 
 ### Invalid names:
-```basic
+```vb
 LET score       ' Missing suffix
 LET 1player$    ' Starts with number
 ```
@@ -180,7 +180,7 @@ LET 1player$    ' Starts with number
 
 In case of error, BazzBasic stops with proper error message.
 
-```basic
+```vb
 LET a$ = 100 ' ok
 b$ = 200     ' Error at line 2: Undefined variable: B$ (use LET for first assignment)
 ```
@@ -189,7 +189,7 @@ b$ = 200     ' Error at line 2: Undefined variable: B$ (use LET for first assign
 
 Variables initialized within the main code belong to the same scope.
 
-```basic
+```vb
 IF 1 = 1 THEN
     LET x$ = 10
 END IF
@@ -199,7 +199,7 @@ PRINT x$                 ' Output: 10 (x$ is still accessible)
 - Variables initialized and modified in user-defined functions do not belong to the same scope.
 - However, global constants are available.
 
-```basic
+```vb
 LET a$ = 1
 LET b$ = 100              ' Global variable
 LET C# = "Foo"            ' Global constant
