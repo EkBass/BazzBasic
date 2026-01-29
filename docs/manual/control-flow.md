@@ -4,7 +4,7 @@
 
 Halts the program for _x_ milliseconds
 
-```basic
+```vb
 PRINT "Wait 2 seconds..."
 SLEEP 2000
 PRINT "Done!"
@@ -16,7 +16,7 @@ PRINT "Done!"
 
 Multi-line conditional with THEN on its own:
 
-```basic
+```vb
 IF score$ >= 90 THEN
     PRINT "Grade: A"
     PRINT "Excellent!"
@@ -25,7 +25,7 @@ END IF
 
 ### IF/ELSE
 
-```basic
+```vb
 IF age$ >= 18 THEN
     PRINT "Adult"
 ELSE
@@ -35,7 +35,7 @@ END IF
 
 ### IF/ELSEIF/ELSE
 
-```basic
+```vb
 IF score$ >= 90 THEN
     PRINT "A"
 ELSEIF score$ >= 80 THEN
@@ -53,14 +53,14 @@ END IF
 
 Jump to label based on condition:
 
-```basic
+```vb
 IF lives$ = 0 THEN GOTO [game_over]
 IF key$ = KEY_ESC# THEN GOTO [menu] ELSE GOTO [continue]
 ```
 
 With GOSUB:
 
-```basic
+```vb
 IF ready$ = 1 THEN GOSUB [start_game]
 ```
 
@@ -77,7 +77,7 @@ IF ready$ = 1 THEN GOSUB [start_game]
 
 ## Logical Operators
 
-```basic
+```vb
 IF age$ >= 18 AND age$ <= 65 THEN
     PRINT "Working age"
 END IF
@@ -97,7 +97,7 @@ END IF
 
 ### Basic FOR
 
-```basic
+```vb
 FOR i$ = 1 TO 10
     PRINT i$
 NEXT
@@ -107,7 +107,7 @@ Output: 1 2 3 4 5 6 7 8 9 10
 
 ### FOR with STEP
 
-```basic
+```vb
 FOR i$ = 0 TO 100 STEP 10
     PRINT i$
 NEXT
@@ -117,7 +117,7 @@ Output: 0 10 20 30 40 50 60 70 80 90 100
 
 ### Counting Down
 
-```basic
+```vb
 FOR i$ = 10 TO 1 STEP -1
     PRINT i$
 NEXT
@@ -126,7 +126,7 @@ PRINT "Liftoff!"
 
 ### Nested FOR
 
-```basic
+```vb
 FOR row$ = 1 TO 3
     FOR col$ = 1 TO 3
         PRINT row$; ","; col$; " ";
@@ -139,7 +139,7 @@ NEXT
 
 Repeat while condition is true:
 
-```basic
+```vb
 LET count$ = 0
 WHILE count$ < 5
     PRINT count$
@@ -151,7 +151,7 @@ Output: 0 1 2 3 4
 
 ### Infinite Loop with Exit Condition
 
-```basic
+```vb
 WHILE 1
     LET key$ = INKEY
     IF key$ = KEY_ESC# THEN GOTO [exit]
@@ -166,7 +166,7 @@ PRINT "Goodbye"
 
 Labels are marked with square brackets:
 
-```basic
+```vb
 [start]
     PRINT "Starting..."
     GOTO [main]
@@ -184,7 +184,7 @@ Labels are marked with square brackets:
 
 Call a subroutine and return:
 
-```basic
+```vb
 PRINT "Before subroutine"
 GOSUB [greet]
 PRINT "After subroutine"
@@ -206,7 +206,7 @@ After subroutine
 
 ### Nested GOSUB
 
-```basic
+```vb
 GOSUB [level1]
 END
 
@@ -230,7 +230,7 @@ END
 
 **Note:** A variable can be used to indicate the location of the jump.
 
-```basic
+```vb
 LET foo$ = "[start]"
 LET bar# = "[jump]"
 GOTO foo$
@@ -259,7 +259,7 @@ Ending line
 
 Inside user-defined functions, GOTO and GOSUB can only jump to labels within the same function:
 
-```basic
+```vb
 ' GOTO cannot jump outside function
 DEF FN test$(x$)
     [local_label]
@@ -277,7 +277,7 @@ PRINT "Outside"
 
 ## Using Key Constants
 
-```basic
+```vb
 [game_loop]
     LET key$ = INKEY
     
@@ -295,7 +295,7 @@ PRINT "Outside"
 
 Terminates program execution:
 
-```basic
+```vb
 IF error$ THEN
     PRINT "Error occurred"
     END
