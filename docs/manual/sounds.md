@@ -25,7 +25,7 @@ Loads a sound file from disk and returns a unique sound ID string.
 **Returns:** String - Unique identifier for the loaded sound
 
 **Syntax:**
-```basic
+```vb
 LET soundId$ = LOADSOUND("path/to/sound.wav")
 ' or
 LET soundId$ = LOADSOUND("path\\to\\sound.wav")
@@ -34,7 +34,7 @@ LET soundId$ = LOADSOUND("path\\to\\sound.wav")
 **Note:** If you use "\", you must use it as double "\\" since it is also a escape character
 
 **Example:**
-```basic
+```vb
 LET explosion$
 explosion$ = LOADSOUND("C:\\sounds\\explosion.wav")
 PRINT "Sound loaded with ID: "; explosion$
@@ -52,12 +52,12 @@ PRINT "Sound loaded with ID: "; explosion$
 Plays a loaded sound once in the background. Program execution continues immediately.
 
 **Syntax:**
-```basic
+```vb
 SOUNDONCE(soundId$)
 ```
 
 **Example:**
-```basic
+```vb
 LET beep$
 beep$ = LOADSOUND("beep.wav")
 SOUNDONCE(beep$)
@@ -78,12 +78,12 @@ PRINT "Continuing while sound plays..."
 Plays a sound once and waits for playback to complete before continuing program execution.
 
 **Syntax:**
-```basic
+```vb
 SOUNDONCEWAIT(soundId$)
 ```
 
 **Example:**
-```basic
+```vb
 LET intro$
 intro$ = LOADSOUND("intro_music.wav")
 PRINT "Playing intro..."
@@ -103,12 +103,12 @@ PRINT "Intro finished, starting game!"
 Plays a sound in a continuous loop in the background.
 
 **Syntax:**
-```basic
+```vb
 SOUNDREPEAT(soundId$)
 ```
 
 **Example:**
-```basic
+```vb
 LET bgmusic$
 bgmusic$ = LOADSOUND("background_music.wav")
 SOUNDREPEAT(bgmusic$)
@@ -133,12 +133,12 @@ REM Game loop runs here
 Stops playback of a specific sound.
 
 **Syntax:**
-```basic
+```vb
 SOUNDSTOP(soundId$)
 ```
 
 **Example:**
-```basic
+```vb
 LET alarm$
 alarm$ = LOADSOUND("alarm.wav")
 SOUNDREPEAT(alarm$)
@@ -159,12 +159,12 @@ PRINT "Alarm stopped"
 Stops all currently playing sounds at once.
 
 **Syntax:**
-```basic
+```vb
 SOUNDSTOPALL
 ```
 
 **Example:**
-```basic
+```vb
 REM Emergency stop all audio
 SOUNDSTOPALL
 PRINT "All sounds stopped"
@@ -180,7 +180,7 @@ PRINT "All sounds stopped"
 
 ## Complete Example: Game with Sound
 
-```basic
+```vb
 REM ============================================
 REM Simple Game with Sound Effects
 REM ============================================
@@ -247,7 +247,7 @@ END
 
 ## Example: Multiple Background Sounds
 
-```basic
+```vb
 REM Layer multiple ambient sounds
 
 LET rain$, wind$, thunder$
@@ -275,7 +275,7 @@ END
 
 ## Example: Sequential Audio Narration
 
-```basic
+```vb
 REM Play audio files in sequence
 
 LET part1$, part2$, part3$
@@ -328,7 +328,7 @@ END
 ## Best Practices
 
 1. **Organize Your Sounds**
-   ```basic
+   ```vb
    REM Load all sounds at startup
    LET sfx_jump$, sfx_coin$, music_bg$
    sfx_jump$ = LOADSOUND("sfx\\jump.wav")
@@ -342,14 +342,14 @@ END
    - `SOUNDONCEWAIT` - Sequential audio, narration
 
 3. **Clean Up Audio**
-   ```basic
+   ```vb
    REM Before program exit
    SOUNDSTOPALL
    END
    ```
 
 4. **Handle Game States**
-   ```basic
+   ```vb
    REM When pausing game
    SOUNDSTOPALL
    
