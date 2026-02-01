@@ -260,7 +260,9 @@ public partial class Interpreter
         Require(TokenType.TOK_LPAREN);
         int length = (int)EvaluateExpression().AsNumber();
         Require(TokenType.TOK_RPAREN);
-        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456780-_";
+
+        // adjusted as raw string generation
+        const string chars = """ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz01234567890!@#£$%&/{([)]=}?+-_""";
         var random = new Random();
         var result = new char[length];
         for (int i = 0; i < length; i++)

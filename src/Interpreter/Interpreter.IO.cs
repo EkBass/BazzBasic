@@ -26,7 +26,7 @@ public partial class Interpreter
         _pos++;
         bool endsWithSemicolon = false;
         
-        StringBuilder output = new StringBuilder();
+        StringBuilder output = new();
         
         while (_pos < _tokens.Count)
         {
@@ -38,7 +38,7 @@ public partial class Interpreter
             
             if (token.Type == TokenType.TOK_COMMA)
             {
-                output.Append("\t");
+                output.Append('\t');
                 _pos++;
                 endsWithSemicolon = false;
                 continue;
@@ -119,7 +119,7 @@ public partial class Interpreter
         }
         else
         {
-            values = input.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+            values = input.Split([' ', '\t'], StringSplitOptions.RemoveEmptyEntries);
         }
         
         // Set values to variables
@@ -149,6 +149,48 @@ public partial class Interpreter
                 }
             }
         }
+    }
+
+    private void ExecuteLineInput()
+    {
+        _pos++; // Skip LINE
+        _pos++; // Skip INPUT
+        
+        string prompt = "";
+        
+        // Check for optional prompt string
+        if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_STRING)
+        {
+            prompt = _tokens[_pos].StringValue ?? "";
+            _pos++;
+            
+            // Comma after prompt is optional
+            if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_COMMA)
+            {
+                _pos++;
+            }
+        }
+        
+        // Get variable name
+        if (_pos >= _tokens.Count || _tokens[_pos].Type != TokenType.TOK_VARIABLE)
+        {
+            Error("Expected variable after LINE INPUT");
+            return;
+        }
+        
+        string varName = _tokens[_pos].StringValue ?? "";
+        _pos++;
+        
+        // Print prompt and read entire line
+        if (!string.IsNullOrEmpty(prompt))
+        {
+            Console.Write(prompt);
+        }
+        
+        string input = Console.ReadLine() ?? "";
+        
+        // Store entire line to variable (no splitting)
+        _variables.SetVariable(varName, Value.FromString(input));
     }
 
     private void ExecuteCls()
@@ -356,7 +398,8 @@ public partial class Interpreter
     {
         public short X;
         public short Y;
-        public COORD(short x, short y) { X = x; Y = y; }
+        public COORD(short x,
+                     short y) { X = x; Y = y; }
     }
     
     private const int STD_OUTPUT_HANDLE = -11;
@@ -388,7 +431,7 @@ public partial class Interpreter
         // Convert from 1-based (BASIC) to 0-based (Windows API)
         // COORD is (X, Y) = (column, row) in Windows API
         IntPtr handle = GetStdHandle(STD_OUTPUT_HANDLE);
-        COORD coord = new COORD((short)(column - 1), (short)(row - 1));
+        COORD coord = new((short)(column - 1), (short)(row - 1));
         
         switch (mode)
         {

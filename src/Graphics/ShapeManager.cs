@@ -8,9 +8,9 @@
  Licence: MIT
 */
 using SDL2;
-using System.Drawing;
+//using System.Drawing;
 using System.Drawing.Imaging;
-using System.Runtime.InteropServices;
+//using System.Runtime.InteropServices;
 
 namespace BazzBasic.Graphics;
 

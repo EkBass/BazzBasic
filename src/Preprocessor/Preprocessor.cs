@@ -57,6 +57,13 @@ public class Preprocessor
                     throw new Exception($"Invalid INCLUDE syntax at line {i + 1}: expected \"filename\"");
                 }
 
+                // Skip .bb library files - they are handled after tokenization
+                if (filename.EndsWith(".bb", StringComparison.OrdinalIgnoreCase))
+                {
+                    result.Add(line); // Keep the INCLUDE line for LibraryLoader
+                    continue;
+                }
+
                 // solve file path
                 string filePath = ResolveFilePath(filename, currentFile);
 

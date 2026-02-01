@@ -7,6 +7,7 @@
 
  Licence: MIT
 */
+
 namespace BazzBasic.Graphics;
 
 // type enumeration

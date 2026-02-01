@@ -8,11 +8,6 @@
  Licence: MIT
 */
 
-
-
-
-
-
 namespace BazzBasic.Lexer;
 
 public readonly struct Token

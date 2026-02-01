@@ -48,6 +48,21 @@ if (args.Length >= 2 && args[0].ToLower() == "-exe")
     return PackageExe(sourceFile);
 }
 
+// Check for -lib library compilation command
+if (args.Length >= 2 && args[0].ToLower() == "-lib")
+{
+    string sourceFile = args[1];
+    return CompileLibrary(sourceFile);
+}
+
+// Check for -v version info
+if (args.Length == 1 && (args[0].ToLower() == "-v" || args[0].ToLower() == "--version"))
+{
+    Console.WriteLine($"Version: {BazzBasic.AppInfo.Version}");
+    Console.WriteLine($"Url: {BazzBasic.AppInfo.Url}");
+    return 0;
+}
+
 // Normal operation: IDE or interpreter
 if (args.Length == 0)
 {
@@ -96,12 +111,19 @@ static void RunProgram(string source, string basePath = "", string? filename = n
 {
     try
     {
-        // Preprocess - handle INCLUDE directives
+        // Preprocess - handle INCLUDE directives for .bas files
         var preprocessor = new Preprocessor(basePath);
         string processedSource = preprocessor.Process(source, filename);
         
+        // Tokenize
         var lexer = new Lexer(processedSource);
         var tokens = lexer.Tokenize();
+        
+        // Load .bb libraries (if any INCLUDE "*.bb" statements)
+        var libraryLoader = new LibraryLoader(basePath);
+        tokens = libraryLoader.ProcessLibraries(tokens);
+        
+        // Run
         var interpreter = new Interpreter(tokens, basePath);
         interpreter.Run();
     }
@@ -237,6 +259,66 @@ static int PackageExe(string sourceFile)
     catch (Exception ex)
     {
         Console.WriteLine($"Error creating exe: {ex.Message}");
+        return 1;
+    }
+}
+
+/// <summary>
+/// Compile a BASIC library file to tokenized .bb format
+/// </summary>
+static int CompileLibrary(string sourceFile)
+{
+    if (!File.Exists(sourceFile))
+    {
+        Console.WriteLine($"Error: File not found: {sourceFile}");
+        return 1;
+    }
+    
+    // Determine output filename and library name
+    string baseName = Path.GetFileNameWithoutExtension(sourceFile);
+    string libraryName = baseName.ToUpperInvariant();
+    string outputFile = baseName + ".bb";
+    string outputPath = Path.Combine(
+        Path.GetDirectoryName(Path.GetFullPath(sourceFile)) ?? Directory.GetCurrentDirectory(),
+        outputFile
+    );
+    
+    try
+    {
+        // Read and tokenize source
+        string source = File.ReadAllText(sourceFile);
+        var lexer = new Lexer(source);
+        var tokens = lexer.Tokenize();
+        
+        // Validate: only DEF FN allowed
+        var errors = TokenSerializer.ValidateLibraryContent(tokens);
+        if (errors.Count > 0)
+        {
+            Console.WriteLine("Library validation failed:");
+            foreach (var error in errors)
+            {
+                Console.WriteLine($"  {error}");
+            }
+            return 1;
+        }
+        
+        // Add library prefix to function names
+        TokenSerializer.AddFunctionPrefix(tokens, libraryName);
+        
+        // Serialize to binary
+        byte[] data = TokenSerializer.Serialize(tokens, libraryName);
+        
+        // Write output
+        File.WriteAllBytes(outputPath, data);
+        
+        Console.WriteLine($"Created library: {outputPath}");
+        Console.WriteLine($"Library name: {libraryName}");
+        Console.WriteLine($"Size: {data.Length:N0} bytes");
+        return 0;
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error compiling library: {ex.Message}");
         return 1;
     }
 }

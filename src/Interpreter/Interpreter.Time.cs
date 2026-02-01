@@ -15,21 +15,18 @@ namespace BazzBasic.Interpreter;
 
 public partial class Interpreter
 {
-    // ========================================================================
-    // Time Functions
-    // TIME(format$) - Returns formatted date/time string using .NET format
-    // TICKS - Returns milliseconds since program start
-    // ========================================================================
-
-    /// <summary>
-    /// TIME(format$) - Returns current date/time formatted using .NET DateTime format strings.
-    /// Examples:
-    ///   TIME("HH:mm:ss")      -> "15:21:22"
-    ///   TIME("dd.MM.yyyy")    -> "09.01.2026"
-    ///   TIME("dddd")          -> "Friday"
-    ///   TIME("MMMM")          -> "January"
-    ///   TIME()                -> Default format "HH:mm:ss"
-    /// </summary>
+    /* ========================================================================
+     Time Functions
+     TIME(format$) - Returns formatted date/time string using .NET format
+     TICKS - Returns milliseconds since program start
+     ========================================================================
+     TIME(format$) - Returns current date/time formatted using .NET DateTime format strings.
+     Examples:
+       TIME("HH:mm:ss")      -> "15:21:22"
+       TIME("dd.MM.yyyy")    -> "09.01.2026"
+       TIME("dddd")          -> "Friday"
+       TIME("MMMM")          -> "January"
+       TIME()                -> Default format "HH:mm:ss" */
     private Value EvaluateTimeFunc()
     {
         _pos++; // Skip TIME token
@@ -65,10 +62,9 @@ public partial class Interpreter
         }
     }
 
-    /// <summary>
-    /// TICKS - Returns milliseconds elapsed since program started.
-    /// Useful for timing, animations, and game loops.
-    /// </summary>
+
+    // TICKS - Returns milliseconds elapsed since program started.
+    // Useful for timing, animations, and game loops.
     private Value EvaluateTicksFunc()
     {
         _pos++; // Skip TICKS token

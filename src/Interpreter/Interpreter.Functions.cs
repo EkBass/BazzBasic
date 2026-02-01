@@ -73,7 +73,7 @@ public partial class Interpreter
         _functions[funcName] = new UserFunction
         {
             Name = funcName,
-            Parameters = parameters.ToArray(),
+            Parameters = [.. parameters],
             StartPosition = startPos,
             EndPosition = endPos
         };
@@ -175,7 +175,7 @@ public partial class Interpreter
         
         _variables.PopScope();
         _pos = savedPos;
-        _running = _hasError ? false : savedRunning;
+        _running = !_hasError && savedRunning;
         _inFunction = false;
         
         return _returnValue;

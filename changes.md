@@ -1,5 +1,17 @@
 # News and changes
 
+## Feb 2026
+
+### 1st Feb 2026
+
+The documentation has been worked on and is now a bit better than good.
+
+BazzBasic supports creating libraries: bazzbasic.exe -lib file.bas
+
+LINE INPUT is now in the list of supported commands
+
+Version 0.7 released to this date
+
 ## Jan 2026
 
 ### 18th Jan 2026

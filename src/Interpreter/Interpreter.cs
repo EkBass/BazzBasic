@@ -259,7 +259,15 @@ public partial class Interpreter
                 ExecutePset();
                 break;
             case TokenType.TOK_LINE:
-                ExecuteLine();
+                // Check for LINE INPUT
+                if (_pos + 1 < _tokens.Count && _tokens[_pos + 1].Type == TokenType.TOK_INPUT)
+                {
+                    ExecuteLineInput();
+                }
+                else
+                {
+                    ExecuteLine();
+                }
                 break;
             case TokenType.TOK_CIRCLE:
                 ExecuteCircle();

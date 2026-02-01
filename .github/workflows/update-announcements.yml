@@ -1,0 +1,46 @@
+name: Update Announcements
+
+on:
+  # Ajetaan kun Discussion luodaan tai päivitetään
+  discussion:
+    types: [created, edited, deleted]
+  # Manuaalinen triggeri
+  workflow_dispatch:
+  # Ajastettu ajo kerran päivässä (varmuuden vuoksi)
+  schedule:
+    - cron: '0 6 * * *'
+
+jobs:
+  update-announcements:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      discussions: read
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Fetch announcements from GitHub Discussions
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Hae kaikki discussions ja filtteröi Announcements-kategoria
+          curl -s -H "Authorization: bearer $GH_TOKEN" \
+               -H "Content-Type: application/json" \
+               -X POST https://api.github.com/graphql \
+               -d '{
+                 "query": "query { repository(owner: \"EkBass\", name: \"BazzBasic\") { discussions(first: 50, orderBy: {field: CREATED_AT, direction: DESC}) { nodes { title url createdAt category { name } author { login } } } } }"
+               }' | jq '[.data.repository.discussions.nodes[] | select(.category.name == "Announcements") | {title: .title, url: .url, createdAt: .createdAt, author: .author.login}]' > docs/announcements.json
+          
+          # Näytä tulos
+          echo "Generated announcements.json:"
+          cat docs/announcements.json
+      
+      - name: Commit and push if changed
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add docs/announcements.json
+          git diff --staged --quiet || git commit -m "Update announcements [automated]"
+          git push

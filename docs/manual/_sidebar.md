@@ -5,6 +5,7 @@
 - [Installation](installation.md)
 - [IDE Usage](ide-usage.md)
 - [Creating EXE](packaging.md)
+- [Creating Libraries](libraries.md)
 
 **Language Reference**
 - [Variables & Constants](variables-and-constants.md)

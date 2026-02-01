@@ -35,4 +35,11 @@
   <ItemGroup>
     <Folder Include="docs\" />
   </ItemGroup>
+
+  <!-- Clean up publish: remove runtimes folder and .pdb -->
+  <Target Name="CleanPublishOutput" AfterTargets="Publish">
+    <RemoveDir Directories="$(PublishDir)runtimes" Condition="Exists('$(PublishDir)runtimes')" />
+    <Delete Files="$(PublishDir)BazzBasic.pdb" Condition="Exists('$(PublishDir)BazzBasic.pdb')" />
+  </Target>
+
 </Project>

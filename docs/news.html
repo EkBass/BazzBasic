@@ -10,6 +10,34 @@
     <meta name="keywords" content="BazzBasic, QBasic, GWBasic, MSX, Atari, Spectrum">
     <meta name="description" content="BazzBasic News and Changes">
     <title>BazzBasic - News</title>
+    <style>
+      .announcements-section {
+        margin-bottom: 2em;
+        padding-bottom: 1.5em;
+        border-bottom: 2px solid #444;
+      }
+      .announcement-item {
+        margin-bottom: 1em;
+        padding: 0.8em 1em;
+        background: rgba(255,255,255,0.03);
+        border-left: 3px solid #e8b923;
+        border-radius: 0 4px 4px 0;
+      }
+      .announcement-item a {
+        font-weight: bold;
+        font-size: 1.1em;
+      }
+      .announcement-meta {
+        font-size: 0.85em;
+        color: #888;
+        margin-top: 0.3em;
+      }
+      .section-title {
+        color: #e8b923;
+        margin-bottom: 1em;
+        font-size: 1.4em;
+      }
+    </style>
   </head>
   <body>
     <!-- HEADER -->
@@ -36,7 +64,16 @@
     <!-- MAIN -->
     <main class="site-main">
       <div class="container">
+        <!-- ANNOUNCEMENTS -->
+        <section class="announcements-section" id="announcements">
+          <h2 class="section-title">📣 Announcements</h2>
+          <div id="announcements-content">
+            <p class="loading">Loading announcements...</p>
+          </div>
+        </section>
+        <!-- CHANGELOG -->
         <section class="main-news" id="news-content">
+          <h2 class="section-title">📋 Changelog</h2>
           <p class="loading">Loading changes...</p>
         </section>
       </div>
@@ -53,15 +90,69 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
       document.getElementById("year").textContent = new Date().getFullYear();
+
+      // Helper: Format relative time
+      function timeAgo(dateStr) {
+        const date = new Date(dateStr);
+        const now = new Date();
+        const diffMs = now - date;
+        const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+        
+        if (diffDays === 0) return 'today';
+        if (diffDays === 1) return 'yesterday';
+        if (diffDays < 7) return diffDays + ' days ago';
+        if (diffDays < 14) return 'last week';
+        if (diffDays < 30) return Math.floor(diffDays / 7) + ' weeks ago';
+        if (diffDays < 60) return 'last month';
+        return Math.floor(diffDays / 30) + ' months ago';
+      }
+
+      // Fetch and render announcements
+      fetch('announcements.json')
+        .then(response => {
+          if (!response.ok) throw new Error('Failed to load');
+          return response.json();
+        })
+        .then(announcements => {
+          if (announcements.length === 0) {
+            document.getElementById('announcements-content').innerHTML = '<p>No announcements yet.</p>';
+            return;
+          }
+          const html = announcements.map(a => `
+            <div class="announcement-item">
+              <a href="${a.url}" target="_blank" rel="noopener">${a.title}</a>
+              <div class="announcement-meta">
+                <strong>${a.author}</strong> announced ${timeAgo(a.createdAt)} in Announcements
+              </div>
+            </div>
+          `).join('');
+          document.getElementById('announcements-content').innerHTML = html;
+        })
+        .catch(error => {
+          document.getElementById('announcements-content').innerHTML = 
+            '<p>Could not load announcements. <a href="https://github.com/EkBass/BazzBasic/discussions/categories/announcements">View on GitHub</a></p>';
+        });
+
       // Fetch and render changes.md
-      fetch('https://raw.githubusercontent.com/EkBass/BazzBasic/refs/heads/main/changes.md').then(response => {
-        if (!response.ok) throw new Error('Failed to load');
-        return response.text();
-      }).then(markdown => {
-        document.getElementById('news-content').innerHTML = marked.parse(markdown);
-      }).catch(error => {
-        document.getElementById('news-content').innerHTML = ' < p class = "error" > Could not load changes. < a href = "https://github.com/EkBass/BazzBasic/blob/main/changes.md" > View on GitHub < /a> < /p>';
-      });
+      fetch('https://raw.githubusercontent.com/EkBass/BazzBasic/refs/heads/main/changes.md')
+        .then(response => {
+          if (!response.ok) throw new Error('Failed to load');
+          return response.text();
+        })
+        .then(markdown => {
+          // Keep the h2 title, replace only the loading text
+          const container = document.getElementById('news-content');
+          const title = container.querySelector('.section-title');
+          container.innerHTML = '';
+          container.appendChild(title);
+          const content = document.createElement('div');
+          content.innerHTML = marked.parse(markdown);
+          container.appendChild(content);
+        })
+        .catch(error => {
+          document.getElementById('news-content').innerHTML = 
+            '<h2 class="section-title">📋 Changelog</h2><p class="error">Could not load changes. <a href="https://github.com/EkBass/BazzBasic/blob/main/changes.md">View on GitHub</a></p>';
+        });
     </script>
   </body>
 </html>

@@ -74,15 +74,89 @@ PRINT "Jumped here"
 
 ---
 
-## INPUT
+## INPUT and LINE INPUT
 
-Read user input into a variable.
+BazzBasic provides two commands for reading user input from the console.
 
+---
+
+### INPUT
+
+Reads user input and splits it by whitespace or comma. Ideal for reading multiple values or single words.
+
+**Syntax:**
 ```vb
-INPUT "Enter your name: ", name$
-INPUT "Enter x, y: ", x$, y$
-INPUT answer$    ' Uses "? " as default prompt
+INPUT "prompt", variable$
+INPUT "prompt", var1$, var2$, var3$
+INPUT variable$              ' Uses "? " as default prompt
 ```
+
+**Example:**
+```vb
+LET name$ = ""
+INPUT "Enter your name: ", name$
+' User types: Kristian Virtanen
+PRINT name$
+' Output: Kristian
+```
+
+When reading multiple variables, input is split automatically:
+```vb
+LET x$ = ""
+LET y$ = ""
+INPUT "Enter x, y: ", x$, y$
+' User types: 100 200
+' x$ = "100", y$ = "200"
+```
+
+---
+
+### LINE INPUT
+
+Reads the entire line of input including spaces. Use this when you need to capture full sentences or text with spaces.
+
+**Syntax:**
+```vb
+LINE INPUT "prompt", variable$
+LINE INPUT variable$
+```
+
+**Example:**
+```vb
+LET name$ = ""
+LINE INPUT "Enter your name: ", name$
+' User types: Kristian Virtanen
+PRINT name$
+' Output: Kristian Virtanen
+```
+
+---
+
+### Comparison
+
+| Feature | INPUT | LINE INPUT |
+|---------|-------|------------|
+| Reads spaces | No (splits on space) | Yes |
+| Multiple variables | Yes | No |
+| Default prompt | "? " | None |
+
+**Side by side:**
+```vb
+LET a$ = ""
+LET b$ = ""
+
+INPUT "Name: ", a$
+' User types: Kristian Virtanen
+PRINT a$   ' Output: Kristian
+
+LINE INPUT "Name: ", b$
+' User types: Kristian Virtanen
+PRINT b$   ' Output: Kristian Virtanen
+```
+
+**When to use which:**
+- Use `INPUT` for single words, numbers, or multiple comma-separated values
+- Use `LINE INPUT` for full names, addresses, sentences, or any text containing spaces
 
 ---
 

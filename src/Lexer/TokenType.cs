@@ -12,189 +12,194 @@ namespace BazzBasic.Lexer;
 
 public enum TokenType
 {
+    /*
+     * After ver. 0.7 DO NOT change the numeric values of existing tokens!
+     * Find next free from the proper category and use that.
+     */
+
     // ========================================================================
-    // Control Flow Keywords
+    // Control Flow Keywords 1 - 50
     // ========================================================================
     TOK_DEF = 1,
-    TOK_DIM,
-    TOK_END,
-    TOK_ENDIF,
-    TOK_ELSE,
-    TOK_ELSEIF,
-    TOK_FN,
-    TOK_FOR,
-    TOK_GOSUB,
-    TOK_GOTO,
-    TOK_IF,
-    TOK_INCLUDE,
-    TOK_LET,
-    TOK_NEXT,
-    TOK_PRINT,
-    TOK_REM,
-    TOK_RETURN,
-    TOK_STEP,
-    TOK_THEN,
-    TOK_TO,
-    TOK_WEND,
-    TOK_WHILE,
+    TOK_DIM                 = 2,
+    TOK_END                 = 3,
+    TOK_ENDIF               = 4,
+    TOK_ELSE                = 5,
+    TOK_ELSEIF              = 6,
+    TOK_FN                  = 7,
+    TOK_FOR                 = 8,
+    TOK_GOSUB               = 9,
+    TOK_GOTO                = 10,
+    TOK_IF                  = 11,
+    TOK_INCLUDE             = 12,
+    TOK_LET                 = 13,
+    TOK_NEXT                = 14,
+    TOK_PRINT               = 15,
+    TOK_REM                 = 16,
+    TOK_RETURN              = 17,
+    TOK_STEP                = 18,
+    TOK_THEN                = 19,
+    TOK_TO                  = 20,
+    TOK_WEND                = 21,
+    TOK_WHILE               = 22,
 
     // ========================================================================
-    // I/O Keywords
+    // I/O Keywords 51 - 100
     // ========================================================================
-    TOK_CLS,
-    TOK_COLOR,
-    TOK_GETCONSOLE,
-    TOK_INPUT,
-    TOK_LOCATE,
-    TOK_SLEEP,
+    TOK_CLS                 = 51,
+    TOK_COLOR               = 52,
+    TOK_GETCONSOLE          = 53,
+    TOK_INPUT               = 54,
+    TOK_LOCATE              = 55,
+    TOK_SLEEP               = 56,
 
     // ========================================================================
-    // Graphics Keywords
+    // Graphics Keywords 101 - 150
     // ========================================================================
-    TOK_B,          // Box flag for LINE
-    TOK_BF,         // Box Filled flag for LINE
-    TOK_CIRCLE,
-    TOK_DRAWSHAPE,
-    TOK_HIDESHAPE,
-    TOK_LINE,
-    TOK_LOADIMAGE,
-    TOK_LOADSHAPE,
-    TOK_MOVESHAPE,
-    TOK_PAINT,
-    TOK_POINT,      // Read pixel color at x,y
-    TOK_PSET,
-    TOK_REMOVESHAPE,
-    TOK_ROTATESHAPE,
-    TOK_SCALESHAPE,
-    TOK_SCREEN,
-    TOK_SCREENLOCK,
-    TOK_SHOWSHAPE,
+    TOK_B                   = 101,          // Box flag for LINE
+    TOK_BF                  = 102,         // Box Filled flag for LINE
+    TOK_CIRCLE              = 103,
+    TOK_DRAWSHAPE           = 104,
+    TOK_HIDESHAPE           = 105,
+    TOK_LINE                = 106,
+    TOK_LOADIMAGE           = 107,
+    TOK_LOADSHAPE           = 108,
+    TOK_MOVESHAPE           = 109,
+    TOK_PAINT               = 110,
+    TOK_POINT               = 111,      // Read pixel color at x,y
+    TOK_PSET                = 112,
+    TOK_REMOVESHAPE         = 113,
+    TOK_ROTATESHAPE         = 114,
+    TOK_SCALESHAPE          = 115,
+    TOK_SCREEN              = 116,
+    TOK_SCREENLOCK          = 117,
+    TOK_SHOWSHAPE           = 118,
 
     // ========================================================================
-    // Sound Keywords
+    // Sound Keywords 151 - 200
     // ========================================================================
-    TOK_LOADSOUND,
-    TOK_SOUNDONCE,
-    TOK_SOUNDONCEWAIT,
-    TOK_SOUNDREPEAT,
-    TOK_SOUNDSTOP,
-    TOK_SOUNDSTOPALL,
+    TOK_LOADSOUND           = 151,
+    TOK_SOUNDONCE           = 152,
+    TOK_SOUNDONCEWAIT       = 153,
+    TOK_SOUNDREPEAT         = 154,
+    TOK_SOUNDSTOP           = 155,
+    TOK_SOUNDSTOPALL        = 156,
 
     // ========================================================================
-    // File Keywords
+    // File Keywords 201 - 250
     // ========================================================================
-    TOK_FILEREAD,
-    TOK_FILEEXISTS,
-    TOK_FILEWRITE,
-    TOK_FILEAPPEND,
-    TOK_FILEDELETE,
+    TOK_FILEREAD            = 201,
+    TOK_FILEEXISTS          = 202,
+    TOK_FILEWRITE           = 203,
+    TOK_FILEAPPEND          = 204,
+    TOK_FILEDELETE          = 205,
 
     // ========================================================================
-    // Built-in Functions
+    // Built-in Functions 251 - 350
     // ========================================================================
     // Math
-    TOK_ABS,
-    TOK_ATAN,
-    TOK_CINT,
-    TOK_COS,
-    TOK_CEIL,
-    TOK_EXP,
-    TOK_FLOOR,
-    TOK_INT,
-    TOK_LOG,
-    TOK_MAX,
-    TOK_MIN,
-    TOK_MOD,
-    TOK_POW,
-    TOK_RND,
-    TOK_ROUND,
-    TOK_SGN,
-    TOK_SIN,
-    TOK_SQR,
-    TOK_TAN,
+    TOK_ABS                 = 251,
+    TOK_ATAN                = 252,
+    TOK_CINT                = 253,
+    TOK_COS                 = 254,
+    TOK_CEIL                = 255,
+    TOK_EXP                 = 256,
+    TOK_FLOOR               = 257,
+    TOK_INT                 = 258,
+    TOK_LOG                 = 259,
+    TOK_MAX                 = 260,
+    TOK_MIN                 = 261,
+    TOK_MOD                 = 262,
+    TOK_POW                 = 263,
+    TOK_RND                 = 264,
+    TOK_ROUND               = 265,
+    TOK_SGN                 = 266,
+    TOK_SIN                 = 267,
+    TOK_SQR                 = 268,
+    TOK_TAN                 = 269,
 
     // String
-    TOK_ASC,
-    TOK_CHR,
-    TOK_INSTR,
-    TOK_INVERT,
-    TOK_LCASE,
-    TOK_LEFT,
-    TOK_LEN,
-    TOK_LTRIM,
-    TOK_MID,
-    TOK_REPEAT,
-    TOK_REPLACE,
-    TOK_RIGHT,
-    TOK_RTRIM,
-    TOK_SRAND,
-    TOK_SPLIT,
-    TOK_STR,
-    TOK_TRIM,
-    TOK_UCASE,
-    TOK_VAL,
+    TOK_ASC                 = 290,
+    TOK_CHR                 = 291,
+    TOK_INSTR               = 292,
+    TOK_INVERT              = 293,
+    TOK_LCASE               = 294,
+    TOK_LEFT                = 295,
+    TOK_LEN                 = 296,
+    TOK_LTRIM               = 297,
+    TOK_MID                 = 298,
+    TOK_REPEAT              = 299,
+    TOK_REPLACE             = 300,
+    TOK_RIGHT               = 301,
+    TOK_RTRIM               = 302,
+    TOK_SRAND               = 303,
+    TOK_SPLIT               = 304,
+    TOK_STR                 = 305,
+    TOK_TRIM                = 306,
+    TOK_UCASE               = 307,
+    TOK_VAL                 = 308,
 
     // Input/Mouse
-    TOK_INKEY,
-    TOK_MOUSEB,
-    TOK_MOUSEX,
-    TOK_MOUSEY,
-    TOK_RGB,
+    TOK_INKEY               = 320,
+    TOK_MOUSEB              = 321,
+    TOK_MOUSEX              = 322,
+    TOK_MOUSEY              = 323,
+    TOK_RGB                 = 324,
 
     // Array functions
-    TOK_DELARRAY,
-    TOK_DELKEY,
-    TOK_HASKEY,
+    TOK_DELARRAY            = 330,
+    TOK_DELKEY              = 331,
+    TOK_HASKEY              = 332,
 
     // Time functions
-    TOK_TICKS,
-    TOK_TIME,
+    TOK_TICKS               = 340,
+    TOK_TIME                = 341,
 
     // ========================================================================
-    // Logic Keywords
+    // Logic Keywords 400 - 450
     // ========================================================================
-    TOK_AND,
-    TOK_FALSE,
-    TOK_NOT,
-    TOK_OFF,
-    TOK_ON,
-    TOK_OR,
-    TOK_TRUE,
+    TOK_AND                 = 400,
+    TOK_FALSE               = 410,
+    TOK_NOT                 = 402,
+    TOK_OFF                 = 403,
+    TOK_ON                  = 404,
+    TOK_OR                  = 405,
+    TOK_TRUE                = 406,
 
 
     // ========================================================================
-    // Operators
+    // Operators 450 - 500
     // ========================================================================
-    TOK_COLON,              // :
-    TOK_COMMA,              // ,
-    TOK_DIVIDE,             // /
-    TOK_EQUALS,             // =
-    TOK_GREATER,            // >
-    TOK_GREATER_EQ,         // >=
-    TOK_LESS,               // <
-    TOK_LESS_EQ,            // <=
-    TOK_LPAREN,             // (
-    TOK_MINUS,              // -
-    TOK_MODULO,             // % (MOD)
-    TOK_MULTIPLY,           // *
-    TOK_NOT_EQUALS,         // <>
-    TOK_PLUS,               // +
-    TOK_RPAREN,             // )
-    TOK_SEMICOLON,          // ;
+    TOK_COLON               = 450,              // :
+    TOK_COMMA               = 451,              // ,
+    TOK_DIVIDE              = 452,             // /
+    TOK_EQUALS              = 453,             // =
+    TOK_GREATER             = 454,            // >
+    TOK_GREATER_EQ          = 455,         // >=
+    TOK_LESS                = 456,               // <
+    TOK_LESS_EQ             = 457,            // <=
+    TOK_LPAREN              = 458,             // (
+    TOK_MINUS               = 459,              // -
+    TOK_MODULO              = 460,             // % (MOD)
+    TOK_MULTIPLY            = 461,           // *
+    TOK_NOT_EQUALS          = 462,         // <>
+    TOK_PLUS                = 463,               // +
+    TOK_RPAREN              = 464,             // )
+    TOK_SEMICOLON           = 465,          // ;
 
     // ========================================================================
-    // Literals
+    // Literals 501 - 550
     // ========================================================================
-    TOK_CONSTANT,     // StringValue = constant name (ends with #)
-    TOK_LABEL,        // StringValue = label name
-    TOK_NUMBER,       // NumValue contains the number
-    TOK_STRING,       // StringValue contains the string
-    TOK_VARIABLE,     // StringValue = variable name (ends with $)
+    TOK_CONSTANT            = 501,     // StringValue = constant name (ends with #)
+    TOK_LABEL               = 502,        // StringValue = label name
+    TOK_NUMBER              = 503,       // NumValue contains the number
+    TOK_STRING              = 504,       // StringValue contains the string
+    TOK_VARIABLE            = 505,     // StringValue = variable name (ends with $)
 
     // ========================================================================
-    // Special
+    // Special 551+
     // ========================================================================
-    TOK_BEEB,
-    TOK_EOF,
-    TOK_NEWLINE,
+    TOK_BEEB                = 551,
+    TOK_EOF                 = 552,
+    TOK_NEWLINE             = 553,
 }

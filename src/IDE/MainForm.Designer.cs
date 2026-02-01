@@ -55,7 +55,7 @@ partial class MainForm
         this.components = new System.ComponentModel.Container();
         
         // Main Form
-        this.Text = "BazzBasic IDE";
+        this.Text = $"{BazzBasic.AppInfo.Name} IDE v{BazzBasic.AppInfo.Version}";
         this.Size = new Size(1200, 800);
         this.StartPosition = FormStartPosition.CenterScreen;
         this.MinimumSize = new Size(800, 600);
