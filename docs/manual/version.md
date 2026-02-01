@@ -1,11 +1,9 @@
 # Versioning
 
-This guide is written for BazzBasic version **0.6**
+This guide is written for BazzBasic version **0.7**
 
-## Version 0.6 (January 2026)
+## Version 0.7 (Feb 2026)
 
-New features:
-- **PNG support with alpha transparency** - LOADIMAGE now supports PNG files with full alpha channel
-- **POINT function** - Read pixel color at screen coordinates
-- **Standalone EXE packaging** - Create distributable executables with `bazzbasic.exe -exe program.bas`
-- **LOCATE fix** - Text overwrite in graphics mode now clears background properly
+**Main issues:** Support for LINE INPUT and pre-compiled libraries.
+
+More at: github.com/EkBass/BazzBasic/discussions/7
