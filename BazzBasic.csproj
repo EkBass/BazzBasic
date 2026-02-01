@@ -1,20 +1,30 @@
 <Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
+    <Company>Kristian Virtanen</Company>
+    <Product>BazzBasic</Product>
+    <FileVersion>0.7.0.0</FileVersion>
+    <AssemblyVersion>0.7.0.0</AssemblyVersion>
+    <Copyright>MIT License</Copyright>
+
     <OutputType>Exe</OutputType>
     <TargetFramework>net10.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <PublishAot>false</PublishAot>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <UseWindowsForms>true</UseWindowsForms>
     <NoWarn>IDE0130;NU1510</NoWarn>
-    
+
     <!-- Assembly info -->
     <AssemblyName>BazzBasic</AssemblyName>
     <RootNamespace>BazzBasic</RootNamespace>
-    <Version>0.6.0</Version>
+    <Version>0.7.0</Version>
     <Authors>Kristian Virtanen</Authors>
     <Description>BASIC interpreter with integrated IDE</Description>
+
+    <!-- Manifest & icon -->
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,7 +37,7 @@
     <Content Include="SDL2.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="icon.png">
+    <Content Include="icon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -36,9 +46,9 @@
     <Folder Include="docs\" />
   </ItemGroup>
 
-  <!-- Clean up publish: remove runtimes folder and .pdb -->
+  <!-- Clean up publish: remove win-x86 (not needed for x64 build) and .pdb -->
   <Target Name="CleanPublishOutput" AfterTargets="Publish">
-    <RemoveDir Directories="$(PublishDir)runtimes" Condition="Exists('$(PublishDir)runtimes')" />
+    <RemoveDir Directories="$(PublishDir)runtimes\win-x86" Condition="Exists('$(PublishDir)runtimes\win-x86')" />
     <Delete Files="$(PublishDir)BazzBasic.pdb" Condition="Exists('$(PublishDir)BazzBasic.pdb')" />
   </Target>
 
