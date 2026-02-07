@@ -31,6 +31,7 @@
 - [Ball Animation](./tutorials/tutorial-ball-animation.md)
 - [Simple Sound Effects](./tutorials/tutorial-sounds.md)
 - [2D raycasting](./tutorials/tutorial-raycasting.md)
+- [3D raycasting](./tutorials/tutorial-3d-raycasting.md)
 
 **About**
 - [Version / Changelog](version.md)
