@@ -252,6 +252,14 @@ public partial class Interpreter
                 return EvaluateSgnFunc();
             case TokenType.TOK_TAN:
                 return EvaluateTanFunc();
+            case TokenType.TOK_PI:
+                return EvaluatePiFunc();
+            case TokenType.TOK_HPI:
+                return EvaluateHpiFunc();
+            case TokenType.TOK_RAD:
+                return EvaluateRadFunc();
+            case TokenType.TOK_DEG:
+                return EvaluateDegFunc();
 
             // String functions
             case TokenType.TOK_ASC:

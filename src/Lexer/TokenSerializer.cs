@@ -18,12 +18,7 @@ public static class TokenSerializer
     private static readonly byte[] MAGIC = "BAZZ"u8.ToArray();
     private const byte VERSION = 1;
 
-    /// <summary>
-    /// Serialize tokens to binary .bb format
-    /// </summary>
-    /// <param name="tokens">Token list to serialize</param>
-    /// <param name="libraryName">Library name (used as function prefix)</param>
-    /// <returns>Binary data</returns>
+    // Serialize tokens to binary .bb format
     public static byte[] Serialize(List<Token> tokens, string libraryName)
     {
         using var ms = new MemoryStream();
@@ -61,11 +56,7 @@ public static class TokenSerializer
         return ms.ToArray();
     }
 
-    /// <summary>
-    /// Deserialize binary .bb format to tokens
-    /// </summary>
-    /// <param name="data">Binary data</param>
-    /// <returns>Tuple of (libraryName, tokens)</returns>
+    // Deserialize binary .bb format to tokens
     public static (string LibraryName, List<Token> Tokens) Deserialize(byte[] data)
     {
         using var ms = new MemoryStream(data);
@@ -124,11 +115,7 @@ public static class TokenSerializer
         return (libraryName, tokens);
     }
 
-    /// <summary>
-    /// Validate that source contains only DEF FN functions
-    /// </summary>
-    /// <param name="tokens">Tokens to validate</param>
-    /// <returns>List of error messages (empty if valid)</returns>
+    // Validate that source contains only DEF FN functions
     public static List<string> ValidateLibraryContent(List<Token> tokens)
     {
         var errors = new List<string>();
@@ -179,11 +166,7 @@ public static class TokenSerializer
         return errors;
     }
 
-    /// <summary>
-    /// Add library prefix to all function names in tokens
-    /// </summary>
-    /// <param name="tokens">Tokens to modify</param>
-    /// <param name="prefix">Prefix to add (e.g., "MYLIB")</param>
+    // Add library prefix to all function names in tokens
     public static void AddFunctionPrefix(List<Token> tokens, string prefix)
     {
         for (int i = 0; i < tokens.Count - 1; i++)

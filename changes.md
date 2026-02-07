@@ -1,6 +1,56 @@
 # News and changes
+These changes are about the current source code. These are effected once new binary release is published
 
 ## Feb 2026
+
+### 7th Feb. 2026
+
+Added keyword **HPI** which returns raw coded 1,5707963267929895
+
+**PI** and **HPI** are raw coded values, so no math involved. Should make performance much better.
+
+### 7th Feb 2026
+
+Added keyword **PI** which returns 3.14159265358979  
+Added keywords RAD & DEG
+
+```vb
+REM Test RAD and DEG functions
+PRINT "Testing RAD() and DEG() functions"
+PRINT
+
+REM Test degrees to radians
+PRINT "90 degrees = "; RAD(90); " radians"
+PRINT "180 degrees = "; RAD(180); " radians"
+PRINT "360 degrees = "; RAD(360); " radians"
+PRINT
+
+REM Test radians to degrees  
+PRINT "PI radians = "; DEG(PI); " degrees"
+PRINT "PI/2 radians = "; DEG(PI/2); " degrees"
+PRINT
+
+REM Test with trigonometry
+PRINT "SIN(RAD(90)) = "; SIN(RAD(90))
+PRINT "COS(RAD(180)) = "; COS(RAD(180))
+PRINT
+
+END
+```
+
+```batch
+Testing RAD() and DEG() functions
+
+90 degrees = 1.5707963267948966 radians
+180 degrees = 3.141592653589793 radians
+360 degrees = 6.283185307179586 radians
+
+PI radians = 179.99999999999983 degrees
+PI/2 radians = 89.99999999999991 degrees
+
+SIN(RAD(90)) = 1
+COS(RAD(180)) = -1
+````
 
 ### 1st Feb 2026
 

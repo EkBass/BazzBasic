@@ -103,6 +103,10 @@ public class Lexer
         ["SIN"]             = TokenType.TOK_SIN,
         ["SQR"]             = TokenType.TOK_SQR,
         ["TAN"]             = TokenType.TOK_TAN,
+        ["PI"]              = TokenType.TOK_PI,
+        ["RAD"]             = TokenType.TOK_RAD,
+        ["DEG"]             = TokenType.TOK_DEG,
+        ["HPI"]             = TokenType.TOK_HPI,
 
         // String functions
         ["ASC"]         = TokenType.TOK_ASC,

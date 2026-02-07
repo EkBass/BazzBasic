@@ -117,6 +117,10 @@ public enum TokenType
     TOK_SIN                 = 267,
     TOK_SQR                 = 268,
     TOK_TAN                 = 269,
+    TOK_PI                  = 270,
+    TOK_RAD                 = 271,
+    TOK_DEG                 = 272,
+    TOK_HPI                 = 273,
 
     // String
     TOK_ASC                 = 290,
