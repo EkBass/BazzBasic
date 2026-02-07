@@ -71,8 +71,16 @@ if (args.Length == 0)
     
     var thread = new Thread(() =>
     {
-        ApplicationConfiguration.Initialize();
-        Application.Run(new MainForm());
+        try
+        {
+            ApplicationConfiguration.Initialize();
+            Application.Run(new MainForm());
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"IDE Error: {ex.Message}\n\n{ex.StackTrace}", "BazzBasic Error", 
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
     });
     thread.SetApartmentState(ApartmentState.STA);
     thread.Start();
