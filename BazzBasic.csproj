@@ -15,7 +15,6 @@
     <UseWindowsForms>true</UseWindowsForms>
     <NoWarn>IDE0130;NU1510</NoWarn>
 
-<<<<<<< HEAD
     <!-- Assembly metadata -->
     <AssemblyName>BazzBasic</AssemblyName>
     <RootNamespace>BazzBasic</RootNamespace>
@@ -35,7 +34,7 @@
     <!-- Optional: icon + manifest -->
     <ApplicationIcon>icon.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-=======
+
     <!-- Assembly info -->
     <AssemblyName>BazzBasic</AssemblyName>
     <RootNamespace>BazzBasic</RootNamespace>
@@ -46,7 +45,6 @@
     <!-- Manifest & icon -->
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>icon.ico</ApplicationIcon>
->>>>>>> 3adc2b3dce711cfbc1827c1a6129d7bd1bae31cf
   </PropertyGroup>
 
   <ItemGroup>

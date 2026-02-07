@@ -26,10 +26,11 @@
 - [Introduction to user defined functions and scope](introduction-to-user-defined-functions-and-scope.md)
 
 **Quick Tutorials**
-- [Hello World](tutorial-hello-world.md)
-- [Guessing Game](tutorial-guessing-game.md)
-- [Ball Animation](tutorial-ball-animation.md)
-- [Simple Sound Effects](tutorial-sounds.md)
+- [Hello World](./tutorials/tutorial-hello-world.md)
+- [Guessing Game](./tutorials/tutorial-guessing-game.md)
+- [Ball Animation](./tutorials/tutorial-ball-animation.md)
+- [Simple Sound Effects](./tutorials/tutorial-sounds.md)
+- [2D raycasting](./tutorials/tutorial-raycasting.md)
 
 **About**
 - [Version / Changelog](version.md)
