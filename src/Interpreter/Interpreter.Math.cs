@@ -36,6 +36,7 @@ public partial class Interpreter
     // SQR
     // TAN
     // PI
+    // HPI
     // ========================================================================
 
     private double HelperGetDouble() {

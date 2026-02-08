@@ -472,12 +472,6 @@ public static class Graphics
     // POINT command - Read pixel color at x, y (lazy approach)
     // ========================================================================
     
-    /// <summary>
-    /// Read pixel color at specified coordinates.
-    /// Returns color as 24-bit RGB value (0xRRGGBB).
-    /// Note: This uses SDL_RenderReadPixels which is relatively slow,
-    /// but POINT is rarely used in performance-critical code nowadays.
-    /// </summary>
     public static int GetPixelColor(int x, int y)
     {
         if (!initialized) return 0;

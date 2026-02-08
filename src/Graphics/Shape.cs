@@ -61,7 +61,6 @@ public class Shape
     
 
     // actual width after scaling
-    
     public double ScaledWidth => Width * Scale;
     
     // the actual height after scaling

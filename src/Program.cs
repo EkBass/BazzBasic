@@ -126,8 +126,9 @@ static void RunProgram(string source, string basePath = "", string? filename = n
         // Tokenize
         var lexer = new Lexer(processedSource);
         var tokens = lexer.Tokenize();
-        
+
         // Load .bb libraries (if any INCLUDE "*.bb" statements)
+        // .bb are tokenized libraries, so this step adds their tokens into the main token list
         var libraryLoader = new LibraryLoader(basePath);
         tokens = libraryLoader.ProcessLibraries(tokens);
         
@@ -145,10 +146,9 @@ static void RunProgram(string source, string basePath = "", string? filename = n
     }
 }
 
-/// <summary>
-/// Check if this exe has embedded BASIC code appended to it.
-/// Returns the code if found, null otherwise.
-/// </summary>
+
+// Check if this exe has embedded BASIC code appended to it.
+// Returns the code if found, null otherwise.
 static string? GetEmbeddedCode()
 {
     try

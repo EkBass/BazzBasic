@@ -31,8 +31,8 @@ public partial class Interpreter
     {
         _pos++; // Skip TIME token
         
-        string format = "HH:mm:ss"; // Default format
-        
+        string format = "HH:mm:ss"; // Default format in european style (24-hour)
+
         if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_LPAREN)
         {
             _pos++; // Skip (
