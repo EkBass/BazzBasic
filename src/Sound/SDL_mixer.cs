@@ -11,9 +11,8 @@ using System.Runtime.InteropServices;
 
 namespace BazzBasic.Sound;
 
-/// <summary>
-/// Minimal P/Invoke bindings for SDL2_mixer.dll
-/// </summary>
+// Min P-Invoke bindsfor SDL2_mixer.dll
+
 public static class SDL_mixer
 {
     private const string DllName = "SDL2_mixer.dll";
