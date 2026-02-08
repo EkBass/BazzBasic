@@ -260,6 +260,12 @@ public partial class Interpreter
                 return EvaluateRadFunc();
             case TokenType.TOK_DEG:
                 return EvaluateDegFunc();
+            case TokenType.TOK_FASTSIN:
+                return EvaluateFastSin();
+            case TokenType.TOK_FASTCOS:
+                return EvaluateFastCos();
+            case TokenType.TOK_FASTRAD:
+                return EvaluateFastRad();
 
             // String functions
             case TokenType.TOK_ASC:

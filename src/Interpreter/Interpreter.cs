@@ -63,6 +63,11 @@ public partial class Interpreter
     // RND
     private readonly Random _random = new();
     
+    // FastTrig lookup tables
+    private double[]? _fastSinTable = null;
+    private double[]? _fastCosTable = null;
+    private bool _fastTrigEnabled = false;
+    
     // Sound
     private readonly SoundManager _soundManager = new();
     
@@ -248,6 +253,9 @@ public partial class Interpreter
                 break;
             case TokenType.TOK_SLEEP:
                 ExecuteSleep();
+                break;
+            case TokenType.TOK_FASTTRIG:
+                ExecuteFastTrig();
                 break;
             case TokenType.TOK_SCREEN:
                 ExecuteScreen();

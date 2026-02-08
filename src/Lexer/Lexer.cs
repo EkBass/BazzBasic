@@ -107,6 +107,10 @@ public class Lexer
         ["RAD"]             = TokenType.TOK_RAD,
         ["DEG"]             = TokenType.TOK_DEG,
         ["HPI"]             = TokenType.TOK_HPI,
+        ["FASTTRIG"]        = TokenType.TOK_FASTTRIG,
+        ["FASTSIN"]         = TokenType.TOK_FASTSIN,
+        ["FASTCOS"]         = TokenType.TOK_FASTCOS,
+        ["FASTRAD"]         = TokenType.TOK_FASTRAD,
 
         // String functions
         ["ASC"]         = TokenType.TOK_ASC,

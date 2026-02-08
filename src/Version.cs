@@ -12,7 +12,7 @@ namespace BazzBasic;
 
 public static class AppInfo
 {
-    public const string Version = "0.7";
+    public const string Version = "0.8";
     public const string Url = "https://ekbass.github.io/BazzBasic/";
     public const string Name = "BazzBasic";
 }

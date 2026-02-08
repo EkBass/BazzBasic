@@ -121,6 +121,10 @@ public enum TokenType
     TOK_RAD                 = 271,
     TOK_DEG                 = 272,
     TOK_HPI                 = 273,
+    TOK_FASTTRIG            = 274,
+    TOK_FASTSIN             = 275,
+    TOK_FASTCOS             = 276,
+    TOK_FASTRAD             = 277,
 
     // String
     TOK_ASC                 = 290,

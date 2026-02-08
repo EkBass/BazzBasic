@@ -181,9 +181,7 @@ static string? GetEmbeddedCode()
     }
 }
 
-/// <summary>
-/// Find marker position in byte array (search from end for efficiency)
-/// </summary>
+// Find marker position in byte array (search from end for efficiency)
 static int FindMarker(byte[] data, byte[] marker)
 {
     // Search last 1MB of file (code won't be bigger than that)
@@ -206,9 +204,8 @@ static int FindMarker(byte[] data, byte[] marker)
     return -1;
 }
 
-/// <summary>
-/// Package a BASIC file into a standalone exe
-/// </summary>
+
+// Package a BASIC file into a standalone exe
 static int PackageExe(string sourceFile)
 {
     if (!File.Exists(sourceFile))
@@ -271,9 +268,8 @@ static int PackageExe(string sourceFile)
     }
 }
 
-/// <summary>
-/// Compile a BASIC library file to tokenized .bb format
-/// </summary>
+
+// Compile a BASIC library file to tokenized .bb format
 static int CompileLibrary(string sourceFile)
 {
     if (!File.Exists(sourceFile))

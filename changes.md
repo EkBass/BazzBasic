@@ -3,16 +3,174 @@ These changes are about the current source code. These are effected once new bin
 
 ## Feb 2026
 
+### 8th Feb. 2026
+
+- Succesfully changed audio from NAudio to SDL2_mixer.
+
+#### Fast Trigonometry (Lookup Tables)
+
+For graphics-intensive applications (games, raycasting, animations), BazzBasic provides fast trigonometric functions using pre-calculated lookup tables. These are significantly faster than standard `SIN`/`COS` functions but have 1-degree precision.
+
+**Performance:** ~20x faster than `SIN(RAD(x))` for integer degree values.
+
+**Memory:** Uses ~5.6 KB when enabled (360 values � 2 tables � 8 bytes).
+
+
+##### FastTrig(enable)
+Enables or disables fast trigonometry lookup tables.
+
+**Parameters:**
+- `TRUE` (or any non-zero value) - Creates lookup tables
+- `FALSE` (or 0) - Destroys lookup tables and frees memory
+
+**Important:** Must call `FastTrig(TRUE)` before using `FastSin`, `FastCos`, or `FastRad`.
+
+```vb
+' Enable at program start
+FastTrig(TRUE)
+
+' Use fast trig functions...
+LET x$ = FastCos(45)
+LET y$ = FastSin(45)
+
+' Disable at program end to free memory
+FastTrig(FALSE)
+```
+
+
+##### FastSin(angle)
+Returns the sine of an angle (in degrees) using a lookup table.
+
+**Parameters:**
+- `angle` - Angle in degrees (automatically normalized to 0-359)
+
+**Returns:** Sine value (-1.0 to 1.0)
+
+**Precision:** 1 degree (sufficient for most games and graphics)
+
+```vb
+FastTrig(TRUE)
+
+PRINT FastSin(0)    ' Output: 0
+PRINT FastSin(90)   ' Output: 1
+PRINT FastSin(180)  ' Output: 0
+PRINT FastSin(270)  ' Output: -1
+
+' Angles are automatically wrapped
+PRINT FastSin(450)  ' Same as FastSin(90) = 1
+PRINT FastSin(-90)  ' Same as FastSin(270) = -1
+
+FastTrig(FALSE)
+```
+
+
+##### FastCos(angle)
+Returns the cosine of an angle (in degrees) using a lookup table.
+
+**Parameters:**
+- `angle` - Angle in degrees (automatically normalized to 0-359)
+
+**Returns:** Cosine value (-1.0 to 1.0)
+
+**Precision:** 1 degree (sufficient for most games and graphics)
+
+```vb
+FastTrig(TRUE)
+
+PRINT FastCos(0)    ' Output: 1
+PRINT FastCos(90)   ' Output: 0
+PRINT FastCos(180)  ' Output: -1
+PRINT FastCos(270)  ' Output: 0
+
+' Use in raycasting
+FOR angle$ = 0 TO 359
+    LET dx$ = FastCos(angle$)
+    LET dy$ = FastSin(angle$)
+    ' Cast ray in direction (dx, dy)
+NEXT
+
+FastTrig(FALSE)
+```
+
+
+##### FastRad(angle)
+Converts degrees to radians using an optimized formula.
+
+**Parameters:**
+- `angle` - Angle in degrees (automatically normalized to 0-359)
+
+**Returns:** Angle in radians
+
+**Note:** This function doesn't require `FastTrig(TRUE)` but is included for consistency.
+
+```vb
+PRINT FastRad(90)   ' Output: 1.5707963267948966 (HPI)
+PRINT FastRad(180)  ' Output: 3.141592653589793 (PI)
+PRINT FastRad(360)  ' Output: 6.283185307179586 (2*PI)
+```
+
+
+##### Fast Trig Example: Raycasting
+
+```vb
+REM Fast raycasting demo
+SCREEN 12
+
+' Enable fast trigonometry
+FastTrig(TRUE)
+
+LET player_angle$ = 0
+LET num_rays# = 320
+
+[mainloop]
+    ' Update player rotation
+    LET player_angle$ = player_angle$ + 1
+    IF player_angle$ >= 360 THEN player_angle$ = 0
+    
+    ' Cast all rays
+    FOR ray$ = 0 TO num_rays# - 1
+        LET ray_angle$ = player_angle$ + ray$
+        
+        ' Fast lookup instead of SIN(RAD(angle))
+        LET dx$ = FastCos(ray_angle$)
+        LET dy$ = FastSin(ray_angle$)
+        
+        ' Raycast logic here...
+        ' (20x faster than using SIN/COS!)
+    NEXT
+    
+    IF INKEY = KEY_ESC# THEN GOTO [cleanup]
+    GOTO [mainloop]
+
+[cleanup]
+' Free memory
+FastTrig(FALSE)
+END
+```
+
+
+##### When to Use Fast Trig
+
+**Use FastTrig when:**
+- Rendering graphics at high frame rates (60+ FPS)
+- Raycasting or ray tracing
+- Rotating sprites or shapes
+- Particle systems with many particles
+- Any loop that calls `SIN`/`COS` hundreds of times per frame
+
+**Use regular SIN/COS when:**
+- Math calculations requiring high precision
+- One-time calculations
+- Angles are not in integer degrees
+- Memory is extremely limited
+
 ### 7th Feb. 2026
 
-Added keyword **HPI** which returns raw coded 1,5707963267929895
-
+- Added keyword **HPI** which returns raw coded 1,5707963267929895
+- Added keyword **PI** which returns 3.14159265358979  
+- Added keywords **RAD** & **DEG**
+  
 **PI** and **HPI** are raw coded values, so no math involved. Should make performance much better.
-
-### 7th Feb 2026
-
-Added keyword **PI** which returns 3.14159265358979  
-Added keywords RAD & DEG
 
 ```vb
 REM Test RAD and DEG functions

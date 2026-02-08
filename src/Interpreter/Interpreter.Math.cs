@@ -236,4 +236,90 @@ public partial class Interpreter
         _pos++;
         return Value.FromNumber(Math.Tan(HelperGetDouble()));
     }
+
+    // ========================================================================
+    // FastTrig - Lookup table based trigonometry for graphics/games
+    // ========================================================================
+
+    // FASTTRIG statement - Enable/disable fast trig lookup tables
+    private void ExecuteFastTrig()
+    {
+        _pos++; // Skip TOK_FASTTRIG
+        Require(TokenType.TOK_LPAREN, "Expected '(' after FASTTRIG");
+        bool enable = EvaluateExpression().AsNumber() != 0; // TRUE = non-zero
+        Require(TokenType.TOK_RPAREN, "Expected ')' after FASTTRIG parameter");
+        
+        if (enable && !_fastTrigEnabled)
+        {
+            // Create and populate lookup tables
+            _fastSinTable = new double[360];
+            _fastCosTable = new double[360];
+            
+            for (int i = 0; i < 360; i++)
+            {
+                double radians = i * (Math.PI / 180.0);
+                _fastSinTable[i] = Math.Sin(radians);
+                _fastCosTable[i] = Math.Cos(radians);
+            }
+            
+            _fastTrigEnabled = true;
+        }
+        else if (!enable && _fastTrigEnabled)
+        {
+            // Destroy lookup tables and free memory
+            _fastSinTable = null;
+            _fastCosTable = null;
+            _fastTrigEnabled = false;
+        }
+    }
+
+    // FastSin function - Fast sine lookup (1 degree precision)
+    private Value EvaluateFastSin()
+    {
+        _pos++;
+        Require(TokenType.TOK_LPAREN, "Expected '(' after FASTSIN");
+        double angle = EvaluateExpression().AsNumber();
+        Require(TokenType.TOK_RPAREN, "Expected ')' after FASTSIN parameter");
+        
+        if (!_fastTrigEnabled || _fastSinTable == null)
+        {
+            int line = _pos < _tokens.Count ? _tokens[_pos].Line : 0;
+            throw new Exception($"Line {line}: FastTrig not enabled. Call FASTTRIG(TRUE) first.");
+        }
+        
+        // Normalize angle to 0-359 range
+        int index = ((int)Math.Round(angle) % 360 + 360) % 360;
+        return Value.FromNumber(_fastSinTable[index]);
+    }
+
+    // FastCos function - Fast cosine lookup (1 degree precision)
+    private Value EvaluateFastCos()
+    {
+        _pos++;
+        Require(TokenType.TOK_LPAREN, "Expected '(' after FASTCOS");
+        double angle = EvaluateExpression().AsNumber();
+        Require(TokenType.TOK_RPAREN, "Expected ')' after FASTCOS parameter");
+        
+        if (!_fastTrigEnabled || _fastCosTable == null)
+        {
+            int line = _pos < _tokens.Count ? _tokens[_pos].Line : 0;
+            throw new Exception($"Line {line}: FastTrig not enabled. Call FASTTRIG(TRUE) first.");
+        }
+        
+        int index = ((int)Math.Round(angle) % 360 + 360) % 360;
+        return Value.FromNumber(_fastCosTable[index]);
+    }
+
+    // FastRad function - Fast degree to radian conversion (1 degree precision)
+    private Value EvaluateFastRad()
+    {
+        _pos++;
+        Require(TokenType.TOK_LPAREN, "Expected '(' after FASTRAD");
+        double angle = EvaluateExpression().AsNumber();
+        Require(TokenType.TOK_RPAREN, "Expected ')' after FASTRAD parameter");
+        
+        // Normalize and convert using pre-calculated constant
+        int index = ((int)Math.Round(angle) % 360 + 360) % 360;
+        return Value.FromNumber(index * 0.017453292519943295); // PI/180
+    }
 }

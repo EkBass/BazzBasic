@@ -1,29 +1,68 @@
-﻿/*
+/*
  BazzBasic project
  Url: https://github.com/EkBass/BazzBasic
  
  File: Sound\SoundManager.cs
- Rocks like a hurricane using NAudio
+ Rocks like a hurricane using SDL2_mixer
  Licence: MIT
 */
 
-using NAudio.Wave;
 using System.Collections.Concurrent;
 
 namespace BazzBasic.Sound;
 
-public class SoundManager
+public class SoundManager : IDisposable
 {
     private class SoundData
     {
         public string FilePath { get; set; } = "";
-        public WaveStream? Reader { get; set; }
-        public WaveOutEvent? Output { get; set; }
+        public IntPtr Chunk { get; set; } = IntPtr.Zero;  // Mix_Chunk* for short sounds
+        public IntPtr Music { get; set; } = IntPtr.Zero;  // Mix_Music* for music/long files
+        public int Channel { get; set; } = -1;            // Channel number for chunks
+        public bool IsMusic { get; set; }                 // true = Music, false = Chunk
         public bool IsRepeating { get; set; }
     }
 
     private readonly ConcurrentDictionary<string, SoundData> _sounds = new();
-    private readonly object _lock = new();
+    private static bool _initialized = false;
+    private static readonly object _initLock = new();
+
+    // ========================================================================
+    // Initialize SDL2_mixer (call once)
+    // ========================================================================
+    public SoundManager()
+    {
+        lock (_initLock)
+        {
+            if (!_initialized)
+            {
+                // Note: SDL2 is already initialized by Graphics.Graphics
+                // We only need to initialize SDL_mixer
+
+                // Initialize SDL_mixer
+                var flags = SDL_mixer.MIX_InitFlags.MIX_INIT_MP3 | 
+                           SDL_mixer.MIX_InitFlags.MIX_INIT_OGG |
+                           SDL_mixer.MIX_InitFlags.MIX_INIT_FLAC;
+                
+                if (SDL_mixer.Mix_Init(flags) != (int)flags)
+                {
+                    // Not all formats supported, but continue anyway
+                }
+
+                // Open audio device
+                // 44.1kHz, 16-bit stereo, 2048 byte chunks
+                if (SDL_mixer.Mix_OpenAudio(44100, SDL_mixer.MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+                {
+                    throw new Exception($"Mix_OpenAudio failed: {SDL_mixer.SDL_GetErrorString()}");
+                }
+
+                // Allocate 16 mixing channels
+                SDL_mixer.Mix_AllocateChannels(16);
+
+                _initialized = true;
+            }
+        }
+    }
 
     // ========================================================================
     // Load sound from file
@@ -35,7 +74,7 @@ public class SoundManager
             throw new Exception($"Sound file not found: {filePath}");
         }
 
-        // Create unique ID for this sound/file/noice
+        // Create unique ID for this sound
         string soundId = Guid.NewGuid().ToString();
 
         try
@@ -44,6 +83,29 @@ public class SoundManager
             {
                 FilePath = filePath
             };
+
+            // Detect if this should be loaded as music (long files: MP3, OGG) or chunk (short: WAV)
+            string ext = Path.GetExtension(filePath).ToLowerInvariant();
+            soundData.IsMusic = ext == ".mp3" || ext == ".ogg" || ext == ".flac";
+
+            if (soundData.IsMusic)
+            {
+                // Load as music (streamed from disk)
+                soundData.Music = SDL_mixer.Mix_LoadMUS(filePath);
+                if (soundData.Music == IntPtr.Zero)
+                {
+                    throw new Exception($"Mix_LoadMUS failed: {SDL_mixer.SDL_GetErrorString()}");
+                }
+            }
+            else
+            {
+                // Load as chunk (fully loaded into memory)
+                soundData.Chunk = SDL_mixer.Mix_LoadWAV(filePath);
+                if (soundData.Chunk == IntPtr.Zero)
+                {
+                    throw new Exception($"Mix_LoadWAV failed: {SDL_mixer.SDL_GetErrorString()}");
+                }
+            }
 
             _sounds[soundId] = soundData;
             return soundId;
@@ -64,43 +126,40 @@ public class SoundManager
             throw new Exception($"Sound not found: {soundId}");
         }
 
-        lock (_lock)
+        try
         {
-            try
+            // Stop any existing playback
+            StopSound(soundId);
+
+            soundData.IsRepeating = false;
+
+            if (soundData.IsMusic)
             {
-                // Stop existing playback
-                StopSound(soundId);
-
-                // Create new reader and output
-                soundData.Reader = new AudioFileReader(soundData.FilePath);
-                soundData.Output = new WaveOutEvent();
-                soundData.IsRepeating = false;
-
-                soundData.Output.Init(soundData.Reader);
-                
-                // Clean up when playback stops
-                soundData.Output.PlaybackStopped += (sender, args) =>
+                // Play music once (0 = play once)
+                if (SDL_mixer.Mix_PlayMusic(soundData.Music, 0) < 0)
                 {
-                    lock (_lock)
-                    {
-                        soundData.Reader?.Dispose();
-                        soundData.Output?.Dispose();
-                        soundData.Reader = null;
-                        soundData.Output = null;
-                    }
-                };
-
-                soundData.Output.Play();
+                    throw new Exception($"Mix_PlayMusic failed: {SDL_mixer.SDL_GetErrorString()}");
+                }
             }
-            catch (Exception ex)
+            else
             {
-                throw new Exception($"Failed to play sound: {ex.Message}");
+                // Play chunk on first available channel (0 = play once)
+                int channel = SDL_mixer.Mix_PlayChannel(-1, soundData.Chunk, 0);
+                if (channel < 0)
+                {
+                    throw new Exception($"Mix_PlayChannel failed: {SDL_mixer.SDL_GetErrorString()}");
+                }
+                soundData.Channel = channel;
             }
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Failed to play sound: {ex.Message}");
         }
     }
 
     // ========================================================================
-    // Play it with repeat
+    // Play with repeat
     // ========================================================================
     public void PlayRepeat(string soundId)
     {
@@ -109,62 +168,40 @@ public class SoundManager
             throw new Exception($"Sound not found: {soundId}");
         }
 
-        lock (_lock)
+        try
         {
-            try
+            // Stop any existing playback
+            StopSound(soundId);
+
+            soundData.IsRepeating = true;
+
+            if (soundData.IsMusic)
             {
-                // Stop any existing playback
-                StopSound(soundId);
-
-                // Create new reader and output
-                soundData.Reader = new AudioFileReader(soundData.FilePath);
-                soundData.Output = new WaveOutEvent();
-                soundData.IsRepeating = true;
-
-                soundData.Output.Init(soundData.Reader);
-
-                // Loop the sound
-                soundData.Output.PlaybackStopped += (sender, args) =>
+                // Play music in loop (-1 = infinite loop)
+                if (SDL_mixer.Mix_PlayMusic(soundData.Music, -1) < 0)
                 {
-                    lock (_lock)
-                    {
-                        try
-                        {
-                            if (soundData.IsRepeating && soundData.Reader != null && soundData.Output != null)
-                            {
-                                soundData.Reader.Position = 0;
-                                soundData.Output.Play();
-                            }
-                            else
-                            {
-                                soundData.Reader?.Dispose();
-                                soundData.Output?.Dispose();
-                                soundData.Reader = null;
-                                soundData.Output = null;
-                            }
-                        }
-                        catch
-                        {
-                            // Ignore errors if sound was stopped during playback
-                            soundData.Reader?.Dispose();
-                            soundData.Output?.Dispose();
-                            soundData.Reader = null;
-                            soundData.Output = null;
-                        }
-                    }
-                };
-
-                soundData.Output.Play();
+                    throw new Exception($"Mix_PlayMusic failed: {SDL_mixer.SDL_GetErrorString()}");
+                }
             }
-            catch (Exception ex)
+            else
             {
-                throw new Exception($"Failed to play repeating sound: {ex.Message}");
+                // Play chunk in loop (-1 = infinite loop)
+                int channel = SDL_mixer.Mix_PlayChannel(-1, soundData.Chunk, -1);
+                if (channel < 0)
+                {
+                    throw new Exception($"Mix_PlayChannel failed: {SDL_mixer.SDL_GetErrorString()}");
+                }
+                soundData.Channel = channel;
             }
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Failed to play repeating sound: {ex.Message}");
         }
     }
 
     // ========================================================================
-    // Play once and wait till its done
+    // Play once and wait until done
     // ========================================================================
     public void PlayOnceWait(string soundId)
     {
@@ -173,28 +210,47 @@ public class SoundManager
             throw new Exception($"Sound not found: {soundId}");
         }
 
-        lock (_lock)
+        try
         {
-            try
+            // Stop any existing playback
+            StopSound(soundId);
+
+            soundData.IsRepeating = false;
+
+            if (soundData.IsMusic)
             {
-                // Stop any existing playback
-                StopSound(soundId);
+                // Play music once
+                if (SDL_mixer.Mix_PlayMusic(soundData.Music, 0) < 0)
+                {
+                    throw new Exception($"Mix_PlayMusic failed: {SDL_mixer.SDL_GetErrorString()}");
+                }
 
-                using var reader = new AudioFileReader(soundData.FilePath);
-                using var output = new WaveOutEvent();
-
-                output.Init(reader);
-
-                var playbackFinished = new ManualResetEvent(false);
-                output.PlaybackStopped += (sender, args) => playbackFinished.Set();
-
-                output.Play();
-                playbackFinished.WaitOne(); // Wait for playback to finish
+                // Wait for music to finish
+                while (SDL_mixer.Mix_PlayingMusic() != 0)
+                {
+                    Thread.Sleep(100);
+                }
             }
-            catch (Exception ex)
+            else
             {
-                throw new Exception($"Failed to play sound (wait): {ex.Message}");
+                // Play chunk once
+                int channel = SDL_mixer.Mix_PlayChannel(-1, soundData.Chunk, 0);
+                if (channel < 0)
+                {
+                    throw new Exception($"Mix_PlayChannel failed: {SDL_mixer.SDL_GetErrorString()}");
+                }
+                soundData.Channel = channel;
+
+                // Wait for chunk to finish
+                while (SDL_mixer.Mix_Playing(channel) != 0)
+                {
+                    Thread.Sleep(100);
+                }
             }
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Failed to play sound (wait): {ex.Message}");
         }
     }
 
@@ -208,14 +264,16 @@ public class SoundManager
             return; // Silently ignore if sound not found
         }
 
-        lock (_lock)
+        soundData.IsRepeating = false;
+
+        if (soundData.IsMusic)
         {
-            soundData.IsRepeating = false;
-            soundData.Output?.Stop();
-            soundData.Reader?.Dispose();
-            soundData.Output?.Dispose();
-            soundData.Reader = null;
-            soundData.Output = null;
+            SDL_mixer.Mix_HaltMusic();
+        }
+        else if (soundData.Channel >= 0)
+        {
+            SDL_mixer.Mix_HaltChannel(soundData.Channel);
+            soundData.Channel = -1;
         }
     }
 
@@ -224,26 +282,47 @@ public class SoundManager
     // ========================================================================
     public void StopAllSounds()
     {
-        lock (_lock)
+        foreach (var sound in _sounds.Values)
         {
-            foreach (var sound in _sounds.Values)
+            sound.IsRepeating = false;
+            
+            if (sound.IsMusic)
             {
-                sound.IsRepeating = false;
-                sound.Output?.Stop();
-                sound.Reader?.Dispose();
-                sound.Output?.Dispose();
-                sound.Reader = null;
-                sound.Output = null;
+                SDL_mixer.Mix_HaltMusic();
+            }
+            else if (sound.Channel >= 0)
+            {
+                SDL_mixer.Mix_HaltChannel(sound.Channel);
+                sound.Channel = -1;
             }
         }
     }
 
     // ========================================================================
-    // Clean the trashes
+    // Clean up resources
     // ========================================================================
     public void Dispose()
     {
         StopAllSounds();
+
+        // Free all loaded sounds
+        foreach (var sound in _sounds.Values)
+        {
+            if (sound.IsMusic && sound.Music != IntPtr.Zero)
+            {
+                SDL_mixer.Mix_FreeMusic(sound.Music);
+                sound.Music = IntPtr.Zero;
+            }
+            else if (sound.Chunk != IntPtr.Zero)
+            {
+                SDL_mixer.Mix_FreeChunk(sound.Chunk);
+                sound.Chunk = IntPtr.Zero;
+            }
+        }
+
         _sounds.Clear();
+
+        // Note: We don't close Mix_CloseAudio() here because other instances might be using it
+        // It will be closed when the application exits
     }
 }
