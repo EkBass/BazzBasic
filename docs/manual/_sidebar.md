@@ -31,7 +31,7 @@
 - [Ball Animation](./tutorials/tutorial-ball-animation.md)
 - [Simple Sound Effects](./tutorials/tutorial-sounds.md)
 - [2D raycasting](./tutorials/tutorial-raycasting.md)
-- [3D raycasting]([./tutorials/tutorial-3d-raycasting.md](https://github.com/EkBass/BazzBasic/discussions/9))
+- [3D raycasting](https://github.com/EkBass/BazzBasic/discussions/9)
 
 **About**
 - [Version / Changelog](version.md)
