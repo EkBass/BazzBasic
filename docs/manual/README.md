@@ -36,15 +36,15 @@ See [Graphics Commands](graphics.md)
 
 ### Sounds
 
-BazzBasic includes a sound system built on NAudio, supporting audio playback with both background and blocking modes.
+BazzBasic includes a sound system built on SDL2_mixer, supporting audio playback with both background and blocking modes.
 
 See [Sound Commands](sounds.md)
 
 ### Source Control
 
-With the INCLUDE function, you can split the source code into different files and folders.
+With the INCLUDE function, you can split the source code into different files and folders or generate tokenized libraries.
 
-See [Preprocessor](preprocessor.md)
+See [Preprocessor](preprocessor.md) or [Generating libraries](libraries.md)
 
 ### Arrays
 

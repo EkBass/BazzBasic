@@ -37,6 +37,12 @@ public partial class Interpreter
     // TAN
     // PI
     // HPI
+<<<<<<< HEAD
+=======
+    // QPI
+    // TAU
+    // BETWEEN
+>>>>>>> 7a41b25 (Update on 2026-02-12 09:57:17)
     // ========================================================================
 
     private double HelperGetDouble() {
@@ -151,12 +157,26 @@ public partial class Interpreter
         _pos++;
         return Value.FromNumber(3.14159265358979);
     }
-
+    
     // HPI function - Half PI (PI/2)
     private Value EvaluateHpiFunc()
     {
         _pos++;
         return Value.FromNumber(1.5707963267948966);
+    }
+
+    // QPI function - (PI/4)
+    private Value EvaluateQpiFunc()
+    {
+        _pos++;
+        return Value.FromNumber(0.7853981633974475);
+    }
+
+    // TAU function - (PI*2)
+    private Value EvaluateTauFunc()
+    {
+        _pos++;
+        return Value.FromNumber(6.28318530717958);
     }
 
     // RAD function - Convert degrees to radians
@@ -237,6 +257,22 @@ public partial class Interpreter
         _pos++;
         return Value.FromNumber(Math.Tan(HelperGetDouble()));
     }
+
+    // BETWEEN function - Check if a value is between two others (inclusive)
+    private Value EvaluateBetweenFunc()
+    {
+        _pos++;
+        Require(TokenType.TOK_LPAREN);
+        double value = EvaluateExpression().AsNumber();
+        Require(TokenType.TOK_COMMA);
+        double lower = EvaluateExpression().AsNumber();
+        Require(TokenType.TOK_COMMA);
+        double upper = EvaluateExpression().AsNumber();
+        Require(TokenType.TOK_RPAREN);
+        
+        return Value.FromNumber((value >= lower && value <= upper) ? 1 : 0);
+    }
+
 
     // ========================================================================
     // FastTrig - Lookup table based trigonometry for graphics/games

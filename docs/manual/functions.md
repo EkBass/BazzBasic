@@ -16,6 +16,14 @@ PRINT ATAN(1.5)	' 0.982793723247329
 PRINT ATAN(-1.5)	' -0.982793723247329
 ```
 
+### BETWEEN(n, min, max)
+Returns true, if n is between min and max.
+```vb
+IF BETWEEN(5, 1, 10) = TRUE THEN
+    PRINT "5 is between 1 and 10"
+END IF
+' Output: 5 is between 1 and 10
+```
 
 ### CINT(n)
 The Cint function converts an expression to type Integer.
@@ -127,12 +135,49 @@ Useful in graphics and game programming where 90-degree angles are common.
 PRINT HPI                   ' Output: 1.5707963267948966
 PRINT DEG(HPI)              ' Output: 90
 
-' Common angles in radians
+' Common angles in radians using built-in constants
 LET angle_0$ = 0            ' 0 degrees
+LET angle_45$ = QPI         ' 45 degrees
 LET angle_90$ = HPI         ' 90 degrees
 LET angle_180$ = PI         ' 180 degrees
-LET angle_270$ = 3 * HPI    ' 270 degrees
-LET angle_360$ = 2 * PI     ' 360 degrees
+LET angle_270$ = PI + HPI   ' 270 degrees
+LET angle_360$ = TAU        ' 360 degrees
+```
+
+
+### QPI
+Returns a quarter of π (pi/4) ≈ 0.7853981633974475. Equivalent to 45 degrees in radians.
+
+Useful in graphics programming for diagonal movement and isometric calculations.
+```vb
+PRINT QPI                   ' Output: 0.7853981633974475
+PRINT DEG(QPI)              ' Output: 45
+
+' Common use: diagonal directions
+LET dx$ = COS(QPI)          ' ~0.707 (equal X and Y component)
+LET dy$ = SIN(QPI)          ' ~0.707
+```
+
+
+### TAU
+Returns τ (tau) = 2π ≈ 6.28318530717958. Equivalent to 360 degrees in radians (a full circle).
+
+Simplifies expressions that would otherwise use `2 * PI`.
+```vb
+PRINT TAU                   ' Output: 6.28318530717958
+
+' Full circle loop
+FOR angle$ = 0 TO 359
+    LET rad$ = (angle$ / 360) * TAU
+    LET x$ = COS(rad$) * radius$
+    LET y$ = SIN(rad$) * radius$
+NEXT
+
+' All BazzBasic circle constants:
+' QPI  = π/4  = 45°
+' HPI  = π/2  = 90°
+' PI   = π    = 180°
+' TAU  = 2π   = 360°
 ```
 
 

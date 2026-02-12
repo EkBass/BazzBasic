@@ -111,6 +111,9 @@ public class Lexer
         ["FASTSIN"]         = TokenType.TOK_FASTSIN,
         ["FASTCOS"]         = TokenType.TOK_FASTCOS,
         ["FASTRAD"]         = TokenType.TOK_FASTRAD,
+        ["QPI"]             = TokenType.TOK_QPI,
+        ["TAU"]             = TokenType.TOK_TAU,
+        ["BETWEEN"]         = TokenType.TOK_BETWEEN,
 
         // String functions
         ["ASC"]         = TokenType.TOK_ASC,

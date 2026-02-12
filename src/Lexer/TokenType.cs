@@ -95,7 +95,7 @@ public enum TokenType
     TOK_FILEDELETE          = 205,
 
     // ========================================================================
-    // Built-in Functions 251 - 350
+    // Built-in Functions 251 - 400
     // ========================================================================
     // Math
     TOK_ABS                 = 251,
@@ -125,43 +125,46 @@ public enum TokenType
     TOK_FASTSIN             = 275,
     TOK_FASTCOS             = 276,
     TOK_FASTRAD             = 277,
+    TOK_QPI                 = 278,
+    TOK_TAU                 = 279,
+    TOK_BETWEEN             = 280,
 
     // String
-    TOK_ASC                 = 290,
-    TOK_CHR                 = 291,
-    TOK_INSTR               = 292,
-    TOK_INVERT              = 293,
-    TOK_LCASE               = 294,
-    TOK_LEFT                = 295,
-    TOK_LEN                 = 296,
-    TOK_LTRIM               = 297,
-    TOK_MID                 = 298,
-    TOK_REPEAT              = 299,
-    TOK_REPLACE             = 300,
-    TOK_RIGHT               = 301,
-    TOK_RTRIM               = 302,
-    TOK_SRAND               = 303,
-    TOK_SPLIT               = 304,
-    TOK_STR                 = 305,
-    TOK_TRIM                = 306,
-    TOK_UCASE               = 307,
-    TOK_VAL                 = 308,
+    TOK_ASC                 = 300,
+    TOK_CHR                 = 301,
+    TOK_INSTR               = 302,
+    TOK_INVERT              = 303,
+    TOK_LCASE               = 304,
+    TOK_LEFT                = 305,
+    TOK_LEN                 = 306,
+    TOK_LTRIM               = 307,
+    TOK_MID                 = 308,
+    TOK_REPEAT              = 309,
+    TOK_REPLACE             = 310,
+    TOK_RIGHT               = 311,
+    TOK_RTRIM               = 312,
+    TOK_SRAND               = 313,
+    TOK_SPLIT               = 314,
+    TOK_STR                 = 315,
+    TOK_TRIM                = 316,
+    TOK_UCASE               = 317,
+    TOK_VAL                 = 318,
 
     // Input/Mouse
-    TOK_INKEY               = 320,
-    TOK_MOUSEB              = 321,
-    TOK_MOUSEX              = 322,
-    TOK_MOUSEY              = 323,
-    TOK_RGB                 = 324,
+    TOK_INKEY               = 350,
+    TOK_MOUSEB              = 351,
+    TOK_MOUSEX              = 352,
+    TOK_MOUSEY              = 353,
+    TOK_RGB                 = 354,
 
     // Array functions
-    TOK_DELARRAY            = 330,
-    TOK_DELKEY              = 331,
-    TOK_HASKEY              = 332,
+    TOK_DELARRAY            = 360,
+    TOK_DELKEY              = 361,
+    TOK_HASKEY              = 362,
 
     // Time functions
-    TOK_TICKS               = 340,
-    TOK_TIME                = 341,
+    TOK_TICKS               = 370,
+    TOK_TIME                = 371,
 
     // ========================================================================
     // Logic Keywords 400 - 450

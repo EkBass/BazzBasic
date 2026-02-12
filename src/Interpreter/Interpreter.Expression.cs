@@ -266,6 +266,10 @@ public partial class Interpreter
                 return EvaluateFastCos();
             case TokenType.TOK_FASTRAD:
                 return EvaluateFastRad();
+            case TokenType.TOK_QPI:
+                return EvaluateQpiFunc();
+            case TokenType.TOK_TAU:
+                return EvaluateTauFunc();
 
             // String functions
             case TokenType.TOK_ASC:
@@ -306,6 +310,8 @@ public partial class Interpreter
                 return EvaluateUcaseFunc();
             case TokenType.TOK_VAL:
                 return EvaluateValFunc();
+            case TokenType.TOK_BETWEEN:
+                return EvaluateBetweenFunc();
 
             // Other functions
             case TokenType.TOK_INKEY:

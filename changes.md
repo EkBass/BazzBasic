@@ -3,6 +3,11 @@ These changes are about the current source code. These are effected once new bin
 
 ## Feb 2026
 
+### 11th Feb. 2026
+
+- Added TAU, which returns raw coded value of PI * 2
+- Added QPI, which returns raw coded value of PI / 4
+
 ### 8th Feb. 2026
 
 - Succesfully changed audio from NAudio to SDL2_mixer.
