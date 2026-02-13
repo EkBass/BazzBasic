@@ -17,16 +17,16 @@ LET money$ = 100
 LET deckPos$ = 0
 DIM deck$
 
-GOSUB [initGame]
+GOSUB [sub:initGame]
 
 [mainLoop]
     ' Check money
-    IF money$ <= 0 THEN GOTO [broke]
+    IF money$ <= 0 THEN GOTO [sub:broke]
     
     ' Check deck. Min. 3 cards
     IF deckPos$ > 49 THEN
         PRINT "\nDeck run out. Shuffling new..."
-        GOSUB [shuffleDeck]
+        GOSUB [sub:shuffleDeck]
     END IF
     
     COLOR 15, 0
@@ -94,10 +94,9 @@ GOSUB [initGame]
         PRINT "You lost $"; bet$
         money$ = money$ - bet$
     END IF
-    
-    GOTO [mainLoop]
+GOTO [mainLoop]
 
-[broke]
+[sub:broke]
     COLOR 4, 0
     PRINT "\n================================"
     PRINT "  OUT OF MONEY! GAME OVER!"
@@ -107,17 +106,17 @@ GOSUB [initGame]
     INPUT "\nNew game? (y/n): ", again$
     IF UCASE(LEFT(again$, 1)) = "Y" THEN
         money$ = 100
-        GOSUB [shuffleDeck]
+        GOSUB [sub:shuffleDeck]
         GOTO [mainLoop]
     END IF
     
     PRINT "\nCheers!"
-    END
+END
 
 ' ============================================
 ' INIT
 ' ============================================
-[initGame]
+[sub:initGame]
     COLOR 14, 0
     CLS
     PRINT " "; REPEAT("*", 28)
@@ -129,13 +128,13 @@ GOSUB [initGame]
     PRINT "\n You bet does third card have a value between two first cards"
     PRINT "\n Ace is 14."
     
-    GOSUB [shuffleDeck]
-    RETURN
+    GOSUB [sub:shuffleDeck]
+RETURN
 
 ' ============================================
 ' Fisher-Yates
 ' ============================================
-[shuffleDeck]
+[sub:shuffleDeck]
     LET idx$ = 0
     FOR suit$ = 0 TO 3
         FOR value$ = 2 TO 14
@@ -154,4 +153,4 @@ GOSUB [initGame]
     deckPos$ = 0
     COLOR 8, 0
     PRINT "Deck shuffled."
-    RETURN
+RETURN

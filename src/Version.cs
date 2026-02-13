@@ -3,7 +3,7 @@
  Url: https://github.com/EkBass/BazzBasic
  
  File: Version.cs
- Global version constants - edit before release
+ Global version constants - edit before releasing new version
 
  Licence: MIT
 */

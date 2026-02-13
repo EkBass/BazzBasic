@@ -25,21 +25,21 @@ LET LMAGENTA#	= 13
 LET YELLOW# 	= 14
 LET WHITE# 		= 15
 
-GOSUB [title]
+GOSUB [sub:title]
 
-[newGame]
+[sub:newGame]
     LET matches$ = 23
     LET playerWins$ = 0
     LET compWins$ = 0
     
-    GOSUB [playRound]
-    GOTO [newGame]
+    GOSUB [sub:playRound]
+    GOTO [sub:newGame]
 END
 
 ' ============================================
 ' TITLE SCREEN
 ' ============================================
-[title]
+[sub:title]
     CLS
     COLOR YELLOW#, BLACK#
     PRINT "\n "; REPEAT("*", 40)
@@ -81,26 +81,26 @@ RETURN
 ' ============================================
 ' PLAY ONE ROUND
 ' ============================================
-[playRound]
+[sub:playRound]
     LET matches$ = 23
     
     [gameLoop]
         CLS
-        GOSUB [drawMatches]
+        GOSUB [sub:drawMatches]
         
         ' Player's turn
-        GOSUB [playerTurn]
-        IF matches$ = 0 THEN GOTO [computerWins]
+        GOSUB [sub:playerTurn]
+        IF matches$ = 0 THEN GOTO [sub:computerWins]
         
         ' Computer's turn
-        GOSUB [computerTurn]
-        IF matches$ = 0 THEN GOTO [playerWins]
+        GOSUB [sub:computerTurn]
+        IF matches$ = 0 THEN GOTO [sub:playerWins]
         
         GOTO [gameLoop]
 
-[playerWins]
+[sub:playerWins]
     CLS
-    GOSUB [drawMatches]
+    GOSUB [sub:drawMatches]
     COLOR LGREEN#, BLACK#
     PRINT "\n "; REPEAT("*", 35)
     PRINT " *  YOU WIN! I had to take the last match.  *"
@@ -111,9 +111,9 @@ RETURN
     INPUT "", temp$
 RETURN
 
-[computerWins]
+[sub:computerWins]
     CLS
-    GOSUB [drawMatches]
+    GOSUB [sub:drawMatches]
     COLOR LRED#, BLACK#
     PRINT "\n "; REPEAT("*", 35)
     PRINT " *  I WIN! You took the last match!  *"
@@ -128,7 +128,7 @@ RETURN
 ' ============================================
 ' DRAW MATCHES VISUALLY
 ' ============================================
-[drawMatches]
+[sub:drawMatches]
     COLOR YELLOW#, BLACK#
     PRINT "\n "; REPEAT("=", 45)
     PRINT "              MATCHES REMAINING: ";
@@ -170,37 +170,41 @@ RETURN
 ' ============================================
 ' PLAYER'S TURN
 ' ============================================
-[playerTurn]
+[sub:playerTurn]
     COLOR LGREEN#, BLACK#
     PRINT " YOUR TURN"
     COLOR WHITE#, BLACK#
+	LET exitInput$ = FALSE
+  
+    WHILE exitInput$ = FALSE
+		LET exitInput$ = TRUE
+		
+		PRINT " How many matches do you take (1-3)? ";
+		INPUT "", take$
     
-    [getInput]
-    PRINT " How many matches do you take (1-3)? ";
-    INPUT "", take$
+		' Validate input
+		IF take$ < 1 OR take$ > 3 THEN
+			COLOR LRED#, BLACK#
+			PRINT " You must take 1, 2, or 3 matches!"
+			COLOR WHITE#, BLACK#
+			exitInput$ = FALSE
+		END IF
     
-    ' Validate input
-    IF take$ < 1 OR take$ > 3 THEN
-        COLOR LRED#, BLACK#
-        PRINT " You must take 1, 2, or 3 matches!"
-        COLOR WHITE#, BLACK#
-        GOTO [getInput]
-    END IF
+		IF take$ > matches$ THEN
+			COLOR LRED#, BLACK#
+			PRINT " There are only "; matches$; " matches left!"
+			COLOR WHITE#, BLACK#
+			exitInput$ = FALSE
+		END IF
     
-    IF take$ > matches$ THEN
-        COLOR LRED#, BLACK#
-        PRINT " There are only "; matches$; " matches left!"
-        COLOR WHITE#, BLACK#
-        GOTO [getInput]
-    END IF
-    
-    ' Check if not integer
-    IF take$ <> INT(take$) THEN
-        COLOR LRED#, BLACK#
-        PRINT " Please enter a whole number!"
-        COLOR WHITE#, BLACK#
-        GOTO [getInput]
-    END IF
+		' Check if not integer
+		IF take$ <> INT(take$) THEN
+			COLOR LRED#, BLACK#
+			PRINT " Please enter a whole number!"
+			COLOR WHITE#, BLACK#
+			exitInput$ = FALSE
+		END IF
+	WEND
     
     matches$ = matches$ - take$
     
@@ -218,7 +222,7 @@ RETURN
 ' ============================================
 ' COMPUTER'S TURN (with smart endgame)
 ' ============================================
-[computerTurn]
+[sub:computerTurn]
     COLOR LRED#, BLACK#
     PRINT " COMPUTER'S TURN"
     COLOR WHITE#, BLACK#
