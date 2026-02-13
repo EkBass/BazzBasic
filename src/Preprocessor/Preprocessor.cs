@@ -47,15 +47,10 @@ public class Preprocessor
             // See for INCLUDE directive
             if (trimmedLine.StartsWith("INCLUDE", StringComparison.OrdinalIgnoreCase))
             {
-                string includeLine = trimmedLine.Substring(7).Trim();
+                string includeLine = trimmedLine[7..].Trim();
                 
                 // Extract filename
-                string? filename = ExtractQuotedString(includeLine);
-                
-                if (filename == null)
-                {
-                    throw new Exception($"Invalid INCLUDE syntax at line {i + 1}: expected \"filename\"");
-                }
+                string? filename = ExtractQuotedString(includeLine) ?? throw new Exception($"Invalid INCLUDE syntax at line {i + 1}: expected \"filename\"");
 
                 // Skip .bb library files - they are handled after tokenization
                 if (filename.EndsWith(".bb", StringComparison.OrdinalIgnoreCase))

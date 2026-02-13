@@ -16,6 +16,11 @@
 **************************************************************
 */
 
+
+/*
+ * There is tons of places to improve this one. I will, eventually
+*/
+
 using System.Runtime.InteropServices;
 
 namespace SDL2;

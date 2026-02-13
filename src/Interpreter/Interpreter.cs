@@ -263,6 +263,9 @@ public partial class Interpreter
             case TokenType.TOK_SCREENLOCK:
                 ExecuteScreenlock();
                 break;
+            case TokenType.TOK_VSYNC:
+                ExecuteVSync();
+                break;
             case TokenType.TOK_PSET:
                 ExecutePset();
                 break;

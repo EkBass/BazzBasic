@@ -1,84 +1,93 @@
 # BazzBasic
+BazzBasic is a BASIC interpreter built to work with the [.NET10](https://dotnet.microsoft.com/en-us) Framework.
 
-BazzBasic is a BASIC interpreter built to work with the .NET10 Framework.
+It supports many of the features of [BASIC interpreters](https://en.wikipedia.org/wiki/BASIC_interpreter) from the 80s, but also offers something modern.
 
-It supports many of the features of BASIC interpreters from the 80s, but also offers something modern.
 
-Website locates at: [ekbass.github.io/BazzBasic](https://ekbass.github.io/BazzBasic/)
+## Development
+So far, [EkBass](https://github.com/EkBass) has been responsible for the development of BazzBasic.
 
-## About
+BazzBasic is released under the [open source MIT license](https://github.com/EkBass/BazzBasic/blob/main/LICENSE.txt).
 
-BazzBasic is my vision of how to achieve the same feelings today as I did long ago when I was writing hundreds of lines of code on a Spectravideo 328.
+Its source code is available and visible to everyone in the project's [GitHub repository](https://github.com/EkBass/BazzBasic).
 
-BazzBasic does not allow line numbers, which I think is a bit outdated ways of programming, but it allows [label] tags, which make the familiar GOTO and GOSUB successful.  
-This is my view, not a call to argue.
-
-### Source or binary
-
-See source at [github](https://github.com/EkBass/BazzBasic) or download binary from [Google Drive](https://drive.google.com/drive/folders/1vlOtfd6COIowDwRcK4IprBMPK1uCU3U7?usp=sharing)
+Currently, the development work is done in the Windows 11 operating system, but with quite a bit of effort it can also be translated to Linux or MacOS.
 
 ## Main functionalities
+Most familiar BASIC features work either completely or almost completely as users of traditional BASIC languages ​​are used to using them.
+
 
 ### User-Defined Functions
 With or without recursion.
 
-```basic
+```vb
 DEF FN factorial$(n$) 
-IF n$ <= 1 THEN 
-RETURN 1 
-END IF 
-RETURN n$ * FN factorial$(n$ - 1)
+    IF n$ <= 1 THEN 
+        RETURN 1 
+    END IF 
+    RETURN n$ * FN factorial$(n$ - 1)
 END DEF
 
 PRINT FN factorial$(5) ' Output: 120
 PRINT FN factorial$(10) ' Output: 3628800
 ```
 
-### SDL2
+### SDL2 Graphics
+BazzBasic offers a reasonable sampling of SDL2 features.
 
-BazzBasic already offers a reasonable sampling of SDL2 features and I intend to add more.
+If your program uses graphic features, SDL2.dll must be in the same directory. This does not apply to console-only programs.
 
-If your BazzBasic program uses graphic features, the SDL2.dll file must be in the same directory.  
-This does not apply to programs running on the console.  
-[Graphics-Documentation](https://ekbass.github.io/BazzBasic/manual/#/graphics))
+See [Graphics Commands](https://ekbass.github.io/BazzBasic/manual/#/graphics)
 
 ### Sounds
+BazzBasic includes a sound system built on SDL2_mixer, supporting audio playback with both background and blocking modes.
 
-BazzBasic includes a comprehensive sound system built on NAudio, supporting audio playback with both background and blocking modes.
-
-[Sounds](https://ekbass.github.io/BazzBasic/manual/#/sounds)
-
+See [Sound Commands](https://ekbass.github.io/BazzBasic/manual/#/sounds)
 
 ### Source Control
+With the INCLUDE function, you can split the source code into different files and folders or generate tokenized libraries.
 
-With the INCLUDE function, you can split the source code into different files and folders.
+See [Preprocessor](https://ekbass.github.io/BazzBasic/manual/#/preprocessor) or [Generating libraries](https://ekbass.github.io/BazzBasic/manual/#/libraries)
 
-[Source-Control](https://ekbass.github.io/BazzBasic/manual/#/source-control)
+### Data types
+Unlike many traditional BASIC interpreters, which required strong typing and often separated different data types with suffixes such as *$* or *%*, BazzBasic copes smoothly with untyped data.
 
-### Arrays
-
-BazzBasic arrays are fully dynamic and support numeric, string, or mixed indexing.
-
-[Arrays](https://ekbass.github.io/BazzBasic/manual/#/arrays)
-
-### Typeless variables and Constants
+#### Typeless Variables and Constants
 Variables automatically hold either numbers or strings:
 
-```basic
+```vb
 LET num$ = 42            ' Number
 LET text$ = "Hello"      ' String
 LET mixed$ = "123"       ' String (quoted)
 ```
-[Variables-and-Constants](https://ekbass.github.io/BazzBasic/manual/#/variables-and-constants)
+See [Variables & Constants](https://ekbass.github.io/BazzBasic/manual/#/variables-and-constants)
 
-### Tons of classic and modern BASIC features.
+#### Arrays
+BazzBasic arrays are fully dynamic and support numeric, string, or mixed indexing.
 
-Have a look at the [manual](https://ekbass.github.io/BazzBasic/manual/#/) or study [example programs](https://github.com/EkBass/BazzBasic/tree/main/Examples)
+```basic
+DIM MyArray$
+MyArray$("name") = "John Smith"
+MyArray$("age") = 42
+```
+See [Arrays](https://ekbass.github.io/BazzBasic/manual/#/arrays)
+
+## Getting Started
+
+- [Installation]([installation.md](https://ekbass.github.io/BazzBasic/manual/#/installation))
+- [IDE Usage]([ide-usage.md]https://ekbass.github.io/BazzBasic/manual/#/installation?id=run-bazzbasic-ide)
+- [Hello World Tutorial](https://ekbass.github.io/BazzBasic/manual/#/./tutorials/tutorial-hello-world)
+
+## More Resources
+- [Example programs on GitHub](https://github.com/EkBass/BazzBasic/tree/main/Examples)
+- [Show & Tell discussion forum](https://github.com/EkBass/BazzBasic/discussions/categories/show-and-tell)
+- [BazzBasic Homepage](https://ekbass.github.io/BazzBasic/)
 
 ## BazzBasic size
+Currently, BazzBasic requires about 70 megabytes + SDL2.dll
 
-Currently BazzBasic requires about 70 megabytes + SDL2.dll
+_PublishTrimmed=true_ would reduce its size, but thorough testing is needed first.
 
-_PublishTrimmed=true_ would halve its size, but I won't do it before thorough testing.
+BazzBasic includes .NET 10 assemblies during compilation, which affects the file size.
 
-It's good to note that BazzBasic includes .NET 10 assemblies during compilation, and even when trimmed, this easily makes the finished BazzBasic interpreter a few tens of megabytes.
+.NET 10, although a bit bulky, still offers compatibility far into the future.,

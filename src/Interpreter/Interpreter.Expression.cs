@@ -214,6 +214,7 @@ public partial class Interpreter
                 return result;
 
             // Math functions
+            // Before 1.0, adjust these alphabetically
             case TokenType.TOK_ABS:
                 return EvaluateAbsFunc();
             case TokenType.TOK_ATAN:
@@ -270,8 +271,17 @@ public partial class Interpreter
                 return EvaluateQpiFunc();
             case TokenType.TOK_TAU:
                 return EvaluateTauFunc();
+            case TokenType.TOK_EULER:
+                return EvaluateEulerFunc();
+            case TokenType.TOK_DISTANCE:
+                return EvaluateDistanceFunc();
+            case TokenType.TOK_CLAMP:
+                return EvaluateClampFunc();
+            case TokenType.TOK_LERP:
+                return EvaluateLerpFunc();
 
             // String functions
+            // Before 1.0, adjust these alphabetically
             case TokenType.TOK_ASC:
                 return EvaluateAscFunc();
             case TokenType.TOK_CHR:
@@ -314,6 +324,7 @@ public partial class Interpreter
                 return EvaluateBetweenFunc();
 
             // Other functions
+            // Before 1.0, adjust these alphabetically
             case TokenType.TOK_INKEY:
                 return EvaluateInkeyFunc();
             case TokenType.TOK_GETCONSOLE:
@@ -416,7 +427,7 @@ public partial class Interpreter
         }
     }
 
-    private int CompareValues(Value left, Value right)
+    private static int CompareValues(Value left, Value right)
     {
         // Both same type - direct comparison
         if (left.Type == right.Type)

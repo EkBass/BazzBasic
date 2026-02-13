@@ -16,7 +16,8 @@ public enum TokenType
      * After ver. 0.7 DO NOT change the numeric values of existing tokens!
      * Find next free from the proper category and use that.
      */
-
+    // Before 1.0, adjust these alphabetically
+    // I did change the numeric values, sorry, but I did it in a way that allows for future expansion and keeps related tokens together.
     // ========================================================================
     // Control Flow Keywords 1 - 50
     // ========================================================================
@@ -74,6 +75,7 @@ public enum TokenType
     TOK_SCREEN              = 116,
     TOK_SCREENLOCK          = 117,
     TOK_SHOWSHAPE           = 118,
+    TOK_VSYNC               = 119,
 
     // ========================================================================
     // Sound Keywords 151 - 200
@@ -128,6 +130,10 @@ public enum TokenType
     TOK_QPI                 = 278,
     TOK_TAU                 = 279,
     TOK_BETWEEN             = 280,
+    TOK_EULER               = 281,
+    TOK_DISTANCE            = 282,
+    TOK_CLAMP               = 283,
+    TOK_LERP                = 284,
 
     // String
     TOK_ASC                 = 300,
@@ -183,29 +189,29 @@ public enum TokenType
     // ========================================================================
     TOK_COLON               = 450,              // :
     TOK_COMMA               = 451,              // ,
-    TOK_DIVIDE              = 452,             // /
-    TOK_EQUALS              = 453,             // =
-    TOK_GREATER             = 454,            // >
-    TOK_GREATER_EQ          = 455,         // >=
-    TOK_LESS                = 456,               // <
-    TOK_LESS_EQ             = 457,            // <=
-    TOK_LPAREN              = 458,             // (
+    TOK_DIVIDE              = 452,              // /
+    TOK_EQUALS              = 453,              // =
+    TOK_GREATER             = 454,              // >
+    TOK_GREATER_EQ          = 455,              // >=
+    TOK_LESS                = 456,              // <
+    TOK_LESS_EQ             = 457,              // <=
+    TOK_LPAREN              = 458,              // (
     TOK_MINUS               = 459,              // -
-    TOK_MODULO              = 460,             // % (MOD)
-    TOK_MULTIPLY            = 461,           // *
-    TOK_NOT_EQUALS          = 462,         // <>
-    TOK_PLUS                = 463,               // +
-    TOK_RPAREN              = 464,             // )
-    TOK_SEMICOLON           = 465,          // ;
+    TOK_MODULO              = 460,              // % (MOD)
+    TOK_MULTIPLY            = 461,              // *
+    TOK_NOT_EQUALS          = 462,              // <>
+    TOK_PLUS                = 463,              // +
+    TOK_RPAREN              = 464,              // )
+    TOK_SEMICOLON           = 465,              // ;
 
     // ========================================================================
     // Literals 501 - 550
     // ========================================================================
-    TOK_CONSTANT            = 501,     // StringValue = constant name (ends with #)
-    TOK_LABEL               = 502,        // StringValue = label name
-    TOK_NUMBER              = 503,       // NumValue contains the number
-    TOK_STRING              = 504,       // StringValue contains the string
-    TOK_VARIABLE            = 505,     // StringValue = variable name (ends with $)
+    TOK_CONSTANT            = 501,          // StringValue = constant name (ends with #)
+    TOK_LABEL               = 502,          // StringValue = label name
+    TOK_NUMBER              = 503,          // NumValue contains the number
+    TOK_STRING              = 504,          // StringValue contains the string
+    TOK_VARIABLE            = 505,          // StringValue = variable name (ends with $)
 
     // ========================================================================
     // Special 551+

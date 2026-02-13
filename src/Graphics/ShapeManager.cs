@@ -17,7 +17,7 @@ namespace BazzBasic.Graphics;
 // Manages collection of shapes and theyr things
 public static class ShapeManager
 {
-    private static Dictionary<string, Shape> shapes = new();
+    private static Dictionary<string, Shape> shapes = [];
     private static int nextId = 1;
     
     // Create a new shape and return its ID
@@ -58,8 +58,8 @@ public static class ShapeManager
             {
                 throw new Exception($"Failed to create texture from: {filepath}");
             }
-            
-            SDL.SDL_QueryTexture(texture, out _, out _, out width, out height);
+
+            _ = SDL.SDL_QueryTexture(texture, out _, out _, out width, out height);
         }
         
         // Create shape
@@ -109,7 +109,7 @@ public static class ShapeManager
             }
             
             // Enable alpha blending for this texture
-            SDL.SDL_SetTextureBlendMode(texture, SDL.SDL_BlendMode.SDL_BLENDMODE_BLEND);
+            _ = SDL.SDL_SetTextureBlendMode(texture, SDL.SDL_BlendMode.SDL_BLENDMODE_BLEND);
             
             // Copy pixel data to texture
             int result = SDL.SDL_UpdateTexture(
@@ -244,7 +244,7 @@ public static class ShapeManager
         // IF image shapes
         if (shape.Type == ShapeType.Image && shape.ImageTexture != IntPtr.Zero)
         {
-            SDL.SDL_Rect dstrect = new SDL.SDL_Rect
+            SDL.SDL_Rect dstrect = new()
             {
                 x = centerX - w / 2,
                 y = centerY - h / 2,
@@ -253,7 +253,7 @@ public static class ShapeManager
             };
 
             // This prolly is not most elegant way but whatever
-            SDL.SDL_RenderCopyEx(
+            _ = SDL.SDL_RenderCopyEx(
                 renderer,
                 shape.ImageTexture,
                 IntPtr.Zero,        // srcrect (null = whole texture)
@@ -269,7 +269,7 @@ public static class ShapeManager
         int r = (shape.Color >> 16) & 0xFF;
         int g = (shape.Color >> 8) & 0xFF;
         int b = shape.Color & 0xFF;
-        SDL.SDL_SetRenderDrawColor(renderer, (byte)r, (byte)g, (byte)b, 255);
+        _ = SDL.SDL_SetRenderDrawColor(renderer, (byte)r, (byte)g, (byte)b, 255);
         
         switch (shape.Type)
         {
@@ -293,7 +293,8 @@ public static class ShapeManager
         if (angle == 0)
         {
             // No rotation - peace of cake
-            SDL.SDL_Rect rect = new SDL.SDL_Rect { 
+            SDL.SDL_Rect rect = new()
+            {
                 x = cx - w / 2, 
                 y = cy - h / 2, 
                 w = w, 
@@ -301,9 +302,9 @@ public static class ShapeManager
             };
             
             if (filled)
-                SDL.SDL_RenderFillRect(renderer, ref rect);
+                _ = SDL.SDL_RenderFillRect(renderer, ref rect);
             else
-                SDL.SDL_RenderDrawRect(renderer, ref rect);
+                _ = SDL.SDL_RenderDrawRect(renderer, ref rect);
             return;
         }
         
@@ -328,7 +329,7 @@ public static class ShapeManager
             for (int i = 0; i < 4; i++)
             {
                 int next = (i + 1) % 4;
-                SDL.SDL_RenderDrawLine(renderer, corners[i].x, corners[i].y, corners[next].x, corners[next].y);
+                _ = SDL.SDL_RenderDrawLine(renderer, corners[i].x, corners[i].y, corners[next].x, corners[next].y);
             }
         }
         else
@@ -337,7 +338,7 @@ public static class ShapeManager
             for (int i = 0; i < 4; i++)
             {
                 int next = (i + 1) % 4;
-                SDL.SDL_RenderDrawLine(renderer, corners[i].x, corners[i].y, corners[next].x, corners[next].y);
+                _ = SDL.SDL_RenderDrawLine(renderer, corners[i].x, corners[i].y, corners[next].x, corners[next].y);
             }
         }
     }
@@ -351,7 +352,7 @@ public static class ShapeManager
             for (int y = -radius; y <= radius; y++)
             {
                 int x = (int)Math.Sqrt(radius * radius - y * y);
-                SDL.SDL_RenderDrawLine(renderer, cx - x, cy + y, cx + x, cy + y);
+                _ = SDL.SDL_RenderDrawLine(renderer, cx - x, cy + y, cx + x, cy + y);
             }
         }
         else
@@ -363,14 +364,14 @@ public static class ShapeManager
             
             while (x >= y)
             {
-                SDL.SDL_RenderDrawPoint(renderer, cx + x, cy + y);
-                SDL.SDL_RenderDrawPoint(renderer, cx + y, cy + x);
-                SDL.SDL_RenderDrawPoint(renderer, cx - y, cy + x);
-                SDL.SDL_RenderDrawPoint(renderer, cx - x, cy + y);
-                SDL.SDL_RenderDrawPoint(renderer, cx - x, cy - y);
-                SDL.SDL_RenderDrawPoint(renderer, cx - y, cy - x);
-                SDL.SDL_RenderDrawPoint(renderer, cx + y, cy - x);
-                SDL.SDL_RenderDrawPoint(renderer, cx + x, cy - y);
+                _ = SDL.SDL_RenderDrawPoint(renderer, cx + x, cy + y);
+                _ = SDL.SDL_RenderDrawPoint(renderer, cx + y, cy + x);
+                _ = SDL.SDL_RenderDrawPoint(renderer, cx - y, cy + x);
+                _ = SDL.SDL_RenderDrawPoint(renderer, cx - x, cy + y);
+                _ = SDL.SDL_RenderDrawPoint(renderer, cx - x, cy - y);
+                _ = SDL.SDL_RenderDrawPoint(renderer, cx - y, cy - x);
+                _ = SDL.SDL_RenderDrawPoint(renderer, cx + y, cy - x);
+                _ = SDL.SDL_RenderDrawPoint(renderer, cx + x, cy - y);
                 
                 y += 1;
                 err += 1 + 2 * y;
@@ -406,9 +407,9 @@ public static class ShapeManager
         }
         
         // draw triangle
-        SDL.SDL_RenderDrawLine(renderer, rotated[0].x, rotated[0].y, rotated[1].x, rotated[1].y);
-        SDL.SDL_RenderDrawLine(renderer, rotated[1].x, rotated[1].y, rotated[2].x, rotated[2].y);
-        SDL.SDL_RenderDrawLine(renderer, rotated[2].x, rotated[2].y, rotated[0].x, rotated[0].y);
+        _ = SDL.SDL_RenderDrawLine(renderer, rotated[0].x, rotated[0].y, rotated[1].x, rotated[1].y);
+        _ = SDL.SDL_RenderDrawLine(renderer, rotated[1].x, rotated[1].y, rotated[2].x, rotated[2].y);
+        _ = SDL.SDL_RenderDrawLine(renderer, rotated[2].x, rotated[2].y, rotated[0].x, rotated[0].y);
         
         if (filled)
         {
@@ -416,7 +417,7 @@ public static class ShapeManager
             // For now just draw multiple lines from center
             for (int i = 0; i < 3; i++)
             {
-                SDL.SDL_RenderDrawLine(renderer, cx, cy, rotated[i].x, rotated[i].y);
+                _ = SDL.SDL_RenderDrawLine(renderer, cx, cy, rotated[i].x, rotated[i].y);
             }
         }
     }

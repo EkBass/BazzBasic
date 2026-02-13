@@ -10,17 +10,11 @@
 
 namespace BazzBasic.File;
 
-public class FileManager
+public class FileManager(string rootPath)
 {
-    private readonly string _rootPath;
-
-    public FileManager(string rootPath)
-    {
-        _rootPath = rootPath;
-    }
+    private readonly string _rootPath = rootPath;
 
     public string RootPath => _rootPath;
-
 
     // Read entire file contents as string
     public string ReadFile(string path)
@@ -36,9 +30,6 @@ public class FileManager
         }
     }
 
-
-
-
     // Check if file exists
     public bool FileExists(string path)
     {
@@ -53,21 +44,20 @@ public class FileManager
         }
     }
 
-
     // Write content to file (overwrites existing file)
     public bool WriteFile(string path, string content)
     {
         try
         {
             string fullPath = ResolvePath(path);
-            
+
             // Ensure directory exists
             string? directory = Path.GetDirectoryName(fullPath);
             if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
             {
                 Directory.CreateDirectory(directory);
             }
-            
+
             System.IO.File.WriteAllText(fullPath, content);
             return true;
         }
@@ -77,21 +67,20 @@ public class FileManager
         }
     }
 
-
     // Append content to end of file
     public bool AppendFile(string path, string content)
     {
         try
         {
             string fullPath = ResolvePath(path);
-            
+
             // Ensure directory exists
             string? directory = Path.GetDirectoryName(fullPath);
             if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
             {
                 Directory.CreateDirectory(directory);
             }
-            
+
             System.IO.File.AppendAllText(fullPath, content);
             return true;
         }
@@ -100,7 +89,6 @@ public class FileManager
             return false;
         }
     }
-
 
     // Delete file
     public bool DeleteFile(string path)
@@ -121,7 +109,6 @@ public class FileManager
         }
     }
 
-
     // Resolve path relative to root or as absolute
     private string ResolvePath(string path)
     {
@@ -130,7 +117,7 @@ public class FileManager
         {
             return path;
         }
-        
+
         // Or combine with root path
         return Path.Combine(_rootPath, path);
     }

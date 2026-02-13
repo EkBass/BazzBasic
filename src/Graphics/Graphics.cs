@@ -50,12 +50,12 @@ public static class Graphics
     private static bool screenLocked = false;
     
     // Screen dimensions in text mode (80x30 for 640x480 with 8x8 font, adjusted for 8x16)
-    private static int textRows = 60;     // 480 / 8
-    private static int textColumns = 80;  // 640 / 8
-    
+    private const int textRows = 60;     // 480 / 8
+    private const int textColumns = 80;  // 640 / 8
+
     // Character dimensions (for text mode emulation)
-    private static readonly int charWidth = 8;
-    private static readonly int charHeight = 8;
+    private const int charWidth = 8;
+    private const int charHeight = 8;
     
     // Initialise SDL2 stuff
 
@@ -138,9 +138,9 @@ public static class Graphics
     public static void Clear()
     {
         if (!initialized) return;
-        
-        SDL.SDL_SetRenderDrawColor(renderer, bgR, bgG, bgB, bgA);
-        SDL.SDL_RenderClear(renderer);
+
+        _ = SDL.SDL_SetRenderDrawColor(renderer, bgR, bgG, bgB, bgA);
+        _ = SDL.SDL_RenderClear(renderer);
         SDL.SDL_RenderPresent(renderer);
     }
     
@@ -149,17 +149,17 @@ public static class Graphics
     {
         if (!initialized) return;
         
-        SDL.SDL_SetRenderDrawColor(renderer, currentR, currentG, currentB, currentA);
-        SDL.SDL_RenderDrawPoint(renderer, x, y);
+        _ = SDL.SDL_SetRenderDrawColor(renderer, currentR, currentG, currentB, currentA);
+        _ = SDL.SDL_RenderDrawPoint(renderer, x, y);
     }
     
     // Draw a line from x1, y1 to x2, y2
     public static void DrawLine(int x1, int y1, int x2, int y2)
     {
         if (!initialized) return;
-        
-        SDL.SDL_SetRenderDrawColor(renderer, currentR, currentG, currentB, currentA);
-        SDL.SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
+
+        _ = SDL.SDL_SetRenderDrawColor(renderer, currentR, currentG, currentB, currentA);
+        _ = SDL.SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
     }
     
     // Draw  rectangle
@@ -167,21 +167,21 @@ public static class Graphics
     {
         if (!initialized) return;
         
-        SDL.SDL_Rect rect = new SDL.SDL_Rect { x = x, y = y, w = width, h = height };
-        SDL.SDL_SetRenderDrawColor(renderer, currentR, currentG, currentB, currentA);
+        SDL.SDL_Rect rect = new() { x = x, y = y, w = width, h = height };
+        _ = SDL.SDL_SetRenderDrawColor(renderer, currentR, currentG, currentB, currentA);
         
         if (filled)
-            SDL.SDL_RenderFillRect(renderer, ref rect);
+            _ = SDL.SDL_RenderFillRect(renderer, ref rect);
         else
-            SDL.SDL_RenderDrawRect(renderer, ref rect);
+            _ = SDL.SDL_RenderDrawRect(renderer, ref rect);
     }
     
     // Draw a circle using midpoint circle alg.
     public static void DrawCircle(int centerX, int centerY, int radius, bool filled = false)
     {
         if (!initialized) return;
-        
-        SDL.SDL_SetRenderDrawColor(renderer, currentR, currentG, currentB, currentA);
+
+        _ = SDL.SDL_SetRenderDrawColor(renderer, currentR, currentG, currentB, currentA);
         
         if (filled)
         {
@@ -189,7 +189,7 @@ public static class Graphics
             for (int y = -radius; y <= radius; y++)
             {
                 int x = (int)Math.Sqrt(radius * radius - y * y);
-                SDL.SDL_RenderDrawLine(renderer, centerX - x, centerY + y, centerX + x, centerY + y);
+                _ = SDL.SDL_RenderDrawLine(renderer, centerX - x, centerY + y, centerX + x, centerY + y);
             }
         }
         else
@@ -200,14 +200,14 @@ public static class Graphics
             
             while (x >= y)
             {
-                SDL.SDL_RenderDrawPoint(renderer, centerX + x, centerY + y);
-                SDL.SDL_RenderDrawPoint(renderer, centerX + y, centerY + x);
-                SDL.SDL_RenderDrawPoint(renderer, centerX - y, centerY + x);
-                SDL.SDL_RenderDrawPoint(renderer, centerX - x, centerY + y);
-                SDL.SDL_RenderDrawPoint(renderer, centerX - x, centerY - y);
-                SDL.SDL_RenderDrawPoint(renderer, centerX - y, centerY - x);
-                SDL.SDL_RenderDrawPoint(renderer, centerX + y, centerY - x);
-                SDL.SDL_RenderDrawPoint(renderer, centerX + x, centerY - y);
+                _ = SDL.SDL_RenderDrawPoint(renderer, centerX + x, centerY + y);
+                _ = SDL.SDL_RenderDrawPoint(renderer, centerX + y, centerY + x);
+                _ = SDL.SDL_RenderDrawPoint(renderer, centerX - y, centerY + x);
+                _ = SDL.SDL_RenderDrawPoint(renderer, centerX - x, centerY + y);
+                _ = SDL.SDL_RenderDrawPoint(renderer, centerX - x, centerY - y);
+                _ = SDL.SDL_RenderDrawPoint(renderer, centerX - y, centerY - x);
+                _ = SDL.SDL_RenderDrawPoint(renderer, centerX + y, centerY - x);
+                _ = SDL.SDL_RenderDrawPoint(renderer, centerX + x, centerY - y);
                 
                 y += 1;
                 err += 1 + 2 * y;
@@ -364,8 +364,8 @@ public static class Graphics
         // For now, just clear the screen when scrolling
         // A proper implementation would copy pixels upward, just as I am not doing it
 
-        SDL.SDL_SetRenderDrawColor(renderer, bgR, bgG, bgB, bgA);
-        SDL.SDL_RenderClear(renderer);
+        _ = SDL.SDL_SetRenderDrawColor(renderer, bgR, bgG, bgB, bgA);
+        _ = SDL.SDL_RenderClear(renderer);
         cursorRow = 0;
     }
     
@@ -402,9 +402,9 @@ public static class Graphics
         
         // Process SDL first to get latest mouse state
         ProcessEvents();
-        
-        int x = 0, y = 0;
-        uint state = SDL.SDL_GetMouseState(out x, out y);
+
+
+        uint state = SDL.SDL_GetMouseState(out int x, out int y);
         mouseX = x;
         mouseY = y;
         mouseButtons = state;
@@ -484,7 +484,7 @@ public static class Graphics
         byte[] pixelData = new byte[4];
         
         // Create rect for single pixel
-        SDL.SDL_Rect rect = new SDL.SDL_Rect { x = x, y = y, w = 1, h = 1 };
+        SDL.SDL_Rect rect = new() { x = x, y = y, w = 1, h = 1 };
         
         // Pin the byte array and get pointer
         System.Runtime.InteropServices.GCHandle handle = 
@@ -529,5 +529,37 @@ public static class Graphics
         {
             handle.Free();
         }
+    }
+
+    // Enable or disable vertical synchronization (VSync)
+    public static void SetVSync(bool enable)
+    {
+        if (!initialized)
+            throw new InvalidOperationException("Graphics not initialized. Call SCREEN first.");
+
+        // Destroy existing renderer
+        if (renderer != IntPtr.Zero)
+        {
+            SDL.SDL_DestroyRenderer(renderer);
+        }
+
+        // Create new renderer with or without VSync
+        var flags = SDL.SDL_RendererFlags.SDL_RENDERER_ACCELERATED;
+        if (enable)
+            flags |= SDL.SDL_RendererFlags.SDL_RENDERER_PRESENTVSYNC;
+
+        renderer = SDL.SDL_CreateRenderer(
+            window,
+            -1,
+            flags
+        );
+
+        if (renderer == IntPtr.Zero)
+        {
+            throw new Exception($"Renderer could not be recreated! SDL Error: {SDL.SDL_GetErrorString()}");
+        }
+
+        // Restore drawing state
+        _= SDL.SDL_SetRenderDrawColor(renderer, currentR, currentG, currentB, currentA);
     }
 }

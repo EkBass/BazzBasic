@@ -1,6 +1,6 @@
 # Sound System
 
-BazzBasic includes a comprehensive sound system built on NAudio, supporting audio playback with both background and blocking modes.
+BazzBasic includes a comprehensive sound system built on SDL2_mixer, supporting audio playback with both background and blocking modes.
 
 ## Overview
 
@@ -14,7 +14,7 @@ The sound system allows you to:
 
 - **WAV** (recommended for best compatibility)
 - **MP3**
-- Other formats supported by NAudio
+- Other formats supported by SDL2_mixer.dll
 
 ## Sound Commands
 

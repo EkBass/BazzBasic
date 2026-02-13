@@ -20,6 +20,7 @@ public partial class Interpreter
     // String Functions in most likely outdated list order
     // ========================================================================
     // 
+    // Before 1.0, adjust these alphabetically
     // TOK_ASC,
     // TOK_CHR,
     // TOK_INSTR,
@@ -69,7 +70,7 @@ public partial class Interpreter
         Value secondParam = EvaluateExpression();
 
         // Check if there's a third parameter
-        int startPos = 0;
+        int startPos;
         string haystack;
         string needle;
 

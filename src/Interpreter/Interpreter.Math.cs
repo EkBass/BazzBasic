@@ -21,6 +21,7 @@ public partial class Interpreter
     // HelperGetDouble
     //
     // # Math Functions in alphabetical order and so outdated list anyway
+    // Before 1.0, adjust these alphabetically
     // ABS
     // ATAN
     // CINT
@@ -37,12 +38,11 @@ public partial class Interpreter
     // TAN
     // PI
     // HPI
-<<<<<<< HEAD
-=======
     // QPI
     // TAU
     // BETWEEN
->>>>>>> 7a41b25 (Update on 2026-02-12 09:57:17)
+    // EULER
+    // CLAMP
     // ========================================================================
 
     private double HelperGetDouble() {
@@ -80,6 +80,38 @@ public partial class Interpreter
         return Value.FromNumber(Math.Ceiling(HelperGetDouble()));
     }
 
+    // CLAMP function
+    private Value EvaluateClampFunc()
+    {
+        _pos++; // Skip 'CLAMP'
+
+        if (_tokens[_pos].Type != TokenType.TOK_LPAREN)
+            Error("Expected '(' after CLAMP");
+        _pos++;
+
+        double value = EvaluateExpression().AsNumber();
+
+        if (_tokens[_pos].Type != TokenType.TOK_COMMA)
+            Error("Expected ',' in CLAMP");
+        _pos++;
+
+        double min = EvaluateExpression().AsNumber();
+
+        if (_tokens[_pos].Type != TokenType.TOK_COMMA)
+            Error("Expected ',' in CLAMP");
+        _pos++;
+
+        double max = EvaluateExpression().AsNumber();
+
+        if (_tokens[_pos].Type != TokenType.TOK_RPAREN)
+            Error("Expected ')' after CLAMP");
+        _pos++;
+
+        // Clamp logic
+        if (value < min) return Value.FromNumber(min);
+        if (value > max) return Value.FromNumber(max);
+        return Value.FromNumber(value);
+    }
     // COS function
     private Value EvaluateCosFunc()
     {
@@ -106,6 +138,39 @@ public partial class Interpreter
     {
         _pos++;
         return Value.FromNumber(Math.Truncate(HelperGetDouble()));
+    }
+
+    // LERP function - Linear interpolation between two values
+    private Value EvaluateLerpFunc()
+    {
+        _pos++; // Skip 'LERP'
+
+        if (_tokens[_pos].Type != TokenType.TOK_LPAREN)
+            Error("Expected '(' after LERP");
+        _pos++;
+
+        double start = EvaluateExpression().AsNumber();
+
+        if (_tokens[_pos].Type != TokenType.TOK_COMMA)
+            Error("Expected ',' in LERP");
+        _pos++;
+
+        double end = EvaluateExpression().AsNumber();
+
+        if (_tokens[_pos].Type != TokenType.TOK_COMMA)
+            Error("Expected ',' in LERP");
+        _pos++;
+
+        double t = EvaluateExpression().AsNumber();
+
+        if (_tokens[_pos].Type != TokenType.TOK_RPAREN)
+            Error("Expected ')' after LERP");
+        _pos++;
+
+        // LERP formula: start + (end - start) * t
+        double result = start + (end - start) * t;
+
+        return Value.FromNumber(result);
     }
 
     // LOG function
@@ -273,6 +338,13 @@ public partial class Interpreter
         return Value.FromNumber((value >= lower && value <= upper) ? 1 : 0);
     }
 
+    // EULER function - Euler's number (e)
+    private Value EvaluateEulerFunc()
+    {
+        _pos++;
+        return Value.FromNumber(2.718281828459045);
+    }
+
 
     // ========================================================================
     // FastTrig - Lookup table based trigonometry for graphics/games
@@ -358,5 +430,45 @@ public partial class Interpreter
         // Normalize and convert using pre-calculated constant
         int index = ((int)Math.Round(angle) % 360 + 360) % 360;
         return Value.FromNumber(index * 0.017453292519943295); // PI/180
+    }
+
+    // DISTANCE function - Euclidean distance (2D or 3D)
+    // DISTANCE(x1, y1, x2, y2)          → 2D distance
+    // DISTANCE(x1, y1, z1, x2, y2, z2)  → 3D distance
+    private Value EvaluateDistanceFunc()
+    {
+        _pos++;
+        Require(TokenType.TOK_LPAREN, "Expected '(' after DISTANCE");
+
+        double p1 = EvaluateExpression().AsNumber();
+        Require(TokenType.TOK_COMMA, "Expected ',' in DISTANCE parameters");
+        double p2 = EvaluateExpression().AsNumber();
+        Require(TokenType.TOK_COMMA, "Expected ',' in DISTANCE parameters");
+        double p3 = EvaluateExpression().AsNumber();
+        Require(TokenType.TOK_COMMA, "Expected ',' in DISTANCE parameters");
+        double p4 = EvaluateExpression().AsNumber();
+
+        // Check for 5th and 6th parameters (3D mode)
+        if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_COMMA)
+        {
+            _pos++; // Skip comma
+            double p5 = EvaluateExpression().AsNumber();
+            Require(TokenType.TOK_COMMA, "Expected 6th parameter for 3D DISTANCE");
+            double p6 = EvaluateExpression().AsNumber();
+            Require(TokenType.TOK_RPAREN, "Expected ')' after DISTANCE parameters");
+
+            // 3D: DISTANCE(x1, y1, z1, x2, y2, z2)
+            double dx = p4 - p1;
+            double dy = p5 - p2;
+            double dz = p6 - p3;
+            return Value.FromNumber(Math.Sqrt(dx * dx + dy * dy + dz * dz));
+        }
+
+        Require(TokenType.TOK_RPAREN, "Expected ')' after DISTANCE parameters");
+
+        // 2D: DISTANCE(x1, y1, x2, y2)
+        double dx2 = p3 - p1;
+        double dy2 = p4 - p2;
+        return Value.FromNumber(Math.Sqrt(dx2 * dx2 + dy2 * dy2));
     }
 }

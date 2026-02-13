@@ -5,6 +5,8 @@
  File: Sound\SDL_mixer.cs
  Minimal P/Invoke bindings for SDL_mixer.dll
  Licence: MIT
+
+Tons of places to improve this and I will. Some day.
 */
 
 using System.Runtime.InteropServices;

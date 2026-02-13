@@ -22,6 +22,7 @@ public partial class Interpreter
 
 
     // Im pretty sure this is not needed anymore, but I check later
+    /*
     private void ExecuteLoadSound()
     {
         _pos++; // Skip LOADSOUND token
@@ -29,7 +30,7 @@ public partial class Interpreter
         // This is handled in EvaluateExpression as a function
         throw new Exception("LOADSOUND should be used as a function, not a command");
     }
-
+    */
     private void ExecuteSoundOnce()
     {
         _pos++; // Skip SOUNDONCE token

@@ -1,16 +1,13 @@
 # Arrays
-
 Arrays store collections of values. BazzBasic arrays are fully dynamic and support numeric, string, or mixed indexing.
 
 - Arrays store values that can change during program execution.
 - All array names must end with `$`.
 
 ## Initialization
-
 - Arrays must be initialized with `DIM` before they can be used
-- BazzBasic arrays are not typed, but work the same way as in JavaScript, for example.
+- Like variables or constants, arrays are not strongly typed
 - An array needs the suffix '$'.
-
 ```vb
 DIM scores$
 DIM names$
@@ -18,15 +15,12 @@ DIM matrix$
 ```
 
 Multiple declarations:
-
 ```vb
 DIM a$, b$, c$
 ```
 
 ## Numeric Indexing
-
 Use numbers as indices (0-based):
-
 ```vb
 DIM scores$
 scores$(0) = 95
@@ -37,9 +31,7 @@ PRINT scores$(0)         ' Output: 95
 ```
 
 ## String Indexing (Associative Arrays)
-
 Use strings as keys:
-
 ```vb
 DIM player$
 player$("name") = "Alice"
@@ -50,7 +42,6 @@ PRINT player$("name")    ' Output: Alice
 ```
 
 ## Multi-dimensional Arrays
-
 Use multiple indices separated by commas:
 
 ```vb
@@ -59,14 +50,11 @@ matrix$(0, 0) = "A1"
 matrix$(0, 1) = "A2"
 matrix$(1, 0) = "B1"
 matrix$(1, 1) = "B2"
-
 PRINT matrix$(1, 0)      ' Output: B1
 ```
 
 ## Mixed Indexing
-
 Combine numeric and string indices:
-
 ```vb
 DIM data$
 data$(1, "header") = "Name"
@@ -80,9 +68,8 @@ PRINT data$(1, "value")  ' Output: Alice
 ## Array Functions
 
 ### LEN
-
-Returns the number of elements in an array:
-
+Returns the number of elements in an array:  
+**Note the empty parentheses `()` after the array name.**
 ```vb
 DIM items$
 items$(0) = "apple"
@@ -92,12 +79,8 @@ items$(2) = "cherry"
 PRINT LEN(items$())      ' Output: 3
 ```
 
-Note the empty parentheses `()` after the array name.
-
 ### HASKEY
-
 Returns 1 if the key exists, 0 otherwise:
-
 ```vb
 DIM config$
 config$("debug") = 1
@@ -112,9 +95,7 @@ END IF
 ```
 
 ### DELKEY
-
 Removes an element from the array:
-
 ```vb
 DIM cache$
 cache$("temp") = "value"
@@ -125,9 +106,7 @@ PRINT HASKEY(cache$("temp"))  ' Output: 0
 ```
 
 ### DELARRAY
-
 Removes the entire array and all its elements:
-
 ```vb
 DIM arr$
 arr$("name") = "Test"
@@ -145,9 +124,7 @@ PRINT LEN(arr$())             ' Output: 0
 ## Practical Examples
 
 ### Pass values to user-defined functions
-
 Arrays cannot be passed directly to functions. Instead, pass individual elements as values:
-
 ```vb
 DIM a$
 a$("name") = "Foo"
@@ -169,7 +146,6 @@ LET b$ = FN func$(a$("name"), a$("age"), a$(1))
 ```
 
 ### Simple List
-
 ```vb
 DIM fruits$
 LET count$ = 0
@@ -187,7 +163,6 @@ NEXT
 ```
 
 ### Dictionary / Map
-
 ```vb
 DIM translations$
 translations$("hello") = "hei"
@@ -203,7 +178,6 @@ END IF
 ```
 
 ### 2D Grid
-
 ```vb
 DIM grid$
 
@@ -238,14 +212,12 @@ X . .
 ## Error Handling
 
 ### Array Not Declared
-
 ```vb
 scores$(0) = 95
 ' ERROR: Array not declared, use DIM first: scores$
 ```
 
 ### Element Not Initialized
-
 ```vb
 DIM data$
 PRINT data$(0)

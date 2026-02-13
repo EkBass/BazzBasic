@@ -2,8 +2,6 @@
 
 ## Basic Syntax
 **Note:** Name of user-defined function must have '$' as suffix
-
-
 ```vb
 DEF FN functionName$(param1$, param2$, ...)
     ' Function body
@@ -12,7 +10,6 @@ END DEF
 ```
 
 ## Simple Function
-
 ```vb
 DEF FN double$(x$)
     RETURN x$ * 2
@@ -23,7 +20,6 @@ PRINT FN double$(5)     ' Output: 10
 ```
 
 ## Multiple Parameters
-
 ```vb
 DEF FN add$(a$, b$)
     RETURN a$ + b$
@@ -39,7 +35,6 @@ PRINT FN multiply$(3, 4)    ' Output: 12
 
 ## Array data as parameter
 **Note:** You cant pass a whole array as a parameter. Instead, you need to pass values from it.
-
 ```vb
 DIM a$
 a$("name") = "Foo"
@@ -61,7 +56,6 @@ LET b$ = FN func$(a$("name"), a$("age"), a$(1))
 ```
 
 ## String Functions
-
 ```vb
 DEF FN greet$(name$)
     RETURN "Hello, " + name$ + "!"
@@ -71,7 +65,6 @@ PRINT FN greet$("Alice")    ' Output: Hello, Alice!
 ```
 
 ## Functions with Logic
-
 ```vb
 DEF FN max$(a$, b$)
     IF a$ > b$ THEN
@@ -94,9 +87,7 @@ PRINT FN min$(10, 25)    ' Output: 10
 ```
 
 ## Recursive Functions
-
 Functions can call themselves:
-
 ```vb
 DEF FN factorial$(n$)
     IF n$ <= 1 THEN
@@ -110,7 +101,6 @@ PRINT FN factorial$(10)   ' Output: 3628800
 ```
 
 ### Fibonacci
-
 ```vb
 DEF FN fib$(n$)
     IF n$ <= 1 THEN
@@ -126,14 +116,12 @@ NEXT
 ```
 
 ## Scope
-
 User-defined functions have their own local scope that is completely isolated from the main program:
 
 - Function parameters are local to the function
 - Variables declared with `LET` inside a function are local to that function  
 - Functions **cannot** access or modify global variables from the main program
 - Parameters are passed **by value** - changes to parameters don't affect the original variables
-
 ```vb
 LET b$ = 100              ' Global variable
 LET C# = "Foo"            ' Global constant
@@ -155,7 +143,6 @@ END DEF
 
 
 ## Labels Inside Functions
-
 Functions can have local labels for GOTO/GOSUB:
 
 ```vb
@@ -183,7 +170,6 @@ Done!
 ```
 
 ## Function Isolation
-
 GOTO and GOSUB inside a function **cannot** jump outside the function:
 
 ```vb
@@ -191,7 +177,7 @@ GOTO and GOSUB inside a function **cannot** jump outside the function:
 PRINT "Outside"
 
 DEF FN broken$(x$)
-    GOTO [outside_label]    ' ERROR!
+    GOTO [outside_label]    ' ERROR! Label is outside of function
     RETURN x$
 END DEF
 ```
@@ -202,39 +188,7 @@ This restriction ensures functions are self-contained and predictable.
 
 ## Practical Examples
 
-### Clamp Value
-
-```vb
-DEF FN clamp$(value$, minVal$, maxVal$)
-    IF value$ < minVal$ THEN
-        RETURN minVal$
-    END IF
-    IF value$ > maxVal$ THEN
-        RETURN maxVal$
-    END IF
-    RETURN value$
-END DEF
-
-PRINT FN clamp$(150, 0, 100)   ' Output: 100
-PRINT FN clamp$(-50, 0, 100)   ' Output: 0
-PRINT FN clamp$(50, 0, 100)    ' Output: 50
-```
-
-### Distance Formula
-
-```vb
-DEF FN distance$(x1$, y1$, x2$, y2$)
-    LET dx$ = x2$ - x1$
-    LET dy$ = y2$ - y1$
-    RETURN SQR(dx$ * dx$ + dy$ * dy$)
-END DEF
-
-PRINT FN distance$(0, 0, 3, 4)   ' Output: 5
-```
-
-
 ### Is Even/Odd
-
 ```vb
 DEF FN isEven$(n$)
     RETURN MOD(n$, 2) = 0
@@ -252,8 +206,8 @@ FOR i$ = 1 TO 5
     END IF
 NEXT
 ```
-## Order of code
 
+## Order of code
 Before code can call a user-created function, it must be loaded from the source code.
 
 ### Wrong

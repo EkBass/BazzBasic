@@ -11,12 +11,13 @@ using System.Text;
 
 namespace BazzBasic.Lexer;
 
-public class Lexer
+public class Lexer(string source)
 {
     // Keyword lookup table
     private static readonly Dictionary<string, TokenType> Keywords = new(StringComparer.OrdinalIgnoreCase)
     {
         // Control flow
+        // Before 1.0, adjust these alphabetically
         ["DEF"]         = TokenType.TOK_DEF,
         ["DIM"]         = TokenType.TOK_DIM,
         ["ELSE"]        = TokenType.TOK_ELSE,
@@ -67,6 +68,7 @@ public class Lexer
         ["SCREEN"]      = TokenType.TOK_SCREEN,
         ["SCREENLOCK"]  = TokenType.TOK_SCREENLOCK,
         ["SHOWSHAPE"]   = TokenType.TOK_SHOWSHAPE,
+        ["VSYNC"]       = TokenType.TOK_VSYNC,
 
         // Sound
         ["LOADSOUND"]       = TokenType.TOK_LOADSOUND,
@@ -114,6 +116,10 @@ public class Lexer
         ["QPI"]             = TokenType.TOK_QPI,
         ["TAU"]             = TokenType.TOK_TAU,
         ["BETWEEN"]         = TokenType.TOK_BETWEEN,
+        ["EULER"]           = TokenType.TOK_EULER,
+        ["DISTANCE"]        = TokenType.TOK_DISTANCE,
+        ["CLAMP"]           = TokenType.TOK_CLAMP,
+        ["LERP"]            = TokenType.TOK_LERP,
 
         // String functions
         ["ASC"]         = TokenType.TOK_ASC,
@@ -166,16 +172,9 @@ public class Lexer
         ["BEEB"] = TokenType.TOK_BEEB,
     };
 
-    private readonly string _source;
-    private int _pos;
-    private int _line;
-
-    public Lexer(string source)
-    {
-        _source = source;
-        _pos = 0;
-        _line = 1;
-    }
+    private readonly string _source = source;
+    private int _pos = 0;
+    private int _line = 1;
 
 
     // Tokenise entire source into token list

@@ -15,10 +15,7 @@ public class LibraryLoader
     private readonly HashSet<string> _loadedLibraries = new(StringComparer.OrdinalIgnoreCase);
     private readonly string _basePath;
 
-    public LibraryLoader(string basePath = "")
-    {
-        _basePath = string.IsNullOrEmpty(basePath) ? Directory.GetCurrentDirectory() : basePath;
-    }
+    public LibraryLoader(string basePath = "") => _basePath = string.IsNullOrEmpty(basePath) ? Directory.GetCurrentDirectory() : basePath;
 
 
     // Process tokens: find .bb INCLUDE statements, load libraries, merge toke

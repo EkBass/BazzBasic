@@ -3,10 +3,30 @@ These changes are about the current source code. These are effected once new bin
 
 ## Feb 2026
 
+## 12th Feb. 2026
+
+- Added LERP(start, end, t). Linear interpolation between two values. Returns a value between *start* and *end* based on parameter *t* (0.0 to 1.0).
+- Added EULER, which returns raw coded value of e (EULER) 2.718281828459045
+- Added VSYNC(TRUE/FALSE). VSync limits frame rate to display refresh rate (typically 60 FPS) but prevents screen tearing. Disabling VSync allows unlimited frame rate but may cause visual artifacts.
+- Added DISTANCE(x1, y1, x2, y2) or DISTANCE(x1, y1, z1, x2, y2, z2) which returns distance of 2D or 3D coordinates
+- Added CLAMP(n, min, max). If the given parameter *n* falls below or exceeds the given limit values ​​*min* or *max*, it is returned within the limits
+
+```vb
+LET brightness$ = CLAMP(value$, 20, 255)
+' Replaces lines
+' IF brightness$ < 20 THEN brightness$ = 20
+' IF brightness$ > 255 THEN brightness$ = 255
+```
+
 ### 11th Feb. 2026
 
 - Added TAU, which returns raw coded value of PI * 2
 - Added QPI, which returns raw coded value of PI / 4
+- Added BETWEEN(value, min, max) which returns TRUE if value is between min and max.
+
+### 8th Feb 2026
+
+Version 0.8 released as binary
 
 ### 8th Feb. 2026
 

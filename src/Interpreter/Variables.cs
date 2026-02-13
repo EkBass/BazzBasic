@@ -13,15 +13,9 @@ using BazzBasic.Parser;
 namespace BazzBasic.Interpreter;
 
 // Exception for undefined variables
-public class UndefinedVariableException : Exception
+public class UndefinedVariableException(string variableName) : Exception($"Undefined variable: {variableName}")
 {
-    public string VariableName { get; }
-    
-    public UndefinedVariableException(string variableName) 
-        : base($"Undefined variable: {variableName}")
-    {
-        VariableName = variableName;
-    }
+    public string VariableName { get; } = variableName;
 }
 
 public class Variables
@@ -163,12 +157,12 @@ public class Variables
         string key = arrayName.ToUpperInvariant();
         
         // Check if array is declared - do NOT auto-declare
-        if (!_arrays.ContainsKey(key))
+        if (!_arrays.TryGetValue(key, out Dictionary<string, Value>? value1))
         {
             throw new InvalidOperationException($"Array not declared, use DIM first: {arrayName}");
         }
-        
-        _arrays[key][index] = value;
+
+        value1[index] = value;
     }
 
     public Value GetArrayElement(string arrayName, string index)

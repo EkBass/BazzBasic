@@ -138,6 +138,123 @@ WHILE INKEY <> 27
 WEND
 ```
 
+### VSYNC
+Control vertical synchronization (VSync) to limit or maximize frame rate.
+
+```vb
+VSYNC(TRUE)         ' Enable VSync (default)
+VSYNC(FALSE)        ' Disable VSync
+```
+
+**Parameters:**
+- `TRUE` or any non-zero value - Enable VSync
+- `FALSE` or `0` - Disable VSync
+
+**What is VSync?**
+
+VSync synchronizes frame rendering with your monitor's refresh rate (typically 60Hz = 60 FPS). This prevents screen tearing (horizontal lines during fast motion) but limits maximum frame rate.
+
+**When to use:**
+- `VSYNC(TRUE)` - Normal gameplay (smoother, no tearing)
+- `VSYNC(FALSE)` - Benchmarking, performance testing, FPS measurement
+
+**Important:**
+- VSync is **enabled by default** when you call `SCREEN`
+- Call `VSYNC` **after** the `SCREEN` command
+- If rendering takes longer than 16.67ms (1/60s), VSync will lock to 30 FPS instead of 60 FPS
+
+#### Performance Impact
+
+```vb
+' With VSync enabled (default):
+' - FPS capped at monitor refresh rate (usually 60)
+' - Smooth rendering, no screen tearing
+' - If frame takes > 16.67ms → drops to 30 FPS
+
+' With VSync disabled:
+' - Unlimited FPS (can exceed 100+ FPS)
+' - May show screen tearing
+' - Better for performance benchmarking
+```
+
+#### Example - FPS Testing
+
+```vb
+SCREEN 12
+VSYNC(FALSE)        ' Disable for true FPS measurement
+
+LET frameCount$ = 0
+LET lastTime$ = TICKS
+
+WHILE INKEY <> KEY_ESC#
+    SCREENLOCK ON
+    CLS
+    
+    ' Your rendering code here
+    CIRCLE (320, 240), 50, 12
+    
+    SCREENLOCK OFF
+    
+    ' Calculate FPS
+    frameCount$ = frameCount$ + 1
+    LET currentTime$ = TICKS
+    
+    IF currentTime$ - lastTime$ >= 1000 THEN
+        LET fps$ = frameCount$ / ((currentTime$ - lastTime$) / 1000)
+        frameCount$ = 0
+        lastTime$ = currentTime$
+        
+        LOCATE 1, 1
+        PRINT "FPS: "; INT(fps$); "  "
+    ENDIF
+WEND
+
+VSYNC(TRUE)         ' Restore default before exit
+END
+```
+
+#### Example - Toggle VSync at Runtime
+
+```vb
+SCREEN 12
+LET vsyncEnabled$ = TRUE
+VSYNC(vsyncEnabled$)
+
+WHILE INKEY <> KEY_ESC#
+    LET key$ = INKEY
+    
+    ' Press V to toggle VSync
+    IF key$ = ASC("v") OR key$ = ASC("V") THEN
+        vsyncEnabled$ = NOT vsyncEnabled$
+        VSYNC(vsyncEnabled$)
+        
+        LOCATE 2, 1
+        IF vsyncEnabled$ THEN
+            PRINT "VSync: ON  "
+        ELSE
+            PRINT "VSync: OFF "
+        ENDIF
+    ENDIF
+    
+    SCREENLOCK ON
+    ' Rendering here
+    SCREENLOCK OFF
+    SLEEP 1
+WEND
+END
+```
+
+**Troubleshooting:**
+
+If your game runs at 30 FPS instead of 60 FPS with VSync enabled:
+1. Your rendering takes > 16.67ms per frame
+2. VSync forces wait for next refresh (60 FPS ÷ 2 = 30 FPS)
+3. Solutions:
+   - Reduce number of rays in raycaster
+   - Lower screen resolution
+   - Optimize rendering code
+   - Use `VSYNC(FALSE)` to test maximum achievable FPS
+
 ## Basic Graphics Primitives
 
 ### PSET - Draw Pixel

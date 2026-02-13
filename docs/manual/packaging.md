@@ -19,8 +19,7 @@ The standalone exe needs only one additional file:
 |------|----------|---------|
 | yourprogram.exe | Yes | Your packaged program |
 | SDL2.dll | Yes | Graphics and input |
-
-NAudio (sound library) is bundled inside BazzBasic.exe, so no additional DLLs are needed for sound.
+| SDL2_mixer.dll | Yes | Audio |
 
 #### Your assets:
 

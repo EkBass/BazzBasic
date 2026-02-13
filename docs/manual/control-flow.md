@@ -1,7 +1,6 @@
 # Control Flow
 
 ## Sleep
-
 Halts the program for _x_ milliseconds
 
 ```vb
@@ -13,7 +12,6 @@ PRINT "Done!"
 ## IF Statements
 
 ### Block IF
-
 Multi-line conditional with THEN on its own:
 
 ```vb
@@ -24,7 +22,6 @@ END IF
 ```
 
 ### IF/ELSE
-
 ```vb
 IF age$ >= 18 THEN
     PRINT "Adult"
@@ -34,7 +31,6 @@ END IF
 ```
 
 ### IF/ELSEIF/ELSE
-
 ```vb
 IF score$ >= 90 THEN
     PRINT "A"
@@ -50,7 +46,6 @@ END IF
 ```
 
 ### One-line IF
-
 Jump to label based on condition:
 
 ```vb
@@ -59,13 +54,11 @@ IF key$ = KEY_ESC# THEN GOTO [menu] ELSE GOTO [continue]
 ```
 
 With GOSUB:
-
 ```vb
 IF ready$ = 1 THEN GOSUB [start_game]
 ```
 
 ## Comparison Operators
-
 | Operator | Meaning |
 |----------|---------|
 | `=` or `==` | Equal |
@@ -76,7 +69,6 @@ IF ready$ = 1 THEN GOSUB [start_game]
 | `>=` | Greater than or equal |
 
 ## Logical Operators
-
 ```vb
 IF age$ >= 18 AND age$ <= 65 THEN
     PRINT "Working age"
@@ -92,11 +84,9 @@ END IF
 ```
 
 ## FOR Loops
-
 **Note:** FOR can initialize variable itself, without LET
 
 ### Basic FOR
-
 ```vb
 FOR i$ = 1 TO 10
     PRINT i$
@@ -106,7 +96,6 @@ NEXT
 Output: 1 2 3 4 5 6 7 8 9 10
 
 ### FOR with STEP
-
 ```vb
 FOR i$ = 0 TO 100 STEP 10
     PRINT i$
@@ -116,7 +105,6 @@ NEXT
 Output: 0 10 20 30 40 50 60 70 80 90 100
 
 ### Counting Down
-
 ```vb
 FOR i$ = 10 TO 1 STEP -1
     PRINT i$
@@ -125,7 +113,6 @@ PRINT "Liftoff!"
 ```
 
 ### Nested FOR
-
 ```vb
 FOR row$ = 1 TO 3
     FOR col$ = 1 TO 3
@@ -136,9 +123,7 @@ NEXT
 ```
 
 ## WHILE Loops
-
 Repeat while condition is true:
-
 ```vb
 LET count$ = 0
 WHILE count$ < 5
@@ -150,7 +135,6 @@ WEND
 Output: 0 1 2 3 4
 
 ### Infinite Loop with Exit Condition
-
 ```vb
 WHILE 1
     LET key$ = INKEY
@@ -163,7 +147,6 @@ PRINT "Goodbye"
 ```
 
 ## Labels and GOTO
-
 Labels are marked with square brackets:
 
 ```vb
@@ -181,7 +164,6 @@ Labels are marked with square brackets:
 ```
 
 ## GOSUB and RETURN
-
 Call a subroutine and return:
 
 ```vb
@@ -205,7 +187,6 @@ After subroutine
 ```
 
 ### Nested GOSUB
-
 ```vb
 GOSUB [level1]
 END
@@ -227,7 +208,6 @@ END
 ```
 
 ### Variables as GOTO/GOSUB pointers
-
 **Note:** A variable can be used to indicate the location of the jump.
 
 ```vb
@@ -256,7 +236,6 @@ Ending line
 ```
 
 ### Function Scope Isolation
-
 Inside user-defined functions, GOTO and GOSUB can only jump to labels within the same function:
 
 ```vb
@@ -274,9 +253,7 @@ END DEF
 PRINT "Outside"
 ```
 
-
 ## Using Key Constants
-
 ```vb
 [game_loop]
     LET key$ = INKEY
@@ -292,7 +269,6 @@ PRINT "Outside"
 ```
 
 ## END Statement
-
 Terminates program execution:
 
 ```vb

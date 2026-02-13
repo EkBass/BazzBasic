@@ -58,7 +58,6 @@ public class Shape
         Rotation = 0;
         Scale = 1.0;
     }
-    
 
     // actual width after scaling
     public double ScaledWidth => Width * Scale;

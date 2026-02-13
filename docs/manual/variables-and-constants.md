@@ -1,10 +1,8 @@
 # Variables & Constants
-
 - Variables store values that can change during program execution.
 - Constants store value that can not be changed during execution
 
 ## Declaration
-
 - Variables and constants must be initialized with `LET` before they can be used
 - BazzBasic variables are not typed, but work the same way as in JavaScript, for example.
 - A variable needs the suffix **$**
@@ -17,6 +15,8 @@ LET a$ = "Foo"
 PRINT a$ ' Output: "Foo"
 LET b$ = 1
 PRINT b$ ' Output: 1
+LET c$ = 1 + 2
+PRINT c$ ' Output: 3
 ```
 
 ## Constants
@@ -29,7 +29,7 @@ LET GAME_TITLE# = "Space Invaders"
 
 ## LET only when init
 ```vb
-' Once variable is initialized, you do not need "LET" anymore
+' Once variable is initialized, you do not need LET anymore
 LET a$ = 1
 a$ = 3
 PRINT a$ ' Output: 3
@@ -72,10 +72,9 @@ LET b# ' works, but is a bit stupid since now b# is constant with value of nothi
 ```
 
 ## Exceptions
+
 ### FOR and INPUT
-
 When a variable is introduced with a `FOR...NEXT` or `INPUT` command, it does not need to be initialized with `LET`:
-
 ```vb
 REM Ok to use without prior LET
 INPUT "What is your name? ", name$
@@ -86,7 +85,6 @@ NEXT
 ```
 
 ## Comparing variables
-
 A comparison is true if:
 - two string variables are equal
 - two number variables are equal
@@ -126,7 +124,6 @@ ENDIF
 A comparison between a numeric and string variable is only made if the data type of the variable contents is not the same. This slows down the comparison process if it is done significantly.
 
 ## Built-in Constants
-
 BazzBasic provides a few automatically initialized constants
 
 **Keyboard:**
@@ -152,11 +149,11 @@ MOUSE_MIDDLE#  ' Value: 4
     LET key$ = INKEY
     IF key$ = KEY_ESC# THEN END
     IF key$ = KEY_UP# THEN PRINT "Up pressed!"
+    SLEEP 15
     GOTO [loop]
 ```
 
 ## Naming Rules
-
 1. Must end with `$` (variable) or `#` (constant)
 2. Can contain letters, numbers, and underscores
 3. Cannot start with a number
@@ -177,18 +174,14 @@ LET 1player$    ' Starts with number
 ```
 
 ## Errors
-
 In case of error, BazzBasic stops with proper error message.
-
 ```vb
 LET a$ = 100 ' ok
 b$ = 200     ' Error at line 2: Undefined variable: B$ (use LET for first assignment)
 ```
 
 ## Scope
-
 Variables initialized within the main code belong to the same scope.
-
 ```vb
 IF 1 = 1 THEN
     LET x$ = 10

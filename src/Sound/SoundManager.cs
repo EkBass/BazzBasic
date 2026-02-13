@@ -5,6 +5,8 @@
  File: Sound\SoundManager.cs
  Rocks like a hurricane using SDL2_mixer
  Licence: MIT
+
+Lot's of to improve. Will do eventually
 */
 
 using System.Collections.Concurrent;

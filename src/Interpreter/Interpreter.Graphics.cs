@@ -9,6 +9,7 @@
 */
 using BazzBasic.Lexer;
 using BazzBasic.Parser;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace BazzBasic.Interpreter;
 
@@ -25,7 +26,7 @@ public partial class Interpreter
         int mode = 0;
         int width = 640;
         int height = 480;
-        string title = "BazzBasic Graphics";
+        string title = "BazzBasic";
         bool customDimensions = false;
         
         if (!IsEndOfStatement())
@@ -568,5 +569,25 @@ public partial class Interpreter
         
         int color = Graphics.Graphics.GetPixelColor(x, y);
         return Value.FromNumber(color);
+    }
+
+    // ========================================================================
+    // VSYNC command - Recreate renderer with/without VSync flag
+    // ========================================================================
+    // Interpreter.Graphics.cs - lisää ExecuteScreen metodin lähelle
+
+    private void ExecuteVSync()
+    {
+        _pos++;
+        var enable = EvaluateExpression().AsNumber() != 0;
+
+        try
+        {
+            Graphics.Graphics.SetVSync(enable);
+        }
+        catch (Exception ex)
+        {
+            Error($"Failed to set VSync: {ex.Message}");
+        }
     }
 }

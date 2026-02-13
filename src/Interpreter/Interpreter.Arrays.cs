@@ -20,7 +20,8 @@ public partial class Interpreter
     // ========================================================================
     // Array Operations
     // ========================================================================
-    
+
+    // Create a new array variable
     private void ExecuteDim()
     {
         _pos++;
@@ -49,6 +50,7 @@ public partial class Interpreter
         }
     }
 
+    // Delete a specific key from an array
     private void ExecuteDelKey()
     {
         _pos++;
@@ -88,6 +90,7 @@ public partial class Interpreter
         _variables.DeleteKey(arrName, key);
     }
 
+    // Delete an entire array variable
     private void ExecuteDelArray()
     {
         _pos++;
@@ -110,6 +113,7 @@ public partial class Interpreter
         _variables.DeleteArray(arrName);
     }
 
+    // Check if a specific key exists in an array
     private Value EvaluateHaskeyFunc()
     {
         _pos++;
