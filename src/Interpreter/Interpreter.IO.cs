@@ -419,13 +419,12 @@ public partial class Interpreter
     
     private const int STD_OUTPUT_HANDLE = -11;
     
-    /// <summary>
-    /// GETCONSOLE(row, column, mode)
-    /// Uses same (row, column) order as LOCATE for consistency
-    /// mode 0 = character at position
-    /// mode 1 = foreground color
-    /// mode 2 = background color
-    /// </summary>
+    // GETCONSOLE(row, column, mode)
+    // Uses same (row, column) order as LOCATE for consistency
+    // mode 0 = character at position
+    // mode 1 = foreground color
+    // mode 2 = background color
+
     private Value EvaluateGetConsoleFunc()
     {
         _pos++;
