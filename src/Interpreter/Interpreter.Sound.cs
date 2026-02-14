@@ -39,7 +39,7 @@ public partial class Interpreter
         string soundId = EvaluateExpression().AsString();
         Require(TokenType.TOK_RPAREN, "Expected ')' after sound ID");
         
-        _soundManager.PlayOnce(soundId);
+        GetSoundManager().PlayOnce(soundId);
     }
 
     private void ExecuteSoundRepeat()
@@ -50,7 +50,7 @@ public partial class Interpreter
         string soundId = EvaluateExpression().AsString();
         Require(TokenType.TOK_RPAREN, "Expected ')' after sound ID");
         
-        _soundManager.PlayRepeat(soundId);
+        GetSoundManager().PlayRepeat(soundId);
     }
 
     private void ExecuteSoundStop()
@@ -61,7 +61,7 @@ public partial class Interpreter
         string soundId = EvaluateExpression().AsString();
         Require(TokenType.TOK_RPAREN, "Expected ')' after sound ID");
         
-        _soundManager.StopSound(soundId);
+        GetSoundManager().StopSound(soundId);
     }
 
     private void ExecuteSoundStopAll()
@@ -75,7 +75,7 @@ public partial class Interpreter
             Require(TokenType.TOK_RPAREN, "Expected ')' after SOUNDSTOPALL");
         }
         
-        _soundManager.StopAllSounds();
+        GetSoundManager().StopAllSounds();
     }
 
     private void ExecuteSoundOnceWait()
@@ -86,7 +86,7 @@ public partial class Interpreter
         string soundId = EvaluateExpression().AsString();
         Require(TokenType.TOK_RPAREN, "Expected ')' after sound ID");
         
-        _soundManager.PlayOnceWait(soundId);
+        GetSoundManager().PlayOnceWait(soundId);
     }
 
     // ========================================================================
@@ -100,7 +100,7 @@ public partial class Interpreter
         string filePath = EvaluateExpression().AsString();
         Require(TokenType.TOK_RPAREN, "Expected ')' after file path");
         
-        string soundId = _soundManager.LoadSound(filePath);
+        string soundId = GetSoundManager().LoadSound(filePath);
         return Value.FromString(soundId);
     }
 }

@@ -68,8 +68,9 @@ public partial class Interpreter
     private double[]? _fastCosTable = null;
     private bool _fastTrigEnabled = false;
     
-    // Sound
-    private readonly SoundManager _soundManager = new();
+    // Sound (lazy - initialized only when first sound command is used)
+    private Sound.SoundManager? _soundManager = null;
+    private Sound.SoundManager GetSoundManager() => _soundManager ??= new Sound.SoundManager();
     
     // File
     private readonly FileManager _fileManager;

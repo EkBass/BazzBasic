@@ -27,6 +27,7 @@ public class SoundManager : IDisposable
 
     private readonly ConcurrentDictionary<string, SoundData> _sounds = new();
     private static bool _initialized = false;
+    private static bool _audioAvailable = false;
     private static readonly object _initLock = new();
 
     // ========================================================================
@@ -55,13 +56,17 @@ public class SoundManager : IDisposable
                 // 44.1kHz, 16-bit stereo, 2048 byte chunks
                 if (SDL_mixer.Mix_OpenAudio(44100, SDL_mixer.MIX_DEFAULT_FORMAT, 2, 2048) < 0)
                 {
-                    throw new Exception($"Mix_OpenAudio failed: {SDL_mixer.SDL_GetErrorString()}");
+                    Console.Error.WriteLine($"Warning: Audio not available ({SDL_mixer.SDL_GetErrorString()}). Sound commands will be ignored.");
+                    _initialized = true;
+                    _audioAvailable = false;
+                    return;
                 }
 
                 // Allocate 16 mixing channels
                 SDL_mixer.Mix_AllocateChannels(16);
 
                 _initialized = true;
+                _audioAvailable = true;
             }
         }
     }
@@ -71,6 +76,11 @@ public class SoundManager : IDisposable
     // ========================================================================
     public string LoadSound(string filePath)
     {
+        if (!_audioAvailable)
+        {
+            return "no_audio";
+        }
+
         if (!System.IO.File.Exists(filePath))
         {
             throw new Exception($"Sound file not found: {filePath}");
@@ -123,6 +133,7 @@ public class SoundManager : IDisposable
     // ========================================================================
     public void PlayOnce(string soundId)
     {
+        if (!_audioAvailable) return;
         if (!_sounds.TryGetValue(soundId, out var soundData))
         {
             throw new Exception($"Sound not found: {soundId}");
@@ -165,6 +176,7 @@ public class SoundManager : IDisposable
     // ========================================================================
     public void PlayRepeat(string soundId)
     {
+        if (!_audioAvailable) return;
         if (!_sounds.TryGetValue(soundId, out var soundData))
         {
             throw new Exception($"Sound not found: {soundId}");
@@ -207,6 +219,7 @@ public class SoundManager : IDisposable
     // ========================================================================
     public void PlayOnceWait(string soundId)
     {
+        if (!_audioAvailable) return;
         if (!_sounds.TryGetValue(soundId, out var soundData))
         {
             throw new Exception($"Sound not found: {soundId}");
@@ -261,6 +274,7 @@ public class SoundManager : IDisposable
     // ========================================================================
     public void StopSound(string soundId)
     {
+        if (!_audioAvailable) return;
         if (!_sounds.TryGetValue(soundId, out var soundData))
         {
             return; // Silently ignore if sound not found
@@ -284,6 +298,7 @@ public class SoundManager : IDisposable
     // ========================================================================
     public void StopAllSounds()
     {
+        if (!_audioAvailable) return;
         foreach (var sound in _sounds.Values)
         {
             sound.IsRepeating = false;
