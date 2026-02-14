@@ -3,6 +3,16 @@ These changes are about the current source code. These are effected once new bin
 
 ## Feb 2026
 
+## 14th Feb. 2026
+
+- Fixed INPUT and LINE INPUT when using GFX. Binary release also updated
+
+## 14th Feb. 2026
+
+- Added KEYDOWN(<key constant#>) function with what it's possible to check state of all key constants
+- Added key constants to all keys I could imagine. Will add more if figured out some is missing
+
+
 ## 12th Feb. 2026
 
 - Added LERP(start, end, t). Linear interpolation between two values. Returns a value between *start* and *end* based on parameter *t* (0.0 to 1.0).

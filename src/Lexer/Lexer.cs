@@ -148,7 +148,8 @@ public class Lexer(string source)
         ["MOUSEX"]      = TokenType.TOK_MOUSEX,
         ["MOUSEY"]      = TokenType.TOK_MOUSEY,
         ["MOUSEB"]      = TokenType.TOK_MOUSEB,
-        
+        ["KEYDOWN"]     = TokenType.TOK_KEYDOWN,
+
         // Array functions
         ["HASKEY"]      = TokenType.TOK_HASKEY,
         ["DELKEY"]      = TokenType.TOK_DELKEY,

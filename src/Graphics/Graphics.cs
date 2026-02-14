@@ -425,7 +425,110 @@ public static class Graphics
         lastKeyPressed = 0; // Clear after reading
         return key;
     }
-    
+
+    private static readonly Dictionary<int, SDL.SDL_Scancode> _keyMap = new()
+    {
+        // Alphabets (BazzBasic ASCII -> SDL Scancode)
+        [65] = SDL.SDL_Scancode.SDL_SCANCODE_A,
+        [66] = SDL.SDL_Scancode.SDL_SCANCODE_B,
+        [67] = SDL.SDL_Scancode.SDL_SCANCODE_C,
+        [68] = SDL.SDL_Scancode.SDL_SCANCODE_D,
+        [69] = SDL.SDL_Scancode.SDL_SCANCODE_E,
+        [70] = SDL.SDL_Scancode.SDL_SCANCODE_F,
+        [71] = SDL.SDL_Scancode.SDL_SCANCODE_G,
+        [72] = SDL.SDL_Scancode.SDL_SCANCODE_H,
+        [73] = SDL.SDL_Scancode.SDL_SCANCODE_I,
+        [74] = SDL.SDL_Scancode.SDL_SCANCODE_J,
+        [75] = SDL.SDL_Scancode.SDL_SCANCODE_K,
+        [76] = SDL.SDL_Scancode.SDL_SCANCODE_L,
+        [77] = SDL.SDL_Scancode.SDL_SCANCODE_M,
+        [78] = SDL.SDL_Scancode.SDL_SCANCODE_N,
+        [79] = SDL.SDL_Scancode.SDL_SCANCODE_O,
+        [80] = SDL.SDL_Scancode.SDL_SCANCODE_P,
+        [81] = SDL.SDL_Scancode.SDL_SCANCODE_Q,
+        [82] = SDL.SDL_Scancode.SDL_SCANCODE_R,
+        [83] = SDL.SDL_Scancode.SDL_SCANCODE_S,
+        [84] = SDL.SDL_Scancode.SDL_SCANCODE_T,
+        [85] = SDL.SDL_Scancode.SDL_SCANCODE_U,
+        [86] = SDL.SDL_Scancode.SDL_SCANCODE_V,
+        [87] = SDL.SDL_Scancode.SDL_SCANCODE_W,
+        [88] = SDL.SDL_Scancode.SDL_SCANCODE_X,
+        [89] = SDL.SDL_Scancode.SDL_SCANCODE_Y,
+        [90] = SDL.SDL_Scancode.SDL_SCANCODE_Z,
+        // Numbers
+        [48] = SDL.SDL_Scancode.SDL_SCANCODE_0,
+        [49] = SDL.SDL_Scancode.SDL_SCANCODE_1,
+        [50] = SDL.SDL_Scancode.SDL_SCANCODE_2,
+        [51] = SDL.SDL_Scancode.SDL_SCANCODE_3,
+        [52] = SDL.SDL_Scancode.SDL_SCANCODE_4,
+        [53] = SDL.SDL_Scancode.SDL_SCANCODE_5,
+        [54] = SDL.SDL_Scancode.SDL_SCANCODE_6,
+        [55] = SDL.SDL_Scancode.SDL_SCANCODE_7,
+        [56] = SDL.SDL_Scancode.SDL_SCANCODE_8,
+        [57] = SDL.SDL_Scancode.SDL_SCANCODE_9,
+        // Special keys
+        [8] = SDL.SDL_Scancode.SDL_SCANCODE_BACKSPACE,
+        [9] = SDL.SDL_Scancode.SDL_SCANCODE_TAB,
+        [13] = SDL.SDL_Scancode.SDL_SCANCODE_RETURN,
+        [27] = SDL.SDL_Scancode.SDL_SCANCODE_ESCAPE,
+        [32] = SDL.SDL_Scancode.SDL_SCANCODE_SPACE,
+        // Arrow keys
+        [328] = SDL.SDL_Scancode.SDL_SCANCODE_UP,
+        [336] = SDL.SDL_Scancode.SDL_SCANCODE_DOWN,
+        [331] = SDL.SDL_Scancode.SDL_SCANCODE_LEFT,
+        [333] = SDL.SDL_Scancode.SDL_SCANCODE_RIGHT,
+        // Navigation
+        [338] = SDL.SDL_Scancode.SDL_SCANCODE_INSERT,
+        [339] = SDL.SDL_Scancode.SDL_SCANCODE_DELETE,
+        [327] = SDL.SDL_Scancode.SDL_SCANCODE_HOME,
+        [335] = SDL.SDL_Scancode.SDL_SCANCODE_END,
+        [329] = SDL.SDL_Scancode.SDL_SCANCODE_PAGEUP,
+        [337] = SDL.SDL_Scancode.SDL_SCANCODE_PAGEDOWN,
+        // Function keys
+        [315] = SDL.SDL_Scancode.SDL_SCANCODE_F1,
+        [316] = SDL.SDL_Scancode.SDL_SCANCODE_F2,
+        [317] = SDL.SDL_Scancode.SDL_SCANCODE_F3,
+        [318] = SDL.SDL_Scancode.SDL_SCANCODE_F4,
+        [319] = SDL.SDL_Scancode.SDL_SCANCODE_F5,
+        [320] = SDL.SDL_Scancode.SDL_SCANCODE_F6,
+        [321] = SDL.SDL_Scancode.SDL_SCANCODE_F7,
+        [322] = SDL.SDL_Scancode.SDL_SCANCODE_F8,
+        [323] = SDL.SDL_Scancode.SDL_SCANCODE_F9,
+        [324] = SDL.SDL_Scancode.SDL_SCANCODE_F10,
+        [389] = SDL.SDL_Scancode.SDL_SCANCODE_F11,
+        [390] = SDL.SDL_Scancode.SDL_SCANCODE_F12,
+        // Numpad
+        [256] = SDL.SDL_Scancode.SDL_SCANCODE_KP_0,
+        [257] = SDL.SDL_Scancode.SDL_SCANCODE_KP_1,
+        [258] = SDL.SDL_Scancode.SDL_SCANCODE_KP_2,
+        [259] = SDL.SDL_Scancode.SDL_SCANCODE_KP_3,
+        [260] = SDL.SDL_Scancode.SDL_SCANCODE_KP_4,
+        [261] = SDL.SDL_Scancode.SDL_SCANCODE_KP_5,
+        [262] = SDL.SDL_Scancode.SDL_SCANCODE_KP_6,
+        [263] = SDL.SDL_Scancode.SDL_SCANCODE_KP_7,
+        [264] = SDL.SDL_Scancode.SDL_SCANCODE_KP_8,
+        [265] = SDL.SDL_Scancode.SDL_SCANCODE_KP_9,
+        // Modifiers
+        [340] = SDL.SDL_Scancode.SDL_SCANCODE_LSHIFT,
+        [344] = SDL.SDL_Scancode.SDL_SCANCODE_RSHIFT,
+        [341] = SDL.SDL_Scancode.SDL_SCANCODE_LCTRL,
+        [345] = SDL.SDL_Scancode.SDL_SCANCODE_RCTRL,
+        [342] = SDL.SDL_Scancode.SDL_SCANCODE_LALT,
+        [346] = SDL.SDL_Scancode.SDL_SCANCODE_RALT,
+        [343] = SDL.SDL_Scancode.SDL_SCANCODE_LGUI,
+        [347] = SDL.SDL_Scancode.SDL_SCANCODE_RGUI,
+        // Punctuation
+        [44] = SDL.SDL_Scancode.SDL_SCANCODE_COMMA,
+        [46] = SDL.SDL_Scancode.SDL_SCANCODE_PERIOD,
+        [45] = SDL.SDL_Scancode.SDL_SCANCODE_MINUS,
+        [61] = SDL.SDL_Scancode.SDL_SCANCODE_EQUALS,
+        [47] = SDL.SDL_Scancode.SDL_SCANCODE_SLASH,
+        [92] = SDL.SDL_Scancode.SDL_SCANCODE_BACKSLASH,
+        [96] = SDL.SDL_Scancode.SDL_SCANCODE_GRAVE,
+        [91] = SDL.SDL_Scancode.SDL_SCANCODE_LEFTBRACKET,
+        [93] = SDL.SDL_Scancode.SDL_SCANCODE_RIGHTBRACKET,
+        [59] = SDL.SDL_Scancode.SDL_SCANCODE_SEMICOLON,
+    };
     // Map SDL key code to BASIC key code
     private static int MapSDLKeyToBasic(SDL.SDL_Keycode key)
     {
@@ -467,11 +570,27 @@ public static class Graphics
     {
         SDL.SDL_Delay((uint)milliseconds);
     }
-    
+
+    // ========================================================================
+    // Is key currently down (for non-blocking input) - pass BASIC key code
+    // ========================================================================
+    public static bool IsKeyDown(int bazzKeyCode)
+    {
+        if (!_keyMap.TryGetValue(bazzKeyCode, out var scancode))
+            return false;
+
+        IntPtr state = SDL.SDL_GetKeyboardState(out _);
+        unsafe
+        {
+            byte* keys = (byte*)state;
+            return keys[(int)scancode] != 0;
+        }
+    }
+
     // ========================================================================
     // POINT command - Read pixel color at x, y (lazy approach)
     // ========================================================================
-    
+
     public static int GetPixelColor(int x, int y)
     {
         if (!initialized) return 0;
@@ -529,6 +648,211 @@ public static class Graphics
         {
             handle.Free();
         }
+    }
+
+    // ========================================================================
+    // Text Input for INPUT / LINE INPUT in graphics mode
+    // Uses SDL KEYDOWN events with modifier state detection
+    // ========================================================================
+
+    // SDL2 KMOD constants (from SDL_keycode.h)
+    private const ushort KMOD_LSHIFT = 0x0001;
+    private const ushort KMOD_RSHIFT = 0x0002;
+    private const ushort KMOD_SHIFT = KMOD_LSHIFT | KMOD_RSHIFT;
+
+    public static string ReadLine(string prompt = "")
+    {
+        if (!initialized) return "";
+
+        // Print prompt at current cursor position
+        if (!string.IsNullOrEmpty(prompt))
+        {
+            Print(prompt, false);
+        }
+
+        // Remember where user input starts (for redraw on backspace)
+        int inputStartCol = cursorColumn;
+        int inputStartRow = cursorRow;
+
+        string inputBuffer = "";
+        bool inputActive = true;
+
+        // Draw initial cursor
+        DrawInputCursor();
+        SDL.SDL_RenderPresent(renderer);
+
+        while (inputActive)
+        {
+            while (SDL.SDL_PollEvent(out SDL.SDL_Event e) != 0)
+            {
+                if (e.type == SDL.SDL_EventType.SDL_QUIT)
+                {
+                    inputActive = false;
+                    break;
+                }
+                else if (e.type == SDL.SDL_EventType.SDL_KEYDOWN)
+                {
+                    int keyVal = (int)e.key.keysym.sym;
+                    bool shift = (e.key.keysym.mod & KMOD_SHIFT) != 0;
+
+                    if (keyVal == 13) // RETURN
+                    {
+                        EraseCursor();
+                        cursorColumn = 0;
+                        cursorRow++;
+                        if (cursorRow >= textRows)
+                        {
+                            ScrollUp();
+                            cursorRow = textRows - 1;
+                        }
+                        inputActive = false;
+                    }
+                    else if (keyVal == 8) // BACKSPACE
+                    {
+                        if (inputBuffer.Length > 0)
+                        {
+                            inputBuffer = inputBuffer.Substring(0, inputBuffer.Length - 1);
+                            RedrawInputArea(inputStartRow, inputStartCol, inputBuffer);
+                        }
+                    }
+                    else if (keyVal == 27) // ESCAPE
+                    {
+                        inputBuffer = "";
+                        RedrawInputArea(inputStartRow, inputStartCol, "");
+                    }
+                    else
+                    {
+                        char c = MapKeyToChar(keyVal, shift);
+                        if (c != '\0')
+                        {
+                            inputBuffer += c;
+                            EraseCursor();
+                            Print(c.ToString(), false);
+                            DrawInputCursor();
+                            SDL.SDL_RenderPresent(renderer);
+                        }
+                    }
+                }
+            }
+
+            SDL.SDL_Delay(10);
+        }
+
+        return inputBuffer;
+    }
+
+    // Map SDL keycode int value + shift state to a printable character
+    // SDL2 keycodes for printable ASCII chars = their ASCII value (lowercase)
+    private static char MapKeyToChar(int key, bool shift)
+    {
+        // Letters (a=97 to z=122)
+        if (key >= 97 && key <= 122)
+        {
+            return shift ? (char)(key - 32) : (char)key;
+        }
+
+        // Space
+        if (key == 32) return ' ';
+
+        // Numbers (0=48 to 9=57)
+        if (key >= 48 && key <= 57)
+        {
+            if (!shift) return (char)key;
+
+            // Shift + number → symbols (US layout)
+            return key switch
+            {
+                49 => '!', 50 => '@', 51 => '#', 52 => '$', 53 => '%',
+                54 => '^', 55 => '&', 56 => '*', 57 => '(', 48 => ')',
+                _ => '\0'
+            };
+        }
+
+        // Punctuation keys (SDL keycodes = ASCII values)
+        if (!shift)
+        {
+            return key switch
+            {
+                44 => ',',   // comma
+                46 => '.',   // period
+                45 => '-',   // minus
+                61 => '=',   // equals
+                47 => '/',   // slash
+                92 => '\\',  // backslash
+                59 => ';',   // semicolon
+                39 => '\'',  // apostrophe/quote
+                91 => '[',   // left bracket
+                93 => ']',   // right bracket
+                96 => '`',   // backtick
+                _ => '\0'
+            };
+        }
+
+        // Shift + punctuation
+        return key switch
+        {
+            44 => '<', 46 => '>', 45 => '_', 61 => '+', 47 => '?',
+            92 => '|', 59 => ':', 39 => '"', 91 => '{', 93 => '}', 96 => '~',
+            _ => '\0'
+        };
+    }
+
+    // Redraw the input area (clear old text and cursor, print new text + cursor)
+    private static void RedrawInputArea(int startRow, int startCol, string text)
+    {
+        int clearX = startCol * charWidth;
+        int clearY = startRow * charHeight;
+        int clearW = (textColumns - startCol + 1) * charWidth;
+        int clearH = charHeight;
+
+        _ = SDL.SDL_SetRenderDrawColor(renderer, bgR, bgG, bgB, bgA);
+        SDL.SDL_Rect clearRect = new() { x = clearX, y = clearY, w = clearW, h = clearH };
+        _ = SDL.SDL_RenderFillRect(renderer, ref clearRect);
+
+        cursorRow = startRow;
+        cursorColumn = startCol;
+
+        if (!string.IsNullOrEmpty(text))
+        {
+            foreach (char c in text)
+            {
+                if (cursorColumn >= textColumns)
+                {
+                    cursorColumn = 0;
+                    cursorRow++;
+                    if (cursorRow >= textRows)
+                    {
+                        ScrollUp();
+                        cursorRow = textRows - 1;
+                    }
+                }
+
+                int x = cursorColumn * charWidth;
+                int y = cursorRow * charHeight;
+                BitmapFont.DrawChar(renderer, c, x, y, currentR, currentG, currentB, bgR, bgG, bgB);
+                cursorColumn++;
+            }
+        }
+
+        DrawInputCursor();
+        SDL.SDL_RenderPresent(renderer);
+    }
+
+    private static void DrawInputCursor()
+    {
+        int cx = cursorColumn * charWidth;
+        int cy = cursorRow * charHeight;
+        BitmapFont.DrawChar(renderer, '_', cx, cy, currentR, currentG, currentB, bgR, bgG, bgB);
+    }
+
+    private static void EraseCursor()
+    {
+        int cx = cursorColumn * charWidth;
+        int cy = cursorRow * charHeight;
+        _ = SDL.SDL_SetRenderDrawColor(renderer, bgR, bgG, bgB, bgA);
+        SDL.SDL_Rect rect = new() { x = cx, y = cy, w = charWidth, h = charHeight };
+        _ = SDL.SDL_RenderFillRect(renderer, ref rect);
+        _ = SDL.SDL_SetRenderDrawColor(renderer, currentR, currentG, currentB, currentA);
     }
 
     // Enable or disable vertical synchronization (VSync)

@@ -107,8 +107,16 @@ public partial class Interpreter
             return;
         }
         
-        Console.Write(prompt);
-        string? input = Console.ReadLine() ?? "";
+        string input;
+        if (Graphics.Graphics.IsInitialized)
+        {
+            input = Graphics.Graphics.ReadLine(prompt);
+        }
+        else
+        {
+            Console.Write(prompt);
+            input = Console.ReadLine() ?? "";
+        }
         
         // Split input by comma and whitespace
         // First comma, if no comma's found, use whitespace
@@ -182,12 +190,19 @@ public partial class Interpreter
         _pos++;
         
         // Print prompt and read entire line
-        if (!string.IsNullOrEmpty(prompt))
+        string input;
+        if (Graphics.Graphics.IsInitialized)
         {
-            Console.Write(prompt);
+            input = Graphics.Graphics.ReadLine(prompt);
         }
-        
-        string input = Console.ReadLine() ?? "";
+        else
+        {
+            if (!string.IsNullOrEmpty(prompt))
+            {
+                Console.Write(prompt);
+            }
+            input = Console.ReadLine() ?? "";
+        }
         
         // Store entire line to variable (no splitting)
         _variables.SetVariable(varName, Value.FromString(input));

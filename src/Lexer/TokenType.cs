@@ -162,6 +162,7 @@ public enum TokenType
     TOK_MOUSEX              = 352,
     TOK_MOUSEY              = 353,
     TOK_RGB                 = 354,
+    TOK_KEYDOWN             = 355,
 
     // Array functions
     TOK_DELARRAY            = 360,

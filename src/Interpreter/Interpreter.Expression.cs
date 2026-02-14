@@ -327,6 +327,8 @@ public partial class Interpreter
             // Before 1.0, adjust these alphabetically
             case TokenType.TOK_INKEY:
                 return EvaluateInkeyFunc();
+            case TokenType.TOK_KEYDOWN:
+                return EvaluateKeyDownFunc();
             case TokenType.TOK_GETCONSOLE:
                 return EvaluateGetConsoleFunc();
             case TokenType.TOK_RGB:
@@ -365,6 +367,21 @@ public partial class Interpreter
         }
     }
 
+    private Value EvaluateKeyDownFunc()
+    {
+        _pos++;
+        Require(TokenType.TOK_LPAREN);
+        int keyCode = (int)EvaluateExpression().AsNumber();
+        Require(TokenType.TOK_RPAREN);
+
+        if (!Graphics.Graphics.IsInitialized)
+        {
+            Error("Graphics mode not initialized. Use SCREEN first.");
+            return Value.FromNumber(0);
+        }
+
+        return Value.FromNumber(Graphics.Graphics.IsKeyDown(keyCode) ? 1 : 0);
+    }
     private Value EvaluateVariableOrArray()
     {
         string varName = _tokens[_pos].StringValue ?? "";
