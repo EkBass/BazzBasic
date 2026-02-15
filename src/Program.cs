@@ -5,7 +5,12 @@
  File: Program.cs
  BazzBasic - BASIC Interpreter with integrated IDE
 
- Licence: MIT
+ Copyright (c):
+	- 2025 - 2026
+	- Kristian Virtanen
+	- krisu.virtanen@gmail.com
+
+	- Licensed under the MIT License. See LICENSE file in the project root for full license information.
 */
 
 using System.Runtime.InteropServices;

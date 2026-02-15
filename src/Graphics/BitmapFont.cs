@@ -6,7 +6,12 @@
  Complete 8x8 Code Page 437 bitmap font (IBM PC/DOS VGA font)
  All 256 characters including box drawing characters
 
- Licence: MIT
+ Copyright (c):
+	- 2025 - 2026
+	- Kristian Virtanen
+	- krisu.virtanen@gmail.com
+
+	- Licensed under the MIT License. See LICENSE file in the project root for full license information.
 
  Note: To be honest, without Claude.ai this would have taken me ages to so Hail to Claude here.
 */

@@ -4,7 +4,13 @@
  
  File: Sound\SDL_mixer.cs
  Minimal P/Invoke bindings for SDL_mixer.dll
- Licence: MIT
+
+ Copyright (c):
+	- 2025 - 2026
+	- Kristian Virtanen
+	- krisu.virtanen@gmail.com
+
+	- Licensed under the MIT License. See LICENSE file in the project root for full license information.
 
 Tons of places to improve this and I will. Some day.
 */

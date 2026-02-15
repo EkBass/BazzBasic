@@ -1,5 +1,5 @@
 REM =============================================
-REM Color memory game
+REM Color memory game for BazzBasic
 REM https://ekbass.github.io/BazzBasic/
 REM Public Domain.
 REM krisu.virtanen@gmail.com
