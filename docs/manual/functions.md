@@ -581,7 +581,7 @@ PRINT result$  ' "Hello BazzBasic"
 ### RIGHT(s$, n)
 Returns last n characters.
 ```vb
-PRINT RIGHT$("Hello World", 5) ' Output: World
+PRINT RIGHT("Hello World", 5) ' Output: World
 ```
 
 ### RTRIM(s$)
@@ -629,10 +629,10 @@ b$ = TRIM(b$)
 PRINT a$ + b$ ' Output: FooBar
 ```
 
-### UCASE$(s$)
+### UCASE(s$)
 Converts to uppercase.
 ```vb
-PRINT UCASE$("Hello")  ' Output: HELLO
+PRINT UCASE("Hello")  ' Output: HELLO
 ```
 
 ### VAL(s$)
