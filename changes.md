@@ -3,6 +3,11 @@ These changes are about the current source code. These are effected once new bin
 
 ## Feb 2026
 
+## 22nd Feb. 2026
+
+- Released as version 1.0, source and binary
+  
+  
 ## 21st Feb. 2026
 - FILEREAD and FILEWRITE now supports arrays too.
 - **Example with array:**
