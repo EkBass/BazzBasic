@@ -50,6 +50,9 @@ public static class SDL
     {
         SDL_WINDOW_SHOWN = 0x00000004,
         SDL_WINDOW_RESIZABLE = 0x00000020,
+        SDL_WINDOW_FULLSCREEN = 0x00000001,
+        SDL_WINDOW_FULLSCREEN_DESKTOP = 0x00001001,
+        SDL_WINDOW_ALLOW_HIGHDPI = 0x00002000,
     }
 
     [Flags]
@@ -312,6 +315,39 @@ public static class SDL
 
     [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
     public static extern void SDL_DestroyWindow(IntPtr window);
+
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int SDL_SetWindowFullscreen(IntPtr window, uint flags);
+
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern void SDL_SetWindowSize(IntPtr window, int w, int h);
+
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern void SDL_SetWindowPosition(IntPtr window, int x, int y);
+
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern void SDL_RaiseWindow(IntPtr window);
+
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern void SDL_ShowWindow(IntPtr window);
+
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int SDL_RenderSetViewport(IntPtr renderer, IntPtr rect);  // pass IntPtr.Zero to reset
+
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern void SDL_PumpEvents();
+
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    public static extern bool SDL_SetHint(string name, string value);
+
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern void SDL_GetWindowSize(IntPtr window, out int w, out int h);
+
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern uint SDL_GetWindowFlags(IntPtr window);
+
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern void SDL_RenderGetOutputSize(IntPtr renderer, out int w, out int h);
 
     // Renderer functions
     [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]

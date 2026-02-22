@@ -36,25 +36,66 @@ public partial class Interpreter
         
         if (!IsEndOfStatement())
         {
-            mode = (int)EvaluateExpression().AsNumber();
-            
+            int first = (int)EvaluateExpression().AsNumber();
+
             if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_COMMA)
             {
                 _pos++;
-                width = (int)EvaluateExpression().AsNumber();
-                customDimensions = true;
-                
-                if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_COMMA)
+
+                // Peek: if next token is a string, syntax is SCREEN width, "title"
+                // If next token is a number, could be SCREEN width, height or SCREEN mode, width
+                if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_STRING)
                 {
-                    _pos++;
-                    height = (int)EvaluateExpression().AsNumber();
-                    
+                    // SCREEN width, "title"
+                    width = first;
+                    height = 480;
+                    title = EvaluateExpression().AsString();
+                    customDimensions = true;
+                }
+                else
+                {
+                    int second = (int)EvaluateExpression().AsNumber();
+
+                    // If first > 13 it can't be a classic mode number → treat as width
+                    if (first > 13)
+                    {
+                        width = first;
+                        height = second;
+                        customDimensions = true;
+                    }
+                    else
+                    {
+                        // Classic: SCREEN mode, width, height
+                        mode = first;
+                        width = second;
+                        customDimensions = true;
+                    }
+
                     if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_COMMA)
                     {
                         _pos++;
-                        title = EvaluateExpression().AsString();
+                        if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_STRING)
+                        {
+                            // SCREEN width, height, "title"
+                            title = EvaluateExpression().AsString();
+                        }
+                        else
+                        {
+                            // SCREEN mode, width, height  (old style with mode)
+                            height = (int)EvaluateExpression().AsNumber();
+                            if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_COMMA)
+                            {
+                                _pos++;
+                                title = EvaluateExpression().AsString();
+                            }
+                        }
                     }
                 }
+            }
+            else
+            {
+                // SCREEN mode  (single param = classic mode)
+                mode = first;
             }
         }
 
@@ -529,6 +570,7 @@ public partial class Interpreter
         }
         
         Graphics.ShapeManager.DrawShape(id, Graphics.Graphics.Renderer);
+        Graphics.Graphics.Present();
     }
     
     private void ExecuteShowshape()
@@ -593,6 +635,59 @@ public partial class Interpreter
         catch (Exception ex)
         {
             Error($"Failed to set VSync: {ex.Message}");
+        }
+    }
+
+    private void ExecuteFullscreen()
+    {
+        _pos++;
+        var enable = EvaluateExpression().AsNumber() != 0;
+
+        try
+        {
+            Graphics.Graphics.SetFullscreen(enable);
+        }
+        catch (Exception ex)
+        {
+            Error($"Failed to set fullscreen: {ex.Message}");
+        }
+    }
+
+    private void ExecuteLoadsheet()
+    {
+        _pos++; // Skip LOADSHEET token
+
+        // First param: array variable name (must already be DIM'd)
+        if (_pos >= _tokens.Count || _tokens[_pos].Type != TokenType.TOK_VARIABLE)
+            Error("LOADSHEET: expected array variable name as first parameter.");
+
+        string arrayName = _tokens[_pos].StringValue ?? "";
+        _pos++;
+
+        Require(TokenType.TOK_COMMA);
+        int spriteW = (int)EvaluateExpression().AsNumber();
+        Require(TokenType.TOK_COMMA);
+        int spriteH = (int)EvaluateExpression().AsNumber();
+        Require(TokenType.TOK_COMMA);
+        string filepath = EvaluateExpression().AsString();
+
+        if (!_variables.ArrayExists(arrayName))
+            Error($"LOADSHEET: array '{arrayName}' not declared. Use DIM first.");
+
+        if (!Graphics.Graphics.IsInitialized)
+            Error("LOADSHEET: graphics mode not initialized. Use SCREEN first.");
+
+        try
+        {
+            List<string> ids = Graphics.ShapeManager.LoadSheet(
+                spriteW, spriteH, filepath, Graphics.Graphics.Renderer);
+
+            for (int i = 0; i < ids.Count; i++)
+                _variables.SetArrayElement(arrayName, (i + 1).ToString(), Value.FromString(ids[i]));
+        }
+        catch (Exception ex)
+        {
+            Error(ex.Message);
         }
     }
 }

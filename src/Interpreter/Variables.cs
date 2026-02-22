@@ -222,6 +222,12 @@ public class Variables
         return array.Count;
     }
 
+    public Dictionary<string, Value>? GetAllArrayElements(string arrayName)
+    {
+        string key = arrayName.ToUpperInvariant();
+        return _arrays.TryGetValue(key, out var array) ? array : null;
+    }
+
     // ========================================================================
     // Scope management (for user functions)
     // ========================================================================

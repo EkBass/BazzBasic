@@ -138,6 +138,94 @@ public static class ShapeManager
         }
     }
     
+    // Load a sprite sheet and slice it into individual sprite shapes.
+    // spriteW/spriteH: size of each sprite cell in pixels.
+    // Image dimensions must be exact multiples of spriteW/spriteH.
+    // Returns list of shape IDs in order: left-to-right, top-to-bottom.
+    public static List<string> LoadSheet(int spriteW, int spriteH, string filepath, IntPtr renderer)
+    {
+        if (!System.IO.File.Exists(filepath))
+            throw new Exception($"File not found: {filepath}");
+
+        using var bitmap = new Bitmap(filepath);
+        int imgW = bitmap.Width;
+        int imgH = bitmap.Height;
+
+        // Strict validation - image must divide evenly
+        if (imgW % spriteW != 0 || imgH % spriteH != 0)
+            throw new Exception(
+                $"LOADSHEET error: Image size {imgW}x{imgH} is not evenly divisible by sprite size {spriteW}x{spriteH}.");
+
+        int cols = imgW / spriteW;
+        int rows = imgH / spriteH;
+
+        var ids = new List<string>();
+
+        for (int row = 0; row < rows; row++)
+        {
+            for (int col = 0; col < cols; col++)
+            {
+                // Crop one sprite cell
+                var srcRect = new Rectangle(col * spriteW, row * spriteH, spriteW, spriteH);
+                using var cell = bitmap.Clone(srcRect, bitmap.PixelFormat);
+
+                // Convert to SDL texture
+                (IntPtr texture, _, _) = LoadPngTexture(cell, renderer);
+
+                string id = $"SHAPE{nextId++}";
+                var shape = new Shape(id, ShapeType.Image, spriteW, spriteH, 0)
+                {
+                    ImageTexture = texture
+                };
+                shapes[id] = shape;
+                ids.Add(id);
+            }
+        }
+
+        return ids;
+    }
+
+    // Overload: create texture directly from a Bitmap object (used by LoadSheet)
+    private static (IntPtr texture, int width, int height) LoadPngTexture(Bitmap bitmap, IntPtr renderer)
+    {
+        int width = bitmap.Width;
+        int height = bitmap.Height;
+
+        var bitmapData = bitmap.LockBits(
+            new Rectangle(0, 0, width, height),
+            ImageLockMode.ReadOnly,
+            PixelFormat.Format32bppArgb
+        );
+
+        try
+        {
+            IntPtr texture = SDL.SDL_CreateTexture(
+                renderer,
+                SDL.SDL_PIXELFORMAT_ARGB8888,
+                SDL.SDL_TEXTUREACCESS_STATIC,
+                width, height
+            );
+
+            if (texture == IntPtr.Zero)
+                throw new Exception($"Failed to create texture: {SDL.SDL_GetErrorString()}");
+
+            _ = SDL.SDL_SetTextureBlendMode(texture, SDL.SDL_BlendMode.SDL_BLENDMODE_BLEND);
+
+            int result = SDL.SDL_UpdateTexture(texture, IntPtr.Zero, bitmapData.Scan0, bitmapData.Stride);
+            if (result != 0)
+            {
+                SDL.SDL_DestroyTexture(texture);
+                throw new Exception($"Failed to update texture: {SDL.SDL_GetErrorString()}");
+            }
+
+            return (texture, width, height);
+        }
+        finally
+        {
+            bitmap.UnlockBits(bitmapData);
+        }
+    }
+
     // Shape by ID
     public static Shape? GetShape(string id)
     {
@@ -251,8 +339,8 @@ public static class ShapeManager
         {
             SDL.SDL_Rect dstrect = new()
             {
-                x = centerX - w / 2,
-                y = centerY - h / 2,
+                x = centerX,
+                y = centerY,
                 w = w,
                 h = h
             };

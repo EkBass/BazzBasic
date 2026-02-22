@@ -343,6 +343,12 @@ public partial class Interpreter
             case TokenType.TOK_VSYNC:
                 ExecuteVSync();
                 break;
+            case TokenType.TOK_FULLSCREEN:
+                ExecuteFullscreen();
+                break;
+            case TokenType.TOK_LOADSHEET:
+                ExecuteLoadsheet();
+                break;
             case TokenType.TOK_PSET:
                 ExecutePset();
                 break;

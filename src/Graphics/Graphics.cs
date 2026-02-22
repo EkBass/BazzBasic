@@ -14,11 +14,18 @@
 */
 
 using SDL2;
+using System.Runtime.InteropServices;
 
 namespace BazzBasic.Graphics;
 
 public static class Graphics
 {
+    // Win32: minimize console window when graphics mode starts
+    [DllImport("kernel32.dll")] private static extern IntPtr GetConsoleWindow();
+    [DllImport("user32.dll")]   private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+    [DllImport("user32.dll")]   private static extern bool SetProcessDPIAware();
+    private const int SW_MINIMIZE = 6;
+    private const int SW_RESTORE  = 9;
     private static IntPtr window = IntPtr.Zero;
     private static IntPtr renderer = IntPtr.Zero;
     private static bool initialized = false;
@@ -68,7 +75,7 @@ public static class Graphics
     {
         if (initialized)
             return;
-            
+
         if (SDL.SDL_Init(SDL.SDL_INIT_VIDEO) < 0)
         {
             throw new Exception($"SDL could not initialize! SDL Error: {SDL.SDL_GetErrorString()}");
@@ -107,8 +114,18 @@ public static class Graphics
         
         initialized = true;
         
-        // Clear screen as black
+        // Clear screen as black and bring window to front
+        // Minimize console so it doesn't cover the SDL window
+        ShowWindow(GetConsoleWindow(), SW_MINIMIZE);
         Clear();
+        // Pump events a few times so Windows processes WM_PAINT and shows window content
+        for (int i = 0; i < 5; i++)
+        {
+            SDL.SDL_PumpEvents();
+            SDL.SDL_RenderPresent(renderer);
+            SDL.SDL_Delay(10);
+        }
+        SDL.SDL_RaiseWindow(window);
     }
     
     // Close SDL2 shit
@@ -131,10 +148,15 @@ public static class Graphics
         
         SDL.SDL_Quit();
         initialized = false;
+
+        // Restore console when graphics mode ends
+        ShowWindow(GetConsoleWindow(), SW_RESTORE);
     }
-    
+
     // if graphics are initialized
     public static bool IsInitialized => initialized;
+
+    // (debug methods removed)
     
     // SDL renderer for shitty stuff
     public static IntPtr Renderer => renderer;
@@ -890,5 +912,38 @@ public static class Graphics
 
         // Restore drawing state
         _= SDL.SDL_SetRenderDrawColor(renderer, currentR, currentG, currentB, currentA);
+    }
+
+    // Enable or disable fullscreen mode (borderless desktop fullscreen)
+    public static void SetFullscreen(bool enable)
+    {
+        if (!initialized)
+            throw new InvalidOperationException("Graphics not initialized. Call SCREEN first.");
+
+        var flag = enable
+            ? SDL.SDL_WindowFlags.SDL_WINDOW_FULLSCREEN_DESKTOP
+            : (SDL.SDL_WindowFlags)0;
+
+        if (SDL.SDL_SetWindowFullscreen(window, (uint)flag) < 0)
+        {
+            throw new Exception($"Failed to set fullscreen: {SDL.SDL_GetErrorString()}");
+        }
+
+        // When returning to windowed mode, restore size, re-center and raise to front
+        if (!enable)
+        {
+            SDL.SDL_SetWindowSize(window, screenWidth, screenHeight);
+            SDL.SDL_SetWindowPosition(window, SDL.SDL_WINDOWPOS_CENTERED, SDL.SDL_WINDOWPOS_CENTERED);
+            SDL.SDL_ShowWindow(window);
+            for (int i = 0; i < 5; i++)
+            {
+                SDL.SDL_PumpEvents();
+                SDL.SDL_RenderPresent(renderer);
+                SDL.SDL_Delay(10);
+            }
+            SDL.SDL_RaiseWindow(window);
+            _ = SDL.SDL_RenderSetViewport(renderer, IntPtr.Zero);
+            SDL.SDL_RenderPresent(renderer);
+        }
     }
 }

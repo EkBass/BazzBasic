@@ -354,6 +354,10 @@ public partial class Interpreter
                 return EvaluateMousebFunc();
             case TokenType.TOK_LOADSOUND:
                 return EvaluateLoadSound();
+            case TokenType.TOK_HTTPGET:
+                return EvaluateHttpGet();
+            case TokenType.TOK_HTTPPOST:
+                return EvaluateHttpPost();
             case TokenType.TOK_FILEREAD:
                 return EvaluateFileRead();
             case TokenType.TOK_FILEEXISTS:

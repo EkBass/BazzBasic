@@ -18,6 +18,7 @@
 - [File I/O](file-io.md)
 - [Graphics Commands](graphics.md)
 - [Sound Commands](sounds.md)
+- [Network](network.md)
 - [Preprocessor](preprocessor.md)
 
 **Learn BazzBasic**

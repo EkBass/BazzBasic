@@ -75,6 +75,10 @@ public class Lexer(string source)
         ["SCREENLOCK"]  = TokenType.TOK_SCREENLOCK,
         ["SHOWSHAPE"]   = TokenType.TOK_SHOWSHAPE,
         ["VSYNC"]       = TokenType.TOK_VSYNC,
+        ["FULLSCREEN"]  = TokenType.TOK_FULLSCREEN,
+        ["LOADSHEET"]   = TokenType.TOK_LOADSHEET,
+        ["HTTPGET"]     = TokenType.TOK_HTTPGET,
+        ["HTTPPOST"]    = TokenType.TOK_HTTPPOST,
 
         // Sound
         ["LOADSOUND"]       = TokenType.TOK_LOADSOUND,
@@ -382,8 +386,21 @@ public class Lexer(string source)
         _pos++; // Skip opening "
         var sb = new StringBuilder();
 
-        while (_pos < _source.Length && _source[_pos] != '"')
+        while (_pos < _source.Length)
         {
+            // End of string
+            if (_source[_pos] == '"')
+            {
+                // "" inside string = escaped quote (BASIC style)
+                if (_pos + 1 < _source.Length && _source[_pos + 1] == '"')
+                {
+                    sb.Append('"');
+                    _pos += 2;
+                    continue;
+                }
+                break; // closing quote
+            }
+
             if (_source[_pos] == '\\' && _pos + 1 < _source.Length)
             {
                 // Escape sequence

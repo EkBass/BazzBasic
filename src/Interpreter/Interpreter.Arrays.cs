@@ -47,12 +47,58 @@ public partial class Interpreter
                 string arrName = _tokens[_pos].StringValue ?? "";
                 _variables.DeclareArray(arrName);
                 _pos++;
+
+                // Handle optional: DIM arr$ = expression
+                if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_EQUALS)
+                {
+                    _pos++; // skip '='
+                    Value val = EvaluateExpression();
+                    string str = val.AsString();
+
+                    // If value looks like key=value lines, populate as array
+                    if (TryPopulateArrayFromKeyValue(arrName, str))
+                        continue;
+
+                    // Otherwise store as single element with key "0"
+                    _variables.SetArrayElement(arrName, "0", val);
+                }
             }
             else
             {
                 _pos++;
             }
         }
+    }
+
+    // Parse "key=value\nkey=value\n..." string into array elements.
+    // Returns true if content looked like key=value format.
+    private bool TryPopulateArrayFromKeyValue(string arrName, string content)
+    {
+        var lines = content.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+        if (lines.Length == 0) return false;
+
+        // All lines must contain exactly one '=' to qualify
+        foreach (var line in lines)
+        {
+            int eq = line.IndexOf('=');
+            if (eq <= 0) return false;
+        }
+
+        foreach (var line in lines)
+        {
+            string trimmed = line.TrimEnd('\r');
+            int eq = trimmed.IndexOf('=');
+            string key = trimmed[..eq];
+            string value = trimmed[(eq + 1)..];
+
+            // Store as number if possible, otherwise as string
+            if (double.TryParse(value, System.Globalization.NumberStyles.Any,
+                System.Globalization.CultureInfo.InvariantCulture, out double num))
+                _variables.SetArrayElement(arrName, key, Value.FromNumber(num));
+            else
+                _variables.SetArrayElement(arrName, key, Value.FromString(value));
+        }
+        return true;
     }
 
     // Delete a specific key from an array

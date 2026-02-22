@@ -26,7 +26,7 @@ The file system allows you to:
 
 ### FileRead(filepath$)
 
-Reads the entire contents of a text file and returns it as a string.
+Reads the entire contents of a text file and returns it as a string or array.
 
 **Returns:** String - Complete file contents, or empty string if file doesn't exist or error occurs
 
@@ -35,7 +35,7 @@ Reads the entire contents of a text file and returns it as a string.
 content$ = FileRead("path/to/file.txt")
 ```
 
-**Example:**
+**Example with variable:**
 ```vb
 LET config$
 config$ = FileRead("settings.txt")
@@ -44,6 +44,19 @@ IF LEN(config$) > 0 THEN
 ELSE
     PRINT "Config file not found"
 ENDIF
+```
+**Example with array:**
+```vb
+LET FILENAME# = "array.txt"
+DIM a$
+a$("first") = 1
+a$("second") = 2
+a$("third") = 3
+a$("fourth") = "Four"
+a$("fourth", "temp") = "Temp"
+FileWrite FILENAME#, a$
+DIM b$ = FileRead(FILENAME#)
+PRINT b$("fourth", "temp")
 ```
 
 **Notes:**
@@ -95,13 +108,27 @@ Writes content to a file, creating it if it doesn't exist or overwriting it comp
 FileWrite filepath$, content$
 ```
 
-**Example:**
+**Example with string:**
 ```vb
 LET score$ = 12345
 LET playerName$ = "Alice"
 LET saveData$ = playerName$ + "\n" + STR(score$)
 FileWrite "savegame.txt", saveData$
 PRINT "Game saved!"
+```
+
+**Example with array:**
+```vb
+LET FILENAME# = "array.txt"
+DIM a$
+a$("first") = 1
+a$("second") = 2
+a$("third") = 3
+a$("fourth") = "Four"
+a$("fourth", "temp") = "Temp"
+FileWrite FILENAME#, a$
+DIM b$ = FileRead(FILENAME#)
+PRINT b$("fourth", "temp") ' Outputs: Temp
 ```
 
 **Notes:**

@@ -72,10 +72,35 @@ public partial class Interpreter
         string path = EvaluateExpression().AsString();
         
         Require(TokenType.TOK_COMMA, "Expected ',' after FILEWRITE path");
-        
-        string content = EvaluateExpression().AsString();
-        
-        // Write file (returns false on error)
+
+        // Check if next token is a plain array name (variable without index, or with empty parens)
+        string content;
+        if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_VARIABLE)
+        {
+            string varName = _tokens[_pos].StringValue ?? "";
+            bool isEmptyParens = _pos + 2 < _tokens.Count
+                && _tokens[_pos + 1].Type == TokenType.TOK_LPAREN
+                && _tokens[_pos + 2].Type == TokenType.TOK_RPAREN;
+            bool isNoParens = _pos + 1 >= _tokens.Count || _tokens[_pos + 1].Type != TokenType.TOK_LPAREN;
+
+            if (!string.IsNullOrEmpty(varName) && (isNoParens || isEmptyParens))
+            {
+                var elements = _variables.GetAllArrayElements(varName);
+                if (elements != null && elements.Count > 0)
+                {
+                    _pos++; // consume variable token
+                    if (isEmptyParens) _pos += 2; // consume '(' and ')'
+                    var sb = new System.Text.StringBuilder();
+                    foreach (var kv in elements)
+                        sb.AppendLine($"{kv.Key}={kv.Value.AsString()}");
+                    content = sb.ToString();
+                    _fileManager.WriteFile(path, content);
+                    return;
+                }
+            }
+        }
+
+        content = EvaluateExpression().AsString();
         _fileManager.WriteFile(path, content);
     }
 
