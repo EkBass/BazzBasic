@@ -6,6 +6,7 @@
 - [IDE Usage](ide-usage.md)
 - [Creating EXE](packaging.md)
 - [Creating Libraries](libraries.md)
+- [AI assisted help](a-assist.md)
 
 **Language Reference**
 - [Variables & Constants](variables-and-constants.md)

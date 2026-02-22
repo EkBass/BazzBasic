@@ -507,7 +507,6 @@ REMOVESHAPE square$             ' Delete and free memory
 **Note:** Images can be handled just as shapes
 ```vb
 SCREEN 12
-DIM sprite$
 LET sprite$ = LOADIMAGE("temp.bmp")
 ' Currently, only .bmp is supported
 
