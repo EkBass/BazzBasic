@@ -108,6 +108,7 @@ public enum TokenType
     TOK_FILEWRITE           = 203,
     TOK_FILEAPPEND          = 204,
     TOK_FILEDELETE          = 205,
+    TOK_SHELL               = 206,
 
     // ========================================================================
     // Built-in Functions 251 - 400

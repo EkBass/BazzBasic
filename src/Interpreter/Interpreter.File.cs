@@ -132,4 +132,26 @@ public partial class Interpreter
         
         _fileManager.DeleteFile(path);
     }
+
+    // SHELL(command$) or SHELL(command$, timeout)
+    // Returns output as string. Timeout 0 or omitted = 5000ms default.
+    private Value EvaluateShell()
+    {
+        _pos++; // Skip TOK_SHELL
+        Require(TokenType.TOK_LPAREN, "Expected '(' after SHELL");
+
+        string command = EvaluateExpression().AsString();
+        int timeout = 5000;
+
+        if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_COMMA)
+        {
+            _pos++; // Skip comma
+            timeout = (int)EvaluateExpression().AsNumber();
+        }
+
+        Require(TokenType.TOK_RPAREN, "Expected ')' after SHELL arguments");
+
+        string result = _fileManager.ExecuteShellCommand(command, timeout);
+        return Value.FromString(result);
+    }
 }
