@@ -189,6 +189,26 @@ ENDIF
 
 ---
 
+### SHELL arg$, timeout$
+
+Sends a command to the system command interpreter  
+Param *timeout$* is optional. If not given, standard 5000 milliseconds used for timeout.
+
+**Syntax:**
+```vb
+' with default timeout option
+LET a$ = SHELL("dir *.txt")
+PRINT a$
+```
+**Syntax:**
+```vb
+' sets timeout to 2 seconds
+' 1000ms = 1 second etc.
+LET a$ = SHELL("dir *.txt", 2000)
+PRINT a$
+```
+
+
 ## Path Handling
 
 ### Relative vs Absolute Paths

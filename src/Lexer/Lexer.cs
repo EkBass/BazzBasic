@@ -94,6 +94,7 @@ public class Lexer(string source)
         ["FILEWRITE"]       = TokenType.TOK_FILEWRITE,
         ["FILEAPPEND"]      = TokenType.TOK_FILEAPPEND,
         ["FILEDELETE"]      = TokenType.TOK_FILEDELETE,
+        ["SHELL"]           = TokenType.TOK_SHELL,
 
         // Math functions
         ["ABS"]             = TokenType.TOK_ABS,

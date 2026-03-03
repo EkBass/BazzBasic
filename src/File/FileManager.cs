@@ -113,7 +113,34 @@ public class FileManager(string rootPath)
             return false;
         }
     }
+    // Execute SHELL command and return output
+    // timeout: milliseconds to wait. 0 or omitted = 5000ms default
+    public string ExecuteShellCommand(string command, int timeout = 5000)
+    {
+        if (string.IsNullOrWhiteSpace(command))
+            return string.Empty;
 
+        if (timeout <= 0)
+            timeout = 5000;
+
+        try
+        {
+            var processInfo = new System.Diagnostics.ProcessStartInfo("cmd.exe", $"/c {command}")
+            {
+                RedirectStandardOutput = true,
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+            using var process = System.Diagnostics.Process.Start(processInfo);
+            if (process == null) return string.Empty;
+            process.WaitForExit(timeout);
+            return process.StandardOutput.ReadToEnd();
+        }
+        catch
+        {
+            return string.Empty;
+        }
+    }
     // Resolve path relative to root or as absolute
     private string ResolvePath(string path)
     {

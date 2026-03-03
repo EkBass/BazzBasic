@@ -1,6 +1,28 @@
 # News and changes
 These changes are about the current source code. These are effected once new binary release is published
 
+## Mar 2026
+
+## 2nd Mar 2026
+
+Added SHELL feature
+
+```vb
+' SHELL arg$, timeout$
+' Sends a command to the system command interpreter  
+' Param *timeout$* is optional. If not given, standard 5000 milliseconds used for timeout.
+
+' with default timeout option
+LET a$ = SHELL("dir *.txt")
+PRINT a$
+
+' sets timeout to 2 seconds
+' 1000ms = 1 second etc.
+LET a$ = SHELL("dir *.txt", 2000)
+PRINT a$
+```
+
+
 ## Feb 2026
 
 ## 22nd Feb. 2026

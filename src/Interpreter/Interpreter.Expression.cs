@@ -362,6 +362,8 @@ public partial class Interpreter
                 return EvaluateFileRead();
             case TokenType.TOK_FILEEXISTS:
                 return EvaluateFileExists();
+            case TokenType.TOK_SHELL:
+                return EvaluateShell();
             case TokenType.TOK_FN:
                 return EvaluateUserFunction();
             
