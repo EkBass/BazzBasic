@@ -89,6 +89,10 @@ public enum TokenType
     // ========================================================================
     TOK_HTTPGET             = 130,
     TOK_HTTPPOST            = 131,
+    TOK_ASJSON              = 132,
+    TOK_ASARRAY             = 133,
+    TOK_LOADJSON            = 134,
+    TOK_SAVEJSON            = 135,
 
     // ========================================================================
     // Sound Keywords 151 - 200

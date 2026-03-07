@@ -142,7 +142,7 @@ public class FileManager(string rootPath)
         }
     }
     // Resolve path relative to root or as absolute
-    private string ResolvePath(string path)
+    public string ResolvePath(string path)
     {
         // If already absolute, use as-is
         if (Path.IsPathRooted(path))

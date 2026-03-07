@@ -225,3 +225,90 @@ PRINT data$(0)
 ```
 
 Always check with `HASKEY` or initialize elements before reading.
+
+---
+
+## Arrays and JSON
+
+BazzBasic arrays map naturally to JSON. Nested JSON objects and arrays become multi-dimensional keys using comma-separated indices.
+
+### ASJSON
+Converts a BazzBasic array to a JSON string:
+```vb
+DIM player$
+player$("name") = "Alice"
+player$("score") = 9999
+player$("address,city") = "New York"
+player$("skills,0") = "JavaScript"
+player$("skills,1") = "Python"
+
+LET json$ = ASJSON(player$)
+PRINT json$
+' Output: {"name":"Alice","score":9999,"address":{"city":"New York"},"skills":["JavaScript","Python"]}
+```
+
+### ASARRAY
+Converts a JSON string into a BazzBasic array. Returns number of elements loaded:
+```vb
+DIM data$
+LET count$ = ASARRAY(data$, "{""name"":""Bob"",""score"":42}")
+
+PRINT data$("name")    ' Output: Bob
+PRINT data$("score")   ' Output: 42
+PRINT count$           ' Output: 2
+```
+
+Nested JSON becomes comma-separated keys:
+```vb
+DIM data$
+LET json$ = "{""player"":{""name"":""Alice"",""hp"":100},""skills"":[""fire"",""ice""]}"
+ASARRAY data$, json$
+
+PRINT data$("player,name")   ' Output: Alice
+PRINT data$("player,hp")     ' Output: 100
+PRINT data$("skills,0")      ' Output: fire
+PRINT data$("skills,1")      ' Output: ice
+```
+
+### LOADJSON
+Loads a JSON file directly into an array:
+```vb
+DIM scores$
+LOADJSON scores$, "highscores.json"
+
+PRINT scores$("first,name")   ' Output: depends on file contents
+```
+
+### SAVEJSON
+Saves an array as a formatted JSON file:
+```vb
+DIM save$
+save$("level") = 3
+save$("hp") = 80
+save$("position,x") = 100
+save$("position,y") = 200
+
+SAVEJSON save$, "savegame.json"
+```
+
+The resulting `savegame.json`:
+```json
+{
+  "level": 3,
+  "hp": 80,
+  "position": {
+    "x": 100,
+    "y": 200
+  }
+}
+```
+
+### Practical example: HTTP API + JSON
+```vb
+DIM response$
+LET raw$ = HTTPGET("https://api.example.com/user/1")
+ASARRAY response$, raw$
+
+PRINT "Name: "; response$("name")
+PRINT "Email: "; response$("email")
+```

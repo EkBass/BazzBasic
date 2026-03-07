@@ -79,6 +79,10 @@ public class Lexer(string source)
         ["LOADSHEET"]   = TokenType.TOK_LOADSHEET,
         ["HTTPGET"]     = TokenType.TOK_HTTPGET,
         ["HTTPPOST"]    = TokenType.TOK_HTTPPOST,
+        ["ASJSON"]      = TokenType.TOK_ASJSON,
+        ["ASARRAY"]     = TokenType.TOK_ASARRAY,
+        ["LOADJSON"]    = TokenType.TOK_LOADJSON,
+        ["SAVEJSON"]    = TokenType.TOK_SAVEJSON,
 
         // Sound
         ["LOADSOUND"]       = TokenType.TOK_LOADSOUND,

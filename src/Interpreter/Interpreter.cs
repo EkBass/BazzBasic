@@ -414,6 +414,12 @@ public partial class Interpreter
             case TokenType.TOK_FILEDELETE:
                 ExecuteFileDelete();
                 break;
+            case TokenType.TOK_LOADJSON:
+                ExecuteLoadJson();
+                break;
+            case TokenType.TOK_SAVEJSON:
+                ExecuteSaveJson();
+                break;
             case TokenType.TOK_END:
                 _pos++;
                 if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_IF)

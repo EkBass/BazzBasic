@@ -360,6 +360,10 @@ public partial class Interpreter
                 return EvaluateHttpGet();
             case TokenType.TOK_HTTPPOST:
                 return EvaluateHttpPost();
+            case TokenType.TOK_ASJSON:
+                return EvaluateAsJson();
+            case TokenType.TOK_ASARRAY:
+                return EvaluateAsArray();
             case TokenType.TOK_FILEREAD:
                 return EvaluateFileRead();
             case TokenType.TOK_FILEEXISTS:
