@@ -6,6 +6,19 @@ These changes are about the current source code. These are effected once new bin
 
 ## 7th Mar 2026
 
+Added HTTP support for LOADIMAGE
+### LOADIMAGE with url
+```vb
+LET sprite$ = LOADIMAGE("https://example.com/sprite.png")
+' → downloads "sprite.png" to root of your program
+' → sprite$ works just as with normal file load
+
+' to remove or move the downloaded file
+SHELL("move sprite.png images\sprite.png")   ' move to subfolder
+' or
+FileDelete "sprite.png"                       ' just delete it
+```
+
 Added WAITKEY() function. 
 
 ## WAITKEY
