@@ -509,7 +509,28 @@ public partial class Interpreter
             Error("Graphics mode not initialized. Use SCREEN first.");
             return Value.FromString("");
         }
-        
+
+        // HTTP(S) URL → download to program root directory, then load as normal
+        if (filepath.StartsWith("http://", StringComparison.OrdinalIgnoreCase) ||
+            filepath.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
+        {
+            try
+            {
+                using var client = new System.Net.Http.HttpClient();
+                byte[] data = client.GetByteArrayAsync(filepath).GetAwaiter().GetResult();
+                string filename = Path.GetFileName(new Uri(filepath).LocalPath);
+                if (string.IsNullOrEmpty(filename)) filename = "downloaded.png";
+                string localPath = Path.Combine(_fileManager.RootPath, filename);
+                System.IO.File.WriteAllBytes(localPath, data);
+                filepath = localPath;
+            }
+            catch (Exception ex)
+            {
+                Error($"Failed to download image: {ex.Message}");
+                return Value.FromString("");
+            }
+        }
+
         try
         {
             string id = Graphics.ShapeManager.LoadImageShape(filepath, Graphics.Graphics.Renderer);

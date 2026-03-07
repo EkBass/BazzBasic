@@ -522,6 +522,19 @@ REMOVESHAPE sprite$          ' Free mem
 END
 ```
 
+#### LOADIMAGE with url
+```vb
+LET sprite$ = LOADIMAGE("https://example.com/sprite.png")
+' → downloads "sprite.png" to root of your program
+' → sprite$ works just as with normal file load
+
+' to remove or move the downloaded file
+SHELL("move sprite.png images\sprite.png")   ' move to subfolder
+' or
+FileDelete "sprite.png"                       ' just delete it
+```
+
+
 ## Mouse Input
 
 ### MOUSE CONSTANTS
