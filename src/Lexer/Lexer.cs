@@ -160,6 +160,7 @@ public class Lexer(string source)
         ["MOUSEY"]      = TokenType.TOK_MOUSEY,
         ["MOUSEB"]      = TokenType.TOK_MOUSEB,
         ["KEYDOWN"]     = TokenType.TOK_KEYDOWN,
+        ["WAITKEY"]     = TokenType.TOK_WAITKEY,
 
         // Array functions
         ["HASKEY"]      = TokenType.TOK_HASKEY,

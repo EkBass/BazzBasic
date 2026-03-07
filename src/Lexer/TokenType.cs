@@ -177,6 +177,7 @@ public enum TokenType
     TOK_MOUSEY              = 353,
     TOK_RGB                 = 354,
     TOK_KEYDOWN             = 355,
+    TOK_WAITKEY             = 356,
 
     // Array functions
     TOK_DELARRAY            = 360,

@@ -258,78 +258,105 @@ public partial class Interpreter
     {
         _pos++;
         
-        // If graphics mode is active, read from SDL2
         if (Graphics.Graphics.IsInitialized)
-        {
             return Value.FromNumber(Graphics.Graphics.GetLastKey());
-        }
-        
-        // Otherwise read from console
+
         if (Console.KeyAvailable)
-        {
-            ConsoleKeyInfo key = Console.ReadKey(true);
-            
-            switch (key.Key)
-            {
-                case ConsoleKey.Escape:
-                    return Value.FromNumber(27);
-                case ConsoleKey.Enter:
-                    return Value.FromNumber(13);
-                case ConsoleKey.Tab:
-                    return Value.FromNumber(9);
-                case ConsoleKey.Backspace:
-                    return Value.FromNumber(8);
-                case ConsoleKey.Spacebar:
-                    return Value.FromNumber(32);
-                case ConsoleKey.UpArrow:
-                    return Value.FromNumber(328);
-                case ConsoleKey.DownArrow:
-                    return Value.FromNumber(336);
-                case ConsoleKey.LeftArrow:
-                    return Value.FromNumber(331);
-                case ConsoleKey.RightArrow:
-                    return Value.FromNumber(333);
-                case ConsoleKey.Insert:
-                    return Value.FromNumber(338);
-                case ConsoleKey.Delete:
-                    return Value.FromNumber(339);
-                case ConsoleKey.Home:
-                    return Value.FromNumber(327);
-                case ConsoleKey.End:
-                    return Value.FromNumber(335);
-                case ConsoleKey.PageUp:
-                    return Value.FromNumber(329);
-                case ConsoleKey.PageDown:
-                    return Value.FromNumber(337);
-                case ConsoleKey.F1:
-                    return Value.FromNumber(315);
-                case ConsoleKey.F2:
-                    return Value.FromNumber(316);
-                case ConsoleKey.F3:
-                    return Value.FromNumber(317);
-                case ConsoleKey.F4:
-                    return Value.FromNumber(318);
-                case ConsoleKey.F5:
-                    return Value.FromNumber(319);
-                case ConsoleKey.F6:
-                    return Value.FromNumber(320);
-                case ConsoleKey.F7:
-                    return Value.FromNumber(321);
-                case ConsoleKey.F8:
-                    return Value.FromNumber(322);
-                case ConsoleKey.F9:
-                    return Value.FromNumber(323);
-                case ConsoleKey.F10:
-                    return Value.FromNumber(324);
-                case ConsoleKey.F11:
-                    return Value.FromNumber(389);
-                case ConsoleKey.F12:
-                    return Value.FromNumber(390);
-                default:
-                    return Value.FromNumber(key.KeyChar);
-            }
-        }
+            return Value.FromNumber(ReadConsoleKey());
+
         return Value.FromNumber(0);
+    }
+
+    // Shared console key reader used by INKEY and WAITKEY
+    private static double ReadConsoleKey()
+    {
+        ConsoleKeyInfo key = Console.ReadKey(true);
+        return key.Key switch
+        {
+            ConsoleKey.Escape    => 27,
+            ConsoleKey.Enter     => 13,
+            ConsoleKey.Tab       => 9,
+            ConsoleKey.Backspace => 8,
+            ConsoleKey.Spacebar  => 32,
+            ConsoleKey.UpArrow   => 328,
+            ConsoleKey.DownArrow => 336,
+            ConsoleKey.LeftArrow => 331,
+            ConsoleKey.RightArrow => 333,
+            ConsoleKey.Insert    => 338,
+            ConsoleKey.Delete    => 339,
+            ConsoleKey.Home      => 327,
+            ConsoleKey.End       => 335,
+            ConsoleKey.PageUp    => 329,
+            ConsoleKey.PageDown  => 337,
+            ConsoleKey.F1        => 315,
+            ConsoleKey.F2        => 316,
+            ConsoleKey.F3        => 317,
+            ConsoleKey.F4        => 318,
+            ConsoleKey.F5        => 319,
+            ConsoleKey.F6        => 320,
+            ConsoleKey.F7        => 321,
+            ConsoleKey.F8        => 322,
+            ConsoleKey.F9        => 323,
+            ConsoleKey.F10       => 324,
+            ConsoleKey.F11       => 389,
+            ConsoleKey.F12       => 390,
+            _                    => (double)key.KeyChar
+        };
+    }
+
+    // WAITKEY() or WAITKEY(key1$) or WAITKEY(key1$, key2$, ...)
+    // Blocks until a matching key is pressed and returns its value.
+    // Without parameters: waits for any key and returns it.
+    private Value EvaluateWaitKeyFunc()
+    {
+        _pos++; // Skip TOK_WAITKEY
+
+        var acceptedKeys = new List<double>();
+
+        if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_LPAREN)
+        {
+            _pos++; // Skip (
+
+            // Empty parens WAITKEY() = accept any key
+            if (_tokens[_pos].Type != TokenType.TOK_RPAREN)
+            {
+                while (true)
+                {
+                    acceptedKeys.Add(EvaluateExpression().AsNumber());
+                    if (_tokens[_pos].Type == TokenType.TOK_COMMA)
+                        _pos++; // Skip comma, read next key
+                    else
+                        break;
+                }
+            }
+            Require(TokenType.TOK_RPAREN, "Expected ')'");
+        }
+
+        // Loop until a matching key (or any key if no params)
+        while (true)
+        {
+            double key = 0;
+
+            if (Graphics.Graphics.IsInitialized)
+            {
+                key = Graphics.Graphics.GetLastKey();
+            }
+            else if (Console.KeyAvailable)
+            {
+                // Use ConsoleKey enum value (always uppercase/neutral) so
+                // KEY_A# matches both 'a' and 'A' — shift state is irrelevant
+                ConsoleKeyInfo info = Console.ReadKey(true);
+                key = (double)info.Key;
+            }
+
+            if (key != 0)
+            {
+                if (acceptedKeys.Count == 0 || acceptedKeys.Contains(key))
+                    return Value.FromNumber(key);
+            }
+
+            System.Threading.Thread.Sleep(16);
+        }
     }
 
     private Value EvaluateRgbFunc()

@@ -3,6 +3,28 @@ These changes are about the current source code. These are effected once new bin
 
 ## Mar 2026
 
+
+## 7th Mar 2026
+
+Added WAITKEY() function. 
+
+## WAITKEY
+Halts the execution until requested key is pressed.
+
+```vb
+' Wait just the ENTER key
+PRINT "ENTER"
+PRINT WAITKEY(KEY_ENTER#) ' output: 13
+
+' Wait any of "a", "b" or "esc" keys
+PRINT "A, B or ESC"
+PRINT WAITKEY(KEY_A#, KEY_B#, KEY_ESC#) ' output: depends of your choice of key
+
+PRINT "Press any key..." 
+LET a$ = WAITKEY()
+PRINT a$ ' output: val of key you pressed
+```
+
 ## 2nd Mar 2026
 
 Added SHELL feature

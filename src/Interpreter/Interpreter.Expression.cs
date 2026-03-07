@@ -334,6 +334,8 @@ public partial class Interpreter
                 return EvaluateInkeyFunc();
             case TokenType.TOK_KEYDOWN:
                 return EvaluateKeyDownFunc();
+            case TokenType.TOK_WAITKEY:
+                return EvaluateWaitKeyFunc();
             case TokenType.TOK_GETCONSOLE:
                 return EvaluateGetConsoleFunc();
             case TokenType.TOK_RGB:
