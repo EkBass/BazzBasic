@@ -36,6 +36,7 @@ public static class SDL
 
     // SDL_Init flags
     public const uint SDL_INIT_VIDEO = 0x00000020;
+    public const uint SDL_INIT_AUDIO = 0x00000010;
 
     // Window positioning
     public const int SDL_WINDOWPOS_CENTERED = 0x2FFF0000;

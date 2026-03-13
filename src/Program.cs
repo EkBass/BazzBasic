@@ -24,6 +24,10 @@ using BazzBasic.IDE;
 [DllImport("kernel32.dll")]
 static extern bool FreeConsole();
 
+// Nahimic audio middleware on this system breaks WASAPI device enumeration.
+// DirectSound bypasses it reliably.
+Environment.SetEnvironmentVariable("SDL_AUDIODRIVER", "directsound");
+
 // Marker for embedded BASIC code
 const string EMBEDDED_MARKER = "---BAZZBASIC---";
 

@@ -3,6 +3,19 @@ These changes are about the current source code. These are effected once new bin
 
 ## Mar 2026
 
+## 14th Mar 2026
+
+## Sound system fix — parallel audio playback
+
+**Problem:** The old implementation loaded MP3/OGG/FLAC files with `Mix_LoadMUS()` which uses the SDL2_mixer's global Music channel — only one sound at a time.
+
+**Fixes:**
+- All sounds are now loaded with `Mix_LoadWAV()` → play on their own Mix_Channels in parallel
+- `SDL_INIT_AUDIO` added to `SDL_Init()` call in `Graphics.cs`
+- `SoundManager` calls `SDL_Init` + `SDL_InitSubSystem` to ensure audio subsystem even without `SCREEN` command
+- `SDL_AUDIODRIVER=directsound` set in `Program.cs` to work around WASAPI issues (Nahimic middleware causes "Invalid Handle" error in WASAPI)
+- `PlayOnceWait` gets 50ms delay before polling loop due to DirectSound startup delay
+
 
 ## 7th Mar 2026
 

@@ -50,7 +50,18 @@ public static class SDL_mixer
     [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
     public static extern void Mix_Quit();
 
-    // Open audio device
+    // Open audio device with format negotiation (preferred over Mix_OpenAudio)
+    // allowed_changes: SDL_AUDIO_ALLOW_ANY_CHANGE = 0xFF lets the device pick its own format
+    // device = IntPtr.Zero → system default; device = name string → specific device
+    [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int Mix_OpenAudioDevice(int frequency, ushort format, int channels, int chunksize, IntPtr device, int allowed_changes);
+
+    [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    public static extern int Mix_OpenAudioDevice(int frequency, ushort format, int channels, int chunksize, string device, int allowed_changes);
+
+    public const int SDL_AUDIO_ALLOW_ANY_CHANGE = 0xFF;
+
+    // Open audio device (legacy, strict format)
     [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
     public static extern int Mix_OpenAudio(int frequency, ushort format, int channels, int chunksize);
 
@@ -102,9 +113,52 @@ public static class SDL_mixer
     [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
     public static extern int Mix_HaltMusic();
 
+    // Query what format the audio device was actually opened with
+    [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int Mix_QuerySpec(out int frequency, out ushort format, out int channels);
+
+    // Set volume on channel (-1 = all channels), 0–128
+    [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int Mix_Volume(int channel, int volume);
+
+    // Set/query volume on a chunk directly, 0–128 (-1 = query)
+    [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int Mix_VolumeChunk(IntPtr chunk, int volume);
+
+    // Enumerate audio output devices (from SDL2.dll)
+    [DllImport("SDL2.dll", CallingConvention = CallingConvention.Cdecl)]
+    public static extern int SDL_GetNumAudioDevices(int iscapture);
+
+    [DllImport("SDL2.dll", CallingConvention = CallingConvention.Cdecl)]
+    private static extern IntPtr SDL_GetAudioDeviceName(int index, int iscapture);
+    public static string SDL_GetAudioDeviceNameString(int index)
+    {
+        var ptr = SDL_GetAudioDeviceName(index, 0);
+        return ptr == IntPtr.Zero ? "(null)" : (Marshal.PtrToStringAnsi(ptr) ?? "(null)");
+    }
+
+    // Get current audio driver name (from SDL2.dll)
+    [DllImport("SDL2.dll", CallingConvention = CallingConvention.Cdecl)]
+    private static extern IntPtr SDL_GetCurrentAudioDriver();
+    public static string SDL_GetCurrentAudioDriverString()
+    {
+        var ptr = SDL_GetCurrentAudioDriver();
+        return ptr == IntPtr.Zero ? "(none)" : (Marshal.PtrToStringAnsi(ptr) ?? "(null)");
+    }
+
     // Get SDL error string (from SDL2.dll)
     [DllImport("SDL2.dll", CallingConvention = CallingConvention.Cdecl)]
     public static extern IntPtr SDL_GetError();
+
+    // Initialize SDL (from SDL2.dll) — safe to call multiple times
+    [DllImport("SDL2.dll", CallingConvention = CallingConvention.Cdecl)]
+    public static extern int SDL_Init(uint flags);
+
+    // Add subsystem to already-running SDL — use this when SDL_Init was already called
+    [DllImport("SDL2.dll", CallingConvention = CallingConvention.Cdecl)]
+    public static extern int SDL_InitSubSystem(uint flags);
+
+    public const uint SDL_INIT_AUDIO = 0x00000010;
 
     public static string SDL_GetErrorString()
     {
