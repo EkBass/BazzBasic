@@ -508,7 +508,6 @@ REMOVESHAPE square$             ' Delete and free memory
 ```vb
 SCREEN 12
 LET sprite$ = LOADIMAGE("temp.bmp")
-' Currently, only .bmp is supported
 
 MOVESHAPE sprite$, 320, 240
 ROTATESHAPE sprite$, 45      ' Rotate 45
