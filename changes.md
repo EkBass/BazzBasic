@@ -3,6 +3,54 @@ These changes are about the current source code. These are effected once new bin
 
 ## Mar 2026
 
+## 21st Mar 2026
+
+Unfortunately, the GamePad support I planned didn't make it to version 1.1
+
+The reason is that the SDL2 library has been having problems for some time, especially with Bluetooth gamepads.
+
+I didn't want to do something half-hearted, so the gamepad support is now on hold until SDL2 gets its library back in condition.
+
+Instead, I added three other functions that I've had in mind for some time: *BASE64ENCODE*, *BASE64DECODE* and *SHA256*
+
+## 21st Mar 2026
+
+Added JSON support: `ASJSON`, `ASARRAY`, `LOADJSON`, `SAVEJSON`
+
+```vb
+DIM data$
+data$("name") = "Alice"
+data$("score") = 9999
+data$("address,city") = "New York"
+
+LET json$ = ASJSON(data$)
+' Output: {"name":"Alice","score":9999,"address":{"city":"New York"}}
+
+DIM back$
+LET count$ = ASARRAY(back$, json$)
+PRINT back$("name")         ' Alice
+PRINT back$("address,city") ' New York
+
+SAVEJSON data$, "save.json"
+DIM loaded$
+LOADJSON loaded$, "save.json"
+```
+
+Added `BASE64ENCODE`, `BASE64DECODE` and `SHA256`
+
+```vb
+LET encoded$ = BASE64ENCODE("Hello, World!")
+PRINT encoded$              ' SGVsbG8sIFdvcmxkIQ==
+
+LET decoded$ = BASE64DECODE(encoded$)
+PRINT decoded$              ' Hello, World!
+
+LET hash$ = SHA256("password123")
+PRINT hash$                 ' ef92b778... (64-char lowercase hex)
+```
+
+---
+
 ## 14th Mar 2026
 
 ## Sound system fix — parallel audio playback

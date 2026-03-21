@@ -12,10 +12,8 @@ PRINT "--------------------------------"
 FastTrig(TRUE)
 PRINT "FastTrig enabled successfully"
 
-LET test_sin$ = FastSin(90)
-LET test_cos$ = FastCos(0)
-PRINT "FastSin(90) = "; test_sin$; " (should be 1)"
-PRINT "FastCos(0) = "; test_cos$; " (should be 1)"
+PRINT "FastSin(90) = "; FastSin(90); " (should be 1)"
+PRINT "FastCos(0) = "; FastSin(0); " (should be 1)"
 
 FastTrig(FALSE)
 PRINT "FastTrig disabled successfully"
@@ -53,11 +51,9 @@ PRINT
 REM Test 4: 45-degree angles
 PRINT "Test 4: 45-Degree Angles"
 PRINT "------------------------"
-LET sin45$ = FastSin(45)
-LET cos45$ = FastCos(45)
-PRINT "FastSin(45) = "; sin45$; " (should be ~0.707)"
-PRINT "FastCos(45) = "; cos45$; " (should be ~0.707)"
-PRINT "sin45^2 + cos45^2 = "; (sin45$ * sin45$) + (cos45$ * cos45$); " (should be ~1)"
+PRINT "FastSin(45) = "; FastSin(45); " (should be ~0.707)"
+PRINT "FastCos(45) = "; FastCos(45); " (should be ~0.707)"
+PRINT "sin45^2 + cos45^2 = "; (FastSin(45) * FastSin(45)) + (FastCos(45) * FastCos(45)); " (should be ~1)"
 PRINT
 
 REM Test 5: FastRad conversion
@@ -88,9 +84,9 @@ PRINT "Test 7: Performance Test"
 PRINT "------------------------"
 PRINT "Running 10000 FastSin lookups..."
 
-LET start$ = TICKS
+LET start$ = TICKS, dummy$
 FOR i$ = 1 TO 10000
-    LET dummy$ = FastSin(MOD(i$, 360))
+    dummy$ = FastSin(MOD(i$, 360))
 NEXT
 LET fast_time$ = TICKS - start$
 
@@ -105,9 +101,7 @@ LET radius$ = 100
 PRINT "Generating 8 points on circle (radius=100):"
 
 FOR angle$ = 0 TO 315 STEP 45
-    LET x$ = radius$ * FastCos(angle$)
-    LET y$ = radius$ * FastSin(angle$)
-    PRINT "Angle "; angle$; ": ("; ROUND(x$); ", "; ROUND(y$); ")"
+    PRINT "Angle "; angle$; ": ("; ROUND(radius$ * FastCos(angle$)); ", "; ROUND(radius$ * FastSin(angle$)); ")"
 NEXT
 PRINT
 

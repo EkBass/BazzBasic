@@ -509,6 +509,16 @@ PRINT ASC("A")      ' Output: 65
 PRINT ASC("Hello")  ' Output: 72 (H)
 ```
 
+### BASE64DECODE(s$) & BASE64ENCODE(s$)
+Decodes and encodes Base64
+```vb
+LET encoded$ = BASE64ENCODE("Hello, World!")
+PRINT encoded$              ' SGVsbG8sIFdvcmxkIQ==
+
+LET decoded$ = BASE64DECODE(encoded$)
+PRINT decoded$              ' Hello, World!
+```
+
 ### CHR(n)
 Returns character for ASCII code.
 ```vb
@@ -591,6 +601,13 @@ LET a$ = "Foo     "
 LET b$ = "Bar"
 a$ = RTRIM(a$)
 PRINT a$ + b$ ' Output: FooBar
+```
+
+### SHA256
+Creates SHA256 hash from a string
+```vb
+LET hash$ = SHA256("password123")
+PRINT hash$                 ' ef92b778... (64-char hex)
 ```
 
 ### SPLIT(s$, a$, b$)

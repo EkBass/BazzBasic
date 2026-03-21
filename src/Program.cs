@@ -240,8 +240,12 @@ static int PackageExe(string sourceFile)
     
     try
     {
-        // Read source BASIC code
-        string sourceCode = File.ReadAllText(sourceFile);
+        // Read source BASIC code and process INCLUDE directives
+        // so the standalone exe contains the fully merged source
+        string rawSource = File.ReadAllText(sourceFile);
+        string basePath = Path.GetDirectoryName(Path.GetFullPath(sourceFile)) ?? Directory.GetCurrentDirectory();
+        var preprocessor = new Preprocessor(basePath);
+        string sourceCode = preprocessor.Process(rawSource, sourceFile);
         
         // Read this exe (the "clean" bazzbasic.exe without embedded code)
         byte[] exeBytes = File.ReadAllBytes(thisExe);

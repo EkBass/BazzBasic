@@ -1,55 +1,57 @@
-' Makes single yellow ball to bounce around screen
-' BazzBasic version. krisu.virtanen@gmail.com
+' Bouncing Ball — BazzBasic v1.1
+' krisu.virtanen@gmail.com
 ' https://github.com/EkBass/BazzBasic
 
-SCREEN 12, 640, 480, "Bouncing Ball"
-CLS
+' ── 1. CONSTANTS ────────────────────────────
+LET SCREEN_W#  = 640
+LET SCREEN_H#  = 480
+LET BALL_SIZE# = 30
+LET BALL_COL#  = RGB(255, 255, 0)
 
-DIM ball$
-LET ball$ = LOADSHAPE("CIRCLE", 30, 30, RGB(255, 255, 0))
+' ── 2. INIT ─────────────────────────────────
+[inits]
+    SCREEN 0, SCREEN_W#, SCREEN_H#, "Bouncing Ball"
 
-DIM x$
-DIM y$
-DIM dx$
-DIM dy$
+    LET BALL# = LOADSHAPE("CIRCLE", BALL_SIZE#, BALL_SIZE#, BALL_COL#)
 
-LET x$ = 320
-LET y$ = 240
-LET dx$ = 3
-LET dy$ = 2
+    LET x$       = 320
+    LET y$       = 240
+    LET dx$      = 3
+    LET dy$      = 2
+    LET running$ = TRUE
 
-WHILE INKEY <> 27
-        
-    REM Update position
-    LET x$ = x$ + dx$
-    LET y$ = y$ + dy$
-    
-    REM Bounce off walls
-    IF x$ <= 15 OR x$ >= 625 THEN
-        LET dx$ = dx$ * -1
+' ── 3. MAIN LOOP ────────────────────────────
+[main]
+    WHILE running$
+        IF INKEY = KEY_ESC# THEN running$ = FALSE
+        GOSUB [sub:update]
+        GOSUB [sub:draw]
+        SLEEP 16
+    WEND
+    REMOVESHAPE BALL#
+END
+
+' ── 4. SUBROUTINES ──────────────────────────
+[sub:update]
+    x$ = x$ + dx$
+    y$ = y$ + dy$
+
+    IF x$ <= 0 OR x$ >= SCREEN_W# - BALL_SIZE# THEN
+        dx$ = dx$ * -1
     ENDIF
-    
-    IF y$ <= 15 OR y$ >= 465 THEN
-        LET dy$ = dy$ * -1
+
+    IF y$ <= 0 OR y$ >= SCREEN_H# - BALL_SIZE# THEN
+        dy$ = dy$ * -1
     ENDIF
-    
-    REM Draw
-	SCREENLOCK ON
-	
-	' Filling screen with LINE... BF is actually faster than CLS which works better with console
-    COLOR 0, 0
-    LINE (0, 80)-(640, 480), 0, BF
-	
-    MOVESHAPE ball$, x$, y$
-    DRAWSHAPE ball$
-    
+RETURN
+
+[sub:draw]
+    SCREENLOCK ON
+    LINE (0,0)-(SCREEN_W#, SCREEN_H#), 0, BF
+    MOVESHAPE BALL#, x$, y$
+    DRAWSHAPE BALL#
     COLOR 15, 0
     LOCATE 1, 1
     PRINT "Press ESC to exit"
-    
     SCREENLOCK OFF
-    SLEEP 16
-WEND
-
-REMOVESHAPE ball$
-END
+RETURN

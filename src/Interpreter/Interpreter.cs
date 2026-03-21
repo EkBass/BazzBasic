@@ -79,7 +79,7 @@ public partial class Interpreter
     
     // File
     private readonly FileManager _fileManager;
-    
+
     // Time
     private readonly Stopwatch _programTimer = Stopwatch.StartNew();
 
@@ -211,7 +211,7 @@ public partial class Interpreter
             // Mouse
             ["MOUSE_LEFT#"] = 1,
             ["MOUSE_RIGHT#"] = 2,
-            ["MOUSE_MIDDLE#"] = 4, // Wont detect rolling, just pressing
+            ["MOUSE_MIDDLE#"] = 4,
         };
     }
 

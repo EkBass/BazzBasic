@@ -113,6 +113,9 @@ public enum TokenType
     TOK_FILEAPPEND          = 204,
     TOK_FILEDELETE          = 205,
     TOK_SHELL               = 206,
+    TOK_BASE64ENCODE        = 207,
+    TOK_BASE64DECODE        = 208,
+    TOK_SHA256              = 209,
 
     // ========================================================================
     // Built-in Functions 251 - 400

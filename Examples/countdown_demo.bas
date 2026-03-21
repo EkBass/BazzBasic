@@ -7,7 +7,7 @@ REM ============================================
 SCREEN 640, 480, "Countdown!"
 
 DIM sprites$
-LOADSHEET sprites$, 128, 128, "sheet_numbers.png"
+LOADSHEET sprites$, 128, 128, "images/sheet_numbers.png"
 
 REM Center position for a 128x128 sprite on 640x480 screen
 LET x# = 256

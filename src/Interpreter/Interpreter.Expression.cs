@@ -364,6 +364,12 @@ public partial class Interpreter
                 return EvaluateAsJson();
             case TokenType.TOK_ASARRAY:
                 return EvaluateAsArray();
+            case TokenType.TOK_BASE64ENCODE:
+                return EvaluateBase64Encode();
+            case TokenType.TOK_BASE64DECODE:
+                return EvaluateBase64Decode();
+            case TokenType.TOK_SHA256:
+                return EvaluateSha256();
             case TokenType.TOK_FILEREAD:
                 return EvaluateFileRead();
             case TokenType.TOK_FILEEXISTS:

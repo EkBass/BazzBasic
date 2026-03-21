@@ -165,6 +165,9 @@ public class Lexer(string source)
         ["MOUSEB"]      = TokenType.TOK_MOUSEB,
         ["KEYDOWN"]     = TokenType.TOK_KEYDOWN,
         ["WAITKEY"]     = TokenType.TOK_WAITKEY,
+        ["BASE64ENCODE"] = TokenType.TOK_BASE64ENCODE,
+        ["BASE64DECODE"] = TokenType.TOK_BASE64DECODE,
+        ["SHA256"]       = TokenType.TOK_SHA256,
 
         // Array functions
         ["HASKEY"]      = TokenType.TOK_HASKEY,

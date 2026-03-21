@@ -278,4 +278,44 @@ public partial class Interpreter
             Error($"SAVEJSON failed: {ex.Message}");
         }
     }
+
+    // BASE64ENCODE(s$) — encode string to Base64
+    private Value EvaluateBase64Encode()
+    {
+        _pos++;
+        Require(TokenType.TOK_LPAREN, "Expected '(' after BASE64ENCODE");
+        string input = EvaluateExpression().AsString();
+        Require(TokenType.TOK_RPAREN, "Expected ')'");
+        return Value.FromString(Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(input)));
+    }
+
+    // BASE64DECODE(s$) — decode Base64 string
+    private Value EvaluateBase64Decode()
+    {
+        _pos++;
+        Require(TokenType.TOK_LPAREN, "Expected '(' after BASE64DECODE");
+        string input = EvaluateExpression().AsString();
+        Require(TokenType.TOK_RPAREN, "Expected ')'");
+        try
+        {
+            return Value.FromString(System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(input)));
+        }
+        catch
+        {
+            Error("BASE64DECODE: invalid Base64 string");
+            return Value.Empty;
+        }
+    }
+
+    // SHA256(s$) — returns lowercase hex SHA256 hash
+    private Value EvaluateSha256()
+    {
+        _pos++;
+        Require(TokenType.TOK_LPAREN, "Expected '(' after SHA256");
+        string input = EvaluateExpression().AsString();
+        Require(TokenType.TOK_RPAREN, "Expected ')'");
+        byte[] hash = System.Security.Cryptography.SHA256.HashData(
+            System.Text.Encoding.UTF8.GetBytes(input));
+        return Value.FromString(Convert.ToHexString(hash).ToLowerInvariant());
+    }
 }

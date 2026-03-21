@@ -6,27 +6,26 @@
 ' Classic DOCTOR script - Rogerian therapist
 ' ============================================
 
-' Color constants
-LET BLACK# = 0
-LET GREEN# = 2
-LET CYAN# = 11
-LET YELLOW# = 14
-LET WHITE# = 15
-LET LGRAY# = 7
-LET LGREEN# = 10
-LET MAGENTA# = 13
-LET response$
+[init]
+	' Color constants
+	LET BLACK# = 0
+	LET GREEN# = 2
+	LET CYAN# = 11
+	LET YELLOW# = 14
+	LET WHITE# = 15
+	LET LGRAY# = 7
+	LET LGREEN# = 10
+	LET MAGENTA# = 13
+	LET response$
 
-' Response arrays
-DIM responses$
-DIM reflections$
-DIM generic$
+	' Response arrays
+	DIM responses$
+	DIM generic$
 
-GOSUB [initResponses]
-GOSUB [initReflections]
-GOSUB [initGeneric]
-GOSUB [title]
-GOSUB [mainLoop]
+	GOSUB [initResponses]
+	GOSUB [initGeneric]
+	GOSUB [title]
+	GOSUB [mainLoop]
 END
 
 ' ============================================
@@ -64,43 +63,44 @@ RETURN
 ' ============================================
 [mainLoop]
     [conversation]
-    COLOR LGREEN#, BLACK#
-    PRINT "\n You: ";
-    COLOR WHITE#, BLACK#
-    INPUT "", userInput$
-    
-    ' Normalize input
-    LET userInput$ = TRIM(userInput$)
-    LET upperInput$ = UCASE(userInput$)
-    
-    ' Check for exit
-    IF upperInput$ = "BYE" OR upperInput$ = "QUIT" OR upperInput$ = "EXIT" THEN
-        GOTO [goodbye]
-    END IF
-    
-    ' Empty input
-    IF LEN(userInput$) = 0 THEN
-        COLOR CYAN#, BLACK#
-        PRINT "\n Eliza: Please, tell me something."
-        GOTO [conversation]
-    END IF
-    
-    ' Process and respond
-    GOSUB [findResponse]
-    
-    COLOR CYAN#, BLACK#
-    PRINT "\n Eliza: "; response$
-    
+		COLOR LGREEN#, BLACK#
+		PRINT "\n You: ";
+		COLOR WHITE#, BLACK#
+		INPUT "", userInput$
+		
+		' Normalize input
+		LET userInput$ = TRIM(userInput$)
+		LET upperInput$ = UCASE(userInput$)
+		
+		' Check for exit
+		IF upperInput$ = "BYE" OR upperInput$ = "QUIT" OR upperInput$ = "EXIT" THEN
+			GOTO [goodbye]
+		END IF
+		
+		' Empty input
+		IF LEN(userInput$) = 0 THEN
+			COLOR CYAN#, BLACK#
+			PRINT "\n Eliza: Please, tell me something."
+			GOTO [conversation]
+		END IF
+		
+		' Process and respond
+		GOSUB [findResponse]
+		
+		COLOR CYAN#, BLACK#
+		PRINT "\n Eliza: "; response$
+		
     GOTO [conversation]
 
-[goodbye]
-    COLOR YELLOW#, BLACK#
-    PRINT "\n"; REPEAT("-", 50)
-    COLOR CYAN#, BLACK#
-    PRINT "\n Eliza: Thank you for talking with me."
-    PRINT "        I hope our session was helpful."
-    PRINT "        Take care of yourself. Goodbye.\n"
-    COLOR WHITE#, BLACK#
+	[goodbye]
+		COLOR YELLOW#, BLACK#
+		PRINT "\n"; REPEAT("-", 50)
+		COLOR CYAN#, BLACK#
+		PRINT "\n Eliza: Thank you for talking with me."
+		PRINT "        I hope our session was helpful."
+		PRINT "        Take care of yourself. Goodbye.\n"
+		COLOR WHITE#, BLACK#
+	'[/goodbye]
 RETURN
 
 ' ============================================
@@ -511,20 +511,6 @@ RETURN
     responses$("MAYBE_2") = "Can't you be more definite?"
     responses$("MAYBE_3") = "What would make you more sure?"
     responses$("MAYBE_COUNT") = 4
-RETURN
-
-' ============================================
-' INITIALIZE REFLECTION WORDS
-' ============================================
-[initReflections]
-    ' These are used in [reflectPhrase]
-    reflections$("I") = "you"
-    reflections$("ME") = "you"
-    reflections$("MY") = "your"
-    reflections$("AM") = "are"
-    reflections$("YOU") = "I"
-    reflections$("YOUR") = "my"
-    reflections$("ARE") = "am"
 RETURN
 
 ' ============================================

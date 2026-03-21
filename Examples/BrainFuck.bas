@@ -17,13 +17,13 @@ LET LGREEN# = 10
 LET LRED# = 12
 
 ' BF virtual machine
-LET memSize# = 1000
+LET MEM_SIZE# = 1000
 DIM mem$
 LET ptr$ = 0
 LET pc$ = 1
 
 ' Initialize memory to zero
-FOR i$ = 0 TO memSize# - 1
+FOR i$ = 0 TO MEM_SIZE# - 1
     mem$(i$) = 0
 NEXT
 
@@ -89,13 +89,13 @@ RETURN
         ' > move pointer right
         IF op$ = ">" THEN
             ptr$ = ptr$ + 1
-            IF ptr$ >= memSize# THEN ptr$ = 0
+            IF ptr$ >= MEM_SIZE# THEN ptr$ = 0
         ENDIF
         
         ' < move pointer left
         IF op$ = "<" THEN
             ptr$ = ptr$ - 1
-            IF ptr$ < 0 THEN ptr$ = memSize# - 1
+            IF ptr$ < 0 THEN ptr$ = MEM_SIZE# - 1
         ENDIF
         
         ' + increment
