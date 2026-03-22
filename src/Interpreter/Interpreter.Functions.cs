@@ -157,6 +157,10 @@ public partial class Interpreter
         
         int savedPos = _pos;
         bool savedRunning = _running;
+        bool savedInFunction = _inFunction;
+        int savedFunctionStartPos = _functionStartPos;
+        int savedFunctionEndPos = _functionEndPos;
+        Value savedReturnValue = _returnValue;
         
         _variables.PushScope();
         
@@ -178,11 +182,16 @@ public partial class Interpreter
             ExecuteStatement();
         }
         
+        Value result = _returnValue;
+        
         _variables.PopScope();
         _pos = savedPos;
         _running = !_hasError && savedRunning;
-        _inFunction = false;
+        _inFunction = savedInFunction;
+        _functionStartPos = savedFunctionStartPos;
+        _functionEndPos = savedFunctionEndPos;
+        _returnValue = savedReturnValue;
         
-        return _returnValue;
+        return result;
     }
 }
