@@ -312,3 +312,91 @@ ASARRAY response$, raw$
 PRINT "Name: "; response$("name")
 PRINT "Email: "; response$("email")
 ```
+---
+
+## HTTP Headers with Arrays
+
+HTTPGET and HTTPPOST accept an optional `headers$` array as the last parameter. This enables authenticated API calls, custom content types, and any other HTTP header needs.
+
+```vb
+DIM headers$
+headers$("Authorization") = "Bearer mytoken123"
+headers$("Content-Type") = "application/json"
+
+LET raw$ = HTTPGET("https://api.example.com/data", headers$)
+```
+
+```vb
+DIM headers$
+headers$("Authorization") = "Bearer mytoken123"
+headers$("Content-Type") = "application/json"
+
+DIM body$
+body$("model") = "gpt-4.1-mini"
+body$("messages,0,role") = "user"
+body$("messages,0,content") = "Hello"
+body$("max_tokens") = 100
+
+LET raw$ = HTTPPOST("https://api.openai.com/v1/chat/completions", ASJSON(body$), headers$)
+
+DIM result$
+LET count$ = ASARRAY(result$, raw$)
+PRINT result$("choices,0,message,content")
+```
+
+The headers array is applied directly to the HTTP request. Standard request headers (like `Authorization`) and content headers (like `Content-Type`) are both supported.
+
+---
+
+## Loading key=value Files into Arrays
+
+`FileRead` can populate an array directly from a `key=value` formatted text file. If the target variable is a `DIM`'d array, BazzBasic automatically parses the file contents line by line into array elements.
+
+```vb
+DIM config$
+LET config$ = FileRead("settings.txt")
+
+PRINT config$("width")    ' Output: 800
+PRINT config$("height")   ' Output: 600
+```
+
+Where `settings.txt` contains:
+```
+width=800
+height=600
+title=My Game
+```
+
+Lines beginning with `#` are treated as comments and ignored:
+```
+# Game settings
+width=800
+height=600
+
+# Display
+fullscreen=0
+```
+
+### .env files
+
+This makes `.env` files work naturally for storing API keys and configuration outside of source code:
+
+```vb
+IF FileExists(".env") = 0 THEN
+    PRINT "Error: .env file not found"
+    END
+END IF
+
+DIM env$
+LET env$ = FileRead(".env")
+
+LET ApiKey# = env$("OPENAI_API_KEY")
+```
+
+Where `.env` contains:
+```
+OPENAI_API_KEY=sk-proj-...
+ANTHROPIC_API_KEY=sk-ant-...
+```
+
+**Important:** Add `.env` to your `.gitignore` to keep API keys out of version control.

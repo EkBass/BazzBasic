@@ -18,6 +18,7 @@ HTTPGET(url$, headers$)         ' new, optional
 HTTPPOST(url$, body$)                       ' works as before
 HTTPPOST(url$, body$, headers$)     ' new, optional
 ```
+See [OpenAI API example](https://github.com/EkBass/BazzBasic/blob/main/Examples/OpenAI_request.bas) for more.
 
 ## 22nd Mar 2026
 

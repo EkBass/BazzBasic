@@ -209,6 +209,70 @@ PRINT a$
 ```
 
 
+---
+
+## Loading key=value Files into Arrays (.env support)
+
+When `FileRead` assigns to a `DIM`'d array, BazzBasic automatically parses the file contents line by line into array elements — using the `key=value` format that `.env` files use.
+
+```vb
+DIM config$
+LET config$ = FileRead("settings.txt")
+
+PRINT config$("width")      ' Output: 800
+PRINT config$("height")     ' Output: 600
+PRINT config$("title")      ' Output: My Game
+```
+
+Where `settings.txt` contains:
+```
+width=800
+height=600
+title=My Game
+```
+
+Lines beginning with `#` are treated as comments and ignored:
+```
+# Game settings
+width=800
+height=600
+
+# Display options
+fullscreen=0
+```
+
+### Using .env files for API keys
+
+This makes standard `.env` files work directly for storing sensitive values such as API keys outside of source code:
+
+```vb
+IF FileExists(".env") = 0 THEN
+    PRINT "Error: .env file not found"
+    END
+END IF
+
+DIM env$
+LET env$ = FileRead(".env")
+
+LET ApiKey# = env$("OPENAI_API_KEY")
+LET OtherKey# = env$("OTHER_SERVICE_KEY")
+```
+
+Where `.env` contains:
+```
+OPENAI_API_KEY=sk-proj-...
+OTHER_SERVICE_KEY=abc123...
+```
+
+**Important:** Add `.env` to your `.gitignore` to keep API keys out of version control:
+```
+.env
+```
+
+**Note:** This parsing only happens when assigning `FileRead` to a `DIM`'d array. Assigning to a regular variable (`LET data$`) always returns the raw file contents as a plain string.
+
+---
+
 ## Path Handling
 
 ### Relative vs Absolute Paths
