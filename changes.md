@@ -3,8 +3,25 @@ These changes are about the current source code. These are effected once new bin
 
 ## Mar 2026
 
+
+## 22nd Mar 2026
+
+Released as version 1.1
+
+## 22nd Mar 2026
+
+At Rosetta code I got inspired to create pendulum animation.
+[pendulum_animation.bas](Examples/pendulum_animation.bas)
+
 ## 21st Mar 2026
 
+BazzBasic-AI_guide.md is a tutorial for modern AI's. With it, AI can easily teach the user how to use BazzBasic.
+
+Just download the file, attach it as project file or via prompt to AI and you are cool to go.  
+
+[Technical guide ment for AI](https://github.com/EkBass/BazzBasic/discussions/26)
+
+---
 Unfortunately, the GamePad support I planned didn't make it to version 1.1
 
 The reason is that the SDL2 library has been having problems for some time, especially with Bluetooth gamepads.
