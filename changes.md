@@ -3,6 +3,21 @@ These changes are about the current source code. These are effected once new bin
 
 ## Mar 2026
 
+## 22nd Mar 2026
+
+Quick "rerelease" as 1.1b
+
+- I forgot to update version from source
+- I forgot to update syntax files for Notepad++, VS Code, Geany and built-in IDE
+- Headers "support" not documented
+  
+```vb
+HTTPGET(url$)                           ' works as before
+HTTPGET(url$, headers$)         ' new, optional
+
+HTTPPOST(url$, body$)                       ' works as before
+HTTPPOST(url$, body$, headers$)     ' new, optional
+```
 
 ## 22nd Mar 2026
 

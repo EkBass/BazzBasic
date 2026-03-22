@@ -1,0 +1,111 @@
+{
+    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "name": "BazzBasic",
+    "scopeName": "source.bazzbasic",
+    "patterns": [
+        { "include": "#comments" },
+        { "include": "#strings" },
+        { "include": "#numbers" },
+        { "include": "#keywords-control" },
+        { "include": "#keywords-io" },
+        { "include": "#keywords-graphics" },
+        { "include": "#keywords-sound" },
+        { "include": "#keywords-math" },
+        { "include": "#keywords-string" },
+        { "include": "#keywords-file" },
+        { "include": "#keywords-logic" },
+        { "include": "#operators" },
+        { "include": "#variables" },
+        { "include": "#constants" },
+        { "include": "#labels" }
+    ],
+    "repository": {
+        "comments": {
+            "patterns": [
+                {
+                    "name": "comment.line.rem.bazzbasic",
+                    "match": "(?i)^\\s*REM\\b.*$"
+                },
+                {
+                    "name": "comment.line.rem.bazzbasic",
+                    "match": "(?i)\\bREM\\b.*$"
+                },
+                {
+                    "name": "comment.line.apostrophe.bazzbasic",
+                    "match": "'.*$"
+                }
+            ]
+        },
+        "strings": {
+            "name": "string.quoted.double.bazzbasic",
+            "begin": "\"",
+            "end": "\"",
+            "patterns": [
+                {
+                    "name": "constant.character.escape.bazzbasic",
+                    "match": "\\\\."
+                }
+            ]
+        },
+        "numbers": {
+            "patterns": [
+                {
+                    "name": "constant.numeric.float.bazzbasic",
+                    "match": "\\b\\d+\\.\\d+\\b"
+                },
+                {
+                    "name": "constant.numeric.integer.bazzbasic",
+                    "match": "\\b\\d+\\b"
+                }
+            ]
+        },
+        "keywords-control": {
+            "name": "keyword.control.bazzbasic",
+            "match": "(?i)\\b(DEF|DIM|END|ENDIF|ELSE|ELSEIF|FN|FOR|GOSUB|GOTO|IF|INCLUDE|LET|NEXT|RETURN|STEP|THEN|TO|WEND|WHILE|SLEEP)\\b"
+        },
+        "keywords-io": {
+            "name": "keyword.other.io.bazzbasic",
+            "match": "(?i)\\b(CLS|COLOR|GETCONSOLE|INPUT|LOCATE|PRINT|SCREEN|SCREENLOCK|FULLSCREEN|VSYNC|INKEY|KEYDOWN|WAITKEY)\\b"
+        },
+        "keywords-graphics": {
+            "name": "support.function.graphics.bazzbasic",
+            "match": "(?i)\\b(CIRCLE|DRAWSHAPE|HIDESHAPE|LINE|LOADIMAGE|LOADSHAPE|LOADSHEET|MOVESHAPE|PAINT|POINT|PSET|REMOVESHAPE|ROTATESHAPE|SCALESHAPE|SHOWSHAPE|B|BF)\\b"
+        },
+        "keywords-sound": {
+            "name": "support.function.sound.bazzbasic",
+            "match": "(?i)\\b(LOADSOUND|SOUNDONCE|SOUNDONCEWAIT|SOUNDREPEAT|SOUNDSTOP|SOUNDSTOPALL)\\b"
+        },
+        "keywords-math": {
+            "name": "support.function.math.bazzbasic",
+            "match": "(?i)\\b(ABS|ATAN|BETWEEN|CEIL|CINT|CLAMP|COS|DEG|DISTANCE|EXP|FLOOR|INT|LERP|LOG|MAX|MIN|MOD|POW|RAD|RND|ROUND|SGN|SIN|SQR|TAN|PI|HPI|QPI|TAU|EULER|FASTTRIG|FASTSIN|FASTCOS|FASTRAD)\\b"
+        },
+        "keywords-string": {
+            "name": "support.function.string.bazzbasic",
+            "match": "(?i)\\b(ASC|CHR|INSTR|INVERT|LCASE|LEFT|LEN|LTRIM|MID|REPEAT|REPLACE|RIGHT|RTRIM|SPLIT|SRAND|STR|TRIM|UCASE|VAL)\\b"
+        },
+        "keywords-file": {
+            "name": "support.function.file.bazzbasic",
+            "match": "(?i)\\b(FILEDELETE|FILEEXISTS|FILELIST|FILEREAD|FILEWRITE|SHELL|HTTPGET|HTTPPOST|ASJSON|ASARRAY|LOADJSON|SAVEJSON|BASE64ENCODE|BASE64DECODE|SHA256|DELARRAY|DELKEY|HASKEY)\\b"
+        },
+        "keywords-logic": {
+            "name": "keyword.operator.logical.bazzbasic",
+            "match": "(?i)\\b(AND|FALSE|NOT|OFF|ON|OR|TRUE|BEEP|MOUSEB|MOUSEX|MOUSEY|RGB|TICKS|TIME)\\b"
+        },
+        "operators": {
+            "name": "keyword.operator.bazzbasic",
+            "match": "[+\\-*/=<>]|<>|<=|>="
+        },
+        "variables": {
+            "name": "variable.other.bazzbasic",
+            "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\$\\b"
+        },
+        "constants": {
+            "name": "constant.other.bazzbasic",
+            "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*#\\b"
+        },
+        "labels": {
+            "name": "entity.name.label.bazzbasic",
+            "match": "\\[\\w+\\]"
+        }
+    }
+}

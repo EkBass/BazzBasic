@@ -600,6 +600,27 @@ public partial class Interpreter
         }
         else
         {
+            // If target is a DIM'd array and value is a key=value string, populate array elements
+            if (value.Type == BazzBasic.Parser.BazzValueType.String
+                && _variables.ArrayExists(varName))
+            {
+                string content = value.AsString();
+                bool parsed = false;
+                foreach (string line in content.Split('\n'))
+                {
+                    string trimmed = line.Trim().TrimEnd('\r');
+                    if (trimmed.Length == 0 || trimmed.StartsWith('#')) continue;
+                    int eq = trimmed.IndexOf('=');
+                    if (eq > 0)
+                    {
+                        string k = trimmed[..eq].Trim();
+                        string v = trimmed[(eq + 1)..].Trim();
+                        _variables.SetArrayElement(varName, k, Value.FromString(v));
+                        parsed = true;
+                    }
+                }
+                if (parsed) return;
+            }
             _variables.SetVariable(varName, value);
         }
     }

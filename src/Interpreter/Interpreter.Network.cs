@@ -27,18 +27,29 @@ public partial class Interpreter
         Timeout = TimeSpan.FromSeconds(30)
     };
 
-    // HTTPGET(url$) -> returns response body as string
+    // HTTPGET(url$) / HTTPGET(url$, headers$) -> returns response body as string
     private Value EvaluateHttpGet()
     {
         _pos++;
         Require(TokenType.TOK_LPAREN, "Expected '(' after HTTPGET");
         string url = EvaluateExpression().AsString();
-        Require(TokenType.TOK_RPAREN, "Expected ')' after HTTPGET url");
+
+        string? headersArrayName = null;
+        if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_COMMA)
+        {
+            _pos++; // consume comma
+            headersArrayName = _tokens[_pos].StringValue ?? "";
+            _pos++;
+        }
+
+        Require(TokenType.TOK_RPAREN, "Expected ')' after HTTPGET arguments");
 
         try
         {
-            string result = _httpClient.GetStringAsync(url).GetAwaiter().GetResult();
-            return Value.FromString(result);
+            using var request = new HttpRequestMessage(HttpMethod.Get, url);
+            ApplyHeaders(request, headersArrayName);
+            var response = _httpClient.SendAsync(request).GetAwaiter().GetResult();
+            return Value.FromString(response.Content.ReadAsStringAsync().GetAwaiter().GetResult());
         }
         catch (Exception ex)
         {
@@ -46,7 +57,7 @@ public partial class Interpreter
         }
     }
 
-    // HTTPPOST(url$, body$) -> returns response body as string
+    // HTTPPOST(url$, body$) / HTTPPOST(url$, body$, headers$) -> returns response body as string
     private Value EvaluateHttpPost()
     {
         _pos++;
@@ -54,18 +65,44 @@ public partial class Interpreter
         string url = EvaluateExpression().AsString();
         Require(TokenType.TOK_COMMA, "Expected ',' after HTTPPOST url");
         string body = EvaluateExpression().AsString();
-        Require(TokenType.TOK_RPAREN, "Expected ')' after HTTPPOST body");
+
+        string? headersArrayName = null;
+        if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_COMMA)
+        {
+            _pos++; // consume comma
+            headersArrayName = _tokens[_pos].StringValue ?? "";
+            _pos++;
+        }
+
+        Require(TokenType.TOK_RPAREN, "Expected ')' after HTTPPOST arguments");
 
         try
         {
-            var content = new StringContent(body, System.Text.Encoding.UTF8, "application/json");
-            var response = _httpClient.PostAsync(url, content).GetAwaiter().GetResult();
-            string result = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-            return Value.FromString(result);
+            using var request = new HttpRequestMessage(HttpMethod.Post, url);
+            request.Content = new StringContent(body, System.Text.Encoding.UTF8, "application/json");
+            ApplyHeaders(request, headersArrayName);
+            var response = _httpClient.SendAsync(request).GetAwaiter().GetResult();
+            return Value.FromString(response.Content.ReadAsStringAsync().GetAwaiter().GetResult());
         }
         catch (Exception ex)
         {
             throw new Exception($"HTTPPOST failed: {ex.Message}");
+        }
+    }
+
+    // Apply BazzBasic array elements as HTTP headers to a request
+    private void ApplyHeaders(HttpRequestMessage request, string? arrayName)
+    {
+        if (arrayName == null) return;
+        var elements = _variables.GetAllArrayElements(arrayName);
+        if (elements == null) return;
+
+        foreach (var kv in elements)
+        {
+            string headerValue = kv.Value.AsString();
+            // Request headers first; fall back to content headers (e.g. Content-Type)
+            if (!request.Headers.TryAddWithoutValidation(kv.Key, headerValue))
+                request.Content?.Headers.TryAddWithoutValidation(kv.Key, headerValue);
         }
     }
 

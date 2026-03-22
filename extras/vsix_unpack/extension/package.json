@@ -1,0 +1,41 @@
+{
+    "name": "bazzbasic",
+    "displayName": "BazzBasic",
+    "description": "Syntax highlighting for BazzBasic BASIC interpreter",
+    "version": "1.1.0",
+    "publisher": "ekbass",
+    "engines": {
+        "vscode": "^1.60.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [
+            {
+                "id": "bazzbasic",
+                "aliases": [
+                    "BazzBasic",
+                    "bazzbasic",
+                    "BASIC"
+                ],
+                "extensions": [
+                    ".bas",
+                    ".bb"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "bazzbasic",
+                "scopeName": "source.bazzbasic",
+                "path": "./syntaxes/bazzbasic.tmLanguage.json"
+            }
+        ]
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/EkBass/BazzBasic"
+    }
+}

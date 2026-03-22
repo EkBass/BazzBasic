@@ -65,7 +65,7 @@ if (args.Length >= 2 && args[0].ToLower() == "-lib")
 }
 
 // Check for -v version info
-if (args.Length == 1 && (args[0].ToLower() == "-v" || args[0].ToLower() == "--version"))
+if (args.Length == 1 && (args[0].ToLower() == "-v" || args[0].ToLower() == "-version"))
 {
     Console.WriteLine($"Version: {BazzBasic.AppInfo.Version}");
     Console.WriteLine($"Url: {BazzBasic.AppInfo.Url}");

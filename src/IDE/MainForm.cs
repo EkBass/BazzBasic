@@ -428,31 +428,32 @@ public partial class MainForm : Form
         editor.Styles[SCE_B_KEYWORD3].ForeColor = Color.DarkMagenta; // Built-ins
         editor.Styles[SCE_B_KEYWORD4].ForeColor = Color.Teal; // Graphics
         
-        // BazzBasic keywords
-        editor.SetKeywords(0, 
-            "if then else elseif endif while wend for to step next " +
-            "dim let goto gosub return end def fn " +
-            "print input cls color locate screen " +
-            "and or not mod rem mouseb mousex mouseb");
-        
-        // Built-in functions
+        // Control flow, declarations, logic
+        editor.SetKeywords(0,
+            "if then else elseif endif end while wend for to step next " +
+            "dim let goto gosub return def fn include rem sleep " +
+            "and or not true false on off");
+
+        // Math & string functions, constants
         editor.SetKeywords(1,
-            "sin cos tan atn sqr abs int sgn log exp rnd " +
-            "len left mid right instr chr asc val str " +
-            "ucase lcase trim ltrim rtrim replace " +
-            "timer sleep wait inkey");
-        
-        // I/O and arrays
+            "abs atan between ceil cint clamp cos deg distance exp floor int lerp log max min mod pow rad rnd round sgn sin sqr tan " +
+            "pi hpi qpi tau euler fasttrig fastsin fastcos fastrad " +
+            "asc chr instr invert lcase left len ltrim mid repeat replace right rtrim srand split str trim ucase val " +
+            "ticks time rgb");
+
+        // I/O, files, network, arrays
         editor.SetKeywords(2,
-            "open close read write append eof " +
-            "ubound lbound haskey delkey");
-        
-        // Graphics and sound
+            "print input cls color locate getconsole inkey keydown waitkey " +
+            "fileread filewrite fileexists filedelete filelist shell " +
+            "httpget httppost asjson asarray loadjson savejson base64encode base64decode sha256 " +
+            "haskey delkey delarray beep");
+
+        // Graphics & sound
         editor.SetKeywords(3,
-            "line circle pset point paint box " +
-            "loadimage drawimage freeimage " +
-            "loadsound soundonce soundrepeat stopsound freesound " +
-            "getmouse mousebutton keypressed flip");
+            "screen screenlock fullscreen vsync line circle pset point paint " +
+            "loadimage loadshape loadsheet moveshape drawshape rotateshape scaleshape showshape hideshape removeshape " +
+            "mouseb mousex mousey " +
+            "loadsound soundonce soundrepeat soundstop soundstopall");
     }
 
     #endregion
