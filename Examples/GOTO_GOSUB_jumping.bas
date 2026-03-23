@@ -1,0 +1,50 @@
+' ============================================
+' GOTO / GOSUB presentation for BazzBasic
+' BazzBasic supports dynamic calls
+' https://rosettacode.org/wiki/Jump_anywhere
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' ============================================
+
+DEF FN FuncHello$(msg$)
+    [sub:inside] ' This label exists only inside FuncHello$
+    ' GOTO/GOSUB [inits] would produce error since it does not exists inside FuncHello$
+    RETURN "From FuncHello$: "
+END DEF
+
+[inits]
+    LET hello$ = "[sub:hello2]"
+    LET HELLO# = "[sub:hello2]"
+' [/inits]
+
+[main]
+    PRINT "Jumping to [sub:hello1] with strict style..."
+    GOTO [sub:hello1]
+    [ret:hello1]
+
+    PRINT "Now GOSUB to [sub:hello2] via variable 'hello$'..."
+    PRINT "And GOSUB to [sub:hello2] via CONSTANT 'HELLO#'..."
+
+    PRINT FN FuncHello$("Function calling...")
+
+    ' Line numbers not supported, unless you do it in pretty akward way
+    GOSUB [1]
+
+    ' GOTO / GOSUB [sub:inside] would produce error, since it exists only inside FuncHello$
+END ' [/main]
+
+[sub:hello1]
+    PRINT "Greets from [sub:hello1]"
+GOTO [ret:hello1]
+' [/sub:hello1]
+
+
+[sub:hello2]
+    PRINT "Greets from [sub:hello2]"
+RETURN
+' [/sub:hello2]
+
+
+[1]
+    PRINT "Inside [1]"
+RETURN
+' [/1]
