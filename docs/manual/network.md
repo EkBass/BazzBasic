@@ -29,7 +29,6 @@ PRINT response$
 Allows you to send HTTP POST requests to a specified URL and retrieve the response as a string.
 
 ```vb
-DIM postResult$
 LET postResult$ = HTTPPOST("https://httpbin.org/post", "{""key"":""value""}")
 PRINT postResult$
 ```
