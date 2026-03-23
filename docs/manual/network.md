@@ -1,17 +1,15 @@
 ## Network
 
 **Note:**
-httpbin.org is a good test address — it returns JSON showing what you sent. HTTPPOST sends Content-Type: application/json by default.
+httpbin.org is a good test address â€” it returns JSON showing what you sent. HTTPPOST sends Content-Type: application/json by default.
 
 
 ### HTTPGET
 Allows you to send HTTP GET requests to a specified URL and retrieve the response as a string.
 
 ```vb
-DIM response$
 LET response$ = HTTPGET("https://httpbin.org/get")
 PRINT response$
-PRINT postResult$
 ```
 **Output:**
 ```
