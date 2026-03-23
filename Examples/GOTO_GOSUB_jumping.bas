@@ -1,7 +1,7 @@
 ' ============================================
 ' GOTO / GOSUB presentation for BazzBasic
 ' BazzBasic supports dynamic calls
-' https://rosettacode.org/wiki/Jump_anywhere
+' https://rosettacode.org/wiki/Jump_anywhere#GW-BASIC
 ' BazzBasic: https://github.com/EkBass/BazzBasic
 ' ============================================
 
@@ -22,11 +22,14 @@ END DEF
     [ret:hello1]
 
     PRINT "Now GOSUB to [sub:hello2] via variable 'hello$'..."
+    GOSUB hello$
+
     PRINT "And GOSUB to [sub:hello2] via CONSTANT 'HELLO#'..."
+    GOSUB HELLO#
 
     PRINT FN FuncHello$("Function calling...")
 
-    ' Line numbers not supported, unless you do it in pretty akward way
+    ' Line numbers supported, unless you do it in pretty akward way
     GOSUB [1]
 
     ' GOTO / GOSUB [sub:inside] would produce error, since it exists only inside FuncHello$
@@ -48,3 +51,14 @@ RETURN
     PRINT "Inside [1]"
 RETURN
 ' [/1]
+
+' Output:
+
+' Jumping to [sub:hello1] with strict style...
+' Greets from [sub:hello1]
+' Now GOSUB to [sub:hello2] via variable 'hello$'...
+' Greets from [sub:hello2]
+' And GOSUB to [sub:hello2] via CONSTANT 'HELLO#'...
+' Greets from [sub:hello2]
+' From FuncHello$:
+' Inside [1]
