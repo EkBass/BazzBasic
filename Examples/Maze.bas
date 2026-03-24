@@ -1,4 +1,4 @@
-' MazeWithLabels.bas
+' Maze.bas
 ' Simple maze game for BazzBasic
 ' Kristian Virtanen, public domain
 
