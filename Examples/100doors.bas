@@ -1,4 +1,3 @@
-[code lang='BazzBasic']
 ' ============================================
 ' 100 DOORS - BazzBasic Edition
 ' https://rosettacode.org/wiki/100_doors
