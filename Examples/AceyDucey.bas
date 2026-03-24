@@ -34,7 +34,7 @@ GOSUB [sub:initGame]
     ' Check money
     IF money$ <= 0 THEN GOTO [sub:broke]
 
-    ' Check deck - need at least 3 cards remaining
+    ' Need 3 cards; reshuffle when fewer than 3 remain
     IF deckPos$ > 49 THEN
         PRINT "\nDeck run out. Shuffling new..."
         GOSUB [sub:shuffleDeck]
@@ -111,8 +111,10 @@ GOTO [mainLoop]
     PRINT "================================"
 
     COLOR WHITE#, BLACK#
-    INPUT "\nNew game? (y/n): ", again$
-    IF UCASE(LEFT(again$, 1)) = "Y" THEN
+    PRINT "\nNew game? (y/n): "
+	
+	LET rep$ = WAITKEY(KEY_Y#, KEY_N#)
+    IF  rep$ = KEY_Y# THEN
         money$ = 100
         GOSUB [sub:shuffleDeck]
         GOTO [mainLoop]
