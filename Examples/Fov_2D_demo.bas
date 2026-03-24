@@ -1,5 +1,5 @@
 ' ==========================================
-' Fov_demo_1.bas — BazzBasic
+' Fov_2D_demo.bas — BazzBasic
 ' 2D Field-of-View: 90-ray casting on a
 ' console map. Walls stored in array,
 ' https://ekbass.github.io/BazzBasic/
