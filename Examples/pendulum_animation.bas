@@ -21,7 +21,7 @@
     LET theta$  = HPI           ' Current angle in radians (HPI = 90° = starts horizontal)
     LET bx$                     ' Bob X position on screen (calculated each frame)
     LET by$                     ' Bob Y position on screen (calculated each frame)
-' [/init]
+
 
 [main]
     SCREEN SCREEN_W#, SCREEN_H#
@@ -41,4 +41,4 @@
         theta$  = theta$ + speed$              ' advance the angle by current speed
         SLEEP 16
     WEND
-END ' [/main]
+END
