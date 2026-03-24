@@ -1,58 +1,59 @@
-' BazzBasic; Rotating shapes demo
+' ==========================================
+' Rotating Shapes — BazzBasic
+' Three shapes, each with a different rotation
+' speed and direction.
+' Press ESC to exit.
 ' https://github.com/EkBass/BazzBasic
+' ==========================================
 
+[inits]
+    LET SCREEN_W#  = 640
+    LET SCREEN_H#  = 480
+    LET SHAPE_SZ#  = 60
+    LET RED#       = RGB(255, 0, 0)
+    LET GREEN#     = RGB(0, 255, 0)
+    LET BLUE#      = RGB(0, 0, 255)
 
-SCREEN 12, 640, 480, "Rotating Shapes Demo"
-CLS
+    LET angle$   = 0
+    LET running$ = TRUE
 
-REM Create shapes
-DIM square$
-DIM circle$
-DIM triangle$
+[init:gfx]
+    SCREEN 0, SCREEN_W#, SCREEN_H#, "Rotating Shapes"
 
-LET square$ = LOADSHAPE("RECTANGLE", 60, 60, RGB(255, 0, 0))
-LET circle$ = LOADSHAPE("CIRCLE", 60, 60, RGB(0, 255, 0))
-LET triangle$ = LOADSHAPE("TRIANGLE", 60, 60, RGB(0, 0, 255))
+    LET SQUARE#   = LOADSHAPE("RECTANGLE", SHAPE_SZ#, SHAPE_SZ#, RED#)
+    LET CIRCLE#   = LOADSHAPE("CIRCLE",    SHAPE_SZ#, SHAPE_SZ#, GREEN#)
+    LET TRIANGLE# = LOADSHAPE("TRIANGLE",  SHAPE_SZ#, SHAPE_SZ#, BLUE#)
 
-MOVESHAPE square$, 160, 240
-MOVESHAPE circle$, 320, 240
-MOVESHAPE triangle$, 480, 240
+    MOVESHAPE SQUARE#,   160, 240
+    MOVESHAPE CIRCLE#,   320, 240
+    MOVESHAPE TRIANGLE#, 480, 240
 
-DIM angle$
-LET angle$ = 0
+[main]
+    WHILE running$
+        ' Input and logic outside SCREENLOCK
+        IF INKEY = KEY_ESC# THEN running$ = FALSE
 
-WHILE INKEY <> 27
-        
-    LET angle$ = angle$ + 2
-    IF angle$ >= 360 THEN
-        LET angle$ = 0
-    ENDIF
-    
-    ROTATESHAPE square$, angle$
-    ROTATESHAPE circle$, angle$ * 0.5
-    ROTATESHAPE triangle$, angle$ * -1
-    
-	SCREENLOCK ON
-	
-	' Filling screen with LINE... BF is actually faster than CLS which works better with console
-    COLOR 0, 0
-    LINE (0, 80)-(640, 480), 0, BF
-	
-	' Draw the shapes
-    DRAWSHAPE square$
-    DRAWSHAPE circle$
-    DRAWSHAPE triangle$
-    
-    COLOR 15, 0
-    LOCATE 1, 1
-    PRINT "Angle: "; angle$; "   "
-    PRINT "Press ESC to exit"
-    SCREENLOCK OFF
-	
-    SLEEP 16
-WEND
+        angle$ = angle$ + 2
+        IF angle$ >= 360 THEN angle$ = 0
 
-REMOVESHAPE square$
-REMOVESHAPE circle$
-REMOVESHAPE triangle$
+        ROTATESHAPE SQUARE#,   angle$
+        ROTATESHAPE CIRCLE#,   angle$ * 0.5
+        ROTATESHAPE TRIANGLE#, angle$ * -1
+
+        SCREENLOCK ON
+            LINE (0, 0)-(SCREEN_W#, SCREEN_H#), 0, BF
+            DRAWSHAPE SQUARE#
+            DRAWSHAPE CIRCLE#
+            DRAWSHAPE TRIANGLE#
+            COLOR 15, 0
+            LOCATE 1, 1
+            PRINT "Red: x1   Green: x0.5   Blue: x-1   (ESC to exit)"
+        SCREENLOCK OFF
+
+        SLEEP 16
+    WEND
+
+    REMOVESHAPE SQUARE#
+    REMOVESHAPE CIRCLE#
+    REMOVESHAPE TRIANGLE#
 END
