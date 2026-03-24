@@ -14,10 +14,10 @@ END DEF
     LET mySub$ = "[sub:subHello]"
 
 [main]
-    PRINT FN add$(5, RND(10) + 1)
-    PRINT FN ReturnHello$()
-    GOSUB mySub$
-    GOSUB [sub:subHello]
+    PRINT FN add$(5, RND(10) + 1)	' Function call with arguments
+    PRINT FN ReturnHello$()			' Function call, no arguments
+    GOSUB mySub$					' Dynamic subroutine call via label string
+    GOSUB [sub:subHello]			' Direct subroutine call
 END
 
 [sub:subHello]
