@@ -7,23 +7,24 @@
 ' Enter your expression in Reverse Polish Notation (RPN).
 ' ============================================
 
-' Color constants
-LET BLACK#   = 0
-LET CYAN#    = 3
-LET MAGENTA# = 5
-LET LGRAY#   = 7
-LET LGREEN#  = 10
-LET LRED#    = 12
-LET YELLOW#  = 14
-LET WHITE#   = 15
+[inits]
+	' Color constants
+	LET BLACK#   = 0
+	LET CYAN#    = 3
+	LET MAGENTA# = 5
+	LET LGRAY#   = 7
+	LET LGREEN#  = 10
+	LET LRED#    = 12
+	LET YELLOW#  = 14
+	LET WHITE#   = 15
 
-' Shared arrays — declared once at top level
-DIM digits$     ' the 4 given digits, indices 0-3
-DIM rpnStack$   ' RPN evaluation stack
-DIM usedDigits$ ' digits extracted from player expression
-DIM tokens$     ' tokenized input
-DIM givenCnt$   ' digit frequency: what was given
-DIM usedCnt$    ' digit frequency: what was typed
+	' Shared arrays — declared once at top level
+	DIM digits$     ' the 4 given digits, indices 0-3
+	DIM rpnStack$   ' RPN evaluation stack
+	DIM usedDigits$ ' digits extracted from player expression
+	DIM tokens$     ' tokenized input
+	DIM givenCnt$   ' digit frequency: what was given
+	DIM usedCnt$    ' digit frequency: what was typed
 
 GOSUB [sub:title]
 
