@@ -8,35 +8,18 @@
 ' The player who reaches exactly 21 WINS!
 ' ============================================
 
-' Color constants
-LET BLACK#      = 0
-LET BLUE#       = 1
-LET GREEN#      = 2
-LET CYAN#       = 3
-LET RED#        = 4
-LET MAGENTA#    = 5
-LET BROWN#      = 6
-LET LGRAY#      = 7
-LET DGRAY#      = 8
-LET LBLUE#      = 9
-LET LGREEN#     = 10
-LET LCYAN#      = 11
-LET LRED#       = 12
-LET LMAGENTA#   = 13
-LET YELLOW#     = 14
-LET WHITE#      = 15
+[inits]
+    LET BLACK#   = 0
+    LET CYAN#    = 3
+    LET MAGENTA# = 5
+    LET LGRAY#   = 7
+    LET DGRAY#   = 8
+    LET LGREEN#  = 10
+    LET LRED#    = 12
+    LET YELLOW#  = 14
+    LET WHITE#   = 15
 
-GOSUB [sub:title]
-
-[sub:newGame]
-    GOSUB [sub:playRound]
-    GOTO [sub:newGame]
-END
-
-' ============================================
-' TITLE SCREEN
-' ============================================
-[sub:title]
+[title]
     CLS
     COLOR YELLOW#, BLACK#
     PRINT "\n "; REPEAT("*", 40)
@@ -48,11 +31,9 @@ END
     PRINT "          *"
     PRINT " *"; REPEAT(" ", 38); "*"
     PRINT " "; REPEAT("*", 40)
-
     COLOR LGRAY#, BLACK#
     PRINT "\n Rosetta Code task: rosettacode.org/wiki/21_game"
     PRINT " BazzBasic Edition\n"
-
     COLOR CYAN#, BLACK#
     PRINT " RULES:"
     COLOR WHITE#, BLACK#
@@ -60,63 +41,63 @@ END
     PRINT " - Take turns saying a number: 1, 2, or 3"
     PRINT " - That number is added to the running total"
     PRINT " - The player who reaches exactly 21 WINS!\n"
-
     COLOR YELLOW#, BLACK#
     PRINT " Hint: there IS a perfect strategy...\n"
-
     COLOR WHITE#, BLACK#
     PRINT REPEAT("-", 50)
     PRINT " Press ENTER to start...";
     WAITKEY(KEY_ENTER#)
-    PRINT ""
-RETURN
 
-' ============================================
-' PLAY ONE ROUND
-' ============================================
-[sub:playRound]
+[main]
     LET total$ = 0
+    LET winner$ = ""
 
-    [gameLoop]
+    ' Randomly decide who goes first
+    IF RND(2) = 0 THEN
+        LET first$  = "[sub:playerTurn]"
+        LET second$ = "[sub:computerTurn]"
+    ELSE
+        LET first$  = "[sub:computerTurn]"
+        LET second$ = "[sub:playerTurn]"
+    END IF
+
+    [roundLoop]
         CLS
         GOSUB [sub:drawTotal]
 
-        GOSUB [sub:playerTurn]
-        IF total$ = 21 THEN GOTO [sub:playerWins]
+        GOSUB first$
+        IF total$ = 21 THEN winner$ = first$ : GOTO [roundDone]
 
-        GOSUB [sub:computerTurn]
-        IF total$ = 21 THEN GOTO [sub:computerWins]
+        GOSUB second$
+        IF total$ = 21 THEN winner$ = second$ : GOTO [roundDone]
 
-        GOTO [gameLoop]
+        GOTO [roundLoop]
 
-[sub:playerWins]
+[roundDone]
     CLS
     GOSUB [sub:drawTotal]
-    COLOR LGREEN#, BLACK#
-    PRINT "\n "; REPEAT("*", 34)
-    PRINT " *  YOU WIN! You reached 21!  *"
-    PRINT " "; REPEAT("*", 34)
-    COLOR WHITE#, BLACK#
-    PRINT "\n You found the strategy! Play again?\n"
-    PRINT " Press ENTER...";
-    WAITKEY(KEY_ENTER#)
-    PRINT ""
-RETURN
 
-[sub:computerWins]
-    CLS
-    GOSUB [sub:drawTotal]
-    COLOR LRED#, BLACK#
-    PRINT "\n "; REPEAT("*", 32)
-    PRINT " *  I WIN! I reached 21.  *"
-    PRINT " "; REPEAT("*", 32)
-    COLOR YELLOW#, BLACK#
-    PRINT "\n Better luck next time!\n"
+    IF winner$ = "[sub:playerTurn]" THEN
+        COLOR LGREEN#, BLACK#
+        PRINT "\n "; REPEAT("*", 34)
+        PRINT " *  YOU WIN! You reached 21!  *"
+        PRINT " "; REPEAT("*", 34)
+        COLOR WHITE#, BLACK#
+        PRINT "\n You found the strategy!"
+    ELSE
+        COLOR LRED#, BLACK#
+        PRINT "\n "; REPEAT("*", 32)
+        PRINT " *  I WIN! I reached 21.  *"
+        PRINT " "; REPEAT("*", 32)
+        COLOR YELLOW#, BLACK#
+        PRINT "\n Better luck next time!"
+    END IF
+
     COLOR WHITE#, BLACK#
-    PRINT " Press ENTER to try again...";
-    WAITKEY(KEY_ENTER#)
-    PRINT ""
-RETURN
+    PRINT "\n Play again? ENTER = yes, ESC = quit"
+    LET k$ = WAITKEY(KEY_ENTER#, KEY_ESC#)
+    IF k$ = KEY_ESC# THEN END
+    GOTO [main]
 
 ' ============================================
 ' SHOW THE RUNNING TOTAL WITH A PROGRESS BAR
@@ -129,7 +110,6 @@ RETURN
     PRINT total$; " / 21"
     COLOR YELLOW#, BLACK#
     PRINT " "; REPEAT("=", 44); "\n"
-
     COLOR CYAN#, BLACK#
     PRINT "  [";
     COLOR LGREEN#, BLACK#
@@ -151,9 +131,8 @@ RETURN
     COLOR WHITE#, BLACK#
 
     LET key$ = WAITKEY(KEY_1#, KEY_2#, KEY_3#)
-    LET said$ = key$ - 48       ' ASCII: '1'=49, '2'=50, '3'=51
+    LET said$ = key$ - 48
 
-    ' Only remaining check: don't exceed 21
     WHILE total$ + said$ > 21
         COLOR LRED#, BLACK#
         PRINT said$; "  (would exceed 21!)"
@@ -164,7 +143,6 @@ RETURN
     WEND
 
     total$ = total$ + said$
-
     COLOR CYAN#, BLACK#
     PRINT said$; "  — total is now "; total$; "\n"
     SLEEP 700
@@ -173,13 +151,9 @@ RETURN
 ' ============================================
 ' COMPUTER'S TURN - optimal strategy
 ' ============================================
-' Losing positions for the current player: 1, 5, 9, 13, 17
-' (no matter what you say, opponent reaches the next one)
-' These are all 1 mod 4. Computer always aims to leave
-' the human at one of these positions.
-'
+' Losing positions: 1, 5, 9, 13, 17 (all 1 mod 4)
 ' Formula: say = (4 + 1 - total mod 4) mod 4
-' If result is 0 we are stuck in a losing spot -> random
+' If result is 0 we are in a losing position -> random
 ' ============================================
 [sub:computerTurn]
     COLOR LRED#, BLACK#
@@ -187,24 +161,17 @@ RETURN
     COLOR WHITE#, BLACK#
     SLEEP 900
 
-    ' Win immediately if possible
     IF 21 - total$ >= 1 AND 21 - total$ <= 3 THEN
         LET compSaid$ = 21 - total$
         GOTO [doCompMove]
     END IF
 
-    ' Optimal: leave total at 1, 5, 9, 13 or 17 (all 1 mod 4)
     LET compSaid$ = MOD(4 + 1 - MOD(total$, 4), 4)
-
-    ' compSaid = 0 means we are in a losing position -> random
     IF compSaid$ = 0 THEN LET compSaid$ = INT(RND(3)) + 1
-
-    ' Safety: never exceed 21
     IF total$ + compSaid$ > 21 THEN LET compSaid$ = 21 - total$
 
     [doCompMove]
     total$ = total$ + compSaid$
-
     COLOR MAGENTA#, BLACK#
     PRINT " I say "; compSaid$; " — total is now "; total$; "\n"
     SLEEP 1200
