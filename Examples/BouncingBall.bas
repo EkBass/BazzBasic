@@ -1,25 +1,31 @@
+' ==========================================
 ' Bouncing Ball — BazzBasic v1.1
-' krisu.virtanen@gmail.com
+' Makes yellow ball wonder around screen.
+' Press ESC to exit
 ' https://github.com/EkBass/BazzBasic
+' ==========================================
 
-' ── 1. CONSTANTS ────────────────────────────
-LET SCREEN_W#  = 640
-LET SCREEN_H#  = 480
-LET BALL_SIZE# = 30
-LET BALL_COL#  = RGB(255, 255, 0)
-
-' ── 2. INIT ─────────────────────────────────
 [inits]
-    SCREEN 0, SCREEN_W#, SCREEN_H#, "Bouncing Ball"
+    ' ── 1. CONSTANTS ────────────────────────────
+    LET SCREEN_W#  = 640
+    LET SCREEN_H#  = 480
+    LET BALL_SIZE# = 30
+    LET BALL_COL#  = RGB(255, 255, 0)
 
-    LET BALL# = LOADSHAPE("CIRCLE", BALL_SIZE#, BALL_SIZE#, BALL_COL#)
-
+    ' ── 2. VARIABLES ────────────────────────────
     LET x$       = 320
     LET y$       = 240
     LET dx$      = 3
     LET dy$      = 2
     LET running$ = TRUE
+  
+[init:gfx]
+    SCREEN 0, SCREEN_W#, SCREEN_H#, "Bouncing Ball"
+    
+    ' SDL2 requires GFX mode for shapes
+    LET BALL# = LOADSHAPE("CIRCLE", BALL_SIZE#, BALL_SIZE#, BALL_COL#)
 
+    
 ' ── 3. MAIN LOOP ────────────────────────────
 [main]
     WHILE running$
@@ -47,11 +53,11 @@ RETURN
 
 [sub:draw]
     SCREENLOCK ON
-    LINE (0,0)-(SCREEN_W#, SCREEN_H#), 0, BF
-    MOVESHAPE BALL#, x$, y$
-    DRAWSHAPE BALL#
-    COLOR 15, 0
-    LOCATE 1, 1
-    PRINT "Press ESC to exit"
+        LINE (0,0)-(SCREEN_W#, SCREEN_H#), 0, BF    ' Tons of faster that CLS in graphics screen
+        MOVESHAPE BALL#, x$, y$
+        DRAWSHAPE BALL#
+        COLOR 15, 0
+        LOCATE 1, 1
+        PRINT "Press ESC to exit"
     SCREENLOCK OFF
 RETURN
