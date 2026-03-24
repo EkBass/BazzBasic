@@ -1,34 +1,50 @@
-' SoundPlayer.bas
-' BazzBasic https://github.com/EkBass/BazzBasic
+' ==========================================
+' Sound Player — BazzBasic
+' Demonstrates LOADSOUND, SOUNDONCE,
+' SOUNDREPEAT, SOUNDONCEWAIT, SOUNDSTOP,
+' and SOUNDSTOPALL.
+'
+' Audio credits (royalty-free, Pixabay):
+'   Song:  pixabay.com/users/audioknap-52540465/
+'   Clip:  pixabay.com/users/viralaudio-44793737/
+'
+' https://github.com/EkBass/BazzBasic
+' ==========================================
 
-' Royalty free song https://pixabay.com/users/audioknap-52540465/
-LET SONGPATH# = "Examples\\audio\\music-free-458044.mp3"
-LET song# = LOADSOUND(SONGPATH#)
+[inits]
+    LET SONG_PATH# = "Examples\\audio\\music-free-458044.mp3"
+    LET CLIP_PATH# = "Examples\\audio\\descent-whoosh-long-cinematic-sound-effect-405921.mp3"
 
-SOUNDONCE(song#)
-PRINT "Sound playing in background..."
-SLEEP 5000
-PRINT "Continuing while sound plays...\nBut lets stop it now."
-SLEEP 2000
-SOUNDSTOP(song#)
+[main]
+    LET song$ = LOADSOUND(SONG_PATH#)
+    LET clip$ = LOADSOUND(CLIP_PATH#)
 
-' Royalty free https://pixabay.com/users/viralaudio-44793737/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=405921
-LET CLIPPATH# = "Examples\\audio\\descent-whoosh-long-cinematic-sound-effect-405921.mp3"
-LET clip# = LOADSOUND(CLIPPATH#)
+    ' --- Play song in background, then stop it early ---
+    PRINT "Playing song in the background..."
+    SOUNDONCE(song$)
+    SLEEP 5000
 
-PRINT "Lets play with the clip and wait its done."
-SOUNDONCEWAIT(clip#)
+    PRINT "Stopping song early.\n"
+    SLEEP 2000
+    SOUNDSTOP(song$)
 
-PRINT "Now lets repeat it for a while."
-SOUNDREPEAT(clip#)
-SLEEP 20000
+    ' --- Play clip once and WAIT for it to finish ---
+    PRINT "Playing clip once — waiting for it to finish..."
+    SOUNDONCEWAIT(clip$)
+    PRINT "Clip done.\n"
 
-PRINT "Pretty easy, huh?"
-PRINT "Now both at same time."
-SOUNDONCE(song#)
-SOUNDREPEAT(clip#)
-SLEEP 20000
+    ' --- Loop the clip for a while ---
+    PRINT "Looping clip for 20 seconds..."
+    SOUNDREPEAT(clip$)
+    SLEEP 20000
+    SOUNDSTOP(clip$)
 
-SOUNDSTOPALL
-PRINT "Bye"
+    ' --- Play both at the same time ---
+    PRINT "Playing both at the same time for 20 seconds..."
+    SOUNDONCE(song$)
+    SOUNDREPEAT(clip$)
+    SLEEP 20000
+
+    SOUNDSTOPALL
+    PRINT "\nDone."
 END
