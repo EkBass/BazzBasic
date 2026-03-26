@@ -1,64 +1,88 @@
-# Preprocessor
+# Preprocessor & Source Control
 
-Preprocessor directives are processed before the program runs.
-
----
+BazzBasic supports splitting your program across multiple files. This helps keep large programs organized and allows reusable code libraries.
 
 ## INCLUDE
 
-Include another BazzBasic file.
+Include another BazzBasic source file. The contents of the included file are inserted at the exact point of the INCLUDE statement — as if you had written the code there directly.
 
 ```vb
 INCLUDE "utils.bas"
 INCLUDE "graphics_helpers.bas"
+INCLUDE "MathLib.bb"    ' Compiled library
 ```
-
-The included file's contents are inserted at the INCLUDE location.
 
 ### Usage Notes
 
 - Path is relative to the main program file
-- Included files can contain functions, subroutines, or any valid code
-- Avoid circular includes (file A includes B which includes A)
+- Included files can contain functions, constants, or any valid BazzBasic code
+- Avoid circular includes (A includes B which includes A)
 
 ### Example
 
 **main.bas:**
 ```vb
-INCLUDE "math_utils.bas"
+INCLUDE "helpers.bas"
 
-LET result$ = Square(5)
+LET result$ = FN Square$(5)
 PRINT result$    ' Output: 25
 ```
 
-**math_utils.bas:**
+**helpers.bas:**
 ```vb
-DEF FN Square(n$)
+DEF FN Square$(n$)
     RETURN n$ * n$
 END DEF
 ```
 
----
-
-## REM
-
-Comment - ignored by the interpreter.
+BazzBasic reads these as a single program:
 
 ```vb
-REM This is a comment
-' This is also a comment (shorthand)
+DEF FN Square$(n$)
+    RETURN n$ * n$
+END DEF
 
-PRINT "Hello"  ' Inline comment
+LET result$ = FN Square$(5)
+PRINT result$    ' Output: 25
 ```
 
-### Multi-line Comments
+## Compiled Libraries (.bb)
 
-BazzBasic doesn't have block comments, use multiple REM lines:
+Library files contain only `DEF FN` functions and are compiled to a tokenized `.bb` format.
 
 ```vb
-REM ================================
-REM Program: My Game
-REM Author: Krisu
-REM Date: 2026
-REM ================================
+' Compile:  bazzbasic.exe -lib MathLib.bas  →  MathLib.bb
+INCLUDE "MathLib.bb"
+
+' Library functions are prefixed with FILENAME_
+PRINT FN MATHLIB_Square$(5)    ' Output: 25
 ```
+
+- Libraries can only contain `DEF FN` functions
+- Functions are auto-prefixed with the filename: `MATHLIB_functionname$`
+- Library functions can read global constants (`#`) from the main program
+- `.bb` files are version-locked — may not work across BazzBasic versions
+
+## Recommended Program Structure
+
+For larger programs, split code into focused files and INCLUDE them:
+
+```vb
+' main.bas
+INCLUDE "constants.bas"
+INCLUDE "functions.bas"
+INCLUDE "inits.bas"
+
+[main]
+    GOSUB [sub:update]
+    GOSUB [sub:draw]
+    SLEEP 16
+    GOTO [main]
+END
+
+INCLUDE "subs.bas"
+```
+
+## See Also
+- [Comments](comments.md) — REM and '
+- [Libraries](libraries.md) — creating and distributing .bb files

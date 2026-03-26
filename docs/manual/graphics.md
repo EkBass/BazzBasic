@@ -88,34 +88,6 @@ COLOR 15, 0         ' White on black (default)
 | 6 | Brown | 14 | Yellow |
 | 7 | Light Gray | 15 | White |
 
-### GETCONSOLE
-GETCONSOLE(row, col, type) is meant to be used on console only.  
-It can be used to read the character, font color or background color in a certain place on the console screen.
-
-GETCONSOLE returns an integer.  
-- The color code is restored directly  
-- ASCII character is returned as ASC code  
-
-####  Parameters
-GETCONSOLE(x, y, z)  
-row: row
-col: col
-type: 0 returns character, 1 foreground color and 2 background color  
-
-```vb
-CLS
-COLOR 11, 1
-PRINT "abcdefghi"
-PRINT "ABCDEFGHI"
-COLOR 1, 9
-PRINT "987654321"
-COLOR 15, 0
-' Lets use CHR to translate ASCII-code as character
-PRINT "Row 2, col 5 char is: " + CHR(GETCONSOLE(2, 5, 0)) ' Output: E
-PRINT "Row 1, col 2 foreground color is: "  + GETCONSOLE(1, 2, 1) ' Output: 11
-PRINT "Row 1, col 3 background color is:" + GETCONSOLE(1,3,2) ' Output: 1
-```
-
 ### SCREENLOCK
 Control when graphics are displayed to prevent flickering.
 ```vb
@@ -533,59 +505,6 @@ SHELL("move sprite.png images\sprite.png")   ' move to subfolder
 FileDelete "sprite.png"                       ' just delete it
 ```
 
-
-## Mouse Input
-
-### MOUSE CONSTANTS
-```vb
-MOUSE_LEFT#    ' Value: 1
-MOUSE_RIGHT#   ' Value: 2
-MOUSE_MIDDLE#  ' Value: 4
-```
-
-### MOUSEX / MOUSEY - Mouse Position
-
-Get current mouse coordinates.
-
-```vb
-x$ = MOUSEX                     ' X coordinate (0 to screen width)
-y$ = MOUSEY                     ' Y coordinate (0 to screen height)
-
-LET x$ = MOUSEX
-LET y$ = MOUSEY
-PSET (x$, y$), 15               ' Draw at mouse position
-```
-
-### MOUSEB - Mouse Buttons
-
-Get mouse button state (bitwise flags).
-
-```vb
-buttons$ = MOUSEB
-
-' Button flags:
-' MOUSE_LEFT#    ' Value: 1
-' MOUSE_RIGHT#   ' Value: 2
-' MOUSE_MIDDLE#  ' Value: 4
-```
-
-**Check specific buttons:**
-
-```vb
-LET buttons$ = MOUSEB
-
-IF buttons$ AND MOUSE_LEFT# THEN
-    PRINT "Left button pressed"
-ENDIF
-
-IF buttons$ AND MOUSE_RIGHT# THEN
-    PRINT "Right button pressed"
-ENDIF
-
-IF buttons$ > 0 THEN
-    PRINT "Any button pressed"
-ENDIF
-```
 
 ## Complete Examples
 

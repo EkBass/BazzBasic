@@ -189,28 +189,6 @@ ENDIF
 
 ---
 
-### SHELL arg$, timeout$
-
-Sends a command to the system command interpreter  
-Param *timeout$* is optional. If not given, standard 5000 milliseconds used for timeout.
-
-**Syntax:**
-```vb
-' with default timeout option
-LET a$ = SHELL("dir *.txt")
-PRINT a$
-```
-**Syntax:**
-```vb
-' sets timeout to 2 seconds
-' 1000ms = 1 second etc.
-LET a$ = SHELL("dir *.txt", 2000)
-PRINT a$
-```
-
-
----
-
 ## Loading key=value Files into Arrays (.env support)
 
 When `FileRead` assigns to a `DIM`'d array, BazzBasic automatically parses the file contents line by line into array elements — using the `key=value` format that `.env` files use.

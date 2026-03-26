@@ -1,5 +1,17 @@
 # Operators
 
+## Logical Values
+### TRUE, FALSE
+
+Boolean constants.
+```vb
+LET gameOver$ = FALSE
+
+WHILE NOT gameOver$
+    ' game loop
+    IF lives$ = 0 THEN gameOver$ = TRUE
+WEND
+```
 ## Arithmetic Operators
 
 | Operator | Description | Example |

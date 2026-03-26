@@ -1,7 +1,7 @@
 # Installation
 
 ## Download binary
-- Download BazzBasic binary from [Google Drive](https://drive.google.com/drive/folders/1vlOtfd6COIowDwRcK4IprBMPK1uCU3U7?usp=drive_link).
+- Download BazzBasic binary from [GitHub Releases](https://github.com/EkBass/BazzBasic/releases).
 - Extract the _".zip"_ package to a folder of your choice.
 
 ## Firewall issues

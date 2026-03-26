@@ -9,6 +9,20 @@ DEF FN functionName$(param1$, param2$, ...)
 END DEF
 ```
 
+## Important to remember
+
+A user-defined function must always return a value, and BazzBasic always expects that value to be used — assigned to a variable or passed to a command like `PRINT`.
+
+```vb
+DEF FN double$(x$)
+    RETURN x$ * 2
+END DEF
+
+PRINT FN double$(21)        ' ✓ OK - return value goes to PRINT
+LET foo$ = FN double$(5)    ' ✓ OK - return value stored in foo$
+FN double$(21)              ' ✗ ERROR - return value has nowhere to go
+```
+
 ## Simple Function
 ```vb
 DEF FN double$(x$)
@@ -100,20 +114,6 @@ PRINT FN factorial$(5)    ' Output: 120
 PRINT FN factorial$(10)   ' Output: 3628800
 ```
 
-### Fibonacci
-```vb
-DEF FN fib$(n$)
-    IF n$ <= 1 THEN
-        RETURN n$
-    END IF
-    RETURN FN fib$(n$ - 1) + FN fib$(n$ - 2)
-END DEF
-
-FOR i$ = 0 TO 10
-    PRINT FN fib$(i$); " ";
-NEXT
-' Output: 0 1 1 2 3 5 8 13 21 34 55
-```
 
 ## Scope
 User-defined functions have their own local scope that is completely isolated from the main program:

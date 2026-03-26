@@ -1,4 +1,4 @@
-# Arrays
+# Arrays & JSON
 Arrays store collections of values. BazzBasic arrays are fully dynamic and support numeric, string, or mixed indexing.
 
 - Arrays store values that can change during program execution.

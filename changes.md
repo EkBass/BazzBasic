@@ -5,6 +5,17 @@ These changes are about the current source code. These are effected once new bin
 
 ## 26th Mar 2026
 
+I spent a couple of hours editing the already somewhat confusing documentation.
+
+I think the new structure and division is clearer now and it's easier to find what you need.  
+*Ek*
+
+## 26th Mar 2026
+
+Due MOUSE issue below is pretty major, BazzBasic 1.1d released as source and binary
+
+## 26th Mar 2026
+
 **Bugfix: Mouse button detection rewrite**
 
 `MOUSEB AND MOUSE_LEFT#` did not work correctly because `AND` in BazzBasic is logical, not bitwise — any non-zero value is TRUE, so all three buttons appeared pressed simultaneously.

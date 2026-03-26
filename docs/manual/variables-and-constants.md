@@ -128,8 +128,6 @@ BazzBasic provides a full range of automatically initialized constants
 
 **Keyboard:**
 
-## Built-in Constants
-
 ### Arrow Keys
 | | | |
 |---|---|---|
@@ -195,26 +193,6 @@ BazzBasic provides a full range of automatically initialized constants
 | `KEY_3#` | `KEY_4#` | `KEY_5#` |
 | `KEY_6#` | `KEY_7#` | `KEY_8#` |
 | `KEY_9#` | | |
-
-
-**Mouse:**
-### Mouse
-| | | |
-|---|---|---|
-| `MOUSE_LEFT#` | `MOUSE_RIGHT#` | `MOUSE_MIDDLE#` |
-
-> **Note:** `MOUSE_MIDDLE#` detects button press only, not scroll wheel.
-
-
-**Example:**
-```vb
-[loop]
-    LET key$ = INKEY
-    IF key$ = KEY_ESC# THEN END
-    IF key$ = KEY_UP# THEN PRINT "Up pressed!"
-    SLEEP 15
-GOTO [loop]
-```
 
 ## Naming Rules
 1. Must end with `$` (variable) or `#` (constant)
