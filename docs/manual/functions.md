@@ -774,15 +774,14 @@ SCREEN 12
     GOTO [loop]
 ```
 
-### MOUSEB
+### MOUSELEFT, MOUSERIGHT, MOUSEMIDDLE
 **Note: Only available when graphics screen is open.**
 
-Returns mouse button state (bitmask).
+Returns 1 if the specified mouse button is currently pressed, 0 otherwise.
 ```vb
-' MOUSE_LEFT# = 1, MOUSE_RIGHT# = 2, MOUSE_MIDDLE# = 4
-LET buttons$ = MOUSEB
-IF buttons$ AND MOUSE_LEFT# THEN PRINT "Left clicked"
-IF buttons$ AND MOUSE_RIGHT# THEN PRINT "Right clicked"
+IF MOUSELEFT   THEN PRINT "Left clicked"
+IF MOUSERIGHT  THEN PRINT "Right clicked"
+IF MOUSEMIDDLE THEN PRINT "Middle clicked"
 ```
 
 ## Color Functions

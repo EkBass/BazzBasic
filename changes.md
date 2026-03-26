@@ -3,6 +3,34 @@ These changes are about the current source code. These are effected once new bin
 
 ## Mar 2026
 
+## 26th Mar 2026
+
+**Bugfix: Mouse button detection rewrite**
+
+`MOUSEB AND MOUSE_LEFT#` did not work correctly because `AND` in BazzBasic is logical, not bitwise — any non-zero value is TRUE, so all three buttons appeared pressed simultaneously.
+
+**Removed:**
+- `MOUSE_LEFT#`, `MOUSE_RIGHT#`, `MOUSE_MIDDLE#` built-in constants
+- `MOUSEB` keyword (token kept internally for binary compatibility)
+
+**Added:**
+- `MOUSELEFT` — returns 1 if left mouse button is pressed, 0 otherwise
+- `MOUSERIGHT` — returns 1 if right mouse button is pressed, 0 otherwise
+- `MOUSEMIDDLE` — returns 1 if middle mouse button is pressed, 0 otherwise
+
+```vb
+WHILE INKEY <> KEY_ESC#
+    LOCATE 1, 1
+    PRINT "X:"; MOUSEX; " Y:"; MOUSEY; "   "
+
+    IF MOUSELEFT   THEN PRINT "Left clicked  "
+    IF MOUSERIGHT  THEN PRINT "Right clicked "
+    IF MOUSEMIDDLE THEN PRINT "Middle clicked"
+
+    SLEEP 10
+WEND
+```
+
 ## 22nd Mar 2026
 
 Quick "rerelease" as 1.1b

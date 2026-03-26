@@ -354,6 +354,12 @@ public partial class Interpreter
                 return EvaluateMouseyFunc();
             case TokenType.TOK_MOUSEB:
                 return EvaluateMousebFunc();
+            case TokenType.TOK_MOUSELEFT:
+                return EvaluateMouseleftFunc();
+            case TokenType.TOK_MOUSEMIDDLE:
+                return EvaluateMousemiddleFunc();
+            case TokenType.TOK_MOUSERIGHT:
+                return EvaluateMouserightFunc();
             case TokenType.TOK_LOADSOUND:
                 return EvaluateLoadSound();
             case TokenType.TOK_HTTPGET:

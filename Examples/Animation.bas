@@ -14,7 +14,7 @@
     WHILE INKEY <> KEY_ESC#
 
         ' Edge-trigger: flip direction only on fresh click
-        clicked$ = (MOUSEB AND MOUSE_RIGHT#) > 0
+        clicked$ = MOUSERIGHT
         IF clicked$ AND NOT prevClick$ THEN dir$ = NOT dir$
         prevClick$ = clicked$
 

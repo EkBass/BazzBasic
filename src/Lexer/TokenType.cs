@@ -179,12 +179,15 @@ public enum TokenType
 
     // Input/Mouse
     TOK_INKEY               = 350,
-    TOK_MOUSEB              = 351,
+    TOK_MOUSEB              = 351,      // Deprecated - kept for binary compat
     TOK_MOUSEX              = 352,
     TOK_MOUSEY              = 353,
     TOK_RGB                 = 354,
     TOK_KEYDOWN             = 355,
     TOK_WAITKEY             = 356,
+    TOK_MOUSELEFT           = 357,
+    TOK_MOUSEMIDDLE         = 358,
+    TOK_MOUSERIGHT          = 359,
 
     // Array functions
     TOK_DELARRAY            = 360,

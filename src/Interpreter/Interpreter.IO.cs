@@ -416,6 +416,30 @@ public partial class Interpreter
         return Value.FromNumber(Graphics.Graphics.MouseButtons);
     }
 
+    private Value EvaluateMouseleftFunc()
+    {
+        _pos++;
+        if (!Graphics.Graphics.IsInitialized) return Value.FromNumber(0);
+        Graphics.Graphics.UpdateMouse();
+        return Value.FromNumber((Graphics.Graphics.MouseButtons & 1) != 0 ? 1 : 0);
+    }
+
+    private Value EvaluateMousemiddleFunc()
+    {
+        _pos++;
+        if (!Graphics.Graphics.IsInitialized) return Value.FromNumber(0);
+        Graphics.Graphics.UpdateMouse();
+        return Value.FromNumber((Graphics.Graphics.MouseButtons & 2) != 0 ? 1 : 0);
+    }
+
+    private Value EvaluateMouserightFunc()
+    {
+        _pos++;
+        if (!Graphics.Graphics.IsInitialized) return Value.FromNumber(0);
+        Graphics.Graphics.UpdateMouse();
+        return Value.FromNumber((Graphics.Graphics.MouseButtons & 4) != 0 ? 1 : 0);
+    }
+
     // ========================================================================
     // Console Reading Functions
     // ========================================================================

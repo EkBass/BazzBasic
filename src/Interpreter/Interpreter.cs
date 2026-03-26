@@ -209,9 +209,7 @@ public partial class Interpreter
             ["KEY_BACKSLASH#"] = 92, // \
 
             // Mouse
-            ["MOUSE_LEFT#"] = 1,
-            ["MOUSE_RIGHT#"] = 2,
-            ["MOUSE_MIDDLE#"] = 4,
+
         };
     }
 
