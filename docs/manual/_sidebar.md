@@ -8,6 +8,7 @@
 - [Creating EXE](packaging.md)
 - [Creating Libraries](libraries.md)
 - [AI assisted help](ai-assist.md)
+- [Rosetta Code](rosetta-code.md)
 
 **Language Reference**
 - [Variables & Constants](variables-and-constants.md)
