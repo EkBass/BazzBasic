@@ -32,3 +32,6 @@ desktop.ini
 
 # long-lived runtime folders
 runtimes/
+
+# TODO's and such
+RELEASE_CHECKLIST.md

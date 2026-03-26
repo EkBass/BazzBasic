@@ -116,7 +116,7 @@
           document.getElementById('announcements-content').innerHTML = ' < p > No announcements yet. < /p>';
           return;
         }
-        const html = announcements.map(a => `
+        const html = announcements.slice(0, 3).map(a => `
             
 								<div class="announcement-item">
 									<a href="${a.url}" target="_blank" rel="noopener">${a.title}</a>
@@ -135,6 +135,9 @@
         if (!response.ok) throw new Error('Failed to load');
         return response.text();
       }).then(markdown => {
+        if (markdown.length > 1024) {
+          markdown = markdown.substring(0, 1024) + '\n\n*...[truncated — [view full changelog on GitHub](https://github.com/EkBass/BazzBasic/blob/main/changes.md)]*';
+        }
         // Keep the h2 title, replace only the loading text
         const container = document.getElementById('news-content');
         const title = container.querySelector('.section-title');
