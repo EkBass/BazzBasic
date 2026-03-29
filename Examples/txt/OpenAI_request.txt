@@ -1,0 +1,39 @@
+' ============================================
+' OpenAI API call — BazzBasic
+' https://github.com/EkBass/BazzBasic
+' Public domain
+' ============================================
+' Requires .env file in same directory as script:
+'   OPENAI_API_KEY=sk-proj-yourKeyHere
+' ============================================
+
+[check:env]
+    IF FileExists(".env") = 0 THEN
+        PRINT "Error: .env file not found."
+        END
+    END IF
+
+[inits]
+    DIM env$
+    env$ = FileRead(".env")
+    LET ApiKey# = env$("OPENAI_API_KEY")
+
+    DIM headers$
+    headers$("Authorization") = "Bearer " + ApiKey#
+    headers$("Content-Type")  = "application/json"
+
+    DIM body$
+    body$("model")              = "gpt-4.1-mini"
+    body$("messages,0,role")    = "user"
+    body$("messages,0,content") = "Hello"
+    body$("max_tokens")         = 100
+
+[main]
+    LET jsonBody$ = ASJSON(body$)
+    LET raw$      = HTTPPOST("https://api.openai.com/v1/chat/completions", jsonBody$, headers$)
+
+    DIM result$
+    LET count$ = ASARRAY(result$, raw$)
+
+    PRINT result$("choices,0,message,content")
+END
