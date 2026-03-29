@@ -2,8 +2,9 @@
 ' https://rosettacode.org/wiki/Check_that_file_exists
 ' BazzBasic: https://github.com/EkBass/BazzBasic
 ' ============================================
+
 [inits]
-    LET DRIVE_ROOT# = MID(SHELL("echo %CD%"), 1, 3)
+    LET DRIVE_ROOT# = ROOT#
 
 DEF FN DirExists$(path$)
     LET result$ = TRIM(SHELL("if exist \"" + path$ + "\\\" (echo 1) else (echo 0)"))
@@ -16,8 +17,8 @@ END DEF
     PRINT "  input.txt:      "; FileExists("input.txt")
     PRINT "  docs:           "; FN DirExists$("docs")
 
-    ' Check in filesystem root
-    PRINT "Filesystem root:"
+    ' Check in program root
+    PRINT "Program root:"
     PRINT "  input.txt:      "; FileExists(DRIVE_ROOT# + "input.txt")
     PRINT "  docs:           "; FN DirExists$(DRIVE_ROOT# + "docs")
 
@@ -28,11 +29,12 @@ END DEF
     ' Unusual filename
     PRINT "  Abdu'l-Baha.txt: "; FileExists("Abdu'l-Baha.txt")
 END
+
 ' Output (example):
 ' Current directory:
 '   input.txt:      1
 '   docs:           1
-' Filesystem root:
+' Program root:
 '   input.txt:      0
 '   docs:           0
 ' Optional:
