@@ -99,8 +99,11 @@ public partial class Interpreter
         }
         _fileManager = new FileManager(basePath);
         
-        // ROOT# constant
-        _variables.SetConstant("ROOT#", Value.FromString(basePath));
+        // System constants
+        _variables.SetConstant("PRG_ROOT#", Value.FromString(basePath));
+
+        // BBVER# constant - BazzBasic version string
+        _variables.SetConstant("BBVER#", Value.FromString(AppInfo.Version));
         
         ScanLabels();
     }
@@ -307,6 +310,9 @@ public partial class Interpreter
                 break;
             case TokenType.TOK_DELARRAY:
                 ExecuteDelArray();
+                break;
+            case TokenType.TOK_JOIN:
+                ExecuteJoin();
                 break;
             case TokenType.TOK_DEF:
                 ExecuteDefFn();

@@ -533,4 +533,32 @@ public partial class Interpreter
                 return Value.FromNumber(0);
         }
     }
+
+    // CURPOS("row") → 1-based row of current console cursor
+    // CURPOS("col") → 1-based column of current console cursor
+    // CURPOS()      → "row,col" as string
+    private Value EvaluateCurPosFunc()
+    {
+        _pos++; // skip CURPOS
+
+        string mode = "";
+        if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_LPAREN)
+        {
+            _pos++; // skip (
+            if (_pos < _tokens.Count && _tokens[_pos].Type != TokenType.TOK_RPAREN)
+                mode = EvaluateExpression().AsString().ToLowerInvariant();
+            Require(TokenType.TOK_RPAREN);
+        }
+
+        var (left, top) = Console.GetCursorPosition();
+        int row = top + 1;   // 1-based, matches LOCATE
+        int col = left + 1;
+
+        return mode switch
+        {
+            "row" => Value.FromNumber(row),
+            "col" => Value.FromNumber(col),
+            _     => Value.FromString($"{row},{col}")
+        };
+    }
 }

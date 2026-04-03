@@ -193,6 +193,8 @@ public enum TokenType
     TOK_DELARRAY            = 360,
     TOK_DELKEY              = 361,
     TOK_HASKEY              = 362,
+    TOK_JOIN                = 363,
+    TOK_CURPOS              = 364,
 
     // Time functions
     TOK_TICKS               = 370,

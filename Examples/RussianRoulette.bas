@@ -12,6 +12,8 @@
     LET RED#     = 4
     LET CYAN#    = 11
     LET WHITE#   = 15
+	
+	LET choice$
 
 [title]
     COLOR CYAN#, BLACK#
@@ -29,7 +31,7 @@
     PRINT " 1 — Spin the chamber and pull the trigger."
     PRINT " 2 — Walk away.\n"
 
-    LET choice$ = WAITKEY(KEY_1#, KEY_2#)
+    choice$ = WAITKEY(KEY_1#, KEY_2#)
     PRINT " "; CHR(choice$); "\n"
 
     IF choice$ = KEY_2# THEN GOTO [quit]

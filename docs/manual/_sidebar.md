@@ -9,6 +9,7 @@
 - [Creating Libraries](libraries.md)
 - [AI assisted help](ai-assist.md)
 - [Rosetta Code](rosetta-code.md)
+- [Beginner's Guide](beginners-guide.md)
 
 **Language Reference**
 - [Variables & Constants](variables-and-constants.md)
@@ -29,3 +30,4 @@
 - [Sound Commands](sounds.md)
 - [Network](network.md)
 - [Preprocessor & Source Control](preprocessor.md)
+- [Reserved Words](keywords.md)

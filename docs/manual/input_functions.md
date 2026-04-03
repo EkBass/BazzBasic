@@ -77,6 +77,24 @@ PRINT "Key value: "; k$
 | Returns | Key value or 0 | TRUE/FALSE | Key value |
 | Use case | Game loops | Held keys | Menus, pauses |
 
+### CURPOS
+Returns the current cursor position. Useful for reading where the cursor is after PRINT or LOCATE.
+
+```vb
+LOCATE 5, 10
+PRINT "Hello"
+
+PRINT CURPOS("row")   ' Output: 5
+PRINT CURPOS("col")   ' Output: 15  (10 + 5 chars of "Hello")
+```
+
+| Parameter | Returns |
+|-----------|---------|
+| `"row"` | Current cursor row (1-based) |
+| `"col"` | Current cursor column (1-based) |
+
+---
+
 ### MOUSEX, MOUSEY
 **Note: Only available when graphics screen is open.**
 

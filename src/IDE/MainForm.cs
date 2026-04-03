@@ -443,17 +443,17 @@ public partial class MainForm : Form
 
         // I/O, files, network, arrays
         editor.SetKeywords(2,
-            "print input cls color locate getconsole inkey keydown waitkey " +
-            "fileread filewrite fileexists filedelete filelist shell " +
+            "print input cls color locate curpos getconsole inkey keydown waitkey " +
+            "fileread filewrite fileappend fileexists filedelete filelist shell " +
             "httpget httppost asjson asarray loadjson savejson base64encode base64decode sha256 " +
-            "haskey delkey delarray beep");
+            "haskey delkey delarray join beep");
 
         // Graphics & sound
         editor.SetKeywords(3,
             "screen screenlock fullscreen vsync line circle pset point paint " +
             "loadimage loadshape loadsheet moveshape drawshape rotateshape scaleshape showshape hideshape removeshape " +
-            "mouseb mousex mousey " +
-            "loadsound soundonce soundrepeat soundstop soundstopall");
+            "mousex mousey mouseleft mouseright mousemiddle " +
+            "loadsound soundonce soundoncewait soundrepeat soundstop soundstopall");
     }
 
     #endregion

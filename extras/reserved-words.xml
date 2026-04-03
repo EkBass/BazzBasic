@@ -3,29 +3,32 @@
 	<metadata>
 		<description>list of all reserved keywords</description>
 		<bazzbasic-version>1.1</bazzbasic-version>
-		<date>22.03.2026</date>
+		<date>31.03.2026</date>
 		<author>krisu.virtanen@gmail.com</author>
 	</metadata>
 	<cli>
 		-exe, -lib, -v, -version
 	</cli>
 	<control-flow>
-		def, dim, end, endif, else, elseif, fn, for, gosub, goto, if, include, let, next, print, rem, return, step, then, to, wend, while
+		def, dim, end, endif, else, elseif, fn, for, gosub, goto, if, include, let, next, rem, return, step, then, to, wend, while
 	</control-flow>
 	<io>
-		cls, color, getconsole, input, locate, sleep
+		cls, color, curpos, getconsole, input, locate, sleep, print, inkey, keydown, waitkey
 	</io>
 	<graphics>
-		b, bf, circle, drawshape, hideshape, line, loadimage, loadshape, moveshape, paint, point, pset, removeshape, rotateshape, scaleshape, screen, screenlock, showshape, vsync, fullscreen, loadsheet
+		b, bf, circle, drawshape, hideshape, line, loadimage, loadshape, moveshape, paint, point, pset, rgb, removeshape, rotateshape, scaleshape, screen, screenlock, showshape, vsync, fullscreen, loadsheet
 	</graphics>
 	<network>
-		httpget, httppost, asjson, asarray, loadjson, savejson
+		httpget, httppost
 	</network>
+	<json>
+		asjson, loadjson, savejson
+	</json>
 	<sound>
 		loadsound, soundonce, soundoncewait, soundrepeat, soundstop, soundstopall
 	</sound>
 	<file>
-		fileread, fileexist, filewrite, fileappend, filedelete, shell, base64encode, base64decode, sha256
+		fileread, fileexists, filewrite, fileappend, filedelete, shell, base64encode, base64decode, sha256
 	</file>
 	<built-in-math>
 		abs, atan, cint, cos, ceil, exp, floor, int, log, max, min, mod, pow, rnd, round, sgn, sin, sqr, tan, pi, rad, deg, hpi, fasttrig, fastsin, fastcos, fastrad, qpi, tau, between, euler, distance, clamp, lerp
@@ -34,10 +37,10 @@
 		asc, chr, instr, invert, lcase, left, len, ltrim, mid, repeat, replace, right, rtrim, srand, split, str, trim, ucase, val
 	</built-in-string>
 	<input-mouse>
-		inkey, mouseb, mousex, mousey, rgb, keydown, waitkey
+		mousex, mousey, mouseleft, mouseright, mousemiddle
 	</input-mouse>
 	<array>
-		delarray, delkey, haskey
+		delarray, delkey, haskey, asarray, join
 	</array>
 	<time>
 		ticks, time
@@ -46,12 +49,9 @@
 		and, false, not, off, on, or, true
 	</logic>
 	<special>
-		beep
+		beep, bbver
 	</special>
 	<key-constants>
-		key_esc, key_tab, key_backspace, key_tab, key_enter, key_esc, key_space, key_up, key_down, key_left, key_right, key_insert, key_delete, key_home, key_end, key_pgup, key_pgdn, key_f1, key_f2, key_f3, key_f4, key_f5, key_f6, key_f7, key_f8, key_f9, key_f10, key_f11, key_f12, key_numpad0, key_numpad1, key_numpad2, key_numpad3, key_numpad4, key_numpad5, key_numpad6, key_numpad7, key_numpad8, key_numpad9, key_lshift, key_rshift, key_lctrl, key_rctrl, key_lalt, key_ralt, key_lwin, key_rwin, key_0, key_1, key_2, key_3, key_4, key_5, key_6, key_7, key_8, key_9, key_a, key_b, key_c, key_d, key_e, key_f, key_g1, key_h, key_i, key_j, key_k, key_l, key_m, key_n, key_o, key_p, key_q, key_r, key_s, key_t, key_u, key_v, key_w, key_x, key_y, key_z, key_sep, key_equals, key_comma, key_minus, key_dot, key_slash, key_grave, key_lbracket, key_rbracket,  key_backslash
+		key_esc, key_tab, key_backspace, key_enter, key_space, key_up, key_down, key_left, key_right, key_insert, key_delete, key_home, key_end, key_pgup, key_pgdn, key_f1, key_f2, key_f3, key_f4, key_f5, key_f6, key_f7, key_f8, key_f9, key_f10, key_f11, key_f12, key_numpad0, key_numpad1, key_numpad2, key_numpad3, key_numpad4, key_numpad5, key_numpad6, key_numpad7, key_numpad8, key_numpad9, key_lshift, key_rshift, key_lctrl, key_rctrl, key_lalt, key_ralt, key_lwin, key_rwin, key_0, key_1, key_2, key_3, key_4, key_5, key_6, key_7, key_8, key_9, key_a, key_b, key_c, key_d, key_e, key_f, key_g, key_h, key_i, key_j, key_k, key_l, key_m, key_n, key_o, key_p, key_q, key_r, key_s, key_t, key_u, key_v, key_w, key_x, key_y, key_z, key_sep, key_equals, key_comma, key_minus, key_dot, key_slash, key_grave, key_lbracket, key_rbracket, key_backslash
 	</key-constants>
-	<mouse-constants>
-		mouse_left_mouse_right_mouse_middle
-	</mouse-constants>
 </root>

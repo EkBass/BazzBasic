@@ -3,9 +3,6 @@
 ' BazzBasic: https://github.com/EkBass/BazzBasic
 ' ============================================
 
-[inits]
-    LET DRIVE_ROOT# = ROOT#
-
 DEF FN DirExists$(path$)
     LET result$ = TRIM(SHELL("if exist \"" + path$ + "\\\" (echo 1) else (echo 0)"))
     RETURN result$
@@ -19,8 +16,8 @@ END DEF
 
     ' Check in program root
     PRINT "Program root:"
-    PRINT "  input.txt:      "; FileExists(DRIVE_ROOT# + "input.txt")
-    PRINT "  docs:           "; FN DirExists$(DRIVE_ROOT# + "docs")
+    PRINT "  input.txt:      "; FileExists(PRG_ROOT# + "input.txt")
+    PRINT "  docs:           "; FN DirExists$(PRG_ROOT# + "docs")
 
     ' Optional: zero-length file
     PRINT "Optional:"

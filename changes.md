@@ -1,7 +1,59 @@
 # News and changes
 These changes are about the current source code. These are effected once new binary release is published
 
+## April 2026
+
+## 3rd April 2026
+
+Released as version 1.2 with some bug fixes and new features.
+
+## 3rd April 2026
+
+A Beginners Guide to BazzBasic is now available. It covers all the basics of programming in BazzBasic with what beginner can star at.
+
+https://github.com/EkBass/BazzBasic-Beginners-Guide/blob/main/BazzBasic_Beginners_Guide.md
+
 ## Mar 2026
+
+## 31st Mar 2026
+
+**Added: `BBVER#` — version constant**
+
+Returns the running BazzBasic version as a string. Value is read directly from `Version.cs` at startup.
+
+```vb
+PRINT "Running BazzBasic "; BBVER#   ' Output: Running BazzBasic 1.1d
+```
+
+**Added: `JOIN` — merge two arrays**
+
+Merges `src1$` and `src2$` into `dest$`. If both source arrays share a key, `src2$` overwrites `src1$`.
+
+```vb
+JOIN dest$, src1$, src2$
+```
+
+**Added: `CURPOS("row"/"col")` — read cursor position**
+
+Returns the current cursor row or column (1-based). Useful after `PRINT` or `LOCATE`.
+
+```vb
+LOCATE 5, 10
+PRINT "Hello"
+PRINT CURPOS("row")   ' Output: 5
+PRINT CURPOS("col")   ' Output: 15
+```
+
+**Renamed: `ROOT#` → `PRG_ROOT#`**
+
+The built-in system constant holding the program's base directory path has been renamed to `PRG_ROOT#` for clarity.  
+⚠️ Breaking change — update any code using `ROOT#`.
+
+**Bugfix: `SCREEN` reinitialization**
+
+Calling `SCREEN` more than once no longer causes a crash or corrupted graphics state. Reinitializing the window mid-program now works correctly.
+
+---
 
 ## 26th Mar 2026
 

@@ -164,6 +164,67 @@ public partial class Interpreter
         _variables.DeleteArray(arrName);
     }
 
+    // Merge two arrays into a destination array.
+    // Keys from src2 overwrite matching keys from src1.
+    // JOIN dest$, src1$, src2$
+    private void ExecuteJoin()
+    {
+        _pos++;
+
+        if (_pos >= _tokens.Count || _tokens[_pos].Type != TokenType.TOK_VARIABLE)
+        {
+            Error("JOIN: expected destination array name");
+            return;
+        }
+        string destName = _tokens[_pos].StringValue ?? "";
+        _pos++;
+
+        if (_pos >= _tokens.Count || _tokens[_pos].Type != TokenType.TOK_COMMA)
+        {
+            Error("JOIN: expected comma after destination array");
+            return;
+        }
+        _pos++;
+
+        if (_pos >= _tokens.Count || _tokens[_pos].Type != TokenType.TOK_VARIABLE)
+        {
+            Error("JOIN: expected first source array name");
+            return;
+        }
+        string src1Name = _tokens[_pos].StringValue ?? "";
+        _pos++;
+
+        if (_pos >= _tokens.Count || _tokens[_pos].Type != TokenType.TOK_COMMA)
+        {
+            Error("JOIN: expected comma after first source array");
+            return;
+        }
+        _pos++;
+
+        if (_pos >= _tokens.Count || _tokens[_pos].Type != TokenType.TOK_VARIABLE)
+        {
+            Error("JOIN: expected second source array name");
+            return;
+        }
+        string src2Name = _tokens[_pos].StringValue ?? "";
+        _pos++;
+
+        var src1 = _variables.GetAllArrayElements(src1Name);
+        var src2 = _variables.GetAllArrayElements(src2Name);
+
+        if (src1 == null) { Error($"JOIN: array not found: {src1Name}"); return; }
+        if (src2 == null) { Error($"JOIN: array not found: {src2Name}"); return; }
+
+        if (!_variables.ArrayExists(destName))
+            _variables.DeclareArray(destName);
+
+        foreach (var kvp in src1)
+            _variables.SetArrayElement(destName, kvp.Key, kvp.Value);
+
+        foreach (var kvp in src2)
+            _variables.SetArrayElement(destName, kvp.Key, kvp.Value);
+    }
+
     // Check if a specific key exists in an array
     private Value EvaluateHaskeyFunc()
     {

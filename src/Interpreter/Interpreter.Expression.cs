@@ -338,6 +338,8 @@ public partial class Interpreter
                 return EvaluateWaitKeyFunc();
             case TokenType.TOK_GETCONSOLE:
                 return EvaluateGetConsoleFunc();
+            case TokenType.TOK_CURPOS:
+                return EvaluateCurPosFunc();
             case TokenType.TOK_RGB:
                 return EvaluateRgbFunc();
             case TokenType.TOK_HASKEY:

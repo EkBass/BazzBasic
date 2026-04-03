@@ -126,6 +126,17 @@ A comparison between a numeric and string variable is only made if the data type
 ## Built-in Constants
 BazzBasic provides a full range of automatically initialized constants
 
+**System:**
+| Constant | Description |
+|----------|-------------|
+| `PRG_ROOT#` | Full path to the program's base directory |
+| `BBVER#` | BazzBasic version string (e.g. `"1.1d"`) |
+
+```vb
+PRINT "Version: "; BBVER#     ' Output: 1.1d
+PRINT "Root:    "; PRG_ROOT#  ' Output: C:\path\to\program\
+```
+
 **Keyboard:**
 
 ### Arrow Keys

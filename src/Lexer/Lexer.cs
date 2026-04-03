@@ -51,6 +51,7 @@ public class Lexer(string source)
         ["CLS"]         = TokenType.TOK_CLS,
         ["COLOR"]       = TokenType.TOK_COLOR,
         ["GETCONSOLE"]  = TokenType.TOK_GETCONSOLE,
+        ["CURPOS"]      = TokenType.TOK_CURPOS,
         ["INPUT"]       = TokenType.TOK_INPUT,
         ["LOCATE"]      = TokenType.TOK_LOCATE,
         ["SLEEP"]       = TokenType.TOK_SLEEP,
@@ -175,6 +176,7 @@ public class Lexer(string source)
         ["HASKEY"]      = TokenType.TOK_HASKEY,
         ["DELKEY"]      = TokenType.TOK_DELKEY,
         ["DELARRAY"]    = TokenType.TOK_DELARRAY,
+        ["JOIN"]        = TokenType.TOK_JOIN,
 
         // Time functions
         ["TICKS"]       = TokenType.TOK_TICKS,

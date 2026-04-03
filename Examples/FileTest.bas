@@ -1,13 +1,13 @@
 REM ============================================================================
 REM BazzBasic - File Operations Test
-REM Testing: FileRead, FileExists, FileWrite, FileAppend, FileDelete, ROOT#
+REM Testing: FileRead, FileExists, FileWrite, FileAppend, FileDelete, PRG_ROOT#
 REM ============================================================================
 
 PRINT "=== BazzBasic File Operations Test ==="
 PRINT ""
 
-REM Display ROOT# constant
-PRINT "ROOT# = "; ROOT#
+REM Display PRG_ROOT# constant
+PRINT "PRG_ROOT# = "; PRG_ROOT#
 PRINT ""
 
 REM Test file paths
@@ -91,18 +91,18 @@ ENDIF
 PRINT ""
 
 REM ============================================================================
-REM Test 7: Use ROOT# for absolute path
+REM Test 7: Use PRG_ROOT# for absolute path
 REM ============================================================================
-PRINT "Test 7: Using ROOT# constant..."
-LET absolutepath$ = ROOT# + "\\roottest.txt"
-FileWrite absolutepath$, "Written using ROOT# constant\n"
+PRINT "Test 7: Using PRG_ROOT# constant..."
+LET absolutepath$ = PRG_ROOT# + "\\roottest.txt"
+FileWrite absolutepath$, "Written using PRG_ROOT# constant\n"
 IF FileExists(absolutepath$) = 1 THEN
-    PRINT "  [OK] File written using ROOT#"
+    PRINT "  [OK] File written using PRG_ROOT#"
     LET rootcontent$ = FileRead(absolutepath$)
     PRINT "  Contents: "; rootcontent$
     FileDelete absolutepath$
 ELSE
-    PRINT "  [FAIL] Failed to use ROOT# constant"
+    PRINT "  [FAIL] Failed to use PRG_ROOT# constant"
 ENDIF
 PRINT ""
 

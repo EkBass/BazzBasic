@@ -74,11 +74,28 @@ public static class Graphics
     public static void Initialize(int width = 640, int height = 480, string title = "BazzBasic Graphics")
     {
         if (initialized)
-            return;
-
-        if (SDL.SDL_Init(SDL.SDL_INIT_VIDEO | SDL.SDL_INIT_AUDIO) < 0)
         {
-            throw new Exception($"SDL could not initialize! SDL Error: {SDL.SDL_GetErrorString()}");
+            // Reinitialize with new dimensions: destroy old renderer and window,
+            // but keep SDL alive (no SDL_Quit / SDL_Init needed again).
+            if (renderer != IntPtr.Zero)
+            {
+                SDL.SDL_DestroyRenderer(renderer);
+                renderer = IntPtr.Zero;
+            }
+            if (window != IntPtr.Zero)
+            {
+                SDL.SDL_DestroyWindow(window);
+                window = IntPtr.Zero;
+            }
+            initialized = false;
+            // Fall through to create new window + renderer below
+        }
+        else
+        {
+            if (SDL.SDL_Init(SDL.SDL_INIT_VIDEO | SDL.SDL_INIT_AUDIO) < 0)
+            {
+                throw new Exception($"SDL could not initialize! SDL Error: {SDL.SDL_GetErrorString()}");
+            }
         }
         
         screenWidth = width;
