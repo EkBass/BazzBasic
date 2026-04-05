@@ -118,7 +118,7 @@ LET P2_FACES# = 6
     PRINT ""
     PRINT "P1 wins: "; p1wins$ / total$
     PRINT "P2 wins: "; p2wins$ / total$
-    PRINT "Ttie:     "; ties$   / total$
+    PRINT "Tie:     "; ties$   / total$
 
 END
 

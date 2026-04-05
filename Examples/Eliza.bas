@@ -40,15 +40,15 @@ END
     COLOR WHITE#, BLACK#
     PRINT "E L I Z A";
     COLOR YELLOW#, BLACK#
-    PRINT "                   *"
+    PRINT "                     *"
     PRINT " *"; REPEAT(" ", 42); "*"
-    PRINT " *   Rogerian Psychotherapist Simulation   *"
+    PRINT " *   Rogerian Psychotherapist Simulation    *"
     PRINT " *"; REPEAT(" ", 42); "*"
     PRINT " "; REPEAT("*", 44)
     
     COLOR LGRAY#, BLACK#
-    PRINT "\n Original by Joseph Weizenbaum, MIT 1966"
-    PRINT " BazzBasic Edition\n"
+    PRINT "\n Original by Joseph Weizenbaum, MIT 1966\n"
+    PRINT " BazzBasic Edition By EkBass\n"
     
     COLOR CYAN#, BLACK#
     PRINT " Please tell me what's been troubling you."

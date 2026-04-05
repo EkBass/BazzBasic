@@ -15,6 +15,8 @@ END DEF
     LET foo$
 
 [main]
+	' BazzBasic excepts that value returned from function is used somehow.
+	' PRINT, var$ or just dummy var$ like here
     foo$ = FN LogicalOps$(TRUE, FALSE)
 END
 

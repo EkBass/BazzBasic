@@ -18,19 +18,10 @@
 END
 
 ' Output 1:
-' Enter two integers separated by a comma: 3, 5
-' Sum:35
-' Difference:-2
-' Product:15
-' Quontent:35
-' Remainder:3
-' Power:243
-
-' Output 2:
-' Enter two integers separated by a comma: 3 5
-' Sum:35
-' Difference:-2
-' Product:15
-' Quontent:35
- 'Remainder:3
-' Power:243
+' Enter two integers separated by a comma: 3,5
+' Sum:        8
+' Difference: -2
+' Product:    15
+' Quotient:   0
+' Remainder:  3
+' Power:      243

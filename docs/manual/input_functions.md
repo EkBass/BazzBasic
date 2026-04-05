@@ -58,7 +58,7 @@ Halts execution until one of the specified keys is pressed. Returns the key valu
 ```vb
 ' Wait for ENTER only
 PRINT "Press ENTER to continue"
-WAITKEY(KEY_ENTER#)
+LET foo$ = WAITKEY(KEY_ENTER#)
 
 ' Wait for any of several keys, capture result
 PRINT "Press A, B or ESC"

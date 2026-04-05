@@ -1,4 +1,8 @@
 ' ======================================================
+' Works for both tasks:
+' https://rosettacode.org/wiki/HTTP
+' https://rosettacode.org/wiki/HTTPS
+'
 ' BazzBasic version: https://ekbass.github.io/BazzBasic/
 ' ======================================================
 
