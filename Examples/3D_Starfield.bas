@@ -6,17 +6,15 @@
 ' Ported and extended for BazzBasic
 ' ============================================================
 
-' ---- 1. CONSTANTS ------------------------------------------
-LET STAR_COUNT# = 500
-LET CX#         = 320       ' Center X  (screen width  / 2)
-LET CY#         = 240       ' Center Y  (screen height / 2)
-LET MAX_T#      = 400       ' Distance limit before star resets
-
-' ---- 2. INIT -----------------------------------------------
 [inits]
     SCREEN 12
 
+	LET STAR_COUNT# = 500
+	LET CX#         = 320       ' Center X  (screen width  / 2)
+	LET CY#         = 240       ' Center Y  (screen height / 2)
+	LET MAX_T#      = 400       ' Distance limit before star resets
     ' Parallel arrays — one slot per star per field
+	
     DIM t$          ' Current age / distance multiplier
     DIM sx$         ' X direction component  (-1 to 1)
     DIM sy$         ' Y direction component  (-1 to 1)

@@ -113,8 +113,8 @@ GOTO [mainLoop]
     COLOR WHITE#, BLACK#
     PRINT "\nNew game? (y/n): "
 	
-	LET rep$ = WAITKEY(KEY_Y#, KEY_N#)
-    IF  rep$ = KEY_Y# THEN
+	LET key$ = WAITKEY(KEY_Y#, KEY_N#)
+    IF  key$ = KEY_Y# THEN
         money$ = 100
         GOSUB [sub:shuffleDeck]
         GOTO [mainLoop]
