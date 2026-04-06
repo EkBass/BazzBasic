@@ -16,6 +16,7 @@
     LET COL_BUCKET# = RGB(160, 100, 40)
 
     SCREEN 0, SCREEN_W#, SCREEN_H#, "Fruit Catcher"
+	LET COIN#    = LOADSOUND(COIN_PATH#) ' fixed from 'coin$'
 
     DIM fruits$
     DIM fruitX$
@@ -39,7 +40,7 @@
     LET running$ = TRUE
     LET bx$      = SCREEN_W# / 2
     LET by$      = BUCKET_Y#
-    LET coin$    = LOADSOUND(COIN_PATH#)
+    
 
 [main]
     WHILE running$
@@ -64,7 +65,7 @@ END
             hits$ = hits$ + 1
             fruitX$(i$) = RND(SCREEN_W#)
             fruitY$(i$) = -100 - RND(200)
-            SOUNDONCE(coin$)
+            SOUNDONCE(COIN#)
         ELSEIF fruitY$(i$) > SCREEN_H# THEN
             missed$ = missed$ + 1
             fruitX$(i$) = RND(SCREEN_W#)
