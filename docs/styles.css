@@ -71,7 +71,7 @@ body {
 .nav-link {
   color: var(--header-fg);
   text-decoration: none;
-  padding: 8px 10px;
+  padding: 4px 5px;
   border-radius: 10px;
   border: 1px solid rgba(255, 216, 74, 0.35);
   transition: transform 120ms ease, background 120ms ease;
@@ -111,6 +111,12 @@ body {
   border-radius: 14px;
   padding: 18px;
   background-color: #ffe4b5;
+}
+
+.site-examples {
+  background: #FFFAFA;
+  color: var(--main-fg);
+  padding: 32px 0;
 }
 
 /* STORY */

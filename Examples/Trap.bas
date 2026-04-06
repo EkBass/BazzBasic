@@ -2,10 +2,13 @@
 ' Original by Steve Ullman (1972)
 ' BazzBasic version 
 
-[start]
+[inits]
     LET max_guesses# = 6
     LET range# = 100
-    
+	LET secret$
+
+
+[start]    
     COLOR 14, 0 : CLS
     PRINT " "; REPEAT("*", 32)
     PRINT " *"; REPEAT(" ", 30); "*"
@@ -33,7 +36,7 @@
     END IF
 
 [game_init]
-    LET secret$ = RND(range#) + 1
+    secret$ = RND(range#) + 1
     
     FOR q$ = 1 TO max_guesses#
         COLOR 15, 0
