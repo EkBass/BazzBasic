@@ -67,17 +67,34 @@ PRINT data$(1, "value")  ' Output: Alice
 
 ## Array Functions
 
-### LEN
-Returns the number of elements in an array:  
-**Note the empty parentheses `()` after the array name.**
+### DELARRAY
+Removes the entire array and all its elements:
 ```vb
-DIM items$
-items$(0) = "apple"
-items$(1) = "banana"
-items$(2) = "cherry"
+DIM arr$
+arr$("name") = "Test"
+arr$(0) = "Zero"
 
-PRINT LEN(items$())      ' Output: 3
+PRINT LEN(arr$())             ' Output: 2
+
+DELARRAY arr$
+
+' Array no longer exists, can be re-declared
+DIM arr$
+PRINT LEN(arr$())             ' Output: 0
 ```
+
+### DELKEY
+Removes an element from the array:
+```vb
+DIM cache$
+cache$("temp") = "value"
+PRINT HASKEY(cache$("temp"))  ' Output: 1
+
+DELKEY cache$("temp")
+PRINT HASKEY(cache$("temp"))  ' Output: 0
+```
+
+---
 
 ### HASKEY
 Returns 1 if the key exists, 0 otherwise:
@@ -94,32 +111,44 @@ IF HASKEY(config$("verbose")) = 0 THEN
 END IF
 ```
 
-### DELKEY
-Removes an element from the array:
-```vb
-DIM cache$
-cache$("temp") = "value"
-PRINT HASKEY(cache$("temp"))  ' Output: 1
+---
 
-DELKEY cache$("temp")
-PRINT HASKEY(cache$("temp"))  ' Output: 0
+### JOIN
+Merges two source arrays into a destination array. If both arrays share the same key, `src2$` overwrites `src1$`.
+```vb
+DIM a$
+DIM b$
+DIM c$
+
+a$("name") = "Alice"
+a$("score") = 100
+
+b$("score") = 999   ' Same key as a$ — this wins
+b$("level") = 5
+
+JOIN c$, a$, b$
+
+PRINT c$("name")    ' Output: Alice  (from a$)
+PRINT c$("score")   ' Output: 999    (b$ overwrote a$)
+PRINT c$("level")   ' Output: 5      (from b$)
 ```
 
-### DELARRAY
-Removes the entire array and all its elements:
+---
+
+**Always check with `HASKEY` before reading uninitialized elements.**
+### LEN
+Returns the number of elements in an array:  
+**Note the empty parentheses `()` after the array name.**
 ```vb
-DIM arr$
-arr$("name") = "Test"
-arr$(0) = "Zero"
+DIM items$
+items$(0) = "apple"
+items$(1) = "banana"
+items$(2) = "cherry"
 
-PRINT LEN(arr$())             ' Output: 2
-
-DELARRAY arr$
-
-' Array no longer exists, can be re-declared
-DIM arr$
-PRINT LEN(arr$())             ' Output: 0
+PRINT LEN(items$())      ' Output: 3
 ```
+
+---
 
 ## Practical Examples
 
@@ -312,6 +341,7 @@ ASARRAY response$, raw$
 PRINT "Name: "; response$("name")
 PRINT "Email: "; response$("email")
 ```
+
 ---
 
 ## HTTP Headers with Arrays
@@ -343,8 +373,6 @@ DIM result$
 LET count$ = ASARRAY(result$, raw$)
 PRINT result$("choices,0,message,content")
 ```
-
-The headers array is applied directly to the HTTP request. Standard request headers (like `Authorization`) and content headers (like `Content-Type`) are both supported.
 
 ---
 

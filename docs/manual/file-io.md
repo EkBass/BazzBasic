@@ -276,16 +276,16 @@ REM WRONG (escape sequences):
 FileWrite "data\file.txt", "content"  REM \f becomes form feed!
 ```
 
-### ROOT# Constant
+### PRG_ROOT# Constant
 
-BazzBasic provides a `ROOT#` constant containing the program's base directory path.
+BazzBasic provides a `PRG_ROOT#` constant containing the program's base directory path.
 
 **Example:**
 ```vb
-PRINT "Program root: "; ROOT#
+PRINT "Program root: "; PRG_ROOT#
 
 REM Build absolute paths
-LET savePath# = ROOT# + "/saves/game1.txt"
+LET savePath# = PRG_ROOT# + "/saves/game1.txt"
 FileWrite savePath#, "Player data"
 ```
 
@@ -499,7 +499,7 @@ END
 - Use `\n` for newlines, `\t` for tabs in string literals
 
 ### Path Resolution
-- **Relative paths**: Resolved from program's base directory (ROOT#)
+- **Relative paths**: Resolved from program's base directory (PRG_ROOT#)
 - **Absolute paths**: Used as-is if rooted (e.g., `C:/...`)
 - Forward slashes `/` work on all platforms
 - Backslashes must be escaped: `\\`
@@ -620,7 +620,7 @@ FileWrite filename$, data$
 - Avoid: `\n`, `\t`, `\r` in paths
 
 **Problem:** Can't find files after writing
-- Print ROOT# to see base directory
+- Print PRG_ROOT# to see base directory
 - Use absolute paths for debugging
 - Check program's working directory
 

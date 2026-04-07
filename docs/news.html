@@ -1,155 +1,208 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- META & TITLE -->
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="img/icon.png" type="image/png">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="author" content="krisu.virtanen@gmail.com">
-    <meta name="keywords" content="BazzBasic, QBasic, GWBasic, MSX, Atari, Spectrum">
-    <meta name="description" content="BazzBasic News and Changes">
-    <title>BazzBasic - News</title>
-    <style>
-      .announcements-section {
-        margin-bottom: 2em;
-        padding-bottom: 1.5em;
-        border-bottom: 2px solid #444;
-      }
 
-      .announcement-item {
-        margin-bottom: 1em;
-        padding: 0.8em 1em;
-        background: rgba(255, 255, 255, 0.03);
-        border-left: 3px solid #e8b923;
-        border-radius: 0 4px 4px 0;
-      }
+<head>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="img/icon.png" type="image/png">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="krisu.virtanen@gmail.com">
+  <meta name="keywords" content="BazzBasic, QBasic, GWBasic, MSX, Atari, Spectrum, BASIC">
+  <meta name="description" content="BazzBasic News and Changelog">
+  <title>BazzBasic — News</title>
+</head>
 
-      .announcement-item a {
-        font-weight: bold;
-        font-size: 1.1em;
-      }
+<body>
 
-      .announcement-meta {
-        font-size: 0.85em;
-        color: #888;
-        margin-top: 0.3em;
-      }
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container header-grid">
+      <div class="header-left">
+        <div class="brand">
+          <h1 class="brand-title">BazzBasic</h1>
+          <p class="brand-slogan">Release your curiosity</p>
+        </div>
+      </div>
+      <nav class="header-right" aria-label="Primary navigation">
+        <a class="nav-link" href="index.html">About</a>
+        <a class="nav-link" href="news.html">News</a>
 
-      .section-title {
-        color: #e8b923;
-        margin-bottom: 1em;
-        font-size: 1.4em;
-      }
-    </style>
-  </head>
-  <body>
-    <!-- HEADER -->
-    <header class="site-header">
-      <div class="container header-grid">
-        <div class="header-left">
-          <div class="brand">
-            <h1 class="brand-title">BazzBasic</h1>
-            <p class="brand-slogan">Release your curiosity</p>
+        <div class="nav-dropdown">
+          <a class="nav-link" href="#" onclick="return false;">Support</a>
+          <div class="dropdown-menu">
+            <a href="start.html">Quick Guide</a>
+            <a href="BazzBasic-Beginners-Guide.pdf">Beginner's Guide</a>
+            <a href="https://ekbass.github.io/BazzBasic/manual/#/" target="_blank" rel="noopener">Manual</a>
+            <a href="https://huggingface.co/datasets/EkBass/BazzBasic_AI_Guide" target="_blank" rel="noopener">AI Guide</a>
           </div>
         </div>
-        <nav class="header-right" aria-label="Primary navigation">
-          <a class="nav-link" href="index.html">About</a>
-          <a class="nav-link" href="news.html">News</a>
-          <a class="nav-link" href="start.html">Quick Guide</a>
-          <a class="nav-link" href="manual/">Manual</a>
-          <a class="nav-link" target="_blank" rel="noopener" href="https://github.com/EkBass/BazzBasic/releases">Download</a>
-          <a class="nav-link" href="communities.html">Community</a>
-        </nav>
-      </div>
-    </header>
-    <!-- /HEADER -->
-    <!-- MAIN -->
-    <main class="site-main">
-      <div class="container">
-        <!-- ANNOUNCEMENTS -->
-        <section class="announcements-section" id="announcements">
-          <h2 class="section-title">📣 Announcements</h2>
-          <div id="announcements-content">
-            <p class="loading">Loading announcements...</p>
+
+        <a class="nav-link" href="gallery.html">Gallery</a>
+
+        <div class="nav-dropdown">
+          <a class="nav-link" href="#" onclick="return false;">Download</a>
+          <div class="dropdown-menu">
+            <a href="https://github.com/EkBass/BazzBasic/releases" target="_blank" rel="noopener">Download Binary</a>
+            <a href="https://github.com/EkBass/BazzBasic" target="_blank" rel="noopener">Download Source</a>
           </div>
-		  <p><b>Read all</b> <a href="https://github.com/EkBass/BazzBasic/discussions/categories/announcements">announcements</a></p>
-        </section>
-        <!-- CHANGELOG -->
-        <section class="main-news" id="news-content">
-          <h2 class="section-title">📋 Changelog</h2>
-          <p class="loading">Loading changes...</p>
-        </section>
-      </div>
-    </main>
-    <!-- FOOTER -->
-    <footer class="site-footer">
-      <div class="container footer-inner">
-        <p>© <span id="year"></span> BazzBasic. All rights reserved. </p>
-        <p class="footer-small">Made with BASIC-flavored stubbornness.</p>
-      </div>
-    </footer>
-    <!-- /FOOTER -->
-    <!-- Marked.js for Markdown parsing -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script>
-      document.getElementById("year").textContent = new Date().getFullYear();
-      // Helper: Format relative time
-      function timeAgo(dateStr) {
-        const date = new Date(dateStr);
-        const now = new Date();
-        const diffMs = now - date;
-        const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-        if (diffDays === 0) return 'today';
-        if (diffDays === 1) return 'yesterday';
-        if (diffDays < 7) return diffDays + ' days ago';
-        if (diffDays < 14) return 'last week';
-        if (diffDays < 30) return Math.floor(diffDays / 7) + ' weeks ago';
-        if (diffDays < 60) return 'last month';
-        return Math.floor(diffDays / 30) + ' months ago';
+        </div>
+
+        <a class="nav-link" href="communities.html">Community</a>
+      </nav>
+    </div>
+  </header>
+  <!-- /HEADER -->
+
+  <!-- LATEST RELEASE BANNER -->
+  <div class="release-banner" id="release-banner" style="display:none;">
+    Latest release: <a id="release-link" href="https://github.com/EkBass/BazzBasic/releases" target="_blank" rel="noopener">—</a>
+  </div>
+
+  <!-- MAIN -->
+  <main class="site-main">
+    <div class="container">
+
+      <!-- ANNOUNCEMENTS -->
+      <section class="announcements-section" id="announcements">
+        <h2 class="section-title">📣 Announcements</h2>
+        <div id="announcements-content">
+          <p class="loading">Loading announcements…</p>
+        </div>
+        <p style="margin-top:12px;"><b>Read all</b> <a href="https://github.com/EkBass/BazzBasic/discussions/categories/announcements">announcements on GitHub</a></p>
+      </section>
+
+      <!-- CHANGELOG -->
+      <section id="changelog-section">
+        <h2 class="section-title">📋 Changelog</h2>
+        <div class="changelog-timeline" id="changelog-content">
+          <p class="loading">Loading changelog…</p>
+        </div>
+        <p style="margin-top:16px; font-size:0.9em;">
+          <a href="https://github.com/EkBass/BazzBasic/blob/main/changes.md">View full changelog on GitHub ↗</a>
+        </p>
+      </section>
+
+    </div>
+  </main>
+  <!-- /MAIN -->
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> BazzBasic. All rights reserved.</p>
+      <p class="footer-small">Made with BASIC-flavored stubbornness.</p>
+    </div>
+  </footer>
+  <!-- /FOOTER -->
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Dropdown navigation
+    document.querySelectorAll('.nav-dropdown > .nav-link').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.preventDefault();
+        const dd = btn.closest('.nav-dropdown');
+        const isOpen = dd.classList.contains('is-open');
+        document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('is-open'));
+        if (!isOpen) dd.classList.add('is-open');
+      });
+    });
+    document.addEventListener('click', e => {
+      if (!e.target.closest('.nav-dropdown')) {
+        document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('is-open'));
       }
-      // Fetch and render announcements
-      fetch('announcements.json').then(response => {
-        if (!response.ok) throw new Error('Failed to load');
-        return response.json();
-      }).then(announcements => {
-        if (announcements.length === 0) {
-          document.getElementById('announcements-content').innerHTML = ' < p > No announcements yet. < /p>';
+    });
+
+    // Relative time helper
+    function timeAgo(dateStr) {
+      const date = new Date(dateStr);
+      const diffDays = Math.floor((Date.now() - date) / 86400000);
+      if (diffDays === 0) return "today";
+      if (diffDays === 1) return "yesterday";
+      if (diffDays < 7) return diffDays + " days ago";
+      if (diffDays < 14) return "last week";
+      if (diffDays < 30) return Math.floor(diffDays / 7) + " weeks ago";
+      if (diffDays < 60) return "last month";
+      return Math.floor(diffDays / 30) + " months ago";
+    }
+
+    // Latest release banner
+    fetch("https://api.github.com/repos/EkBass/BazzBasic/releases/latest")
+      .then(r => r.json())
+      .then(data => {
+        if (data.tag_name) {
+          const banner = document.getElementById("release-banner");
+          const link = document.getElementById("release-link");
+          link.textContent = data.tag_name + (data.name ? " — " + data.name : "");
+          link.href = data.html_url;
+          banner.style.display = "block";
+        }
+      })
+      .catch(() => {});
+
+    // Announcements
+    fetch("announcements.json")
+      .then(r => { if (!r.ok) throw new Error(); return r.json(); })
+      .then(list => {
+        if (!list.length) {
+          document.getElementById("announcements-content").innerHTML = "<p>No announcements yet.</p>";
           return;
         }
-        const html = announcements.slice(0, 3).map(a => `
-            
-								<div class="announcement-item">
-									<a href="${a.url}" target="_blank" rel="noopener">${a.title}</a>
-									<div class="announcement-meta">
-										<strong>${a.author}</strong> announced ${timeAgo(a.createdAt)} in Announcements
-              
-									</div>
-								</div>
-          `).join('');
-        document.getElementById('announcements-content').innerHTML = html;
-      }).catch(error => {
-        document.getElementById('announcements-content').innerHTML = ' < p > Could not load announcements. < a href = "https://github.com/EkBass/BazzBasic/discussions/categories/announcements" > View on GitHub < /a> < /p>';
+        document.getElementById("announcements-content").innerHTML =
+          list.slice(0, 3).map(a => `
+            <div class="announcement-item">
+              <a href="${a.url}" target="_blank" rel="noopener">${a.title}</a>
+              <div class="announcement-meta">
+                <strong>${a.author}</strong> announced ${timeAgo(a.createdAt)}
+              </div>
+            </div>
+          `).join("");
+      })
+      .catch(() => {
+        document.getElementById("announcements-content").innerHTML =
+          '<p>Could not load announcements. <a href="https://github.com/EkBass/BazzBasic/discussions/categories/announcements">View on GitHub</a></p>';
       });
-      // Fetch and render changes.md
-      fetch('https://raw.githubusercontent.com/EkBass/BazzBasic/refs/heads/main/changes.md').then(response => {
-        if (!response.ok) throw new Error('Failed to load');
-        return response.text();
-      }).then(markdown => {
-        if (markdown.length > 1024) {
-          markdown = markdown.substring(0, 1024) + '\n\n*...[truncated — [view full changelog on GitHub](https://github.com/EkBass/BazzBasic/blob/main/changes.md)]*';
-        }
-        // Keep the h2 title, replace only the loading text
-        const container = document.getElementById('news-content');
-        const title = container.querySelector('.section-title');
-        container.innerHTML = '';
-        container.appendChild(title);
-        const content = document.createElement('div');
-        content.innerHTML = marked.parse(markdown);
-        container.appendChild(content);
-      }).catch(error => {
-        document.getElementById('news-content').innerHTML = ' < h2 class = "section-title" > 📋Changelog < /h2> < p class = "error" > Could not load changes. < a href = "https://github.com/EkBass/BazzBasic/blob/main/changes.md" > View on GitHub < /a> < /p>';
+
+    // Changelog — rendered as timeline entries split by version headers
+    fetch("https://raw.githubusercontent.com/EkBass/BazzBasic/refs/heads/main/changes.md")
+      .then(r => { if (!r.ok) throw new Error(); return r.text(); })
+      .then(md => {
+        // Split into blocks at each line starting with ## or #
+        const blocks = [];
+        let current = null;
+        md.split("\n").forEach(line => {
+          const vMatch = line.match(/^#{1,2}\s+(.+)/);
+          if (vMatch) {
+            if (current) blocks.push(current);
+            current = { heading: vMatch[1], lines: [] };
+          } else if (current) {
+            current.lines.push(line);
+          }
+        });
+        if (current) blocks.push(current);
+
+        // Limit to first 8 version blocks
+        const shown = blocks.slice(0, 8);
+        const container = document.getElementById("changelog-content");
+
+        container.innerHTML = shown.map(block => {
+          const bodyMd = block.lines.join("\n").trim();
+          const bodyHtml = bodyMd ? marked.parse(bodyMd) : "";
+          return `
+            <div class="changelog-entry">
+              <p class="changelog-version">${block.heading}</p>
+              ${bodyHtml ? `<div class="changelog-body">${bodyHtml}</div>` : ""}
+            </div>
+          `;
+        }).join("");
+      })
+      .catch(() => {
+        document.getElementById("changelog-content").innerHTML =
+          '<p class="error">Could not load changelog. <a href="https://github.com/EkBass/BazzBasic/blob/main/changes.md">View on GitHub</a></p>';
       });
-    </script>
-  </body>
+  </script>
+
+</body>
 </html>
