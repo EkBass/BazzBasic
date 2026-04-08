@@ -12,6 +12,7 @@
     LET r$, c$
     LET line$
     LET wkv$
+
 [main]
     FOR r$ = 1 TO ORDER#
         numRows$ = numRows$ * 2
