@@ -1,6 +1,6 @@
 # BazzBasic Beginner's Guide
 
-A beginner's guide to BazzBasic is now available here: [BazzBasic_Beginners_Guide.md](https://github.com/EkBass/BazzBasic-Beginners-Guide/blob/f9b14703f9d6cecac89f1cac1097358f500b8362/BazzBasic_Beginners_Guide.md)
+A beginner's guide to BazzBasic is now available here: [BazzBasic_Beginners_Guide.pdf](https://github.com/EkBass/BazzBasic-Beginners-Guide/releases) or as [markdown file](https://github.com/EkBass/BazzBasic-Beginners-Guide/blob/main/BazzBasic_Beginners_Guide.md).
 
 This guide covers everything you need to get started: variables, loops, conditions, 
 functions, file handling, JSON, networking, graphics, sound, and more. 

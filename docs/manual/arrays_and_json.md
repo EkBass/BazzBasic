@@ -153,7 +153,7 @@ PRINT LEN(items$())      ' Output: 3
 ## Practical Examples
 
 ### Pass values to user-defined functions
-Arrays cannot be passed directly to functions. Instead, pass individual elements as values:
+Arrays cannot be passed directly to functions. You can either pass individual value from it or the whole array as JSON-string.
 ```vb
 DIM a$
 a$("name") = "Foo"
@@ -172,6 +172,54 @@ LET b$ = FN func$(a$("name"), a$("age"), a$(1))
 ' Foo
 ' 19
 ' 1
+```
+
+```vb
+' ==================================================
+' Example how to pass array to user-defined function
+' Starting from ver. 1.2
+' EkBass, public domain
+' ==================================================
+
+ ' User-defined functions
+DEF FN ArrayAsParam$(data$)
+    DIM array$
+
+    LET count$= ASARRAY(array$, data$)
+    LET daString$
+        daString$ = array$("name") + "\n"
+        daString$ = daString$ + array$("score") + "\n"
+        daString$ = daString$ + array$("address,city") + "\n"
+        daString$ = daString$ + array$("skills,0") + "\n"
+        daString$ = daString$ + array$("skills,1") + "\n"
+
+    RETURN daString$
+END DEF
+
+[inits]
+    DIM player$
+        player$("name") = "Alice"
+        player$("score") = 9999
+        player$("address,city") = "New York"
+        player$("skills,0") = "JavaScript"
+        player$("skills,1") = "Python"
+
+    LET json$
+
+[main]
+    json$ = ASJSON(player$)
+    ' json$ now: {"name":"Alice","score":9999,"address":{"city":"New York"},"skills":["JavaScript","Python"]}
+
+[output]
+    PRINT FN ArrayAsParam$(json$)
+END
+
+' Output:
+' Alice
+' 9999
+' New York
+' JavaScript
+' Python
 ```
 
 ### Simple List

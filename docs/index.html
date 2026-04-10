@@ -1,7 +1,8 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 
 <head>
+<<<<<<< HEAD
     <!-- META & TITLE -->
     <div w3-include-html="meta.html"></div>
     <link rel="stylesheet" href="styles.css">
@@ -28,7 +29,7 @@
                 <a class="nav-link" href="index.html">About</a>
                 <a class="nav-link" href="news.html">News</a>
                 <a class="nav-link" href="start.html">Quick Guide</a>
-				<a class="nav-link" href="BazzBasic-Beginners-Guide.pdf">Beginner's Guide</a>
+				<a class="nav-link" href="https://github.com/EkBass/BazzBasic-Beginners-Guide/releases">Beginner's Guide</a>
                 <a class="nav-link" href="https://ekbass.github.io/BazzBasic/manual/#/">Manual</a>
                 <a class="nav-link" target="_blank" rel="noopener" href="https://github.com/EkBass/BazzBasic/releases">Download binary</a>
 				<a class="nav-link" target="_blank" rel="noopener" href="https://github.com/EkBass/BazzBasic">Download source</a>
@@ -102,3 +103,156 @@
 </body>
 
 </html>
+=======
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="img/icon.png" type="image/png">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="krisu.virtanen@gmail.com">
+  <meta name="keywords" content="BazzBasic, QBasic, GWBasic, MSX, Atari, Spectrum, BASIC">
+  <meta name="description" content="BazzBasic — a modern BASIC interpreter. Release your curiosity.">
+  <title>BazzBasic</title>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container header-grid">
+      <div class="header-left">
+        <div class="brand">
+          <h1 class="brand-title">BazzBasic</h1>
+          <p class="brand-slogan">Release your curiosity</p>
+        </div>
+      </div>
+      <nav class="header-right" aria-label="Primary navigation">
+        <a class="nav-link" href="index.html">About</a>
+        <a class="nav-link" href="news.html">News</a>
+
+        <div class="nav-dropdown">
+          <a class="nav-link" href="#" onclick="return false;">Support</a>
+          <div class="dropdown-menu">
+            <a href="start.html">Quick Guide</a>
+            <a href="BazzBasic-Beginners-Guide.pdf">Beginner's Guide</a>
+            <a href="https://ekbass.github.io/BazzBasic/manual/#/" target="_blank" rel="noopener">Manual</a>
+            <a href="https://huggingface.co/datasets/EkBass/BazzBasic_AI_Guide" target="_blank" rel="noopener">AI Guide</a>
+          </div>
+        </div>
+
+        <a class="nav-link" href="gallery.html">Gallery</a>
+
+        <div class="nav-dropdown">
+          <a class="nav-link" href="#" onclick="return false;">Download</a>
+          <div class="dropdown-menu">
+            <a href="https://github.com/EkBass/BazzBasic/releases" target="_blank" rel="noopener">Download Binary</a>
+            <a href="https://github.com/EkBass/BazzBasic" target="_blank" rel="noopener">Download Source</a>
+          </div>
+        </div>
+
+        <a class="nav-link" href="communities.html">Community</a>
+      </nav>
+    </div>
+  </header>
+  <!-- /HEADER -->
+
+  <!-- LATEST RELEASE BANNER -->
+  <div class="release-banner" id="release-banner" style="display:none;">
+    Latest release: <a id="release-link" href="https://github.com/EkBass/BazzBasic/releases" target="_blank" rel="noopener" id="release-tag">—</a>
+  </div>
+
+  <!-- MAIN -->
+  <main class="site-main">
+    <div class="container main-grid">
+      <section class="main-left">
+        <h2>ABOUT</h2>
+        <p>BazzBasic is built around one simple idea: starting programming should feel nice and even fun.</p>
+        <p>Ease of learning, comfort of exploration and small but important moments of success.</p>
+        <p>Just like the classic BASICs of decades past, but with a fresh and modern feel.</p>
+      </section>
+      <section class="main-middle">
+        <h2>BASIC</h2>
+        <p>After more than six decades, BASIC is still one of the easiest ways to reveal your curiosity.</p>
+        <p>It's easy to get started with and offers a rewarding experience with little effort.</p>
+        <p>Simple syntax, modern features, and you'll be creating your first little game in a couple of evenings — hours perhaps.</p>
+        <p>Check this few lines long <a target="_blank" rel="noopener" href="https://github.com/EkBass/BazzBasic/blob/main/Examples/Icon_Catcher_minigame.bas">example game</a> to see it yourself!</p>
+      </section>
+      <section class="main-right">
+        <h2>GRAPHICS</h2>
+        <p>BazzBasic isn't just text and numbers. Using SDL2 under the hood, it supports sprites, images, shapes, colors and smooth animation.</p>
+        <p>From a bouncing ball to a full 3D raycaster — the only limit is your curiosity.</p>
+        <p>See what's possible in the <a href="gallery.html">Gallery</a>.</p>
+      </section>
+    </div>
+  </main>
+  <!-- /MAIN -->
+
+  <!-- STORY -->
+  <section class="site-story">
+    <div class="container story-grid">
+      <div class="story-left">
+        <h2>STORY</h2>
+        <p>Although over the years, as my own skills have grown, I have moved on to more versatile and modern languages, BASIC has always been something that has been fun to try out many different things with.</p>
+        <p>Sometimes it's great to just make a simple adventure game again, a lottery machine, a quiz, or even just those balls bouncing on the screen.</p>
+        <p>BazzBasic was created with this in mind.</p>
+        <p>I wanted to create a language that makes it easy for you to give free rein to your curiosity and program something.</p>
+        <p>And when you finish your first little game, you may crave something bigger and better.</p>
+        <p>Maybe one day you will move on to another programming language, but then BazzBasic will have succeeded in doing what it was intended for.</p>
+        <p>To arouse your curiosity.</p>
+        <p style="margin-top:1.4em; font-size:0.92em; opacity:0.8;">🤖 BazzBasic even has its own <a href="https://huggingface.co/datasets/EkBass/BazzBasic_AI_Guide" target="_blank" rel="noopener">AI Guide</a> — so your favourite AI assistant can help you write BB code.</p>
+      </div>
+      <div class="story-right">
+        <h2>Raycaster 3D</h2>
+        <a target="_blank" rel="noopener" href="https://github.com/EkBass/BazzBasic/blob/main/Examples/Raycaster_3d_optimized.bas">
+          <img src="img/FPS-example-screenshot.png" alt="BazzBasic example: Raycaster_3d_optimized.bas" loading="lazy">
+        </a>
+      </div>
+    </div>
+  </section>
+  <!-- /STORY -->
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> BazzBasic. All rights reserved.</p>
+      <p class="footer-small">Made with BASIC-flavored stubbornness.</p>
+    </div>
+  </footer>
+  <!-- /FOOTER -->
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Dropdown navigation
+    document.querySelectorAll('.nav-dropdown > .nav-link').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.preventDefault();
+        const dd = btn.closest('.nav-dropdown');
+        const isOpen = dd.classList.contains('is-open');
+        document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('is-open'));
+        if (!isOpen) dd.classList.add('is-open');
+      });
+    });
+    document.addEventListener('click', e => {
+      if (!e.target.closest('.nav-dropdown')) {
+        document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('is-open'));
+      }
+    });
+
+    // Fetch latest release from GitHub API
+    fetch("https://api.github.com/repos/EkBass/BazzBasic/releases/latest")
+      .then(r => r.json())
+      .then(data => {
+        if (data.tag_name) {
+          const banner = document.getElementById("release-banner");
+          const link = document.getElementById("release-link");
+          link.textContent = data.tag_name + (data.name ? " — " + data.name : "");
+          link.href = data.html_url;
+          banner.style.display = "block";
+        }
+      })
+      .catch(() => {});
+  </script>
+
+</body>
+</html>
+>>>>>>> f98b655626982b3a9091c0b57e8b3791d8c5a28d
