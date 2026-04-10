@@ -75,11 +75,7 @@ body {
 .nav-link {
   color: var(--header-fg);
   text-decoration: none;
-<<<<<<< HEAD
-  padding: 4px 5px;
-=======
   padding: 4px 10px;
->>>>>>> f98b655626982b3a9091c0b57e8b3791d8c5a28d
   border-radius: 8px;
   border: 1px solid rgba(255, 216, 74, 0.35);
   transition: transform 120ms ease, background 120ms ease;
@@ -188,18 +184,11 @@ body {
 }
 
 .site-examples {
-<<<<<<< HEAD
-  background: #FFFAFA;
-=======
   background: #fffafa;
->>>>>>> f98b655626982b3a9091c0b57e8b3791d8c5a28d
   color: var(--main-fg);
   padding: 32px 0;
 }
 
-<<<<<<< HEAD
-/* STORY */
-=======
 /* ============================================================
    GALLERY  (gallery.html)
    ============================================================ */
@@ -284,7 +273,6 @@ body {
 /* ============================================================
    STORY
    ============================================================ */
->>>>>>> f98b655626982b3a9091c0b57e8b3791d8c5a28d
 .site-story {
   background: var(--story-bg);
   color: var(--story-fg);
