@@ -12,7 +12,7 @@
 
 [main]
     WHILE TRUE
-        value$ = value$ + 1
+        value$+= 1
         PRINT value$
         IF MOD(value$, 6) = 0 THEN GOTO [done]
     WEND

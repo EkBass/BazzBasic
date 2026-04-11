@@ -12,8 +12,8 @@
     LET RED#     = 4
     LET CYAN#    = 11
     LET WHITE#   = 15
-	
-	LET choice$
+
+    LET choice$ = 0
 
 [title]
     COLOR CYAN#, BLACK#
@@ -37,7 +37,6 @@
     IF choice$ = KEY_2# THEN GOTO [quit]
 
 [shoot]
-    ' One in six chance the loaded chamber comes up
     IF RND(6) = 0 THEN
         COLOR RED#, BLACK#
         PRINT " *** BANG! ***\n"

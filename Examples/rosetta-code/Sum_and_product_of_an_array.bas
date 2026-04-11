@@ -14,9 +14,9 @@
     NEXT
 
 [main]
-    FOR i$ = 0 TO LEN(myArray$()) - 1
-        sum$ = sum$ + myArray$(i$)
-        prod$ = prod$ * myArray$(i$)
+    FOR i$ = 0 TO ROWCOUNT(myArray$()) - 1
+        sum$+= myArray$(i$)
+        prod$*= myArray$(i$)
     NEXT
 
 [output]

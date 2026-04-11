@@ -16,13 +16,13 @@ DEF FN Utf8ByteLen$(s$)
     FOR i$ = 1 TO LEN(s$)
         LET cp$ = ASC(MID(s$, i$, 1))
         IF cp$ < 128 THEN
-            bytes$ = bytes$ + 1         ' U+0000 – U+007F  : 1 byte
+            bytes$+= 1         ' U+0000 – U+007F  : 1 byte
         ELSEIF cp$ < 2048 THEN
-            bytes$ = bytes$ + 2         ' U+0080 – U+07FF  : 2 bytes
+            bytes$+= 2         ' U+0080 – U+07FF  : 2 bytes
         ELSEIF cp$ < 65536 THEN
-            bytes$ = bytes$ + 3         ' U+0800 – U+FFFF  : 3 bytes
+            bytes$+= 3         ' U+0800 – U+FFFF  : 3 bytes
         ELSE
-            bytes$ = bytes$ + 4         ' U+10000 –        : 4 bytes
+            bytes$+= 4         ' U+10000 –        : 4 bytes
         END IF
     NEXT
     RETURN bytes$

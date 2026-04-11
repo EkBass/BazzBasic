@@ -11,5 +11,6 @@
     WHILE INKEY <> KEY_ESC#
         LOCATE 1, 1
         PRINT "X:"; MOUSEX; " Y:"; MOUSEY; "   "
+		SLEEP 5
     WEND
 END

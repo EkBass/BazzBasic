@@ -19,7 +19,7 @@ DEF FN UrlEncode$(s$)
 		c$ = MID(s$, i$, 1)
 		code$ = ASC(c$)
 		IF (code$ >= 48 AND code$ <= 57) OR (code$ >= 65 AND code$ <= 90) OR (code$ >= 97 AND code$ <= 122) THEN
-			result$ = result$ + c$
+			result$+= c$
 		ELSE
 			result$ = result$ + "%" + FN ToHex$(code$)
 		END IF

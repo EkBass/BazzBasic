@@ -13,6 +13,6 @@
         SLEEP 5 ' small delay
     WEND
 
-    ' Could use WAITKEY() but task description requires a way which wont stop program
+    ' Could use WAITKEY() but task description requires a way which wont pause program
     PRINT key$
 END

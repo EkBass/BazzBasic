@@ -9,10 +9,9 @@
 
 INCLUDE "MathLib.bb"
 
-]inits}
+[inits]
     LET a$ = 5
     LET b$ = 3
-
 
 [main]
     PRINT "Testing library functions:"

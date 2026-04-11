@@ -10,12 +10,12 @@
 ' =================================================================================================
 
 [inits]
-    LET VER_URL# = "https://raw.githubusercontent.com/EkBass/BazzBasic/main/src/Version.cs"
+    LET VER_URL#      = "https://raw.githubusercontent.com/EkBass/BazzBasic/main/src/Version.cs"
     LET raw$          = ""
     LET marker$       = ""
     LET pos$          = 0
-    LET startPos$        = 0
-    LET stopPos$         = 0
+    LET startPos$     = 0
+    LET stopPos$      = 0
     LET remoteVer$    = ""
     LET remoteCount$  = 0
     LET localCount$   = 0
@@ -23,10 +23,9 @@
     LET remoteMinor$  = 0
     LET localMajor$   = 0
     LET localMinor$   = 0
+    LET key$          = 0
     DIM remote$
     DIM local$
-
-    LET key$  ' for WAITKEY return
 
 [main]
     PRINT "Checking version..."
@@ -41,8 +40,8 @@
         END
     END IF
 
-    startPos$     = pos$ + LEN(marker$)
-    stopPos$      = INSTR(startPos$, raw$, "\"")
+    startPos$  = pos$ + LEN(marker$)
+    stopPos$   = INSTR(startPos$, raw$, "\"")
     remoteVer$ = MID(raw$, startPos$, stopPos$ - startPos$)
 
     remoteCount$ = SPLIT(remote$, remoteVer$, ".")
@@ -50,7 +49,7 @@
 
     IF remoteCount$ < 2 OR localCount$ < 2 THEN
         PRINT "Version format unexpected: '" + remoteVer$ + "'"
-        LET key$ = WAITKEY()
+        key$ = WAITKEY()
         END
     END IF
 

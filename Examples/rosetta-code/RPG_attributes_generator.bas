@@ -46,12 +46,12 @@ END DEF
         total$ = attributes$("str") + attributes$("dex") + attributes$("con") + attributes$("int") + attributes$("wis") + attributes$("cha")
 
         highCount$ = 0
-        IF attributes$("str") >= MIN_TWO# THEN highCount$ = highCount$ + 1
-        IF attributes$("dex") >= MIN_TWO# THEN highCount$ = highCount$ + 1
-        IF attributes$("con") >= MIN_TWO# THEN highCount$ = highCount$ + 1
-        IF attributes$("int") >= MIN_TWO# THEN highCount$ = highCount$ + 1
-        IF attributes$("wis") >= MIN_TWO# THEN highCount$ = highCount$ + 1
-        IF attributes$("cha") >= MIN_TWO# THEN highCount$ = highCount$ + 1
+        IF attributes$("str") >= MIN_TWO# THEN highCount$+=1
+        IF attributes$("dex") >= MIN_TWO# THEN highCount$+=1
+        IF attributes$("con") >= MIN_TWO# THEN highCount$+=1
+        IF attributes$("int") >= MIN_TWO# THEN highCount$+=1
+        IF attributes$("wis") >= MIN_TWO# THEN highCount$+=1
+        IF attributes$("cha") >= MIN_TWO# THEN highCount$+=1
 
         IF total$ >= MIN_TOTAL# AND highCount$ >= 2 THEN passed$ = TRUE
     WEND

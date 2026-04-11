@@ -61,8 +61,8 @@
                 WHILE depth$ > 0
                     pc$ = pc$ + 1
                     ch$ = MID(code$, pc$, 1)
-                    IF ch$ = "[" THEN depth$ = depth$ + 1
-                    IF ch$ = "]" THEN depth$ = depth$ - 1
+                    IF ch$ = "[" THEN depth$+= 1
+                    IF ch$ = "]" THEN depth$-= 1
                 WEND
             END IF
         END IF
@@ -73,13 +73,13 @@
                 WHILE depth$ > 0
                     pc$ = pc$ - 1
                     ch$ = MID(code$, pc$, 1)
-                    IF ch$ = "]" THEN depth$ = depth$ + 1
-                    IF ch$ = "[" THEN depth$ = depth$ - 1
+                    IF ch$ = "]" THEN depth$+= 1
+                    IF ch$ = "[" THEN depth$-= 1
                 WEND
             END IF
         END IF
 
-        pc$ = pc$ + 1
+        pc$+= 1
     WEND
 
 ' Output:

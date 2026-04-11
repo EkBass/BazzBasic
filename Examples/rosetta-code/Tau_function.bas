@@ -12,7 +12,7 @@
 		ELSE
 			t$ = 2
 			FOR a$ = 2 TO INT((n$ + 1) / 2)
-				IF MOD(n$, a$) = 0 THEN t$ = t$ + 1
+				IF MOD(n$, a$) = 0 THEN t$+= 1
 			NEXT
 		END IF
 		PRINT t$; " ";

@@ -9,7 +9,13 @@
 
 [inits]
     DIM a$, b$, result$, seen$
-    LET ai$, bi$, ri$, n$, found$
+    LET ai$   = 0
+    LET bi$   = 0
+    LET ri$   = 0
+    LET n$    = 0
+    LET found$ = FALSE
+    LET lenA$ = 0
+    LET lenB$ = 0
 
     ' Set A
     a$(0) = "John"
@@ -24,9 +30,8 @@
     b$(3) = "Bob"
     b$(4) = "Jim"
 
-    LET lenA$ = 4
-    LET lenB$ = 5
-    LET ri$   = 0
+    lenA$ = ROWCOUNT(a$())
+    lenB$ = ROWCOUNT(b$())
 
 [main]
     ' Elements in A not found in B
@@ -39,7 +44,7 @@
             IF HASKEY(seen$(a$(ai$))) = 0 THEN
                 result$(ri$) = a$(ai$)
                 seen$(a$(ai$)) = 1
-                ri$ = ri$ + 1
+                ri$ += 1
             END IF
         END IF
     NEXT
@@ -54,7 +59,7 @@
             IF HASKEY(seen$(b$(bi$))) = 0 THEN
                 result$(ri$) = b$(bi$)
                 seen$(b$(bi$)) = 1
-                ri$ = ri$ + 1
+                ri$ += 1
             END IF
         END IF
     NEXT
@@ -63,7 +68,6 @@
     FOR n$ = 0 TO ri$ - 1
         PRINT result$(n$)
     NEXT
-
 END
 
 ' Expected output:

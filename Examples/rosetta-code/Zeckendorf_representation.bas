@@ -29,10 +29,10 @@ END
     b$ = 2
     fib_count$ = 0
     fibs$(fib_count$) = a$
-    fib_count$ = fib_count$ + 1
+    fib_count$+= 1
     WHILE b$ <= MAX#
         fibs$(fib_count$) = b$
-        fib_count$ = fib_count$ + 1
+        fib_count$+= 1
         c$ = a$ + b$
         a$ = b$
         b$ = c$

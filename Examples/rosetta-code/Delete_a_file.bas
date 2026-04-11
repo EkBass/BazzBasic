@@ -7,12 +7,12 @@
 
 [main]
     ' Delete in current directory
-    FileDelete "input.txt"
+    FILEDELETE "input.txt"
     SHELL("rmdir /s /q docs")
 
     ' Delete in filesystem root
     ' Note: requires administrator privileges on Windows
-    FileDelete DRIVE_ROOT# + "input.txt"
+    FILEDELETE DRIVE_ROOT# + "input.txt"
     SHELL("rmdir /s /q " + DRIVE_ROOT# + "docs")
 
     PRINT "Done."

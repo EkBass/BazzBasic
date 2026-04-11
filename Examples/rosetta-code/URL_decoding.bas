@@ -18,10 +18,10 @@ DEF FN UrlDecode$(s$)
 	WHILE i$ <= LEN(s$)
 		IF MID(s$, i$, 1) = "%" THEN
 			result$ = result$ + CHR(FN HexVal$(MID(s$, i$ + 1, 2)))
-			i$ = i$ + 3
+			i$+= 3
 		ELSE
 			result$ = result$ + MID(s$, i$, 1)
-			i$ = i$ + 1
+			i$+= 1
 		END IF
 	WEND
 	RETURN result$

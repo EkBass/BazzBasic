@@ -19,9 +19,9 @@ DEF FN IsBalanced$(s$)
     ' If count ever goes under 0, there has been too many closing brackets that far
     WHILE count$ >= 0 AND i$ <= LEN(s$)
         IF MID(s$, i$, 1) = "[" THEN
-            count$ = count$ + 1
+            count$+= 1
         ELSE
-            count$ = count$ - 1
+            count$-= 1
         END IF
         i$ = i$ + 1
     WEND

@@ -15,10 +15,10 @@
     LET SONG_PATH# = "Examples\\audio\\music-free-458044.mp3"
     LET CLIP_PATH# = "Examples\\audio\\descent-whoosh-long-cinematic-sound-effect-405921.mp3"
 
-[main]
     LET song$ = LOADSOUND(SONG_PATH#)
     LET clip$ = LOADSOUND(CLIP_PATH#)
 
+[main]
     ' --- Play song in background, then stop it early ---
     PRINT "Playing song in the background..."
     SOUNDONCE(song$)

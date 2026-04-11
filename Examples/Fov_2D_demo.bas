@@ -32,10 +32,16 @@
     DIM vis$
 
     GOSUB [sub:readMap]
+	
+	' [main]
+	LET running$
+	
+	' [sub:CastAllRays]
+	LET cx$, cy$
 
 [main]
     CLS
-    LET running$ = TRUE
+    running$ = TRUE
 
     WHILE running$
 
@@ -94,6 +100,7 @@ END
 ' Cast all rays — mark cells visible in vis$()
 ' -----------------------------------------------
 [sub:CastAllRays]
+
     FOR ray$ = 0 TO NUM_RAYS# - 1
         angle$ = (ray$ / NUM_RAYS#) * TAU#
         dx$    = COS(angle$) * STEP_SIZE#
@@ -106,8 +113,8 @@ END
             IF hit$ = 0 THEN
                 rx$ = rx$ + dx$
                 ry$ = ry$ + dy$
-                LET cx$ = INT(rx$)
-                LET cy$ = INT(ry$)
+                cx$ = INT(rx$)
+                cy$ = INT(ry$)
 
                 IF cx$ >= 0 AND cx$ < MAP_W# AND cy$ >= 0 AND cy$ < MAP_H# THEN
                     vis$(cy$, cx$) = 1

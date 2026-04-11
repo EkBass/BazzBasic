@@ -29,12 +29,15 @@
     body$("messages,0,role")    = "user"
     body$("messages,0,content") = "Hello"
 
-[main]
-    LET jsonBody$ = ASJSON(body$)
-    LET raw$      = HTTPPOST("https://api.anthropic.com/v1/messages", jsonBody$, headers$)
-
     DIM result$
-    LET count$ = ASARRAY(result$, raw$)
+    LET jsonBody$ = ""
+    LET raw$      = ""
+    LET count$    = 0
+
+[main]
+    jsonBody$ = ASJSON(body$)
+    raw$      = HTTPPOST("https://api.anthropic.com/v1/messages", jsonBody$, headers$)
+    count$    = ASARRAY(result$, raw$)
 
     PRINT result$("content,0,text")
 END

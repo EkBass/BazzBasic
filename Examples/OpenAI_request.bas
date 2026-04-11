@@ -27,13 +27,19 @@
     body$("messages,0,role")    = "user"
     body$("messages,0,content") = "Hello"
     body$("max_tokens")         = 100
+	
+	LET jsonBody$
+	LET raw$
+	
+	DIM result$
+	LET count$
 
 [main]
-    LET jsonBody$ = ASJSON(body$)
-    LET raw$      = HTTPPOST("https://api.openai.com/v1/chat/completions", jsonBody$, headers$)
+    jsonBody$ = ASJSON(body$)
+    raw$      = HTTPPOST("https://api.openai.com/v1/chat/completions", jsonBody$, headers$)
 
-    DIM result$
-    LET count$ = ASARRAY(result$, raw$)
+    result$
+    count$ = ASARRAY(result$, raw$)
 
     PRINT result$("choices,0,message,content")
 END

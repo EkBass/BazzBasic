@@ -38,7 +38,7 @@
 	FOR d$ = 1 TO DOORS#
 		IF door$(d$) = 1 THEN
 			PRINT "  Door "; d$
-			count$ = count$ + 1
+			count$+= + 1
 		END IF
 	NEXT
 

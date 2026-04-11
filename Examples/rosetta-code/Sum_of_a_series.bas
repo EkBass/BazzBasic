@@ -9,10 +9,10 @@
 
 [main]
 	FOR k$ = 1 TO N#
-		sum$ = sum$ + 1 / POW(k$, 2)
+		sum$+= 1 / POW(k$, 2)
 	NEXT
 	PRINT "s(1000) = "; sum$
-	PRINT "zeta(2) = "; POW(PI, 2) / 6
+	PRINT "zeta(2) = "; POW(PI#, 2) / 6
 END
 
 ' Expected output:

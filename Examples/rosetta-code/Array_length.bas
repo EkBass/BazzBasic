@@ -11,8 +11,14 @@
     cars$(3) = "Kia"
 
 [output]
-    PRINT LEN(cars$())
+	' works with 1-dimension
+    PRINT LEN(cars$()) 	' LEN with array works if only 1-dimension.
+						' If more, ROWCOUNT works only with first dimension while LET returns the size of whole array
+
+	' preferred way
+	PRINT ROWCOUNT(cars$())
 END
 
 ' Output:
+' 4
 ' 4

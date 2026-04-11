@@ -37,7 +37,18 @@
 
     DIM seq$
     DIM words$
+	
+	' [main:startNewGame]
     LET round$ = 0
+	
+	' [sub:newRound]
+	LET newColor$, ci$, fillColor$, trimmed$
+	LET wordCount$, correct$, checkIdx$, score$
+	LET nameText$, nameCol$
+	LET given$, expected$
+	
+	' [waitEnd]
+	LET k$
 
 
 [intro]
@@ -72,7 +83,7 @@
         PRINT "Press ENTER to start..."
     SCREENLOCK OFF
 
-    LET k$ = WAITKEY(KEY_ENTER#)
+    k$ = WAITKEY(KEY_ENTER#)
 
 
 [main:startNewGame]
@@ -80,13 +91,13 @@
 
 [sub:newRound]
     ' Add a random color to the sequence
-    LET newColor$ = RND(NUM_COLORS#)
+    newColor$ = RND(NUM_COLORS#)
     seq$(round$) = newColor$
     round$ = round$ + 1
 
     ' Show the new color as a filled circle
-    LET ci$        = newColor$
-    LET fillColor$ = RGB(cR$(ci$), cG$(ci$), cB$(ci$))
+    ci$        = newColor$
+    fillColor$ = RGB(cR$(ci$), cG$(ci$), cB$(ci$))
 
     SCREENLOCK ON
         LINE (0,0)-(639,479), 0, BF
@@ -95,8 +106,8 @@
         CIRCLE (CX#, CY#), CR# + 2, RGB(255,255,255)
         CIRCLE (CX#, CY#), CR# + 3, RGB(255,255,255)
 
-        LET nameText$ = cName$(ci$)
-        LET nameCol$  = INT(40 - LEN(nameText$) / 2)
+        nameText$ = cName$(ci$)
+        nameCol$  = INT(40 - LEN(nameText$) / 2)
         LOCATE 42, nameCol$
         COLOR WHITE#, BLACK#
         PRINT nameText$
@@ -125,21 +136,21 @@
     COLOR CYAN#, BLACK#
     LINE INPUT "> ", answer$
 
-
+	
     ' --- Check answer ---
-    LET trimmed$  = TRIM(answer$)
-    LET wordCount$ = SPLIT(words$, trimmed$, " ")
+    trimmed$  = TRIM(answer$)
+    wordCount$ = SPLIT(words$, trimmed$, " ")
 
-    LET correct$  = TRUE
-    LET checkIdx$ = 0
+    correct$  = TRUE
+    checkIdx$ = 0
 
     FOR i$ = 0 TO wordCount$ - 1
         IF LEN(words$(i$)) > 0 THEN
             IF checkIdx$ >= round$ THEN
                 correct$ = FALSE
             ELSE
-                LET given$    = LCASE(words$(i$))
-                LET expected$ = LCASE(cName$(seq$(checkIdx$)))
+                given$    = LCASE(words$(i$))
+                expected$ = LCASE(cName$(seq$(checkIdx$)))
                 IF given$ <> expected$ THEN correct$ = FALSE
             END IF
             checkIdx$ = checkIdx$ + 1
@@ -163,9 +174,8 @@
         GOTO [sub:newRound]
     END IF
 
-
     ' Wrong — game over screen
-    LET score$ = round$ - 1
+    score$ = round$ - 1
 
     SCREENLOCK ON
         LINE (0,0)-(639,479), 0, BF
@@ -203,7 +213,7 @@
     SCREENLOCK OFF
 
 [waitEnd]
-    LET k$ = INKEY
+    k$ = INKEY
     IF k$ = KEY_ENTER# THEN
         DELARRAY seq$   : DIM seq$
         DELARRAY words$ : DIM words$

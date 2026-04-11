@@ -24,7 +24,7 @@ DEF FN IsPrimeIterative$(n$)
     LET i$ = 3
     WHILE i$ * i$ <= n$
         IF MOD(n$, i$) = 0 THEN RETURN 0
-        i$ = i$ + 2
+        i$+= 2
     WEND
     RETURN 1
 END DEF

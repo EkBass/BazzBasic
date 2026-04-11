@@ -1,14 +1,19 @@
 ' TRAP - BazzBasic Edition
 ' Original by Steve Ullman (1972)
-' BazzBasic version 
+' BazzBasic version
 
 [inits]
     LET max_guesses# = 6
-    LET range# = 100
-	LET secret$
+    LET range#       = 100
 
+    LET secret$ = 0
+    LET temp$   = ""
+    LET a$      = 0
+    LET b$      = 0
+    LET z$      = ""
+    LET r$      = ""
 
-[start]    
+[start]
     COLOR 14, 0 : CLS
     PRINT " "; REPEAT("*", 32)
     PRINT " *"; REPEAT(" ", 30); "*"
@@ -16,11 +21,11 @@
     PRINT " * CREATIVE COMPUTING           *"
     PRINT " *"; REPEAT(" ", 30); "*"
     PRINT " "; REPEAT("*", 32)
-    
+
     COLOR 15, 0
     PRINT "\n INSTRUCTIONS (Y/N)? ";
     INPUT "", z$
-    
+
     IF UCASE(LEFT(z$, 1)) = "Y" THEN
         COLOR 7, 0
         PRINT "\n I AM THINKING OF A NUMBER BETWEEN 1 AND"; range#
@@ -37,23 +42,20 @@
 
 [game_init]
     secret$ = RND(range#) + 1
-    
+
     FOR q$ = 1 TO max_guesses#
         COLOR 15, 0
         PRINT "\n GUESS #"; q$;
         INPUT " - ENTER TWO NUMBERS (e.g. 10, 20): ", a$, b$
-        
-        ' Winning condition: single guess match
+
         IF a$ = b$ AND secret$ = a$ THEN GOTO [win]
-        
-        ' Ensure a$ is the smaller number
+
         IF VAL(a$) > VAL(b$) THEN
-            LET temp$ = a$
-            a$ = b$
-            b$ = temp$
+            temp$ = a$
+            a$    = b$
+            b$    = temp$
         END IF
-        
-        ' Check trap logic
+
         IF VAL(a$) <= VAL(secret$) AND VAL(secret$) <= VAL(b$) THEN
             COLOR 10, 0
             PRINT " YOU HAVE TRAPPED MY NUMBER."
@@ -79,8 +81,8 @@
     COLOR 15, 0
     PRINT "\n TRY AGAIN (Y/N)? ";
     INPUT "", r$
-    IF UCASE$(LEFT$(r$, 1)) = "Y" THEN GOTO [game_init]
+    IF UCASE(LEFT(r$, 1)) = "Y" THEN GOTO [game_init]
 
 [exit]
     PRINT "\n BYE..."
-    END
+END

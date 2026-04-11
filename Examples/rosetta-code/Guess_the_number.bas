@@ -13,7 +13,7 @@ REM ===================================================
 
 	WHILE TRUE
 		INPUT "Your guess: ", guess$
-		guesses$ = guesses$ + 1
+		guesses$+= 1
 		
 		IF guess$ = secret# THEN
 			PRINT "Correct! You got it in "; guesses$; " tries!"

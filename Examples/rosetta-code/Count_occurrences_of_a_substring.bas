@@ -9,7 +9,7 @@ DEF FN CountOccurrences$(haystack$, needle$)
     LET nlen$  = LEN(needle$)
     LET found$ = INSTR(pos$, haystack$, needle$)
     WHILE found$ > 0
-        count$ = count$ + 1
+        count$+= 1
         pos$   = found$ + nlen$
         found$ = INSTR(pos$, haystack$, needle$)
     WEND

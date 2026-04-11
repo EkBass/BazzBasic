@@ -1,5 +1,5 @@
 ' ============================================================
-' 3D Starfield — BazzBasic v1.1
+' 3D Starfield 
 ' Original QBasic version by Antti Laaksonen (2002)
 ' https://www.ohjelmointiputka.net/koodivinkit/23485-qb-avaruuslento
 '

@@ -26,9 +26,9 @@ LET SIMULATIONS# = 10000
         pick$    = RND(3) + 1   ' both players start with same pick
 
         IF pick$ = winning$ THEN
-            stayWins$ = stayWins$ + 1
+            stayWins$+= 1
         ELSE
-            switchWins$ = switchWins$ + 1
+            switchWins$-= 1
         END IF
     NEXT
 
