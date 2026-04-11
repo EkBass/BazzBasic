@@ -71,6 +71,21 @@ a$ = 1 ' inits value 1 to variable
 LET b# ' works, but is a bit stupid since now b# is constant with value of nothing
 ```
 
+## Concatenated values
+```vb
+LET x$ = 10
+x$ += 5     ' 15
+x$ -= 3     ' 12
+x$ *= 2     ' 24
+x$ /= 4     ' 6
+PRINT x$    ' 6
+LET s$ = "Hello"
+s$ += " World"
+PRINT s$    ' Hello World
+```
+
+**Important:** Not allowed with constants "#"
+
 ## Exceptions
 
 ### FOR and INPUT

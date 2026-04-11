@@ -62,9 +62,9 @@
     PRINT "Test 5: FastRad Conversion"
     PRINT REPEAT("-", 44)
     PRINT "  FastRad(0)   = "; FastRad(0);   "       (expected: 0)"
-    PRINT "  FastRad(90)  = "; FastRad(90);  "  (expected: ~1.5708 = HPI)"
-    PRINT "  FastRad(180) = "; FastRad(180); "  (expected: ~3.1416 = PI)"
-    PRINT "  FastRad(360) = "; FastRad(360); "  (expected: ~6.2832 = TAU)"
+    PRINT "  FastRad(90)  = "; FastRad(90);  "  (expected: ~1.5708 = HPI#)"
+    PRINT "  FastRad(180) = "; FastRad(180); "  (expected: ~3.1416 = PI#)"
+    PRINT "  FastRad(360) = "; FastRad(360); "  (expected: ~6.2832 = TAU#)"
     PRINT ""
 
     ' --- Test 6: Accuracy vs regular SIN/COS ---
@@ -151,7 +151,7 @@ END
 '   FastRad(0)   = 0       (expected: 0)
 '   FastRad(90)  = 1.5707963267948966  (expected: ~1.5708 = HPI)
 '   FastRad(180) = 3.141592653589793  (expected: ~3.1416 = PI)
-'   FastRad(360) = 0  (expected: ~6.2832 = TAU)
+'   FastRad(360) = 0  (expected: ~6.2832 = TAU#)
 
 ' Test 6: Accuracy vs SIN / COS
 ' --------------------------------------------

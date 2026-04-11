@@ -161,6 +161,9 @@ public partial class Interpreter
         int savedFunctionStartPos = _functionStartPos;
         int savedFunctionEndPos = _functionEndPos;
         Value savedReturnValue = _returnValue;
+        int savedForStackCount = _forStack.Count;
+        int savedWhileStackCount = _whileStack.Count;
+        int savedIfStackCount = _ifStack.Count;
         
         _variables.PushScope();
         
@@ -184,6 +187,11 @@ public partial class Interpreter
         
         Value result = _returnValue;
         
+        // Clean up any stacks left dirty by early RETURN inside loops/ifs
+        while (_forStack.Count > savedForStackCount) _forStack.Pop();
+        while (_whileStack.Count > savedWhileStackCount) _whileStack.Pop();
+        while (_ifStack.Count > savedIfStackCount) _ifStack.Pop();
+
         _variables.PopScope();
         _pos = savedPos;
         _running = !_hasError && savedRunning;

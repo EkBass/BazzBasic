@@ -27,9 +27,15 @@ PRINT CHR(10)      ' Output: (newline)
 ### INSTR(s$, search$) or INSTR(start, s$, search$)
 Finds position of substring (1-based, 0 if not found).
 ```vb
-PRINT INSTR("Hello World", "World")    ' Output: 7
-PRINT INSTR("Hello World", "xyz")      ' Output: 0
-PRINT INSTR(8, "Hello World", "o")     ' Output: 8
+' In default mode, INSTR is case-sensitive
+ PRINT INSTR("Hello World", "World") ' returns 7
+ PRINT INSTR("Hello World", "HELLO") ' returns 0
+ 
+' Case-insensitive mode.
+PRINT INSTR("Hello World", "world", 0) ' returns 7
+
+' Case-sensitive mode, same as default mode
+PRINT INSTR("Hello World", "world", 1) ' returns 0
 ```
 
 ### INVERT(s$)

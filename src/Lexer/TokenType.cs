@@ -83,6 +83,8 @@ public enum TokenType
     TOK_VSYNC               = 119,
     TOK_FULLSCREEN          = 120,
     TOK_LOADSHEET           = 121,
+    TOK_LOADFONT            = 122,
+    TOK_DRAWSTRING          = 123,
 
     // ========================================================================
     // Network Keywords 130 - 149
@@ -195,6 +197,9 @@ public enum TokenType
     TOK_HASKEY              = 362,
     TOK_JOIN                = 363,
     TOK_CURPOS              = 364,
+    TOK_ROWCOUNT            = 365,
+    TOK_ARGS                = 366,
+    TOK_ARGCOUNT            = 367,
 
     // Time functions
     TOK_TICKS               = 370,
@@ -231,6 +236,10 @@ public enum TokenType
     TOK_PLUS                = 463,              // +
     TOK_RPAREN              = 464,              // )
     TOK_SEMICOLON           = 465,              // ;
+    TOK_PLUS_ASSIGN         = 466,              // +=
+    TOK_MINUS_ASSIGN        = 467,              // -=
+    TOK_MULTIPLY_ASSIGN     = 468,              // *=
+    TOK_DIVIDE_ASSIGN       = 469,              // /=
 
     // ========================================================================
     // Literals 501 - 550

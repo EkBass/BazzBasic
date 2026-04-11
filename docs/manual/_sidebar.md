@@ -7,6 +7,7 @@
 - [IDE Usage](ide-usage.md)
 - [Creating EXE](packaging.md)
 - [Creating Libraries](libraries.md)
+- [More CLI features](cli_features.md)
 - [AI assisted help](ai-assist.md)
 - [Rosetta Code](rosetta-code.md)
 - [Beginner's Guide](beginners-guide.md)

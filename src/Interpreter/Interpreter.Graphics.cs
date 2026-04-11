@@ -711,4 +711,64 @@ public partial class Interpreter
             Error(ex.Message);
         }
     }
+
+    // ========================================================================
+    // LOADFONT — load TTF font and set as current
+    // LOADFONT "file.ttf", size   → load custom font
+    // LOADFONT                    → reset to default Arial
+    // ========================================================================
+
+    private void ExecuteLoadFont()
+    {
+        _pos++;
+
+        if (IsEndOfStatement())
+        {
+            try { Graphics.FontManager.ResetToDefault(); }
+            catch (Exception ex) { Error($"LOADFONT: {ex.Message}"); }
+            return;
+        }
+
+        string path = EvaluateExpression().AsString();
+        int size = 16;
+        if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_COMMA)
+        {
+            _pos++;
+            size = (int)EvaluateExpression().AsNumber();
+        }
+
+        if (!Path.IsPathRooted(path))
+            path = Path.Combine(_fileManager.RootPath, path);
+
+        try { Graphics.FontManager.LoadFont(path, size); }
+        catch (Exception ex) { Error($"LOADFONT: {ex.Message}"); }
+    }
+
+    // ========================================================================
+    // DRAWSTRING — draw text using current font
+    // DRAWSTRING text, x, y, color
+    // ========================================================================
+
+    private void ExecuteDrawString()
+    {
+        _pos++;
+
+        if (!Graphics.Graphics.IsInitialized)
+            Error("DRAWSTRING: graphics mode not initialized. Use SCREEN first.");
+
+        string text = EvaluateExpression().AsString();
+        Require(TokenType.TOK_COMMA);
+        int x = (int)EvaluateExpression().AsNumber();
+        Require(TokenType.TOK_COMMA);
+        int y = (int)EvaluateExpression().AsNumber();
+        Require(TokenType.TOK_COMMA);
+        int color = (int)EvaluateExpression().AsNumber();
+
+        try
+        {
+            Graphics.Graphics.DrawString(text, x, y, color);
+            Graphics.Graphics.Present();
+        }
+        catch (Exception ex) { Error($"DRAWSTRING: {ex.Message}"); }
+    }
 }

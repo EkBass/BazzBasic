@@ -107,3 +107,30 @@ PRINT "Row 2, col 5 char is: " + CHR(GETCONSOLE(2, 5, 0))  ' Output: E
 PRINT "Row 1, col 2 foreground color: " + GETCONSOLE(1, 2, 1)  ' Output: 11
 PRINT "Row 1, col 3 background color: " + GETCONSOLE(1, 3, 2)  ' Output: 1
 ```
+
+## Command Line Arguments
+
+### ARGCOUNT
+Return the amount of arguments passed to program.
+
+```vb
+' BazzBasic.exe test.bas arg1 arg2
+PRINT ARGCOUNT ' 2
+```
+
+### ARGS()
+Returns certain argument, if passed.
+
+```vb
+' BazzBasic.exe test.bas arg1 arg2
+PRINT ARGS(0)
+PRINT ARGS(1)
+' Output:
+' arg1
+' arg2
+```
+
+#### Important
+
+- Always check with ARGCOUNT first, is there arguments passed
+- ARGCOUNT gives the amount of arguments but ARGS() places first argument in ARGS(0), not in ARGS(1).

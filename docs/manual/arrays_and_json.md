@@ -150,6 +150,20 @@ PRINT LEN(items$())      ' Output: 3
 
 ---
 
+### ROWCOUNT
+Returns the number of first dimension elements in an array:  
+**Note the empty parentheses `()` after the array name.**
+```vb
+DIM items$
+items$(0) = "apple"
+items$(1) = "banana"
+items$(2) = "cherry"
+
+PRINT LEN(items$())      ' Output: 3
+```
+
+---
+
 ## Practical Examples
 
 ### Pass values to user-defined functions

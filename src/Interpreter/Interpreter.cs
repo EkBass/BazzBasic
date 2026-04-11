@@ -80,10 +80,13 @@ public partial class Interpreter
     // File
     private readonly FileManager _fileManager;
 
+    // Command-line arguments passed to the BASIC program
+    private string[] _args = [];
+
     // Time
     private readonly Stopwatch _programTimer = Stopwatch.StartNew();
 
-    public Interpreter(List<Token> tokens, string basePath = "")
+    public Interpreter(List<Token> tokens, string basePath = "", string[]? args = null)
     {
         _tokens = tokens;
         _variables = new Variables();
@@ -98,6 +101,7 @@ public partial class Interpreter
             basePath = Directory.GetCurrentDirectory();
         }
         _fileManager = new FileManager(basePath);
+        _args = args ?? [];
         
         // System constants
         _variables.SetConstant("PRG_ROOT#", Value.FromString(basePath));
@@ -213,6 +217,12 @@ public partial class Interpreter
 
             // Mouse
 
+            // Math constants with # suffix (PI# etc.) — backward-compatible aliases
+            ["PI#"]    = Math.PI,
+            ["HPI#"]   = Math.PI / 2.0,
+            ["QPI#"]   = Math.PI / 4.0,
+            ["TAU#"]   = Math.PI * 2.0,
+            ["EULER#"] = Math.E,
         };
     }
 
@@ -353,6 +363,12 @@ public partial class Interpreter
             case TokenType.TOK_LOADSHEET:
                 ExecuteLoadsheet();
                 break;
+            case TokenType.TOK_LOADFONT:
+                ExecuteLoadFont();
+                break;
+            case TokenType.TOK_DRAWSTRING:
+                ExecuteDrawString();
+                break;
             case TokenType.TOK_PSET:
                 ExecutePset();
                 break;
@@ -492,7 +508,33 @@ public partial class Interpreter
                 ExecuteArrayAssignment(varName);
                 return;
             }
-            
+
+            // Compound assignment: var$ += expr  →  var$ = var$ + expr
+            if (_pos < _tokens.Count)
+            {
+                TokenType t = _tokens[_pos].Type;
+                if (t == TokenType.TOK_PLUS_ASSIGN || t == TokenType.TOK_MINUS_ASSIGN ||
+                    t == TokenType.TOK_MULTIPLY_ASSIGN || t == TokenType.TOK_DIVIDE_ASSIGN)
+                {
+                    _pos++; // skip operator
+                    Value right = EvaluateExpression();
+                    Value left = _variables.GetVariable(varName);
+                    Value result = t switch
+                    {
+                        TokenType.TOK_PLUS_ASSIGN =>
+                            (left.Type == BazzValueType.String || right.Type == BazzValueType.String)
+                                ? Value.FromString(left.AsString() + right.AsString())
+                                : Value.FromNumber(left.AsNumber() + right.AsNumber()),
+                        TokenType.TOK_MINUS_ASSIGN    => Value.FromNumber(left.AsNumber() - right.AsNumber()),
+                        TokenType.TOK_MULTIPLY_ASSIGN => Value.FromNumber(left.AsNumber() * right.AsNumber()),
+                        TokenType.TOK_DIVIDE_ASSIGN   => Value.FromNumber(left.AsNumber() / right.AsNumber()),
+                        _ => right
+                    };
+                    _variables.SetVariable(varName, result);
+                    return;
+                }
+            }
+
             // Check if there's = after this variable
             if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_EQUALS)
             {
@@ -723,5 +765,26 @@ public partial class Interpreter
         Console.WriteLine($"Error at line {line}: {message}");
         _running = false;
         _hasError = true;
+    }
+
+    // ========================================================================
+    // ARGS / ARGCOUNT — command-line arguments
+    // ========================================================================
+
+    private Value EvaluateArgsFunc()
+    {
+        _pos++; // consume TOK_ARGS
+        Require(TokenType.TOK_LPAREN);
+        int index = (int)EvaluateExpression().AsNumber();
+        Require(TokenType.TOK_RPAREN);
+        if (index < 0 || index >= _args.Length)
+            return Value.Empty;
+        return Value.FromString(_args[index]);
+    }
+
+    private Value EvaluateArgCountFunc()
+    {
+        _pos++; // consume TOK_ARGCOUNT
+        return Value.FromNumber(_args.Length);
     }
 }

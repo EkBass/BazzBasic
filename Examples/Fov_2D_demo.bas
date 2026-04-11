@@ -95,7 +95,7 @@ END
 ' -----------------------------------------------
 [sub:CastAllRays]
     FOR ray$ = 0 TO NUM_RAYS# - 1
-        angle$ = (ray$ / NUM_RAYS#) * TAU
+        angle$ = (ray$ / NUM_RAYS#) * TAU#
         dx$    = COS(angle$) * STEP_SIZE#
         dy$    = SIN(angle$) * STEP_SIZE#
         rx$    = px$ + 0.5

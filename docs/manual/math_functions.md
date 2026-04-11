@@ -59,9 +59,9 @@ LET brightness$ = CLAMP(value$, 20, 255)
 ### DEG(radians)
 Converts radians to degrees.
 ```vb
-PRINT DEG(PI)       ' Output: 180
-PRINT DEG(HPI)      ' Output: 90
-PRINT DEG(2 * PI)   ' Output: 360
+PRINT DEG(PI#)       ' Output: 180
+PRINT DEG(HPI#)      ' Output: 90
+PRINT DEG(2 * PI#)   ' Output: 360
 
 ' Convert result back to degrees
 LET angle_rad$ = 1.5707963267948966
@@ -94,10 +94,10 @@ IF dist$ < 50 THEN
 END IF
 ```
 
-### EULER
+### EULER#
 Returns the Euler's constant, *2.718281828459045*
 ```vb
-PRINT EULER ' Output: 2.718281828459045
+PRINT EULER# ' Output: 2.718281828459045
 ```
 
 ### EXP(n)
@@ -115,21 +115,21 @@ PRINT FLOOR(1.95)       ' Output: 1
 PRINT FLOOR(300)       ' Output: 300
 ```
 
-### HPI
+### HPI#
 Returns half of π (pi/2) ≈ 1.5707963267948966. Equivalent to 90 degrees in radians.
 
 Useful in graphics and game programming where 90-degree angles are common.
 ```vb
-PRINT HPI                   ' Output: 1.5707963267948966
-PRINT DEG(HPI)              ' Output: 90
+PRINT HPI#                   ' Output: 1.5707963267948966
+PRINT DEG(HPI#)              ' Output: 90
 
 ' Common angles in radians using built-in constants
 LET angle_0$ = 0            ' 0 degrees
-LET angle_45$ = QPI         ' 45 degrees
-LET angle_90$ = HPI         ' 90 degrees
-LET angle_180$ = PI         ' 180 degrees
-LET angle_270$ = PI + HPI   ' 270 degrees
-LET angle_360$ = TAU        ' 360 degrees
+LET angle_45$ = QPI#         ' 45 degrees
+LET angle_90$ = HPI#         ' 90 degrees
+LET angle_180$ = PI#         ' 180 degrees
+LET angle_270$ = PI# + HPI#   ' 270 degrees
+LET angle_360$ = TAU#        ' 360 degrees
 ```
 
 ### INT(n)
@@ -207,12 +207,12 @@ PRINT MOD(10, 3)    ' Output: 1
 PRINT MOD(100, 20)	' Output: 0
 ```
 
-### PI
+### PI#
 Returns the mathematical constant π (pi) ≈ 3.14159265358979.
 ```vb
-PRINT PI                    ' Output: 3.14159265358979
-LET circumference$ = 2 * PI * radius$
-LET area$ = PI * radius$ * radius$
+PRINT PI#                    ' Output: 3.14159265358979
+LET circumference$ = 2 * PI# * radius$
+LET area$ = PI# * radius$ * radius$
 ```
 
 ### POW(n, n)
@@ -222,22 +222,22 @@ PRINT POW(3, 3)    	' Output: 27
 PRINT POW(2, 2)		' Output: 4
 ```
 
-### QPI
+### QPI#
 Returns a quarter of π (pi/4) ≈ 0.7853981633974475. Equivalent to 45 degrees in radians.
 ```vb
-PRINT QPI                   ' Output: 0.7853981633974475
-PRINT DEG(QPI)              ' Output: 45
+PRINT QPI#                   ' Output: 0.7853981633974475
+PRINT DEG(QPI#)              ' Output: 45
 
-LET dx$ = COS(QPI)          ' ~0.707
-LET dy$ = SIN(QPI)          ' ~0.707
+LET dx$ = COS(QPI#)          ' ~0.707
+LET dy$ = SIN(QPI#)          ' ~0.707
 ```
 
 ### RAD(degrees)
 Converts degrees to radians.
 ```vb
-PRINT RAD(90)       ' Output: 1.5707963267948966 (HPI)
-PRINT RAD(180)      ' Output: 3.141592653589793 (PI)
-PRINT RAD(360)      ' Output: 6.283185307179586 (2*PI)
+PRINT RAD(90)       ' Output: 1.5707963267948966 (HPI#)
+PRINT RAD(180)      ' Output: 3.141592653589793 (PI#)
+PRINT RAD(360)      ' Output: 6.283185307179586 (TAU#)
 
 PRINT SIN(RAD(90))  ' Output: 1
 PRINT COS(RAD(180)) ' Output: -1
@@ -293,21 +293,21 @@ PRINT TAN(5)      ' Output: -3.380515006246586
 PRINT TAN(9)      ' Output: -0.45231565944180985
 ```
 
-### TAU
+### TAU#
 Returns τ (tau) = 2π ≈ 6.28318530717958. Equivalent to 360 degrees in radians (a full circle).
 ```vb
-PRINT TAU                   ' Output: 6.28318530717958
+PRINT TAU#                   ' Output: 6.28318530717958
 
 ' Full circle loop
 FOR angle$ = 0 TO 359
-    LET rad$ = (angle$ / 360) * TAU
+    LET rad$ = (angle$ / 360) * TAU#
     LET x$ = COS(rad$) * radius$
     LET y$ = SIN(rad$) * radius$
 NEXT
 
 ' All BazzBasic circle constants:
-' QPI  = π/4  = 45°
-' HPI  = π/2  = 90°
-' PI   = π    = 180°
-' TAU  = 2π   = 360°
+' QPI#  = π/4  = 45°
+' HPI#  = π/2  = 90°
+' PI#   = π    = 180°
+' TAU#  = 2π   = 360°
 ```

@@ -228,6 +228,22 @@ public class Variables
         return _arrays.TryGetValue(key, out var array) ? array : null;
     }
 
+    // Count unique first-dimension values (for ROWCOUNT)
+    // e.g. keys "0,name", "0,gravity", "1,name" → 2 unique rows
+    public int GetArrayRowCount(string arrayName)
+    {
+        var elements = GetAllArrayElements(arrayName);
+        if (elements == null) return 0;
+
+        var uniqueFirst = new HashSet<string>();
+        foreach (var k in elements.Keys)
+        {
+            int comma = k.IndexOf(',');
+            uniqueFirst.Add(comma >= 0 ? k[..comma] : k);
+        }
+        return uniqueFirst.Count;
+    }
+
     // ========================================================================
     // Scope management (for user functions)
     // ========================================================================

@@ -78,6 +78,8 @@ public class Lexer(string source)
         ["VSYNC"]       = TokenType.TOK_VSYNC,
         ["FULLSCREEN"]  = TokenType.TOK_FULLSCREEN,
         ["LOADSHEET"]   = TokenType.TOK_LOADSHEET,
+        ["LOADFONT"]    = TokenType.TOK_LOADFONT,
+        ["DRAWSTRING"]  = TokenType.TOK_DRAWSTRING,
         ["HTTPGET"]     = TokenType.TOK_HTTPGET,
         ["HTTPPOST"]    = TokenType.TOK_HTTPPOST,
         ["ASJSON"]      = TokenType.TOK_ASJSON,
@@ -177,6 +179,9 @@ public class Lexer(string source)
         ["DELKEY"]      = TokenType.TOK_DELKEY,
         ["DELARRAY"]    = TokenType.TOK_DELARRAY,
         ["JOIN"]        = TokenType.TOK_JOIN,
+        ["ROWCOUNT"]    = TokenType.TOK_ROWCOUNT,
+        ["ARGS"]        = TokenType.TOK_ARGS,
+        ["ARGCOUNT"]    = TokenType.TOK_ARGCOUNT,
 
         // Time functions
         ["TICKS"]       = TokenType.TOK_TICKS,
@@ -287,6 +292,10 @@ public class Lexer(string source)
                 "<>" => TokenType.TOK_NOT_EQUALS,
                 "!=" => TokenType.TOK_NOT_EQUALS,
                 "==" => TokenType.TOK_EQUALS,
+                "+=" => TokenType.TOK_PLUS_ASSIGN,
+                "-=" => TokenType.TOK_MINUS_ASSIGN,
+                "*=" => TokenType.TOK_MULTIPLY_ASSIGN,
+                "/=" => TokenType.TOK_DIVIDE_ASSIGN,
                 _ => null
             };
             

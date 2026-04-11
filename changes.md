@@ -3,6 +3,101 @@ These changes are about the current source code. These are effected once new bin
 
 ## April 2026
 
+## Version 1.3
+
+**Added: `DRAWSTRING` and `LOADFONT` — text rendering in graphics mode**
+
+Renders text directly to the SDL2 graphics surface. Requires `SDL2_ttf.dll` in the same directory as the interpreter. Prefer over `PRINT` in graphics mode — `PRINT` bypasses the SDL2 rendering pipeline and causes flickering.
+
+```vb
+' Default font (Arial, size 20)
+DRAWSTRING "Hello!", 100, 200, RGB(255, 255, 255)
+
+' Load alternative font — becomes the new active font
+LOADFONT "myfont.ttf", 24
+DRAWSTRING "Hello!", 100, 200, RGB(255, 255, 255)
+
+' Reset to default (Arial, size 20)
+LOADFONT
+```
+
+`DRAWSTRING` positions text by its top-left corner. Copy `.ttf` files next to your `.bas` for portability — Windows system fonts can be referenced by full path but are not recommended for distribution.
+
+**Added: `ROWCOUNT` — count array rows**
+
+Returns the number of distinct first-dimension keys in an array.
+
+```vb
+PRINT ROWCOUNT(myArray$)
+```
+
+**Added: `ARGCOUNT` and `ARGS()` — command-line arguments**
+
+Access command-line arguments passed to the program.
+
+```vb
+PRINT ARGCOUNT          ' Number of arguments
+PRINT ARGS(0)           ' First argument
+```
+
+**Added: compound assignment operators**
+
+Shorthand for common arithmetic assignments. Works on variables (`$`), not constants (`#`).
+
+```vb
+x$ += 5    ' x$ = x$ + 5
+x$ -= 2    ' x$ = x$ - 2
+x$ *= 3    ' x$ = x$ * 3
+x$ /= 4    ' x$ = x$ / 4
+str$ += " world"   ' String concatenation
+```
+
+**Changed: `INSTR()` — case-sensitivity parameter**
+
+`INSTR` now accepts an optional case-sensitivity flag.
+
+```vb
+PRINT INSTR("Hello World", "world")       ' 0 (case-sensitive, not found)
+PRINT INSTR("Hello World", "world", 0)    ' 7 (case-insensitive)
+```
+
+**Changed: math constants now use `#` suffix**
+
+`PI`, `HPI`, `QPI`, and `TAU` are now `PI#`, `HPI#`, `QPI#`, `TAU#` for consistency with the rest of the language.  
+⚠️ Breaking change — update any code using the old names.
+
+**Changed: IDE and CLI improvements**
+
+| Menu | Shortcut | Action | CLI option |
+|------|----------|--------|------------|
+| File | Ctrl+N | New file | BazzBasic.exe |
+| File | Ctrl+O | Open file | none |
+| File | Ctrl+S | Save file | none |
+| File | Ctrl+Shift+S | Save As | none |
+| File | Ctrl+W | Close tab | none |
+| File | Alt+F4 | Exit | none |
+| Edit | Ctrl+F | Find | none |
+| Edit | Ctrl+H | Replace | none |
+| Run | F5 | Run Program | BazzBasic.exe file.bas |
+| Run | — | Compile as Exe | BazzBasic.exe -exe file.bas |
+| Run | — | Compile as Library (.bb) | BazzBasic.exe -lib file.bas |
+| Help | — | About | BazzBasic.exe -v |
+| Help | — | Beginner's Guide | BazzBasic.exe -guide |
+| Help | — | Check For Updates | BazzBasic.exe -checkupdates |
+
+New files now open with a starter template:
+
+```vb
+' BazzBasic version 1.3
+' https://ekbass.github.io/BazzBasic/
+```
+
+**Bugfix: early RETURN inside FOR loop left function scope dirty**
+
+If a function returned early (e.g. via `RETURN` inside a `FOR` loop), local variables were not cleared. This caused stale values on subsequent calls to the same function. Now fixed.
+
+---
+
 ## 3rd April 2026
 
 Released as version 1.2 with some bug fixes and new features.

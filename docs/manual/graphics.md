@@ -62,7 +62,10 @@ PRINT "Centered"
 LOCATE 1, 1         ' Top-left corner
 PRINT "Header"
 ```
-**Note:** In graphics mode, character positions are based on 8×8 pixel font cells.
+**Note:**
+- In graphics mode, character positions are based on 8×8 pixel font cells.
+- While PRINT works, it is recommended to use DRAWSTRING since PRINT can make graphic screen to blink if FPS rate is high.
+
 
 ### COLOR
 Set foreground (text) and background colors.
@@ -302,6 +305,61 @@ Returns a RGP color value from certain point of the screen.
 LET c$ = POINT(100, 100)
 ```
 
+### DRAWSTRING & LOADFONT
+
+Render text directly to the SDL2 graphics surface. Requires `SDL2_ttf.dll` in the same directory as the interpreter.
+
+```basic
+' Default font (Arial, size 20)
+DRAWSTRING "Hello!", 100, 200, RGB(255, 255, 255)
+
+' Load alternative font — becomes the new active font
+LOADFONT "myfont.ttf", 24
+DRAWSTRING "Hello!", 100, 200, RGB(255, 255, 255)
+
+' Reset to default (Arial, size 20)
+LOADFONT
+```
+
+`DRAWSTRING` positions text by its **top-left corner**. Prefer it over `PRINT` in graphics mode — `PRINT` bypasses the SDL2 rendering pipeline and causes flickering at higher frame rates.
+
+#### Fonts
+
+SDL2_ttf loads any standard `.ttf` or `.otf` font file. BazzBasic defaults to **Arial** (size 20). To use a different font, call `LOADFONT` with a font filename and point size. The loaded font stays active until you call `LOADFONT` again or reset it.
+
+**Bundling fonts with your program (recommended)**
+
+Copy the `.ttf` file into the same folder as your `.bas` file and reference it by filename:
+
+```basic
+LOADFONT "PressStart2P.ttf", 16
+DRAWSTRING "GAME OVER", 200, 200, RGB(255, 0, 0)
+```
+
+This makes your program portable and not dependent on the fonts installed on the user's system. Free fonts are widely available — [Google Fonts](https://fonts.google.com) offers hundreds under the OFL open-source licence.
+
+**Using Windows system fonts**
+
+You can also reference fonts already installed on Windows by full path:
+
+```basic
+LOADFONT "C:\\Windows\\Fonts\\consola.ttf", 14   ' Consolas (monospace)
+LOADFONT "C:\\Windows\\Fonts\\times.ttf", 18     ' Times New Roman
+```
+
+Note: this works only on Windows and only if the font is installed — not recommended for distributed programs.
+
+#### Font sizes
+
+The size parameter is a point size — any positive integer is valid:
+
+| Use | Size |
+|-----|------|
+| Small UI / HUD text | 12–14 |
+| Normal text | 16–20 |
+| Subheadings | 24–32 |
+| Titles / headings | 48–64 |
+| Splash screens | 72–96 |
 
 ## Shape System (Sprites)
 
@@ -505,6 +563,7 @@ SHELL("move sprite.png images\sprite.png")   ' move to subfolder
 FileDelete "sprite.png"                       ' just delete it
 ```
 
+## Drawing on Screen
 
 ## Complete Examples
 

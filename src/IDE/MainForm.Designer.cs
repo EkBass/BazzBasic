@@ -33,13 +33,19 @@ partial class MainForm
     private ToolStripMenuItem editMenu = null!;
     private ToolStripMenuItem findMenuItem = null!;
     private ToolStripMenuItem replaceMenuItem = null!;
-    
+
+    // Run
     private ToolStripMenuItem runMenu = null!;
     private ToolStripMenuItem runMenuItem = null!;
-    
+    // Create executable
+    private ToolStripMenuItem createExeMenuItem = null!;
+    // Create lib
+    private ToolStripMenuItem CreateLibMenuItem = null!;
+
     private ToolStripMenuItem helpMenu = null!;
     private ToolStripMenuItem aboutMenuItem = null!;
-    
+    private ToolStripMenuItem guideMenuItem = null!;
+
     private TabControl tabControl = null!;
     
     private StatusStrip statusStrip = null!;
@@ -95,13 +101,36 @@ partial class MainForm
         // Run Menu
         runMenu = new ToolStripMenuItem("&Run");
         runMenuItem = new ToolStripMenuItem("&Run Program", null, (s, e) => RunProgram(), Keys.F5);
-        runMenu.DropDownItems.Add(runMenuItem);
+        createExeMenuItem = new ToolStripMenuItem("Compile as &Exe", null, (s, e) => CompileAs("-exe"));
+        CreateLibMenuItem = new ToolStripMenuItem("Compile as &Library (.bb)", null, (s, e) => CompileAs("-lib"));
+        runMenu.DropDownItems.AddRange(new ToolStripItem[] {
+            runMenuItem, new ToolStripSeparator(),
+            createExeMenuItem, CreateLibMenuItem
+        });
         
         // Help Menu
         helpMenu = new ToolStripMenuItem("&Help");
         aboutMenuItem = new ToolStripMenuItem("&About", null, (s, e) => ShowAbout());
         helpMenu.DropDownItems.Add(aboutMenuItem);
-        
+
+        // Link to beginner's guide
+        // cmd: start https://github.com/EkBass/BazzBasic-Beginners-Guide/releases
+        guideMenuItem = new ToolStripMenuItem("&Beginner's Guide", null, (s, e) => System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+        {
+            FileName = "https://github.com/EkBass/BazzBasic-Beginners-Guide/releases",
+            UseShellExecute = true
+        }));
+        helpMenu.DropDownItems.Add(guideMenuItem);
+
+        // Check for updates
+        var checkUpdateMenuItem = new ToolStripMenuItem("&Check for Updates...", null, async (s, e) =>
+        {
+            string result = await BazzBasic.UpdateChecker.CheckAsync();
+            MessageBox.Show(result, "BazzBasic Update Check", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        });
+        helpMenu.DropDownItems.Add(checkUpdateMenuItem);
+
+
         menuStrip.Items.AddRange(new ToolStripItem[] { fileMenu, editMenu, runMenu, helpMenu });
         
         // Tab Control for editor tabs - with close button support

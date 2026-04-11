@@ -130,7 +130,15 @@ public static class Graphics
         }
         
         initialized = true;
-        
+
+        // Initialize font system (Arial as default)
+        string arialPath = FindArialFont();
+        if (!string.IsNullOrEmpty(arialPath))
+        {
+            try { FontManager.Initialize(arialPath, 16); }
+            catch { /* TTF optional — DRAWSTRING will error if called */ }
+        }
+
         // Clear screen as black and bring window to front
         // Minimize console so it doesn't cover the SDL window
         ShowWindow(GetConsoleWindow(), SW_MINIMIZE);
@@ -165,6 +173,8 @@ public static class Graphics
         
         SDL.SDL_Quit();
         initialized = false;
+
+        FontManager.Shutdown();
 
         // Restore console when graphics mode ends
         ShowWindow(GetConsoleWindow(), SW_RESTORE);
@@ -929,6 +939,39 @@ public static class Graphics
 
         // Restore drawing state
         _= SDL.SDL_SetRenderDrawColor(renderer, currentR, currentG, currentB, currentA);
+    }
+
+    // ========================================================================
+    // DRAWSTRING — render text via SDL2_ttf
+    // ========================================================================
+
+    public static void DrawString(string text, int x, int y, int rgb)
+    {
+        if (!initialized) return;
+        byte r = (byte)((rgb >> 16) & 0xFF);
+        byte g = (byte)((rgb >> 8) & 0xFF);
+        byte b = (byte)(rgb & 0xFF);
+        FontManager.DrawString(renderer, text, x, y, r, g, b);
+    }
+
+    // Find arial.ttf on Windows (C:\Windows\Fonts) or next to the exe
+    private static string FindArialFont()
+    {
+        // 1. Next to the exe (user-supplied font wins)
+        string exeDir = AppContext.BaseDirectory;
+        foreach (string name in new[] { "arial.ttf", "Arial.ttf", "ARIAL.TTF" })
+        {
+            string local = Path.Combine(exeDir, name);
+            if (System.IO.File.Exists(local)) return local;
+        }
+
+        // 2. Windows system fonts
+        string winFonts = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.Windows), "Fonts");
+        string winArial = Path.Combine(winFonts, "arial.ttf");
+        if (System.IO.File.Exists(winArial)) return winArial;
+
+        return "";
     }
 
     // Enable or disable fullscreen mode (borderless desktop fullscreen)

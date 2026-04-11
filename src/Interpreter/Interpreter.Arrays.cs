@@ -244,4 +244,26 @@ public partial class Interpreter
         
         return Value.FromNumber(_variables.HasKey(arrName, key) ? 1 : 0);
     }
+
+    // Return number of unique first-dimension rows in a 2D array
+    // Syntax: ROWCOUNT(arr$())
+    private Value EvaluateRowCount()
+    {
+        _pos++; // consume TOK_ROWCOUNT
+        Require(TokenType.TOK_LPAREN);
+
+        if (_pos >= _tokens.Count || _tokens[_pos].Type != TokenType.TOK_VARIABLE)
+        {
+            Error("ROWCOUNT: expected array name");
+            return Value.Zero;
+        }
+        string arrName = _tokens[_pos].StringValue ?? "";
+        _pos++;
+
+        Require(TokenType.TOK_LPAREN);  // inner (
+        Require(TokenType.TOK_RPAREN);  // inner )
+        Require(TokenType.TOK_RPAREN);  // outer )
+
+        return Value.FromNumber(_variables.GetArrayRowCount(arrName));
+    }
 }

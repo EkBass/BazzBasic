@@ -344,6 +344,12 @@ public partial class Interpreter
                 return EvaluateRgbFunc();
             case TokenType.TOK_HASKEY:
                 return EvaluateHaskeyFunc();
+            case TokenType.TOK_ROWCOUNT:
+                return EvaluateRowCount();
+            case TokenType.TOK_ARGS:
+                return EvaluateArgsFunc();
+            case TokenType.TOK_ARGCOUNT:
+                return EvaluateArgCountFunc();
             case TokenType.TOK_LOADIMAGE:
                 return EvaluateLoadimageFunc();
             case TokenType.TOK_LOADSHAPE:

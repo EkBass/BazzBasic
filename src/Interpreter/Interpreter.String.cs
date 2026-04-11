@@ -67,42 +67,63 @@ public partial class Interpreter
         _pos++;
         Require(TokenType.TOK_LPAREN);
 
-        // Read first parameter
-        Value firstParam = EvaluateExpression();
-        Require(TokenType.TOK_COMMA);
-
-        // Read second parameter
-        Value secondParam = EvaluateExpression();
-
-        // Check if there's a third parameter
-        int startPos;
-        string haystack;
-        string needle;
-
-        if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_COMMA)
+        // Collect all parameters into a list first
+        var parms = new List<Value>();
+        while (_pos < _tokens.Count && _tokens[_pos].Type != TokenType.TOK_RPAREN)
         {
-            // 3-parameter version: INSTR(start, haystack$, needle$)
-            _pos++; // Skip comma
-            startPos = (int)firstParam.AsNumber() - 1; // Convert to 0-based
-            haystack = secondParam.AsString();
-            needle = EvaluateExpression().AsString();
+            if (_tokens[_pos].Type == TokenType.TOK_COMMA) { _pos++; continue; }
+            parms.Add(EvaluateExpression());
         }
-        else
-        {
-            // 2-parameter version: INSTR(haystack$, needle$)
-            startPos = 0;
-            haystack = firstParam.AsString();
-            needle = secondParam.AsString();
-        }
-
         Require(TokenType.TOK_RPAREN);
 
-        // Bounds check
-        if (startPos < 0 || startPos >= haystack.Length)
-            return Value.FromNumber(0);
+        if (parms.Count < 2)
+        {
+            Error("INSTR: expected at least 2 arguments");
+            return Value.Zero;
+        }
 
-        int idx = haystack.IndexOf(needle, startPos, StringComparison.OrdinalIgnoreCase);
-        return Value.FromNumber(idx + 1); // 1-based, 0 if not found
+        string haystack, needle;
+        int startPos = 0;
+        bool ignoreCase = false;
+
+        if (parms.Count == 2)
+        {
+            // INSTR(haystack, needle) — case-sensitive
+            haystack = parms[0].AsString();
+            needle   = parms[1].AsString();
+        }
+        else if (parms.Count == 3)
+        {
+            // Distinguish by type of 3rd param:
+            //   Number → INSTR(haystack, needle, flag)   0=case-insensitive, 1=case-sensitive
+            //   String → INSTR(start, haystack, needle)  1-based start
+            if (parms[2].Type == BazzValueType.Number)
+            {
+                haystack   = parms[0].AsString();
+                needle     = parms[1].AsString();
+                ignoreCase = parms[2].AsNumber() == 0;
+            }
+            else
+            {
+                startPos = (int)parms[0].AsNumber() - 1; // convert to 0-based
+                haystack = parms[1].AsString();
+                needle   = parms[2].AsString();
+            }
+        }
+        else // 4+ params: INSTR(start, haystack, needle, flag)
+        {
+            startPos   = (int)parms[0].AsNumber() - 1;
+            haystack   = parms[1].AsString();
+            needle     = parms[2].AsString();
+            ignoreCase = parms[3].AsNumber() == 0;
+        }
+
+        if (startPos < 0 || startPos >= haystack.Length)
+            return Value.Zero;
+
+        var comparison = ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
+        int idx = haystack.IndexOf(needle, startPos, comparison);
+        return Value.FromNumber(idx == -1 ? 0 : idx + 1);
     }
 
     private Value EvaluateInvertFunc()

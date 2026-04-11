@@ -72,6 +72,22 @@ if (args.Length == 1 && (args[0].ToLower() == "-v" || args[0].ToLower() == "-ver
     return 0;
 }
 
+// Check for -guide for beginner's guide link
+if (args.Length == 1 && (args[0].ToLower() == "-guide" || args[0].ToLower() == "-help"))
+{
+    Console.WriteLine("BazzBasic - Beginner's Guide");
+    Console.WriteLine("Url: https://github.com/EkBass/BazzBasic-Beginners-Guide/releases");
+    return 0;
+}
+
+// Check for -checkupdate
+if (args.Length == 1 && args[0].ToLower() == "-checkupdate")
+{
+    string result = await BazzBasic.UpdateChecker.CheckAsync();
+    Console.WriteLine(result);
+    return 0;
+}
+
 // Normal operation: IDE or interpreter
 if (args.Length == 0)
 {
@@ -105,11 +121,13 @@ else
         return 1;
     }
     
+    string[] userArgs = args.Length > 1 ? args[1..] : [];
+    
     try
     {
         string source = File.ReadAllText(filename);
         string basePath = Path.GetDirectoryName(Path.GetFullPath(filename)) ?? Directory.GetCurrentDirectory();
-        RunProgram(source, basePath, filename);
+        RunProgram(source, basePath, filename, userArgs);
     }
     catch (Exception ex)
     {
@@ -124,7 +142,7 @@ return 0;
 // Helper functions
 // ============================================================================
 
-static void RunProgram(string source, string basePath = "", string? filename = null)
+static void RunProgram(string source, string basePath = "", string? filename = null, string[]? userArgs = null)
 {
     try
     {
@@ -142,7 +160,7 @@ static void RunProgram(string source, string basePath = "", string? filename = n
         tokens = libraryLoader.ProcessLibraries(tokens);
         
         // Run
-        var interpreter = new Interpreter(tokens, basePath);
+        var interpreter = new Interpreter(tokens, basePath, userArgs);
         interpreter.Run();
     }
     finally

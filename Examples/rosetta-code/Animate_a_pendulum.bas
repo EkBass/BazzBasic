@@ -18,7 +18,7 @@
 
     LET px$     = SCREEN_W# / 2 ' Pivot point X — where the pendulum is attached (screen center top)
     LET py$     = 10            ' Pivot point Y — a bit down from top edge
-    LET theta$  = HPI           ' Current angle in radians (HPI = 90° = starts horizontal)
+    LET theta$  = HPI#           ' Current angle in radians (HPI = 90° = starts horizontal)
     LET bx$                     ' Bob X position on screen (calculated each frame)
     LET by$                     ' Bob Y position on screen (calculated each frame)
 

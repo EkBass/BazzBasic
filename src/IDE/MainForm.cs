@@ -55,6 +55,11 @@ public partial class MainForm : Form
         tabControl.TabPages.Add(tabPage);
         tabControl.SelectedTab = tabPage;
         
+        // Insert default template
+        string template = $"' BazzBasic version {BazzBasic.AppInfo.Version}\n' https://ekbass.github.io/BazzBasic/\n";
+        editor.Text = template;
+        editor.SelectionStart = editor.TextLength;
+        
         editor.Focus();
     }
 
@@ -294,6 +299,37 @@ public partial class MainForm : Form
     #endregion
 
     #region Run Operations
+
+    private void CompileAs(string flag)
+    {
+        if (tabControl.SelectedTab == null) return;
+
+        var tab = _tabs[tabControl.SelectedTab];
+
+        if (tab.FilePath == null || tab.IsModified)
+        {
+            SaveFile();
+            if (tab.FilePath == null) return;
+        }
+
+        try
+        {
+            var startInfo = new ProcessStartInfo
+            {
+                FileName = "cmd.exe",
+                Arguments = $"/c \"\"{Application.ExecutablePath}\" {flag} \"{tab.FilePath}\" && echo Done. & pause\"",
+                WorkingDirectory = IOPath.GetDirectoryName(tab.FilePath),
+                UseShellExecute = true
+            };
+
+            Process.Start(startInfo);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Compile failed: {ex.Message}", "Error",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+    }
 
     private void RunProgram()
     {
