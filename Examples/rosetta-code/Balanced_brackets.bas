@@ -1,0 +1,75 @@
+' ============================================
+' https://rosettacode.org/wiki/Balanced_brackets
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' ============================================
+DEF FN IsBalanced$(s$)
+
+    ' Empty is valid
+    IF LEN(s$) = 0 THEN RETURN TRUE
+
+    ' Cant start with closing bracket.
+    IF MID(s$, 1, 1) = "]" THEN RETURN FALSE
+
+    ' Cant end with opening bracket.
+    IF MID(s$, LEN(s$), 1) = "[" THEN RETURN FALSE
+
+    LET i$ = 1
+    LET count$ = 0
+
+    ' If count ever goes under 0, there has been too many closing brackets that far
+    WHILE count$ >= 0 AND i$ <= LEN(s$)
+        IF MID(s$, i$, 1) = "[" THEN
+            count$ = count$ + 1
+        ELSE
+            count$ = count$ - 1
+        END IF
+        i$ = i$ + 1
+    WEND
+
+    RETURN count$ = 0
+END DEF
+
+[inits]
+    DIM brackets$
+        brackets$(0) = "["
+        brackets$(1) = "]"
+        brackets$(2) = "[]"
+
+    LET brackString$
+    LET posCount$ = 0
+
+[main]
+    FOR i$ = 1 TO 5
+        brackString$ = ""
+        FOR r$ = 1 TO RND(11)
+            brackString$ = brackString$ + brackets$(RND(3))
+        NEXT
+        PRINT "Generated: "; brackString$
+        IF FN IsBalanced$(brackString$) = TRUE THEN
+            PRINT "  -> balanced\n"
+            posCount$ = posCount$ + 1
+        ELSE
+            PRINT "  -> not balanced\n"
+        END IF
+    NEXT
+
+    PRINT "Out of "; i$; " random bracket strings, "; posCount$; " were balanced."
+END
+
+' Output:
+' Generated: ]
+'   -> not balanced
+' 
+' Generated: [[]]][[[][][
+'   -> not balanced
+' 
+' Generated: ]][][][][[]
+'   -> not balanced
+' 
+' Generated: ][]]][][[[][]
+'   -> not balanced
+' 
+' Generated: []
+'   -> balanced
+' 
+' Out of 5 random bracket strings, 1 were balanced.

@@ -9,9 +9,6 @@
 '   - Total of all attributes must be >= 75
 '   - At least two attributes must be >= 15
 
-LET MIN_TOTAL# = 75
-LET MIN_TWO#   = 15
-
 ' Roll 4d6, drop the lowest die, return sum of top 3
 DEF FN RollStat$()
     LET r1$ = RND(6) + 1
@@ -22,6 +19,9 @@ DEF FN RollStat$()
 END DEF
 
 [inits]
+	LET MIN_TOTAL# = 75
+	LET MIN_TWO#   = 15
+
     DIM attributes$
         attributes$("str") = 0
         attributes$("dex") = 0
