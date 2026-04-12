@@ -48,8 +48,8 @@ END DEF
 
 [main]
     CLS
-    PRINT "I will show you names of "; LEN(basics$()); " different BASIC variations."
-    PRINT "But only for "; LEN(basics$()); " seconds.\n"
+    PRINT "I will show you names of "; ROWCOUNT(basics$()); " different BASIC variations."
+    PRINT "But only for "; ROWCOUNT(basics$()); " seconds.\n"
     PRINT "Then I scramble the letters of one of them."
     PRINT "Your job is to figure out which of them it is."
     PRINT "You can response case-insensitive style: basic = BASIC."
@@ -58,7 +58,7 @@ END DEF
 
     GOSUB [sub:showThem]
 
-    correct$ = basics$(RND(LEN(basics$())))
+    correct$ = basics$(RND(ROWCOUNT(basics$()))) - 1
     scrambled$ = FN Scramble$(correct$)
 
     PRINT "Scrambled name of basic is: "; scrambled$
@@ -79,7 +79,7 @@ END
 
 [sub:showThem]
     CLS
-    FOR i$ = 0 TO LEN(basics$()) - 1
+    FOR i$ = 0 TO ROWCOUNT(basics$()) - 1
         PRINT basics$(i$)
     NEXT
     PRINT "\nPress any key to continue..."
