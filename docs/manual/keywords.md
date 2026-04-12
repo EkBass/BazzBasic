@@ -36,6 +36,8 @@ Variables must end with `$`, constants with `#` — they cannot share names with
 ## I/O
 | Keyword | Description |
 |---------|-------------|
+| `ARGCOUNT` | Returns amount or args. passed to program |
+| `ARGS` | Returns specific arg. passed to program |
 | `CLS` | Clear screen |
 | `COLOR` | Set text foreground/background color |
 | `CURPOS` | Read cursor row or col: `CURPOS("row")` / `CURPOS("col")` |
@@ -52,9 +54,11 @@ Variables must end with `$`, constants with `#` — they cannot share names with
 |---------|-------------|
 | `CIRCLE` | Draw circle or filled circle |
 | `DRAWSHAPE` | Render a shape/image to screen |
+| `DRAWSTRING` | Render a text to screen |
 | `FULLSCREEN` | Toggle borderless fullscreen |
 | `HIDESHAPE` | Hide shape without removing |
 | `LINE` | Draw line, box outline, or filled box |
+| `LOADFONT` | Load font from file or reset to Arial |
 | `LOADIMAGE` | Load PNG/BMP (or URL) as shape |
 | `LOADSHEET` | Load sprite sheet into array |
 | `LOADSHAPE` | Create geometric shape |
@@ -198,6 +202,7 @@ Variables must end with `$`, constants with `#` — they cannot share names with
 | `DELKEY` | Remove one array element |
 | `HASKEY` | 1 if array element exists |
 | `JOIN` | Merge two arrays; src2$ overwrites src1$ on conflict |
+| `ROWCOUNT` | Return the size of array in first dimension |
 
 ---
 
@@ -231,11 +236,11 @@ These are auto-initialized at startup — no `LET` required.
 | `PRG_ROOT#` | Program base directory path |
 | `TRUE` | 1 |
 | `FALSE` | 0 |
-| `PI` | 3.14159265358979 |
-| `HPI` | 1.5707963267929895 (π/2) |
-| `QPI` | 0.7853981633974483 (π/4) |
-| `TAU` | 6.283185307179586 (2π) |
-| `EULER` | 2.718281828459045 (e) |
+| `PI#` | 3.14159265358979 |
+| `HPI#` | 1.5707963267929895 (π/2) |
+| `QPI#` | 0.7853981633974483 (π/4) |
+| `TAU#` | 6.283185307179586 (2π) |
+| `EULER#` | 2.718281828459045 (e) |
 
 ### Keyboard constants
 `KEY_UP#` `KEY_DOWN#` `KEY_LEFT#` `KEY_RIGHT#`  
