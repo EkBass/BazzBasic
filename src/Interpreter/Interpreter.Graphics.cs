@@ -704,7 +704,7 @@ public partial class Interpreter
                 spriteW, spriteH, filepath, Graphics.Graphics.Renderer);
 
             for (int i = 0; i < ids.Count; i++)
-                _variables.SetArrayElement(arrayName, (i + 1).ToString(), Value.FromString(ids[i]));
+                _variables.SetArrayElement(arrayName, i.ToString(), Value.FromString(ids[i]));
         }
         catch (Exception ex)
         {

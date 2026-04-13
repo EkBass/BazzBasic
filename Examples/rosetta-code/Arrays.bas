@@ -3,14 +3,6 @@
 ' BazzBasic: https://github.com/EkBass/BazzBasic
 ' ============================================
 
-' # Task
-' Show basic array syntax in your language.
-' Basically, create an array, assign a value to it, and retrieve an element   (if available, show both fixed-length arrays and dynamic arrays, pushing a value into it).
-
-' See also for ASARRAY & ASJSON
-' - Examples/JSON.bas
-' - https://github.com/EkBass/BazzBasic/blob/main/Examples/JSON.bas
-
 ' dynamic-array
 DIM numbers$
 
@@ -59,6 +51,19 @@ FOR row$ = 0 TO 2
     PRINT ""
 NEXT
 
+' 2D associative array - string keys in both dimensions
+DIM people$
+people$("alice", "firstname") = "Alice"
+people$("alice", "lastname")  = "Smith"
+people$("bob",   "firstname") = "Bob"
+people$("bob",   "lastname")  = "Jones"
+PRINT ""
+PRINT "2D associative array:"
+PRINT "alice / firstname: "; people$("alice", "firstname")
+PRINT "alice / lastname:  "; people$("alice", "lastname")
+PRINT "bob   / firstname: "; people$("bob",   "firstname")
+PRINT "bob   / lastname:  "; people$("bob",   "lastname")
+
 ' Output
 ' Numeric array:
 ' numbers$(0) = 10
@@ -66,13 +71,19 @@ NEXT
 ' numbers$(2) = 30
 ' numbers$(3) = 40
 ' numbers$(4) = 50
-
+' 
 ' Associative array:
 ' Name: Alice
 ' Age: 30
 ' City: Helsinki
-
+' 
 ' 2D array (3x3):
 ' 0 1 2
 ' 3 4 5
 ' 6 7 8
+' 
+' 2D associative array:
+' alice / firstname: Alice
+' alice / lastname:  Smith
+' bob   / firstname: Bob
+' bob   / lastname:  Jone

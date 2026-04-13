@@ -35,15 +35,22 @@ END DEF
         brackets$(1) = "]"
         brackets$(2) = "[]"
 
+    LET ROWS# = ROWCOUNT(brackets$())
     LET brackString$
     LET posCount$ = 0
+    LET bLen$
 
 [main]
     FOR i$ = 1 TO 5
         brackString$ = ""
-        FOR r$ = 1 TO RND(11)
-            brackString$ = brackString$ + brackets$(RND(3))
-        NEXT
+        bLen$ = RND(10)
+
+        IF bLen$ > 0 THEN
+            FOR r$ = 0 TO bLen$
+                brackString$ = brackString$ + brackets$(RND(ROWS#))
+            NEXT
+        END IF
+
         PRINT "Generated: "; brackString$
         IF FN IsBalanced$(brackString$) = TRUE THEN
             PRINT "  -> balanced\n"
@@ -56,20 +63,19 @@ END DEF
     PRINT "Out of "; i$; " random bracket strings, "; posCount$; " were balanced."
 END
 
-' Output:
-' Generated: ]
-'   -> not balanced
-' 
-' Generated: [[]]][[[][][
-'   -> not balanced
-' 
-' Generated: ]][][][][[]
-'   -> not balanced
-' 
-' Generated: ][]]][][[[][]
-'   -> not balanced
-' 
-' Generated: []
+' Generated: [][]
 '   -> balanced
 ' 
-' Out of 5 random bracket strings, 1 were balanced.
+' Generated:
+'   -> balanced
+' 
+' Generated: []][]]
+'   -> not balanced
+' 
+' Generated:
+'   -> balanced
+' 
+' Generated: ][][[[][[[[
+'   -> not balanced
+' 
+' Out of 5 random bracket strings, 3 were balanced.

@@ -3,7 +3,20 @@ These changes are about the current source code. These are effected once new bin
 
 ## April 2026
 
-## Version 1.3
+## 13th April 2026
+
+**Fixed: `LOADSHEET` — sprite indexing now starts at 0**
+
+Sprites loaded from a sheet are now indexed from 0, consistent with all other arrays in BazzBasic. Previously the first sprite was at index 1.
+
+**Fixed: `VSYNC` — keyboard input no longer breaks after toggling VSync at runtime**
+
+`VSYNC(TRUE/FALSE)` now uses `SDL_RenderSetVSync` to switch vertical sync without destroying the renderer. Previously the renderer was recreated on each call, causing the window to briefly lose focus and SDL to reset the keyboard state — making `KEYDOWN` and `INKEY` unresponsive until the next keypress.
+
+
+## 10th April 2026
+
+Version 1.3 released as binary
 
 **Added: `DRAWSTRING` and `LOADFONT` — text rendering in graphics mode**
 
@@ -471,7 +484,7 @@ For graphics-intensive applications (games, raycasting, animations), BazzBasic p
 
 **Performance:** ~20x faster than `SIN(RAD(x))` for integer degree values.
 
-**Memory:** Uses ~5.6 KB when enabled (360 values � 2 tables � 8 bytes).
+**Memory:** Uses ~5.6 KB when enabled (360 values   2 tables   8 bytes).
 
 
 ##### FastTrig(enable)

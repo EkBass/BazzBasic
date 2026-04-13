@@ -135,31 +135,21 @@ PRINT c$("level")   ' Output: 5      (from b$)
 
 ---
 
-**Always check with `HASKEY` before reading uninitialized elements.**
-### LEN
-Returns the number of elements in an array:  
-**Note the empty parentheses `()` after the array name.**
+### LEN and ROWCOUNT
+
+| `LEN(arr$())` | Total element count across **all** dimensions (note empty parens) |
+| `ROWCOUNT(arr$())` | Count of **first-dimension** keys only — use for FOR loops over multi-dim arrays |
+
 ```vb
-DIM items$
-items$(0) = "apple"
-items$(1) = "banana"
-items$(2) = "cherry"
+DIM sounds$
+    sounds$("guns", "shotgun_shoot")    = "shoot_shotgun.wav"
+    sounds$("guns", "shotgun_reload")   = "reload_shotgun.wav"
+    sounds$("guns", "ak47_shoot")       = "shoot_ak47.wav"
+    sounds$("guns", "ak47_reload")      = "reload_ak47.wav"
+    sounds$("food", "ham_eat")          = "eat_ham.wav"
 
-PRINT LEN(items$())      ' Output: 3
-```
-
----
-
-### ROWCOUNT
-Returns the number of first dimension elements in an array:  
-**Note the empty parentheses `()` after the array name.**
-```vb
-DIM items$
-items$(0) = "apple"
-items$(1) = "banana"
-items$(2) = "cherry"
-
-PRINT LEN(items$())      ' Output: 3
+PRINT LEN(sounds$())        ' 5 as full size of arrayas there is total of 4 values in array
+PRINT ROWCOUNT(sounds$())   ' 2, "guns" & "food"
 ```
 
 ---

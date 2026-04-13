@@ -14,11 +14,18 @@
 	' works with 1-dimension
     PRINT LEN(cars$()) 	' LEN with array works if only 1-dimension.
 						' If more, ROWCOUNT works only with first dimension while LET returns the size of whole array
+	' preferred way
+	PRINT ROWCOUNT(cars$())
 
+    ' Let's add value for 2nd dimension
+    cars$(0, 1) = "Quatro"
+    PRINT LEN(cars$()) 	' LEN with array works if only 1-dimension.
 	' preferred way
 	PRINT ROWCOUNT(cars$())
 END
 
 ' Output:
 ' 4
+' 4
+' 5
 ' 4
