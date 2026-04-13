@@ -630,9 +630,11 @@ public static class Graphics
     // ========================================================================
     public static bool IsKeyDown(int bazzKeyCode)
     {
+        if (!initialized) return false;
         if (!_keyMap.TryGetValue(bazzKeyCode, out var scancode))
             return false;
 
+        ProcessEvents();  // Pump event queue so keyboard state is current
         IntPtr state = SDL.SDL_GetKeyboardState(out _);
         unsafe
         {
@@ -915,13 +917,18 @@ public static class Graphics
         if (!initialized)
             throw new InvalidOperationException("Graphics not initialized. Call SCREEN first.");
 
-        // Destroy existing renderer
+        // Try SDL_RenderSetVSync first (SDL 2.0.18+) — no renderer recreation needed,
+        // so keyboard focus and input state are preserved.
+        int vsyncResult = SDL.SDL_RenderSetVSync(renderer, enable ? 1 : 0);
+        if (vsyncResult == 0)
+            return; // Success — done, no focus disruption
+
+        // Fallback: destroy and recreate renderer (older SDL2 or unsupported driver)
         if (renderer != IntPtr.Zero)
         {
             SDL.SDL_DestroyRenderer(renderer);
         }
 
-        // Create new renderer with or without VSync
         var flags = SDL.SDL_RendererFlags.SDL_RENDERER_ACCELERATED;
         if (enable)
             flags |= SDL.SDL_RendererFlags.SDL_RENDERER_PRESENTVSYNC;
@@ -939,6 +946,13 @@ public static class Graphics
 
         // Restore drawing state
         _= SDL.SDL_SetRenderDrawColor(renderer, currentR, currentG, currentB, currentA);
+
+        // Renderer recreation can cause the window to briefly lose focus, which
+        // makes SDL zero out the keyboard state. Re-raise the window and flush
+        // the event queue so input works normally on the very next frame.
+        SDL.SDL_RaiseWindow(window);
+        ProcessEvents();
+        lastKeyPressed = 0; // Discard any stale key from the flush
     }
 
     // ========================================================================

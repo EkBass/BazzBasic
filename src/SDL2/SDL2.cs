@@ -336,6 +336,9 @@ public static class SDL
     public static extern int SDL_RenderSetViewport(IntPtr renderer, IntPtr rect);  // pass IntPtr.Zero to reset
 
     [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int SDL_RenderSetVSync(IntPtr renderer, int vsync);  // SDL 2.0.18+
+
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
     public static extern void SDL_PumpEvents();
 
     [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]

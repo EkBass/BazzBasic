@@ -170,69 +170,83 @@ VSync synchronizes frame rendering with your monitor's refresh rate (typically 6
 #### Example - FPS Testing
 
 ```vb
+' BazzBasic version 1.3
+' https://ekbass.github.io/BazzBasic/
+
 [inits]
-	LET frameCount$ = 0
-	LET lastTime$ = TICKS
-	
-	SCREEN 12
-	VSYNC(FALSE)        ' Disable for true FPS measurement
-	LET MY_COLOR# = RGB(255, 255, 255)
+    LET frameCount$     = 0
+    LET lastTime$       = TICKS
+    LET frameCount$     = 0
+    LET currentTime$    = 0
+    LET fps$
 
-WHILE INKEY <> KEY_ESC#
-    ' Calculate FPS
-    frameCount$ = frameCount$ + 1
-    LET currentTime$ = TICKS
-    
-    IF currentTime$ - lastTime$ >= 1000 THEN
-        LET fps$ = frameCount$ / ((currentTime$ - lastTime$) / 1000)
-        frameCount$ = 0
-        lastTime$ = currentTime$
-    ENDIF
+    SCREEN 12
+    VSYNC(FALSE)        ' Disable for true FPS measurement
+    LET MY_COLOR# = RGB(255, 255, 255)
 
-    SCREENLOCK ON
-		LINE (0, 0)-(640, 480), 0, BF
-		
-		' Your rendering code here
-		CIRCLE (320, 240), 50, 12
-		DRAWSTRING "FPS: " + STR(INT(fps$)), 0, 0, MY_COLOR#
-		
-    SCREENLOCK OFF
-WEND
+[main]
+    WHILE INKEY <> KEY_ESC#
 
-VSYNC(TRUE)         ' Restore default before exit
+        ' Calculate FPS
+        frameCount$ = frameCount$ + 1
+        currentTime$ = TICKS
+        
+        IF currentTime$ - lastTime$ >= 1000 THEN
+            fps$ = frameCount$ / ((currentTime$ - lastTime$) / 1000)
+            frameCount$ = 0
+            lastTime$ = currentTime$
+        ENDIF
+
+        SCREENLOCK ON
+            ' clear
+            LINE (0, 0)-(640, 480), 0, BF
+            ' filled circle
+            CIRCLE (320, 240), 50, 12, 1
+            ' fps
+            DRAWSTRING "FPS: " + STR(INT(fps$)), 0, 0, MY_COLOR#
+        SCREENLOCK OFF
+    WEND
+
+    VSYNC(TRUE)         ' Restore default before exit
 END
 ```
 
 #### Example - Toggle VSync at Runtime
 
 ```vb
-[inits]
-	SCREEN 12
-	LET vsyncEnabled$ = TRUE
-	VSYNC(vsyncEnabled$)
+' BazzBasic version 1.3
+' https://ekbass.github.io/BazzBasic/
 
-WHILE INKEY <> KEY_ESC#
-    LET key$ = INKEY
-    
-    ' Press V to toggle VSync
-    IF key$ = ASC("v") OR key$ = ASC("V") THEN
-        vsyncEnabled$ = NOT vsyncEnabled$
-        VSYNC(vsyncEnabled$)
+[inits]
+    SCREEN 12
+    LET vSyncStatus$ = TRUE
+    VSYNC(vSyncStatus$)
+    LET vColor$ = RGB(255, 255, 255)
+    LET vString$
+    LET key$
+    LET running$ = TRUE
+[main]
+    WHILE running$
         
-        LOCATE 2, 1
-        IF vsyncEnabled$ THEN
-            DRAWSTRING "VSync: ON ", 0, 16, RGB(255, 255, 255)
-        ELSE
-            DRAWSTRING "VSync: OFF", 0, 16, RGB(255, 255, 255)
-        ENDIF
-    ENDIF
-    
-    SCREENLOCK ON
-		' Rendering here
-    SCREENLOCK OFF
-	
-    SLEEP 1
-WEND
+        IF KEYDOWN(KEY_ESC#) THEN running$ = FALSE
+        IF KEYDOWN(KEY_SPACE#) THEN
+            vSyncStatus$ = NOT vSyncStatus$
+            VSYNC(vSyncStatus$)
+            ' Wait until space is released or it gets buffered and in problems
+            WHILE KEYDOWN(KEY_SPACE#) : WEND
+            IF vSyncStatus$ = TRUE THEN
+                vString$ = "VSync: ON "
+            ELSE
+                vString$ = "VSync: OFF "
+            END IF
+        END IF
+        
+        SCREENLOCK ON
+            LINE (0,0)-(639,479), 0, BF
+            DRAWSTRING vString$, 0, 16, vColor$
+        SCREENLOCK OFF
+        SLEEP 16
+    WEND
 END
 ```
 
@@ -392,33 +406,30 @@ LET ARROW#  = LOADSHAPE("TRIANGLE", 30, 40, RGB(0, 0, 255))
 ### LOADSHEET - Load Sprite Sheet
 Reads an image file and splits it into sprites according to the specification. The original image size must be divisible by the given size parameters
 ```vb
-REM ============================================
-REM LOADSHEET demo: countdown 9 -> 0
-REM sheet_numbers.png: 640x256, 128x128 sprites
-REM Sprite 1=0, 2=1, 3=2 ... 10=9
-REM ============================================
+' BazzBasic version 1.3
+' https://ekbass.github.io/BazzBasic/
+
+' ============================================
+' LOADSHEET demo: countdown 9 -> 0
+' sheet_numbers.png: 640x256, 128x128 sprites
+' ============================================
 
 [inits]
-	SCREEN 0, 640, 480, "Countdown!"
-
-	DIM sprites$
-	LOADSHEET sprites$, 128, 128, "sheet_numbers.png"
-
-	REM Center position for a 128x128 sprite on 640x480 screen
+	' Center position for a 128x128 sprite on 640x480 screen
 	LET x# = 256
 	LET y# = 176
+	DIM sprites$
 
-	LET spriteIndex$ = 0
+	SCREEN 0, 640, 480, "Countdown!"
+	LOADSHEET sprites$, 128, 128, "Examples/images/sheet_numbers.png"
 
 [main]
-	REM Count down from 9 to 0
-	REM Sprite index = number + 1  (sprite 10 = digit 9, sprite 1 = digit 0)
-	FOR i$ = 9 TO 0 STEP -1
-		spriteIndex$ = i$ + 1
+	' Count down from 9 to 0
+	FOR i$ = ROWCOUNT(sprites$()) - 1 TO 0 STEP -1
 		SCREENLOCK ON
 			LINE (0, 0)-(640, 480), 0, BF
-			MOVESHAPE sprites$(spriteIndex$), x#, y#
-			DRAWSHAPE sprites$(spriteIndex$)
+			MOVESHAPE sprites$(i$), x#, y#
+			DRAWSHAPE sprites$(i$)
 		SCREENLOCK OFF
 		SLEEP 500
 	NEXT
