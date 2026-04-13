@@ -105,20 +105,24 @@ Without screen locking, each graphics command immediately updates the display, c
 #### Example - Smooth Animation
 
 ```vb
-SCREEN 12
-DIM angle$
-LET angle$ = 0
+[inits]
+	' declarations and initialisations before loops etc.
+	LET angle$ = 0
+	SCREEN 12
 
 WHILE INKEY <> 27
-    SCREENLOCK ON           ' Start buffering
-    
-    CLS                     ' Clear
-    LET angle$ = angle$ + 5
-    
-    ' Draw multiple shapes
-    LINE (100,100)-(200,200), 15
-    CIRCLE (320, 240), 50, 12
-    
+
+	' keep logic and math out of SCREENLOCK ON/OFF
+    angle$ = angle$ + 5
+	
+	' Start buffering. Indents helps with SCREENLOCK ON/OFF
+    SCREENLOCK ON
+		' clear with LINE...BF
+		 LINE (0, 0)-(640, 480), 0, BF
+
+		' Draw multiple shapes
+		LINE (100,100)-(200,200), 15
+		CIRCLE (320, 240), 50, 12
     SCREENLOCK OFF          ' Display all at once
     SLEEP 16                ' ~60 FPS
 WEND
@@ -166,21 +170,15 @@ VSync synchronizes frame rendering with your monitor's refresh rate (typically 6
 #### Example - FPS Testing
 
 ```vb
-SCREEN 12
-VSYNC(FALSE)        ' Disable for true FPS measurement
-
-LET frameCount$ = 0
-LET lastTime$ = TICKS
+[inits]
+	LET frameCount$ = 0
+	LET lastTime$ = TICKS
+	
+	SCREEN 12
+	VSYNC(FALSE)        ' Disable for true FPS measurement
+	LET MY_COLOR# = RGB(255, 255, 255)
 
 WHILE INKEY <> KEY_ESC#
-    SCREENLOCK ON
-    CLS
-    
-    ' Your rendering code here
-    CIRCLE (320, 240), 50, 12
-    
-    SCREENLOCK OFF
-    
     ' Calculate FPS
     frameCount$ = frameCount$ + 1
     LET currentTime$ = TICKS
@@ -189,10 +187,16 @@ WHILE INKEY <> KEY_ESC#
         LET fps$ = frameCount$ / ((currentTime$ - lastTime$) / 1000)
         frameCount$ = 0
         lastTime$ = currentTime$
-        
-        LOCATE 1, 1
-        PRINT "FPS: "; INT(fps$); "  "
     ENDIF
+
+    SCREENLOCK ON
+		LINE (0, 0)-(640, 480), 0, BF
+		
+		' Your rendering code here
+		CIRCLE (320, 240), 50, 12
+		DRAWSTRING "FPS: " + STR(INT(fps$)), 0, 0, MY_COLOR#
+		
+    SCREENLOCK OFF
 WEND
 
 VSYNC(TRUE)         ' Restore default before exit
@@ -202,9 +206,10 @@ END
 #### Example - Toggle VSync at Runtime
 
 ```vb
-SCREEN 12
-LET vsyncEnabled$ = TRUE
-VSYNC(vsyncEnabled$)
+[inits]
+	SCREEN 12
+	LET vsyncEnabled$ = TRUE
+	VSYNC(vsyncEnabled$)
 
 WHILE INKEY <> KEY_ESC#
     LET key$ = INKEY
@@ -216,15 +221,16 @@ WHILE INKEY <> KEY_ESC#
         
         LOCATE 2, 1
         IF vsyncEnabled$ THEN
-            PRINT "VSync: ON  "
+            DRAWSTRING "VSync: ON ", 0, 16, RGB(255, 255, 255)
         ELSE
-            PRINT "VSync: OFF "
+            DRAWSTRING "VSync: OFF", 0, 16, RGB(255, 255, 255)
         ENDIF
     ENDIF
     
     SCREENLOCK ON
-    ' Rendering here
+		' Rendering here
     SCREENLOCK OFF
+	
     SLEEP 1
 WEND
 END
@@ -378,14 +384,9 @@ id$ = LOADSHAPE(type$, width, height, color)
 #### Examples
 
 ```vb
-DIM square$
-LET square$ = LOADSHAPE("RECTANGLE", 50, 50, RGB(255, 0, 0))
-
-DIM ball$
-LET ball$ = LOADSHAPE("CIRCLE", 40, 40, RGB(0, 255, 0))
-
-DIM arrow$
-LET arrow$ = LOADSHAPE("TRIANGLE", 30, 40, RGB(0, 0, 255))
+LET SQUARE# = LOADSHAPE("RECTANGLE", 50, 50, RGB(255, 0, 0))
+LET BALL#   = LOADSHAPE("CIRCLE", 40, 40, RGB(0, 255, 0))
+LET ARROW#  = LOADSHAPE("TRIANGLE", 30, 40, RGB(0, 0, 255))
 ```
 
 ### LOADSHEET - Load Sprite Sheet
@@ -397,26 +398,30 @@ REM sheet_numbers.png: 640x256, 128x128 sprites
 REM Sprite 1=0, 2=1, 3=2 ... 10=9
 REM ============================================
 
-SCREEN 640, 480, "Countdown!"
+[inits]
+	SCREEN 0, 640, 480, "Countdown!"
 
-DIM sprites$
-LOADSHEET sprites$, 128, 128, "sheet_numbers.png"
+	DIM sprites$
+	LOADSHEET sprites$, 128, 128, "sheet_numbers.png"
 
-REM Center position for a 128x128 sprite on 640x480 screen
-LET x# = 256
-LET y# = 176
+	REM Center position for a 128x128 sprite on 640x480 screen
+	LET x# = 256
+	LET y# = 176
 
-REM Count down from 9 to 0
-REM Sprite index = number + 1  (sprite 10 = digit 9, sprite 1 = digit 0)
-FOR i$ = 9 TO 0 STEP -1
-    CLS
-    LET spriteIndex$
-    LET spriteIndex$ = i$ + 1
-    MOVESHAPE sprites$(spriteIndex$), x#, y#
-    DRAWSHAPE sprites$(spriteIndex$)
-    SLEEP 500
-NEXT
+	LET spriteIndex$ = 0
 
+[main]
+	REM Count down from 9 to 0
+	REM Sprite index = number + 1  (sprite 10 = digit 9, sprite 1 = digit 0)
+	FOR i$ = 9 TO 0 STEP -1
+		spriteIndex$ = i$ + 1
+		SCREENLOCK ON
+			LINE (0, 0)-(640, 480), 0, BF
+			MOVESHAPE sprites$(spriteIndex$), x#, y#
+			DRAWSHAPE sprites$(spriteIndex$)
+		SCREENLOCK OFF
+		SLEEP 500
+	NEXT
 END
 ```
 
@@ -425,10 +430,7 @@ END
 Move shape to absolute screen position.
 
 ```vb
-MOVESHAPE id$, x, y
-
-MOVESHAPE square$, 320, 240     ' Center of 640×480 screen
-MOVESHAPE ball$, 100, 100       ' Top-left area
+MOVESHAPE ID#, x, y
 ```
 
 ### ROTATESHAPE - Rotate Shape
@@ -438,9 +440,9 @@ Rotate shape to specified angle in degrees.
 ```vb
 ROTATESHAPE id$, angle
 
-ROTATESHAPE square$, 45         ' 45 degrees
-ROTATESHAPE arrow$, 180         ' Upside down
-ROTATESHAPE triangle$, 270      ' 90 degrees counter-clockwise
+ROTATESHAPE SQUARE#, 45         ' 45 degrees
+ROTATESHAPE ARROW#, 180         ' Upside down
+ROTATESHAPE ARROW#, 270         ' 90 degrees counter-clockwise
 ```
 
 **Note:** Rotation is absolute, not cumulative. To spin continuously:
@@ -450,11 +452,11 @@ DIM angle$
 LET angle$ = 0
 
 WHILE 1
-    LET angle$ = angle$ + 5
+    angle$ = angle$ + 5
     IF angle$ >= 360 THEN
-        LET angle$ = 0
+        angle$ = 0
     ENDIF
-    ROTATESHAPE square$, angle$
+    ROTATESHAPE SQUARE#, angle$
     SLEEP 16
 WEND
 ```
@@ -466,9 +468,9 @@ Scale shape by multiplier (1.0 = original size).
 ```vb
 SCALESHAPE id$, scale
 
-SCALESHAPE ball$, 0.5           ' Half size
-SCALESHAPE square$, 2.0         ' Double size
-SCALESHAPE triangle$, 1.5       ' 150% size
+SCALESHAPE BALL#, 0.5           ' Half size
+SCALESHAPE SQUARE#, 2.0         ' Double size
+SCALESHAPE ARROW#, 1.5          ' 150% size
 ```
 
 **Pulsing effect:**
@@ -480,13 +482,13 @@ LET scale$ = 1
 LET direction$ = 0.01
 
 WHILE 1
-    LET scale$ = scale$ + direction$
+    scale$ = scale$ + direction$
     
     IF scale$ >= 1.5 OR scale$ <= 0.5 THEN
-        LET direction$ = direction$ * -1
+        direction$ = direction$ * -1
     ENDIF
     
-    SCALESHAPE ball$, scale$
+    SCALESHAPE BALL#, scale$
     SLEEP 16
 WEND
 ```
@@ -496,13 +498,13 @@ WEND
 Draw shape to screen at current position/rotation/scale.
 
 ```vb
-DRAWSHAPE id$
+DRAWSHAPE SQUARE#
 
 SCREENLOCK ON
-CLS
-DRAWSHAPE square$
-DRAWSHAPE ball$
-DRAWSHAPE triangle$
+	LINE (0, 0)-(640, 480), 0, BF
+	DRAWSHAPE SQUARE#
+	DRAWSHAPE BALL#
+	DRAWSHAPE ARROW#
 SCREENLOCK OFF
 ```
 
@@ -516,9 +518,9 @@ Show or hide shape without removing it.
 SHOWSHAPE id$
 HIDESHAPE id$
 
-HIDESHAPE enemy$                ' Temporarily hide
+HIDESHAPE ENEMY#                ' Temporarily hide
 ' ... do something ...
-SHOWSHAPE enemy$                ' Show again
+SHOWSHAPE ENEMY#                ' Show again
 ```
 
 ### REMOVESHAPE - Delete Shape
@@ -526,9 +528,9 @@ SHOWSHAPE enemy$                ' Show again
 Permanently remove shape from memory.
 
 ```vb
-REMOVESHAPE id$
+REMOVESHAPE ID#
 
-REMOVESHAPE square$             ' Delete and free memory
+REMOVESHAPE SQUARE#             ' Delete and free memory
 ```
 
 **Note:** Always remove shapes when done to free memory!
@@ -536,31 +538,33 @@ REMOVESHAPE square$             ' Delete and free memory
 ### LOADIMAGE
 **Note:** Images can be handled just as shapes
 ```vb
-SCREEN 12
-LET sprite$ = LOADIMAGE("temp.bmp")
+[inits]
+	LET SPRITE# = LOADIMAGE("temp.bmp")
+	SCREEN 12
 
-MOVESHAPE sprite$, 320, 240
-ROTATESHAPE sprite$, 45      ' Rotate 45
-SCALESHAPE sprite$, 2.0      ' Scale by 2
+	MOVESHAPE SPRITE#, 320, 240
+	ROTATESHAPE SPRITE#, 45      ' Rotate 45
+	SCALESHAPE SPRITE#, 2.0      ' Scale by 2
 
-SCREENLOCK ON
-DRAWSHAPE sprite$
-SCREENLOCK OFF
-SLEEP 3000
-REMOVESHAPE sprite$          ' Free mem
+[main]
+	SCREENLOCK ON
+		DRAWSHAPE SPRITE#
+	SCREENLOCK OFF
+	SLEEP 3000
+	REMOVESHAPE SPRITE#          ' Free mem
 END
 ```
 
 #### LOADIMAGE with url
 ```vb
-LET sprite$ = LOADIMAGE("https://example.com/sprite.png")
+LET SPRITE# = LOADIMAGE("https://example.com/sprite.png")
 ' → downloads "sprite.png" to root of your program
 ' → sprite$ works just as with normal file load
 
 ' to remove or move the downloaded file
 SHELL("move sprite.png images\sprite.png")   ' move to subfolder
 ' or
-FileDelete "sprite.png"                       ' just delete it
+FILEDELETE "sprite.png"                       ' just delete it
 ```
 
 ## Drawing on Screen
@@ -609,14 +613,13 @@ FileDelete "sprite.png"                       ' just delete it
 
 4. **Remove unused shapes:**
    ```vb
-   REMOVESHAPE oldShape$  ' Free memory
+   REMOVESHAPE OLD_SHAPE#  ' Free memory
    ```
 
 5. **Use RGB() once, store value:**
    ```vb
-   DIM myColor$
-   LET myColor$ = RGB(128, 64, 200)
-   ' Use myColor$ multiple times
+   LET MY_COLOR# = RGB(128, 64, 200)
+   ' Use MY_COLOR# multiple times
    ```
 
 6. **Target 60 FPS with SLEEP 16:**
@@ -643,7 +646,7 @@ Load images as shapes that can be moved, rotated, and scaled.
 #### Usage
 
 ```vb
-id$ = LOADIMAGE("filepath")
+LET ID# = LOADIMAGE("filepath")
 ```
 
 **Parameters:**
@@ -655,25 +658,28 @@ id$ = LOADIMAGE("filepath")
 #### Example
 
 ```vb
-SCREEN 12, 640, 480, "Image Demo"
+[inits]
+	SCREEN 12
 
-REM Load PNG image with transparency
-DIM sprite$
-LET sprite$ = LOADIMAGE("player.png")
+	REM Load PNG image with transparency
+	LET SPRITE# = LOADIMAGE("player.png")
 
-REM Position and transform
-MOVESHAPE sprite$, 320, 240
-ROTATESHAPE sprite$, 45
-SCALESHAPE sprite$, 2.0
+	REM Position and transform
+	MOVESHAPE SPRITE#, 320, 240
+	ROTATESHAPE SPRITE#, 45
+	SCALESHAPE SPRITE#, 2.0
 
-REM Draw
-DRAWSHAPE sprite$
-FLIP
+[main]
+	REM Draw
+	SCREENLOCK ON
+		DRAWSHAPE SPRITE#
+	SCREENLOCK OFF
 
-SLEEP 3000
+	SLEEP 3000
 
-REM Cleanup when done
-REMOVESHAPE sprite$
+	REM Cleanup when done
+	REMOVESHAPE SPRITE#
+END
 ```
 
 ### PNG Transparency (Alpha Channel)
@@ -693,20 +699,59 @@ Transparency is read directly from the PNG file - no color key needed.
 Once loaded, images work exactly like other shapes:
 
 ```vb
-DIM img$
-LET img$ = LOADIMAGE("logo.png")
+LET IMG# = LOADIMAGE("logo.png")
 
-MOVESHAPE img$, x, y           ' Position (center point)
-ROTATESHAPE img$, angle        ' Rotate (degrees)
-SCALESHAPE img$, scale         ' Scale (1.0 = original size)
-SHOWSHAPE img$                 ' Make visible
-HIDESHAPE img$                 ' Make invisible
-DRAWSHAPE img$                 ' Render to screen
-REMOVESHAPE img$               ' Delete and free memory
+MOVESHAPE IMG#, x, y           ' Position (center point)
+ROTATESHAPE IMG#, angle        ' Rotate (degrees)
+SCALESHAPE IMG#, scale         ' Scale (1.0 = original size)
+SHOWSHAPE IMG#                 ' Make visible
+HIDESHAPE IMG#                 ' Make invisible
+DRAWSHAPE IMG#                 ' Render to screen
+REMOVESHAPE IMG#               ' Delete and free memory
 ```
 
 ### Notes
 
-- Images are positioned by their **center point**
+- Images are positioned by their **top-left point**
 - PNG is recommended for all new projects
 - Larger images use more memory
+
+## Why Constants, Not Variables?
+
+Sound IDs returned by `LOADIMAGE` and are handles assigned by SDL2. BazzBasic uses them only to point to the correct image resource — they never change during program execution.
+
+Storing them in constants (`#` suffix) communicates this intent clearly:
+
+```basic
+LET PISTOL# = LOADIMAGE("pistol.png")
+LET GAME_OVER# = LOADIMAGE("gameOver.png")
+```
+
+Using a mutable variable (`$` suffix) would work, but it implies the value *could* change — which is misleading and leaves the door open for accidental reassignment bugs.
+
+**The rule of thumb:** if a value is set once and never modified, it belongs in a constant.
+
+---
+
+### When to Use an Array Instead
+
+If your program loads many images at once, individual constants become verbose. In that case, a named array is cleaner and self-documenting:
+
+```basic
+DIM images$
+	images$("shoot") 		= LOADIMAGE("shoot.png")
+	images$("explosion") 	= LOADIMAGE("explosion.png")
+	images$("pickup") 		= LOADIMAGE("pickup.png")
+```
+
+For larger projects with categorized images, multidimensional string keys scale even better:
+
+```basic
+DIM images$
+	images$("weapons", "shotgun") 	= LOADIMAGE("shotgun.png")
+	images$("weapons", "ak47")    	= LOADIMAGE("ak47.png")
+	images$("explosions", "small") 	= LOADIMAGE("explosion_small.png")
+	images$("explosions", "large") 	= LOADIMAGE("explosion_large.png")
+```
+
+This keeps image assets organized by category and type — easy to extend without renaming anything.
