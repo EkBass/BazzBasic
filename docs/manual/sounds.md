@@ -26,18 +26,18 @@ Loads a sound file from disk and returns a unique sound ID string.
 
 **Syntax:**
 ```vb
-LET soundId$ = LOADSOUND("path/to/sound.wav")
+LET SOUND_ID# = LOADSOUND("path/to/sound.wav")
 ' or
-LET soundId$ = LOADSOUND("path\\to\\sound.wav")
+LET SOUND_ID# = LOADSOUND("path\\to\\sound.wav")
 ```
 
 **Note:** If you use "\", you must use it as double "\\" since it is also a escape character
 
 **Example:**
 ```vb
-LET explosion$
-explosion$ = LOADSOUND("C:\\sounds\\explosion.wav")
-PRINT "Sound loaded with ID: "; explosion$
+LET EXPLOSION#
+EXPLOSION# = LOADSOUND("C:\\sounds\\explosion.wav")
+PRINT "Sound loaded with ID: "; EXPLOSION#
 ```
 
 **Notes:**
@@ -47,20 +47,20 @@ PRINT "Sound loaded with ID: "; explosion$
 
 ---
 
-### SOUNDONCE(soundId$)
+### SOUNDONCE(SOUND_ID#)
 
 Plays a loaded sound once in the background. Program execution continues immediately.
 
 **Syntax:**
 ```vb
-SOUNDONCE(soundId$)
+SOUNDONCE(SOUND_ID#)
 ```
 
 **Example:**
 ```vb
-LET beep$
-beep$ = LOADSOUND("beep.wav")
-SOUNDONCE(beep$)
+LET BEEP#
+BEEP# = LOADSOUND("beep.wav")
+SOUNDONCE(BEEP#)
 PRINT "Sound playing in background..."
 SLEEP 1000
 PRINT "Continuing while sound plays..."
@@ -73,21 +73,21 @@ PRINT "Continuing while sound plays..."
 
 ---
 
-### SOUNDONCEWAIT(soundId$)
+### SOUNDONCEWAIT(SOUND_ID#)
 
 Plays a sound once and waits for playback to complete before continuing program execution.
 
 **Syntax:**
 ```vb
-SOUNDONCEWAIT(soundId$)
+SOUNDONCEWAIT(SOUND_ID#)
 ```
 
 **Example:**
 ```vb
-LET intro$
-intro$ = LOADSOUND("intro_music.wav")
+LET INTRO#
+INTRO# = LOADSOUND("intro_music.wav")
 PRINT "Playing intro..."
-SOUNDONCEWAIT(intro$)
+SOUNDONCEWAIT(INTRO#)
 PRINT "Intro finished, starting game!"
 ```
 
@@ -98,20 +98,20 @@ PRINT "Intro finished, starting game!"
 
 ---
 
-### SOUNDREPEAT(soundId$)
+### SOUNDREPEAT(SOUND_ID#)
 
 Plays a sound in a continuous loop in the background.
 
 **Syntax:**
 ```vb
-SOUNDREPEAT(soundId$)
+SOUNDREPEAT(SOUND_ID#)
 ```
 
 **Example:**
 ```vb
-LET bgmusic$
-bgmusic$ = LOADSOUND("background_music.wav")
-SOUNDREPEAT(bgmusic$)
+LET BG_MUSIC#
+BG_MUSIC# = LOADSOUND("background_music.wav")
+SOUNDREPEAT(BG_MUSIC#)
 PRINT "Music looping in background..."
 REM Game loop runs here
 ```
@@ -128,23 +128,23 @@ REM Game loop runs here
 
 ---
 
-### SOUNDSTOP(soundId$)
+### SOUNDSTOP(SOUND_ID#)
 
 Stops playback of a specific sound.
 
 **Syntax:**
 ```vb
-SOUNDSTOP(soundId$)
+SOUNDSTOP(SOUND_ID#)
 ```
 
 **Example:**
 ```vb
-LET alarm$
-alarm$ = LOADSOUND("alarm.wav")
-SOUNDREPEAT(alarm$)
+LET ALARM#
+ALARM# = LOADSOUND("alarm.wav")
+SOUNDREPEAT(ALARM#)
 PRINT "Alarm ringing..."
 SLEEP 5000
-SOUNDSTOP(alarm$)
+SOUNDSTOP(ALARM#)
 PRINT "Alarm stopped"
 ```
 
@@ -189,14 +189,14 @@ CLS
 PRINT "Loading sounds..."
 
 REM Load all game sounds
-LET jump$, coin$, death$, bgmusic$
-jump$ = LOADSOUND("C:\\game_sounds\\jump.wav")
-coin$ = LOADSOUND("C:\\game_sounds\\coin.wav")
-death$ = LOADSOUND("C:\\game_sounds\\death.wav")
-bgmusic$ = LOADSOUND("C:\\game_sounds\\music.wav")
+LET JUMP#, COIN#, DEATH#, BG_MUSIC#
+JUMP# = LOADSOUND("C:\\game_sounds\\jump.wav")
+COIN# = LOADSOUND("C:\\game_sounds\\coin.wav")
+DEATH# = LOADSOUND("C:\\game_sounds\\death.wav")
+BG_MUSIC# = LOADSOUND("C:\\game_sounds\\music.wav")
 
 REM Start background music
-SOUNDREPEAT(bgmusic$)
+SOUNDREPEAT(BG_MUSIC#)
 
 REM Game variables
 LET score$ = 0
@@ -214,7 +214,7 @@ WHILE playing$
     ENDIF
     
     IF key$ = KEY_SPACE# THEN
-        SOUNDONCE(jump$)
+        SOUNDONCE(JUMP#)
         PRINT "Jump!"
     ENDIF
     
@@ -222,7 +222,7 @@ WHILE playing$
     IF RND(100) < 1 THEN
         coins_collected$ = coins_collected$ + 1
         score$ = score$ + 10
-        SOUNDONCE(coin$)
+        SOUNDONCE(COIN#)
         PRINT "Coin collected! Score: "; score$
     ENDIF
     
@@ -239,7 +239,7 @@ SOUNDSTOPALL
 PRINT ""
 PRINT "Game Over!"
 PRINT "Final Score: "; score$
-SOUNDONCEWAIT(death$)
+SOUNDONCEWAIT(DEATH#)
 PRINT "Thanks for playing!"
 
 END
@@ -250,20 +250,20 @@ END
 ```vb
 REM Layer multiple ambient sounds
 
-LET rain$, wind$, thunder$
-rain$ = LOADSOUND("rain.wav")
-wind$ = LOADSOUND("wind.wav")  
-thunder$ = LOADSOUND("thunder.wav")
+LET RAIN#, WIND#, THUNDER#
+RAIN# = LOADSOUND("rain.wav")
+WIND# = LOADSOUND("wind.wav")  
+THUNDER# = LOADSOUND("thunder.wav")
 
 REM Start ambient background
-SOUNDREPEAT(rain$)
-SOUNDREPEAT(wind$)
+SOUNDREPEAT(RAIN#)
+SOUNDREPEAT(WIND#)
 
 PRINT "Storm ambience playing..."
 SLEEP 5000
 
 REM Add thunder effect
-SOUNDONCE(thunder$)
+SOUNDONCE(THUNDER#)
 SLEEP 3000
 
 REM Stop all ambience
@@ -278,19 +278,19 @@ END
 ```vb
 REM Play audio files in sequence
 
-LET part1$, part2$, part3$
-part1$ = LOADSOUND("narration_part1.wav")
-part2$ = LOADSOUND("narration_part2.wav")
-part3$ = LOADSOUND("narration_part3.wav")
+LET PART1#, PART2#, PART3#
+PART1# = LOADSOUND("narration_part1.wav")
+PART2# = LOADSOUND("narration_part2.wav")
+PART3# = LOADSOUND("narration_part3.wav")
 
 PRINT "Starting narration..."
-SOUNDONCEWAIT(part1$)
+SOUNDONCEWAIT(PART1#)
 PRINT "Part 1 complete"
 
-SOUNDONCEWAIT(part2$)
+SOUNDONCEWAIT(PART2#)
 PRINT "Part 2 complete"
 
-SOUNDONCEWAIT(part3$)
+SOUNDONCEWAIT(PART3#)
 PRINT "Narration finished!"
 
 END
@@ -330,10 +330,10 @@ END
 1. **Organize Your Sounds**
    ```vb
    REM Load all sounds at startup
-   LET sfx_jump$, sfx_coin$, music_bg$
-   sfx_jump$ = LOADSOUND("sfx\\jump.wav")
-   sfx_coin$ = LOADSOUND("sfx\\coin.wav")
-   music_bg$ = LOADSOUND("music\\background.wav")
+   LET SFX_JUMP#, SFX_COIN#, MUSIC_BG#
+   SFX_JUMP# = LOADSOUND("sfx\\jump.wav")
+   SFX_COIN# = LOADSOUND("sfx\\coin.wav")
+   MUSIC_BG# = LOADSOUND("music\\background.wav")
    ```
 
 2. **Use Appropriate Playback Modes**
@@ -354,38 +354,48 @@ END
    SOUNDSTOPALL
    
    REM When resuming
-   SOUNDREPEAT(bgmusic$)
+   SOUNDREPEAT(BG_MUSIC#)
    ```
+  
+## Why Constants, Not Variables?
 
-## Troubleshooting
+Sound IDs returned by `LOADSOUND` are handles assigned by SDL2. BazzBasic uses them only to point to the correct audio resource — they never change during program execution.
 
-**Problem:** Sound doesn't play
-- Verify file path is correct and absolute
-- Check file format is supported (WAV recommended)
-- Ensure file exists at specified location
+Storing them in constants (`#` suffix) communicates this intent clearly:
 
-**Problem:** Sound cuts off unexpectedly  
-- Use SOUNDONCEWAIT if timing is critical
-- Check that SOUNDSTOPALL isn't being called prematurely
+```basic
+LET SHOOT_SND# = LOADSOUND("shoot.wav")
+```
 
-**Problem:** Memory issues with many sounds
-- Load sounds once, reuse sound IDs
-- Consider limiting simultaneous playback
-- Stop sounds when no longer needed
+Using a mutable variable (`$` suffix) would work, but it implies the value *could* change — which is misleading and leaves the door open for accidental reassignment bugs.
 
-## Limitations
+**The rule of thumb:** if a value is set once and never modified, it belongs in a constant.
 
-- Text/audio data only (no real-time generation)
-- Sound IDs are GUID strings (not sequential numbers)
-- No volume control (currently plays at system volume)
-- No pitch/speed modification
-- No audio mixing/effects
+---
 
-## Future Enhancements
+### When to Use an Array Instead
 
-Potential additions to the sound system:
-- Volume control per sound
-- Fade in/fade out effects
-- Audio positioning (left/right balance)
-- Real-time audio generation
-- Audio recording capabilities
+If your program loads many sounds at once, individual constants become verbose. In that case, a named array is cleaner and self-documenting:
+
+```basic
+DIM sounds$
+	sounds$("shoot") 		= LOADSOUND("shoot.wav")
+	sounds$("explosion") 	= LOADSOUND("explosion.wav")
+	sounds$("pickup") 		= LOADSOUND("pickup.wav")
+
+SOUNDOCE(sounds$("shoot"))
+```
+
+For larger projects with categorized sounds, multidimensional string keys scale even better:
+
+```basic
+DIM sounds$
+	sounds$("shoot", "shotgun") 	= LOADSOUND("shoot_shotgun.wav")
+	sounds$("shoot", "ak47")    	= LOADSOUND("shoot_ak47.wav")
+	sounds$("explosion", "small") 	= LOADSOUND("explosion_small.wav")
+	sounds$("explosion", "large") 	= LOADSOUND("explosion_large.wav")
+
+SOUNDONCE(sounds$("shoot", "ak47"))
+```
+
+This keeps sound assets organized by category and type — easy to extend without renaming anything.
