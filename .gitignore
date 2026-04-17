@@ -18,6 +18,9 @@ obj/
 *.cache
 *.log
 
+# todo
+todo.txt
+
 # NuGet
 *.nupkg
 packages/
