@@ -3,6 +3,43 @@ These changes are about the current source code. These are effected once new bin
 
 ## April 2026
 
+## 18th April 2026
+
+**Fixed:** Concanationing did not work with arrays
+```basic
+a$+= 5 ' worked
+arr$(1) += 5 ' did not work
+' but works now with ver. 1.3b
+```
+
+**Added:** several more example codes. Rosett-code solutions counter now a bit over 130.
+
+**Added:** MOUSEHIDE and MOUSESHOW statemetens
+
+**MOUSEHIDE** hides mouse cursor on graphics screen  
+**MOUSESHOW** brings it back.
+
+Both works only when graphical screen is initialized (SCREEN 'mode')
+
+
+**Added:** INBETWEEN.
+Returns true, if *n* is between *min* and *max* and not equal to them
+
+```vb
+INBETWEEN(1, 1, 10) ' false
+INBETWEEN(2, 1, 10) ' true
+BETWEEN(1, 1, 10) ' true
+BETWEEN(2, 1, 10) ' true
+```
+
+Unlike BETWEEN which returns true if *n* is equal or between *min* and *max*, INBETWEEN returns true if *n* is not equal and between *min* and *max*
+
+**Added:** ATAN2().
+```basic
+PRINT ATAN2(x$, y$) ' 0.4636476090008061
+```
+
+
 ## 13th April 2026
 
 **Fixed: `LOADSHEET` — sprite indexing now starts at 0**

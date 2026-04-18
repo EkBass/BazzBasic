@@ -48,6 +48,7 @@ public partial class Interpreter
     // BETWEEN
     // EULER
     // CLAMP
+    // BETWEEN2
     // ========================================================================
 
     private double HelperGetDouble() {
@@ -69,6 +70,18 @@ public partial class Interpreter
     {
         _pos++;
         return Value.FromNumber(Math.Atan(HelperGetDouble()));
+    }
+
+    // ATAN2 function
+    private Value EvaluateAtan2Func()
+    {
+        _pos++;
+        Require(TokenType.TOK_LPAREN);
+        double y = EvaluateExpression().AsNumber();
+        Require(TokenType.TOK_COMMA);
+        double x = EvaluateExpression().AsNumber();
+        Require(TokenType.TOK_RPAREN);
+        return Value.FromNumber(Math.Atan2(y, x));
     }
 
     // CINT function
@@ -348,6 +361,22 @@ public partial class Interpreter
     {
         _pos++;
         return Value.FromNumber(2.718281828459045);
+    }
+
+    // INBETWEEN function - Check if a value is between two others.
+    // Same as BETWEEN, but returns FALSE if value is EQUAL to either bound, TRUE only if strictly between.
+    private Value EvaluateInBetweenFunc()
+    {
+        _pos++;
+        Require(TokenType.TOK_LPAREN);
+        double value = EvaluateExpression().AsNumber();
+        Require(TokenType.TOK_COMMA);
+        double lower = EvaluateExpression().AsNumber();
+        Require(TokenType.TOK_COMMA);
+        double upper = EvaluateExpression().AsNumber();
+        Require(TokenType.TOK_RPAREN);
+
+        return Value.FromNumber((value > lower && value < upper) ? 1 : 0);
     }
 
 

@@ -116,3 +116,15 @@ IF MOUSELEFT   THEN PRINT "Left clicked"
 IF MOUSERIGHT  THEN PRINT "Right clicked"
 IF MOUSEMIDDLE THEN PRINT "Middle clicked"
 ```
+
+### MOUSEHIDE & MOUSESHOW
+
+In graphics screen, MOUSEHIDE hides the mouse cursor while MOUSESHOW will bring it back.
+
+```vb
+MOUSEHIDE ' hides mouse
+SLEEP 5000
+MOUSESHOW ' brings it back
+```
+
+

@@ -224,6 +224,8 @@ public partial class Interpreter
                 return EvaluateAbsFunc();
             case TokenType.TOK_ATAN:
                 return EvaluateAtanFunc();
+            case TokenType.TOK_ATAN2:
+                return EvaluateAtan2Func();
             case TokenType.TOK_CINT:
                 return EvaluateCintFunc();
             case TokenType.TOK_COS:
@@ -284,6 +286,8 @@ public partial class Interpreter
                 return EvaluateClampFunc();
             case TokenType.TOK_LERP:
                 return EvaluateLerpFunc();
+            case TokenType.TOK_INBETWEEN:
+                return EvaluateInBetweenFunc();
 
             // String functions
             // Before 1.0, adjust these alphabetically

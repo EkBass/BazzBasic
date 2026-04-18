@@ -106,6 +106,7 @@ public class Lexer(string source)
         // Math functions
         ["ABS"]             = TokenType.TOK_ABS,
         ["ATAN"]            = TokenType.TOK_ATAN,
+        ["ATAN2"]           = TokenType.TOK_ATAN2,
         ["CEIL"]            = TokenType.TOK_CEIL,
         ["CINT"]            = TokenType.TOK_CINT,
         ["COS"]             = TokenType.TOK_COS,
@@ -138,6 +139,7 @@ public class Lexer(string source)
         ["DISTANCE"]        = TokenType.TOK_DISTANCE,
         ["CLAMP"]           = TokenType.TOK_CLAMP,
         ["LERP"]            = TokenType.TOK_LERP,
+        ["INBETWEEN"]        = TokenType.TOK_INBETWEEN,
 
         // String functions
         ["ASC"]         = TokenType.TOK_ASC,
@@ -173,6 +175,8 @@ public class Lexer(string source)
         ["BASE64ENCODE"] = TokenType.TOK_BASE64ENCODE,
         ["BASE64DECODE"] = TokenType.TOK_BASE64DECODE,
         ["SHA256"]       = TokenType.TOK_SHA256,
+        ["MOUSEHIDE"]    = TokenType.TOK_MOUSEHIDE,
+        ["MOUSESHOW"]    = TokenType.TOK_MOUSESHOW,
 
         // Array functions
         ["HASKEY"]      = TokenType.TOK_HASKEY,

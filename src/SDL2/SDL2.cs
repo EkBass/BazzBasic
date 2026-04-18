@@ -44,7 +44,12 @@ public static class SDL
     // Return codes
     public const int SDL_SUCCESS = 0;
 
+    public const int SDL_DISABLE = 0;
+    public const int SDL_ENABLE = 1;
+    public const int SDL_QUERY = -1;
 
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int SDL_ShowCursor(int toggle);
     // Thanks to Claude. With out it, this would have been a nightmare to do
     [Flags]
     public enum SDL_WindowFlags : uint

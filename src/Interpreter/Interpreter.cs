@@ -333,6 +333,12 @@ public partial class Interpreter
             case TokenType.TOK_CLS:
                 ExecuteCls();
                 break;
+            case TokenType.TOK_MOUSEHIDE:
+                ExecuteMouseHide();
+                break;
+            case TokenType.TOK_MOUSESHOW:
+                ExecuteMouseShow();
+                break;
             case TokenType.TOK_LOCATE:
                 ExecuteLocate();
                 break;
@@ -674,7 +680,7 @@ public partial class Interpreter
     private void ExecuteArrayAssignment(string arrayName)
     {
         _pos++;
-        
+
         var indices = new List<string>();
         while (_pos < _tokens.Count && _tokens[_pos].Type != TokenType.TOK_RPAREN)
         {
@@ -685,19 +691,53 @@ public partial class Interpreter
             }
             Value idx = EvaluateExpression();
             indices.Add(idx.AsString());
-            
+
             if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_COMMA)
             {
                 _pos++;
             }
         }
         Require(TokenType.TOK_RPAREN);
-        
-        if (!Expect(TokenType.TOK_EQUALS)) return;
-        
-        Value value = EvaluateExpression();
+
         string key = string.Join(",", indices);
-        
+
+        // Compound assignment: arr$(i) += expr  →  arr$(i) = arr$(i) + expr
+        if (_pos < _tokens.Count)
+        {
+            TokenType t = _tokens[_pos].Type;
+            if (t == TokenType.TOK_PLUS_ASSIGN || t == TokenType.TOK_MINUS_ASSIGN ||
+                t == TokenType.TOK_MULTIPLY_ASSIGN || t == TokenType.TOK_DIVIDE_ASSIGN)
+            {
+                _pos++; // skip operator
+                Value right = EvaluateExpression();
+                Value left = _variables.GetArrayElement(arrayName, key);
+                Value result = t switch
+                {
+                    TokenType.TOK_PLUS_ASSIGN =>
+                        (left.Type == BazzValueType.String || right.Type == BazzValueType.String)
+                            ? Value.FromString(left.AsString() + right.AsString())
+                            : Value.FromNumber(left.AsNumber() + right.AsNumber()),
+                    TokenType.TOK_MINUS_ASSIGN => Value.FromNumber(left.AsNumber() - right.AsNumber()),
+                    TokenType.TOK_MULTIPLY_ASSIGN => Value.FromNumber(left.AsNumber() * right.AsNumber()),
+                    TokenType.TOK_DIVIDE_ASSIGN => Value.FromNumber(left.AsNumber() / right.AsNumber()),
+                    _ => right
+                };
+                try
+                {
+                    _variables.SetArrayElement(arrayName, key, result);
+                }
+                catch (InvalidOperationException ex)
+                {
+                    Error(ex.Message);
+                }
+                return;
+            }
+        }
+
+        if (!Expect(TokenType.TOK_EQUALS)) return;
+
+        Value value = EvaluateExpression();
+
         try
         {
             _variables.SetArrayElement(arrayName, key, value);
@@ -711,7 +751,7 @@ public partial class Interpreter
     // ========================================================================
     // Helpers
     // ========================================================================
-    
+
     private void SkipNewlines()
     {
         while (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_NEWLINE)

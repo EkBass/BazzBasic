@@ -17,6 +17,7 @@ using BazzBasic.Lexer;
 using BazzBasic.Parser;
 using System.Runtime.InteropServices;
 using System.Text;
+using SDL2;
 
 namespace BazzBasic.Interpreter;
 
@@ -440,10 +441,24 @@ public partial class Interpreter
         return Value.FromNumber((Graphics.Graphics.MouseButtons & 4) != 0 ? 1 : 0);
     }
 
+    private void ExecuteMouseHide()
+    {
+        _pos++;
+        if (!Graphics.Graphics.IsInitialized) return;
+        _ = SDL.SDL_ShowCursor(SDL.SDL_DISABLE);
+    }
+
+    private void ExecuteMouseShow()
+    {
+        _pos++;
+        if (!Graphics.Graphics.IsInitialized) return;
+        SDL.SDL_ShowCursor(SDL.SDL_ENABLE);
+    }
+
     // ========================================================================
     // Console Reading Functions
     // ========================================================================
-    
+
     // Windows API imports for reading console
     [DllImport("kernel32.dll", SetLastError = true)]
     private static extern IntPtr GetStdHandle(int nStdHandle);
@@ -478,8 +493,8 @@ public partial class Interpreter
     // GETCONSOLE(row, column, mode)
     // Uses same (row, column) order as LOCATE for consistency
     // mode 0 = character at position
-    // mode 1 = foreground color
-    // mode 2 = background color
+    // 1 = foreground color
+    // 2 = background color
 
     private Value EvaluateGetConsoleFunc()
     {

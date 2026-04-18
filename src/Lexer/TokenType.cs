@@ -157,6 +157,8 @@ public enum TokenType
     TOK_DISTANCE            = 282,
     TOK_CLAMP               = 283,
     TOK_LERP                = 284,
+    TOK_INBETWEEN           = 285,
+    TOK_ATAN2               = 286,
 
     // String
     TOK_ASC                 = 300,
@@ -190,20 +192,22 @@ public enum TokenType
     TOK_MOUSELEFT           = 357,
     TOK_MOUSEMIDDLE         = 358,
     TOK_MOUSERIGHT          = 359,
+    TOK_MOUSEHIDE           = 360,
+    TOK_MOUSESHOW           = 361,
 
     // Array functions
-    TOK_DELARRAY            = 360,
-    TOK_DELKEY              = 361,
-    TOK_HASKEY              = 362,
-    TOK_JOIN                = 363,
-    TOK_CURPOS              = 364,
-    TOK_ROWCOUNT            = 365,
-    TOK_ARGS                = 366,
-    TOK_ARGCOUNT            = 367,
+    TOK_DELARRAY            = 370,
+    TOK_DELKEY              = 371,
+    TOK_HASKEY              = 372,
+    TOK_JOIN                = 373,
+    TOK_CURPOS              = 374,
+    TOK_ROWCOUNT            = 375,
+    TOK_ARGS                = 376,
+    TOK_ARGCOUNT            = 377,
 
     // Time functions
-    TOK_TICKS               = 370,
-    TOK_TIME                = 371,
+    TOK_TICKS               = 380,
+    TOK_TIME                = 381,
 
     // ========================================================================
     // Logic Keywords 400 - 450

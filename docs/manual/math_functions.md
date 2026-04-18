@@ -14,14 +14,22 @@ PRINT ATAN(1.5)	' 0.982793723247329
 PRINT ATAN(-1.5)	' -0.982793723247329
 ```
 
-### BETWEEN(n, min, max)
-Returns true, if *n* is between *min* and *max*.
+### ATAN2(n, n2)
+Returns the angle, in radians, between the positive x-axis and a vector to the point with the given (x, y) coordinates in the Cartesian plane.
 ```vb
-IF BETWEEN(5, 1, 10) = TRUE THEN
-    PRINT "5 is between 1 and 10"
-END IF
-' Output: 5 is between 1 and 10
+PRINT ATAN2(5, 10) ' 0.4636476090008061
 ```
+
+### BETWEEN(n, min, max)
+Returns true if *n* is equal or between *min* and *max*
+```vb
+BETWEEN(1, 1, 10) ' true
+BETWEEN(2, 1, 10) ' true
+INBETWEEN(1, 1, 10) ' false
+INBETWEEN(2, 1, 10) ' true
+```
+
+Unlike INBETWEEN which returns true if *n* is not equal and between *min* and *max*, BETWEEN returns true if *n* is equal and between *min* and *max*
 
 ### CINT(n)
 The Cint function converts an expression to type Integer.
@@ -131,6 +139,18 @@ LET angle_180$ = PI#         ' 180 degrees
 LET angle_270$ = PI# + HPI#   ' 270 degrees
 LET angle_360$ = TAU#        ' 360 degrees
 ```
+
+### INBETWEEN(n, min, max)
+Returns true, if *n* is between *min* and *max* and not equal to them
+
+```vb
+INBETWEEN(1, 1, 10) ' false
+INBETWEEN(2, 1, 10) ' true
+BETWEEN(1, 1, 10) ' true
+BETWEEN(2, 1, 10) ' true
+```
+
+Unlike BETWEEN which returns true if *n* is equal or between *min* and *max*, INBETWEEN returns true if *n* is not equal and between *min* and *max*
 
 ### INT(n)
 Returns the integer part (truncates toward zero).
