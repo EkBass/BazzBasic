@@ -3,6 +3,16 @@ These changes are about the current source code. These are effected once new bin
 
 ## April 2026
 
+
+## 26th April 2026
+
+Some manual fixes.  
+Missing floating point example for RND() etc.
+
+## 19th April 2026
+
+Release as ver. 1.3b
+
 ## 18th April 2026
 
 **Fixed:** Concanationing did not work with arrays

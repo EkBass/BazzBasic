@@ -615,7 +615,9 @@ public static class Graphics
             SDL.SDL_Keycode.SDLK_F10 => 324,
             SDL.SDL_Keycode.SDLK_F11 => 389,
             SDL.SDL_Keycode.SDLK_F12 => 390,
-            _ => (int)key // For regular ASCII keys SDL2 matches,,, I think
+            // SDL2 letter keys return lowercase ASCII (97-122); normalize to uppercase (65-90)
+            // so KEY_A# (=65) matches regardless of shift state, consistent with console mode
+            _ => (int)key is >= 97 and <= 122 ? (int)key - 32 : (int)key
         };
     }
     
