@@ -268,7 +268,7 @@ Returns a random integer from 0 to n-1 or a floating point between 0 and 1.
 ```vb
 PRINT RND(10)      	' Output: 0-9
 PRINT RND(100)		' Output: 0-99
-RND(0)				' Float between 0.0 and 1.0 (IE: 0.5841907423666761)
+RND(0)			' Float between 0.0 and 1.0 (IE: 0.5841907423666761)
 ' Dice roll
 LET dice$ = RND(6) + 1
 ```
