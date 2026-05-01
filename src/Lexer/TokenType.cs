@@ -95,6 +95,10 @@ public enum TokenType
     TOK_ASARRAY             = 133,
     TOK_LOADJSON            = 134,
     TOK_SAVEJSON            = 135,
+    TOK_STARTLISTEN         = 136,
+    TOK_GETREQUEST          = 137,
+    TOK_SENDRESPONSE        = 138,
+    TOK_STOPLISTEN          = 139,
 
     // ========================================================================
     // Sound Keywords 151 - 200
@@ -159,6 +163,7 @@ public enum TokenType
     TOK_LERP                = 284,
     TOK_INBETWEEN           = 285,
     TOK_ATAN2               = 286,
+    TOK_ISSET               = 287,
 
     // String
     TOK_ASC                 = 300,
@@ -180,6 +185,7 @@ public enum TokenType
     TOK_TRIM                = 316,
     TOK_UCASE               = 317,
     TOK_VAL                 = 318,
+    TOK_FSTRING             = 319,
 
     // Input/Mouse
     TOK_INKEY               = 350,

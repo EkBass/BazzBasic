@@ -341,6 +341,69 @@ public partial class Interpreter
         return Value.FromNumber(Math.Tan(HelperGetDouble()));
     }
 
+    // ISSET function - Check if a variable or constant is declared
+    // Accepts a single bare variable ($) or constant (#) name. Arrays and
+    // array-element accesses always return false (arrays live in a separate
+    // namespace from scalars). Anything else - expressions, literals, empty
+    // parens - is rejected with an "invalid parameter" error.
+    private Value EvaluateIssetFunc()
+    {
+        _pos++; // consume ISSET
+        Require(TokenType.TOK_LPAREN);
+
+        if (_pos >= _tokens.Count)
+        {
+            Error("ISSET: invalid parameter, expected a variable or constant name.");
+            return Value.Zero;
+        }
+
+        Token tok = _tokens[_pos];
+        if (tok.Type != TokenType.TOK_VARIABLE && tok.Type != TokenType.TOK_CONSTANT)
+        {
+            Error("ISSET: invalid parameter, expected a variable or constant name.");
+            return Value.Zero;
+        }
+
+        string name = tok.StringValue ?? "";
+        _pos++;
+
+        // Followed by '(' -> array-element access syntax. Skip balanced parens
+        // and return false (arr$(idx) is never a scalar variable).
+        if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_LPAREN)
+        {
+            _pos++; // consume opening LPAREN
+            int depth = 1;
+            while (_pos < _tokens.Count && depth > 0
+                && _tokens[_pos].Type != TokenType.TOK_NEWLINE
+                && _tokens[_pos].Type != TokenType.TOK_EOF)
+            {
+                TokenType t = _tokens[_pos].Type;
+                if (t == TokenType.TOK_LPAREN) depth++;
+                else if (t == TokenType.TOK_RPAREN) depth--;
+                _pos++;
+            }
+            if (depth != 0)
+            {
+                Error("ISSET: malformed parameter, unbalanced parentheses.");
+                return Value.Zero;
+            }
+            Require(TokenType.TOK_RPAREN);
+            return Value.Zero;
+        }
+
+        // Anything other than RPAREN here means an expression was attempted
+        if (_pos >= _tokens.Count || _tokens[_pos].Type != TokenType.TOK_RPAREN)
+        {
+            Error("ISSET: invalid parameter, only a single variable or constant name is allowed.");
+            return Value.Zero;
+        }
+        _pos++; // consume RPAREN
+
+        return _variables.VariableExists(name)
+            ? Value.FromNumber(1)
+            : Value.Zero;
+    }
+
     // BETWEEN function - Check if a value is between two others (inclusive)
     private Value EvaluateBetweenFunc()
     {

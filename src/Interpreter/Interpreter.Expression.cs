@@ -1,4 +1,4 @@
-﻿/*
+/*
  BazzBasic project
  Url: https://github.com/EkBass/BazzBasic
  
@@ -329,8 +329,12 @@ public partial class Interpreter
                 return EvaluateUcaseFunc();
             case TokenType.TOK_VAL:
                 return EvaluateValFunc();
+            case TokenType.TOK_FSTRING:
+                return EvaluateFstringFunc();
             case TokenType.TOK_BETWEEN:
                 return EvaluateBetweenFunc();
+            case TokenType.TOK_ISSET:
+                return EvaluateIssetFunc();
 
             // Other functions
             // Before 1.0, adjust these alphabetically
@@ -382,6 +386,8 @@ public partial class Interpreter
                 return EvaluateAsJson();
             case TokenType.TOK_ASARRAY:
                 return EvaluateAsArray();
+            case TokenType.TOK_GETREQUEST:
+                return EvaluateGetRequest();
             case TokenType.TOK_BASE64ENCODE:
                 return EvaluateBase64Encode();
             case TokenType.TOK_BASE64DECODE:

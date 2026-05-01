@@ -24,6 +24,43 @@ PRINT CHR(65)      ' Output: A
 PRINT CHR(10)      ' Output: (newline)
 ```
 
+### FSTRING(template$)
+String interpolation. Substitutes `{{-name-}}` placeholders inside the template with the value of variables, constants, or array elements. Whitespace inside placeholders is trimmed (so `{{- name$ -}}` works the same as `{{-name$-}}`). Numbers are auto-converted to strings.
+
+**Placeholder forms:**
+- `{{-var$-}}` — variable
+- `{{-CONST#-}}` — constant
+- `{{-arr$(0)-}}` — array element with numeric index
+- `{{-arr$(i$)-}}` or `{{-arr$(KEY#)-}}` — array element where the index comes from a variable / constant (must end in `$` or `#`)
+- `{{-arr$(name)-}}` — array element with literal string key (matches what was set via `arr$("name") = ...`)
+- `{{-arr$(0, i$)-}}` — multidimensional, mixed literal and variable indices
+
+**Notes:**
+- No expressions, arithmetic, or function calls are allowed inside placeholders. Pre-compute into a variable first.
+- A bare identifier without `$` / `#` suffix inside an array index is treated as a literal string key.
+- Unknown variable, missing `-}}`, or empty placeholder halts execution with a line-numbered error.
+- The literal sequence `{{-...-}}` is reserved — FSTRING will always try to resolve it.
+
+```vb
+LET name$ = "Krisu"
+LET LEVEL# = 5
+PRINT FSTRING("Hello {{-name$-}}, level {{-LEVEL#-}}")
+' Output: Hello Krisu, level 5
+
+DIM player$
+    player$("name")  = "Krisu"
+    player$("level") = 99
+PRINT FSTRING("{{-player$(name)-}} is level {{-player$(level)-}}")
+' Output: Krisu is level 99
+
+DIM grid$
+    grid$(0, 0) = "X"
+    grid$(0, 1) = "O"
+LET row$ = 0
+PRINT FSTRING("[{{-grid$(row$, 0)-}}{{-grid$(row$, 1)-}}]")
+' Output: [XO]
+```
+
 ### INSTR(s$, search$) or INSTR(start, s$, search$)
 Finds position of substring (1-based, 0 if not found).
 ```vb

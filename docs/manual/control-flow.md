@@ -206,6 +206,74 @@ SLEEP 2000
 PRINT "Done!"
 ```
 
+## Line Continuation
+
+Long expressions and statements can be split across multiple lines. BazzBasic figures this out automatically — there is no special continuation character to remember (no `\`, no `_`, no `&`).
+
+A newline is treated as a continuation (instead of ending the statement) when **either**:
+
+1. The previous token cannot legally end an expression — a binary operator, comma, compound-assign, or open paren.
+2. You are inside an open `( ... )` pair.
+
+### Operator-driven continuation
+
+Any line ending in an "incomplete" token continues on the next line. Empty lines and trailing comments between the parts are tolerated.
+
+```vb
+LET total$ = price$ * count$ -
+             discount$
+
+LET msg$ = "Hello, " +
+           name$ +
+           "!"
+
+IF score$ >= 0 AND
+   score$ <= 100 THEN
+    PRINT "Valid score"
+END IF
+
+LET counter$ +=
+    step$
+```
+
+The full list of operators that trigger continuation: `+`, `-`, `*`, `/`, `%`, `=`, `<>`, `<`, `<=`, `>`, `>=`, `AND`, `OR`, `+=`, `-=`, `*=`, `/=`, and `,`.
+
+> **Note:** `MOD` is a function (`MOD(a, b)`), not an operator, so it does not trigger continuation. The symbol `%` does.
+
+### Paren-driven continuation
+
+Anything inside an unmatched `(` keeps reading until the matching `)`, regardless of newlines:
+
+```vb
+LET dist$ = DISTANCE(
+    x1$, y1$,
+    x2$, y2$
+)
+
+LET val$ = MAX(
+    MIN(100, score$),
+    0
+)
+
+DIM grid$
+    grid$(0,
+          0) = "X"
+```
+
+Both mechanisms can be combined freely:
+
+```vb
+LET total$ = (
+    base$ +
+    tax$ -
+    discount$
+)
+```
+
+### Watch out
+
+Forgetting to close a `(` makes the lexer keep eating lines until it finds a matching `)` (or runs out of source). The eventual error message can be far from the actual mistake — count your parentheses if a long file suddenly stops parsing the way you expect.
+
 ## See Also
 - [Operators](operators.md) — comparison and logical operators
 - [Input Functions](input_functions.md) — INKEY, KEYDOWN, WAITKEY

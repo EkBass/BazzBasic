@@ -86,6 +86,10 @@ public class Lexer(string source)
         ["ASARRAY"]     = TokenType.TOK_ASARRAY,
         ["LOADJSON"]    = TokenType.TOK_LOADJSON,
         ["SAVEJSON"]    = TokenType.TOK_SAVEJSON,
+        ["STARTLISTEN"]  = TokenType.TOK_STARTLISTEN,
+        ["GETREQUEST"]   = TokenType.TOK_GETREQUEST,
+        ["SENDRESPONSE"] = TokenType.TOK_SENDRESPONSE,
+        ["STOPLISTEN"]   = TokenType.TOK_STOPLISTEN,
 
         // Sound
         ["LOADSOUND"]       = TokenType.TOK_LOADSOUND,
@@ -107,6 +111,7 @@ public class Lexer(string source)
         ["ABS"]             = TokenType.TOK_ABS,
         ["ATAN"]            = TokenType.TOK_ATAN,
         ["ATAN2"]           = TokenType.TOK_ATAN2,
+        ["ISSET"]           = TokenType.TOK_ISSET,
         ["CEIL"]            = TokenType.TOK_CEIL,
         ["CINT"]            = TokenType.TOK_CINT,
         ["COS"]             = TokenType.TOK_COS,
@@ -161,6 +166,7 @@ public class Lexer(string source)
         ["TRIM"]        = TokenType.TOK_TRIM,
         ["UCASE"]       = TokenType.TOK_UCASE,
         ["VAL"]         = TokenType.TOK_VAL,
+        ["FSTRING"]     = TokenType.TOK_FSTRING,
 
         // Input/Mouse
         ["INKEY"]       = TokenType.TOK_INKEY,
@@ -215,12 +221,36 @@ public class Lexer(string source)
     public List<Token> Tokenize()
     {
         var tokens = new List<Token>();
-        
+        int parenDepth = 0;
+
         while (_pos < _source.Length)
         {
             var token = NextToken();
             if (token.HasValue)
             {
+                // Implicit line continuation: suppress NEWLINE if either
+                //   (a) the previous token cannot legally end an expression
+                //       (binary operator, comma, compound-assign, etc.), or
+                //   (b) we are currently inside an open '(' ... ')' pair.
+                // Comments after the token are already stripped before the
+                // NEWLINE is emitted, and empty lines stay suppressed since
+                // the last *added* token still belongs to the open expression.
+                if (token.Value.Type == TokenType.TOK_NEWLINE
+                    && tokens.Count > 0
+                    && (IsLineContinuationToken(tokens[tokens.Count - 1].Type)
+                        || parenDepth > 0))
+                {
+                    continue;
+                }
+
+                // Track parenthesis nesting. Clamp at zero so a stray ')'
+                // does not produce a negative depth that would affect later
+                // newline handling â€” the parser will report the imbalance.
+                if (token.Value.Type == TokenType.TOK_LPAREN)
+                    parenDepth++;
+                else if (token.Value.Type == TokenType.TOK_RPAREN && parenDepth > 0)
+                    parenDepth--;
+
                 tokens.Add(token.Value);
             }
         }
@@ -229,6 +259,44 @@ public class Lexer(string source)
         tokens.Add(new Token(TokenType.TOK_EOF, _line));
         
         return tokens;
+    }
+
+    // Tokens that imply "the expression is incomplete, please continue on the
+    // next line". Keep this list strictly to tokens that *cannot* validly end
+    // a statement; otherwise innocent typos (a stray operator) would silently
+    // swallow the next line of code instead of raising a clear parse error.
+    // TOK_LPAREN is also covered structurally by the paren-depth counter.
+    private static bool IsLineContinuationToken(TokenType t)
+    {
+        return t switch
+        {
+            // Arithmetic operators
+            TokenType.TOK_PLUS              => true,
+            TokenType.TOK_MINUS             => true,
+            TokenType.TOK_MULTIPLY          => true,
+            TokenType.TOK_DIVIDE            => true,
+            TokenType.TOK_MODULO            => true,    // %
+            // NOTE: TOK_MOD is the MOD() function, not a binary operator.
+            // Comparison operators
+            TokenType.TOK_EQUALS            => true,    // = (also assignment)
+            TokenType.TOK_NOT_EQUALS        => true,
+            TokenType.TOK_LESS              => true,
+            TokenType.TOK_LESS_EQ           => true,
+            TokenType.TOK_GREATER           => true,
+            TokenType.TOK_GREATER_EQ        => true,
+            // Logical operators
+            TokenType.TOK_AND               => true,
+            TokenType.TOK_OR                => true,
+            // Compound assignment
+            TokenType.TOK_PLUS_ASSIGN       => true,
+            TokenType.TOK_MINUS_ASSIGN      => true,
+            TokenType.TOK_MULTIPLY_ASSIGN   => true,
+            TokenType.TOK_DIVIDE_ASSIGN     => true,
+            // Structural
+            TokenType.TOK_COMMA             => true,
+            TokenType.TOK_LPAREN            => true,
+            _                               => false,
+        };
     }
 
     private Token? NextToken()

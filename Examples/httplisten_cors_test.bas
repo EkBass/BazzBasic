@@ -1,0 +1,12 @@
+PRINT "Listening on 8767..."
+STARTLISTEN 8767, 5000
+LET body$ = GETREQUEST()
+IF LEN(body$) = 0 THEN
+    PRINT "Timeout."
+ELSE
+    PRINT "Body: " + body$
+END IF
+SENDRESPONSE "ok"
+STOPLISTEN
+PRINT "Done."
+END

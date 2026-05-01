@@ -81,7 +81,7 @@
         },
         "keywords-string": {
             "name": "support.function.string.bazzbasic",
-            "match": "(?i)\\b(ASC|CHR|INSTR|INVERT|LCASE|LEFT|LEN|LTRIM|MID|REPEAT|REPLACE|RIGHT|RTRIM|SPLIT|SRAND|STR|TRIM|UCASE|VAL)\\b"
+            "match": "(?i)\\b(ASC|CHR|FSTRING|INSTR|INVERT|ISSET|LCASE|LEFT|LEN|LTRIM|MID|REPEAT|REPLACE|RIGHT|RTRIM|SPLIT|SRAND|STR|TRIM|UCASE|VAL)\\b"
         },
         "keywords-file": {
             "name": "support.function.file.bazzbasic",

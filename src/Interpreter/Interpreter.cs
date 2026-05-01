@@ -217,7 +217,7 @@ public partial class Interpreter
 
             // Mouse
 
-            // Math constants with # suffix (PI# etc.) — backward-compatible aliases
+            // Math constants with # suffix (PI# etc.) â€” backward-compatible aliases
             ["PI#"]    = Math.PI,
             ["HPI#"]   = Math.PI / 2.0,
             ["QPI#"]   = Math.PI / 4.0,
@@ -446,6 +446,15 @@ public partial class Interpreter
             case TokenType.TOK_SAVEJSON:
                 ExecuteSaveJson();
                 break;
+            case TokenType.TOK_STARTLISTEN:
+                ExecuteStartListen();
+                break;
+            case TokenType.TOK_SENDRESPONSE:
+                ExecuteSendResponse();
+                break;
+            case TokenType.TOK_STOPLISTEN:
+                ExecuteStopListen();
+                break;
             case TokenType.TOK_END:
                 _pos++;
                 if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_IF)
@@ -515,7 +524,7 @@ public partial class Interpreter
                 return;
             }
 
-            // Compound assignment: var$ += expr  →  var$ = var$ + expr
+            // Compound assignment: var$ += expr  â†’  var$ = var$ + expr
             if (_pos < _tokens.Count)
             {
                 TokenType t = _tokens[_pos].Type;
@@ -701,7 +710,7 @@ public partial class Interpreter
 
         string key = string.Join(",", indices);
 
-        // Compound assignment: arr$(i) += expr  →  arr$(i) = arr$(i) + expr
+        // Compound assignment: arr$(i) += expr  â†’  arr$(i) = arr$(i) + expr
         if (_pos < _tokens.Count)
         {
             TokenType t = _tokens[_pos].Type;
@@ -808,7 +817,7 @@ public partial class Interpreter
     }
 
     // ========================================================================
-    // ARGS / ARGCOUNT — command-line arguments
+    // ARGS / ARGCOUNT â€” command-line arguments
     // ========================================================================
 
     private Value EvaluateArgsFunc()

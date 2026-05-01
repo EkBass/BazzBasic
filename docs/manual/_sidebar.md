@@ -30,5 +30,6 @@
 - [Graphics Commands](graphics.md)
 - [Sound Commands](sounds.md)
 - [Network](network.md)
+- [SQLite Database](sqlite.md)
 - [Preprocessor & Source Control](preprocessor.md)
 - [Reserved Words](keywords.md)

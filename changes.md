@@ -3,6 +3,63 @@ These changes are about the current source code. These are effected once new bin
 
 ## April 2026
 
+## 1st May 2026
+
+### Line Continuation
+BazzBasic now supports line continuation, see more from documents.
+
+### Added ISSET.
+
+ISSET returns true of false depending is variable/constant deckared. ISSET() does not care about the value, just the declaration.
+
+```basic
+[inits]
+    LET a$ ' just declaration
+    LET b$ = "b$"
+    LET c$ = 123
+
+    LET MY_CONST# = "Foo"
+
+[main]
+    PRINT ISSET(a$) ' true
+    PRINT ISSET(b$) ' true
+    PRINT ISSET(c$) ' true
+    PRINT ISSET(MY_CONST#) ' true
+
+    PRINT ISSET(foo$) ' false
+    PRINT ISSET(FOO#) ' false
+```
+
+## 30th April 2026
+
+Added **FSTRING**. FSTRING() stand for "Fixed String". In other languages it is also known as 'Interpolated strings', 'Template strings', 'Formatted string literals' or 'Embedded expressions in strings'.
+
+```basic
+' BazzBasic version 1.3b
+' https://ekbass.github.io/BazzBasic/
+'
+' Consult file "Examples\fstring_test.bas" for more examples or https://ekbass.github.io/BazzBasic/manual/#/string_functions
+
+[inits]
+    LET a$ = "Hello"
+    LET NAME# = "John Doe"
+    LET foo$ = FSTRING("{{-a$-}} there {{-NAME#-}}. How are you?")
+
+    DIM arr$
+        arr$(1) = "Bazz"
+        arr$("foo") = "Basic"
+
+[main]
+    PRINT foo$
+
+    ' To avoid "quot confusion", use literals with out quotes
+    PRINT FSTRING("{{-arr$(1)-}} and {{-arr$(foo)-}}")
+END
+
+' Output:
+' Hello there John Doe. How are you?
+' Bazz and Basic
+```
 
 ## 26th April 2026
 

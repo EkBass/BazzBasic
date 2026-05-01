@@ -134,3 +134,50 @@ PRINT ARGS(1)
 
 - Always check with ARGCOUNT first, is there arguments passed
 - ARGCOUNT gives the amount of arguments but ARGS() places first argument in ARGS(0), not in ARGS(1).
+
+## Variable Functions
+
+### ISSET(name)
+Returns `1` if the named **variable** (`$`) or **constant** (`#`) is declared, `0` otherwise. Useful for guarding optional parameters, checking whether `LET` has run on a code path, or branching on configuration values.
+
+`ISSET` only sees scalar variables and constants. Arrays and array elements are stored in a separate namespace and always return `0` — use the array-specific functions if you need to check those.
+
+```vb
+LET a$ = "hello"
+LET b$                  ' declared with no value
+LET MAX# = 100
+
+PRINT ISSET(a$)         ' 1
+PRINT ISSET(b$)         ' 1  (LET declares it even without a value)
+PRINT ISSET(MAX#)       ' 1
+PRINT ISSET(undef$)     ' 0
+PRINT ISSET(UNDEF#)     ' 0
+```
+
+**Suffix matters.** `a$` and `A#` are two different names — `$` and `#` are part of the identifier:
+```vb
+LET a$ = "foo"
+PRINT ISSET(a$)  ' 1
+PRINT ISSET(A#)  ' 0   - the constant A# does not exist
+```
+
+**Arrays return 0.** The array name is not a scalar variable, and array elements are not scalars either:
+```vb
+DIM arr$
+    arr$(0) = "zero"
+PRINT ISSET(arr$)        ' 0
+PRINT ISSET(arr$(0))     ' 0
+PRINT ISSET(arr$(99))    ' 0
+```
+
+**Typical use — guarding optional setup:**
+```vb
+IF NOT ISSET(playerName$) THEN
+    LET playerName$ = "Anonymous"
+END IF
+```
+
+#### Important
+
+- `ISSET` accepts only a single bare variable or constant name. `ISSET(a$ + b$)`, `ISSET("a$")`, `ISSET(42)`, and `ISSET()` are all errors.
+- The argument is **not evaluated** — `ISSET(undef$)` is safe and returns `0`, it does not raise an "undefined variable" error.

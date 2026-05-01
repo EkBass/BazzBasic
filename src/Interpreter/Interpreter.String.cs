@@ -378,4 +378,157 @@ public partial class Interpreter
             return Value.FromNumber(result);
         return Value.Zero;
     }
+
+    // ========================================================================
+    // FSTRING - String interpolation with {{-name-}} placeholders
+    // Substitutes $-variables, #-constants, and array elements like
+    // {{-arr$(1)-}} or {{-arr$(i$, KEY#)-}}. Whitespace inside placeholder
+    // is trimmed. Unknown name halts execution with an error.
+    // No expressions, no escape syntax - keep it simple.
+    // ========================================================================
+    private Value EvaluateFstringFunc()
+    {
+        _pos++;
+        Require(TokenType.TOK_LPAREN);
+        string template = EvaluateExpression().AsString();
+        Require(TokenType.TOK_RPAREN);
+
+        if (string.IsNullOrEmpty(template))
+            return Value.FromString(string.Empty);
+
+        const string OPEN = "{{-";
+        const string CLOSE = "-}}";
+
+        var sb = new System.Text.StringBuilder(template.Length);
+        int i = 0;
+        while (i < template.Length)
+        {
+            // Look for opening "{{-"
+            if (i + 2 < template.Length
+                && template[i]     == '{'
+                && template[i + 1] == '{'
+                && template[i + 2] == '-')
+            {
+                int nameStart = i + OPEN.Length;
+                int end = template.IndexOf(CLOSE, nameStart, StringComparison.Ordinal);
+                if (end < 0)
+                {
+                    Error("FSTRING: missing closing '-}}' in template.");
+                    return Value.FromString(template);
+                }
+
+                string content = template.Substring(nameStart, end - nameStart).Trim();
+                if (content.Length == 0)
+                {
+                    Error("FSTRING: empty placeholder '{{--}}'.");
+                    return Value.FromString(template);
+                }
+
+                if (!ResolveFstringPlaceholder(content, sb))
+                    return Value.FromString(template);
+
+                i = end + CLOSE.Length;
+            }
+            else
+            {
+                sb.Append(template[i]);
+                i++;
+            }
+        }
+        return Value.FromString(sb.ToString());
+    }
+
+    // Resolve a single placeholder content (already trimmed, non-empty)
+    // and append the resulting text to sb. Returns false if an error was
+    // emitted (caller should bail out).
+    private bool ResolveFstringPlaceholder(string content, System.Text.StringBuilder sb)
+    {
+        int paren = content.IndexOf('(');
+
+        // ---- Plain variable / constant: no '(' present ----
+        if (paren < 0)
+        {
+            if (_variables.TryGetVariable(content, out Value v))
+            {
+                sb.Append(v.AsString());
+                return true;
+            }
+            Error($"FSTRING: undefined variable '{content}'.");
+            return false;
+        }
+
+        // ---- Array access: name(idx [, idx]...) ----
+        if (paren == 0 || content[content.Length - 1] != ')')
+        {
+            Error($"FSTRING: malformed array access '{content}'.");
+            return false;
+        }
+
+        string arrayName = content.Substring(0, paren).Trim();
+        if (arrayName.Length == 0)
+        {
+            Error($"FSTRING: missing array name in '{content}'.");
+            return false;
+        }
+
+        string inner = content.Substring(paren + 1, content.Length - paren - 2);
+        if (inner.Trim().Length == 0)
+        {
+            Error($"FSTRING: missing array index in '{content}'.");
+            return false;
+        }
+
+        var resolved = new List<string>();
+        foreach (var raw in inner.Split(','))
+        {
+            string idx = raw.Trim();
+            if (idx.Length == 0)
+            {
+                Error($"FSTRING: empty array index in '{content}'.");
+                return false;
+            }
+
+            char lastCh = idx[idx.Length - 1];
+
+            // $-variable or #-constant: suffix tells us this is a lookup
+            if (lastCh == '$' || lastCh == '#')
+            {
+                if (_variables.TryGetVariable(idx, out Value indexVal))
+                {
+                    resolved.Add(indexVal.AsString());
+                }
+                else
+                {
+                    Error($"FSTRING: undefined variable '{idx}' in array index of '{content}'.");
+                    return false;
+                }
+            }
+            // Numeric literal: normalize through double round-trip so
+            // "01" and "1.0" both match the key "1" stored at LET-time.
+            else if (double.TryParse(idx, System.Globalization.NumberStyles.Any,
+                System.Globalization.CultureInfo.InvariantCulture, out double num))
+            {
+                resolved.Add(num.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            }
+            // Bare identifier without suffix -> treat as a string-literal key.
+            // Lets the user write {{-player$(name)-}} for player$("name") = ...
+            else
+            {
+                resolved.Add(idx);
+            }
+        }
+
+        string key = string.Join(",", resolved);
+        try
+        {
+            Value v = _variables.GetArrayElement(arrayName, key);
+            sb.Append(v.AsString());
+            return true;
+        }
+        catch (InvalidOperationException ex)
+        {
+            Error($"FSTRING: {ex.Message}");
+            return false;
+        }
+    }
 }
