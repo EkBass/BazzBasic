@@ -1,7 +1,7 @@
 # More Command Line Features
 
 
-## Get a link to the BazzBasic Starter's Guide
+## Get a link to the BazzBasic Beginner's Guide
 
 ```
 bazzbasic.exe -guide
@@ -16,17 +16,17 @@ bazzbasic.exe -help
 ## Get Version of Your Current BazzBasic
 
 ```
-BazzBasic.exe -version
+bazzbasic.exe -version
 ```
 
 **or**
 
 ```
-BazzBasic.exe -v
+bazzbasic.exe -v
 ```
 
 ## Check For New Version Release
 
 ```
-BazzBasic.exe -checkupdate
+bazzbasic.exe -checkupdates
 ```
