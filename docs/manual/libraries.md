@@ -37,7 +37,7 @@ Output:
 ```
 Created library: MathLib.bb
 Library name: MATHLIB
-Size: <size> bytes
+Size: {size} bytes
 ```
 
 The library name is derived from the filename (uppercase, without extension).
@@ -49,11 +49,14 @@ Include the library and call library functions with the `FN` keyword using the l
 ```vb
 INCLUDE "MathLib.bb"
 
-LET a$ = 5
-LET b$ = 3
+[inits]
+	LET a$ = 5
+	LET b$ = 3
 
-PRINT "5 + 3 = "; FN MATHLIB_add$(a$, b$)
-PRINT "5 * 3 = "; FN MATHLIB_multiply$(a$, b$)
+[main]
+	PRINT "5 + 3 = "; FN MATHLIB_add$(a$, b$)
+	PRINT "5 * 3 = "; FN MATHLIB_multiply$(a$, b$)
+END
 ```
 
 Output:
@@ -66,9 +69,9 @@ Output:
 
 | Source file       | Library name  | Function prefix  |
 |-------------------|---------------|------------------|
-| MathLib.bas       | MATHLIB       | MATHLIB_         |
-| StringUtils.bas   | STRINGUTILS   | STRINGUTILS_     |
-| MyGame.bas        | MYGAME        | MYGAME_          |
+| MathLib.bas       | MATHLIB.bb       | MATHLIB_         |
+| StringUtils.bas   | STRINGUTILS.bb   | STRINGUTILS_     |
+| MyGame.bas        | MYGAME.bb        | MYGAME_          |
 
 Original function `add$()` becomes `MATHLIB_add$()` when compiled from MathLib.bas.
 
@@ -77,12 +80,15 @@ Original function `add$()` becomes `MATHLIB_add$()` when compiled from MathLib.b
 Libraries cannot define constants, but library functions can access constants defined in the main program:
 
 ```vb
-REM Main program
-LET APP_NAME# = "MyApp"
-LET APP_VERSION# = "1.0"
-
 INCLUDE "Utils.bb"
-PRINT FN UTILS_getAppInfo$()   ' Can use APP_NAME# and APP_VERSION#
+
+[inits]
+	LET APP_NAME# = "MyApp"
+	LET APP_VERSION# = "1.0"
+
+[main]
+	PRINT FN UTILS_getAppInfo$()   ' Can use APP_NAME# and APP_VERSION#
+END
 ```
 
 ```vb
@@ -98,7 +104,6 @@ END DEF
 - **Automatic prefix** — All functions get the library name as prefix
 - **No conflicts** — Multiple libraries can have functions with the same base name
 - **Binary format** — `.bb` files are not human-readable
-- **Version locked** — Libraries compiled with one version may not work with others
 - **Constant access** — Library functions can read constants from the main program
 
 ## Error Handling
