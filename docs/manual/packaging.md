@@ -20,6 +20,7 @@ The standalone exe needs only one additional file:
 | yourprogram.exe | Yes | Your packaged program |
 | SDL2.dll | Yes | Graphics and input |
 | SDL2_mixer.dll | Yes | Audio |
+| SDL2_mixer.dll
 
 #### Your assets:
 
@@ -42,6 +43,8 @@ mygame/
 mygame/
 ├── yourprogram.exe
 ├── SDL2.dll
+├── SDL2_mixer.dll
+├── SDL2_ttf.dll
 ├── images/
 │   ├── player.png
 │   └── enemy.png
@@ -54,7 +57,7 @@ mygame/
 
 **Binary download:**
 
-If you downloaded the binary file, __bazzbasic.exe__ the required SDL2.dll in in the same folder.
+If you downloaded the binary file, __bazzbasic.exe__ the required SDL2.dll in the same folder.
 
 **If you build from the source:**
 
