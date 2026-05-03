@@ -9,13 +9,13 @@
 
 [main]
     ' Create in current directory
-    FileWrite "output.txt", ""
-    FileWrite "docs\\placeholder.txt", ""   ' FileWrite auto-creates the directory
+    FILEWRITE "output.txt", ""
+    FILEWRITE "docs\\placeholder.txt", ""   ' FILEWRITE auto-creates the directory
 
 
     ' Create in filesystem root
-    FileWrite DRIVE_ROOT# + "\\output.txt", ""
-    FileWrite DRIVE_ROOT# + "\\docs\\placeholder.txt", ""
+    FILEWRITE DRIVE_ROOT# + "\\output.txt", ""
+    FILEWRITE DRIVE_ROOT# + "\\docs\\placeholder.txt", ""
 
     PRINT "Done."
 END

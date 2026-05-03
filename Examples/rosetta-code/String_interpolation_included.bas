@@ -2,24 +2,26 @@
 ' https://rosettacode.org/wiki/String_interpolation
 ' BazzBasic: https://github.com/EkBass/BazzBasic
 ' ============================================
-
-' BazzBasic does not have built-in string interpolation syntax.
-' The idiomatic approach is REPLACE() or string concatenation.
+' BazzBasic has native string interpolation via FSTRING() since v1.3.
+' Placeholders use the {{- name$ -}} syntax — chosen to avoid collisions
+' with normal text. REPLACE() and concatenation are shown for comparison.
 
 [inits]
-    LET template$ = "Mary had a %s lamb."
-    LET word$     = "little"
-    LET result$
+    LET word$ = "little"
 
 [main]
-    ' REPLACE: substitute placeholder with value
-    result$ = REPLACE(template$, "%s", word$)
-    PRINT result$
+    ' 1. FSTRING — idiomatic, native interpolation
+    PRINT FSTRING("Mary had a {{-word$-}} lamb.")
 
-    ' Concatenation: build string directly
+    ' 2. REPLACE — substitute a placeholder token with a value
+    LET template$ = "Mary had a %s lamb."
+    PRINT REPLACE(template$, "%s", word$)
+
+    ' 3. Concatenation — build the string directly
     PRINT "Mary had a " + word$ + " lamb."
 END
 
 ' Output:
+' Mary had a little lamb.
 ' Mary had a little lamb.
 ' Mary had a little lamb.

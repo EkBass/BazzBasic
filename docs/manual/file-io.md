@@ -24,7 +24,7 @@ The file system allows you to:
 
 ## File Functions
 
-### FileRead(filepath$)
+### FILEREAD(filepath$)
 
 Reads the entire contents of a text file and returns it as a string or array.
 
@@ -32,13 +32,13 @@ Reads the entire contents of a text file and returns it as a string or array.
 
 **Syntax:**
 ```vb
-content$ = FileRead("path/to/file.txt")
+content$ = FILEREAD("path/to/file.txt")
 ```
 
 **Example with variable:**
 ```vb
 LET config$
-config$ = FileRead("settings.txt")
+config$ = FILEREAD("settings.txt")
 IF LEN(config$) > 0 THEN
     PRINT "Config loaded: "; config$
 ELSE
@@ -54,8 +54,8 @@ a$("second") = 2
 a$("third") = 3
 a$("fourth") = "Four"
 a$("fourth", "temp") = "Temp"
-FileWrite FILENAME#, a$
-DIM b$ = FileRead(FILENAME#)
+FILEWRITE FILENAME#, a$
+DIM b$ = FILEREAD(FILENAME#)
 PRINT b$("fourth", "temp")
 ```
 
@@ -67,7 +67,7 @@ PRINT b$("fourth", "temp")
 
 ---
 
-### FileExists(filepath$)
+### FILEEXISTS(filepath$)
 
 Checks whether a file exists at the specified path.
 
@@ -75,14 +75,14 @@ Checks whether a file exists at the specified path.
 
 **Syntax:**
 ```vb
-LET exists# = FileExists("path/to/file.txt")
+LET exists# = FILEEXISTS("path/to/file.txt")
 ```
 
 **Example:**
 ```vb
-IF FileExists("highscore.txt") = 1 THEN
+IF FILEEXISTS("highscore.txt") = 1 THEN
     PRINT "Loading existing scores..."
-    LET scores$ = FileRead("highscore.txt")
+    LET scores$ = FILEREAD("highscore.txt")
 ELSE
     PRINT "No saved scores found"
     LET scores$ = "0"
@@ -92,20 +92,20 @@ ENDIF
 **Notes:**
 - Safe to call on any path
 - Returns 0 if path doesn't exist or access is denied
-- Use before FileRead to avoid empty string results
+- Use before FILEREAD to avoid empty string results
 - Useful for conditional file operations
 
 ---
 
 ## File Commands
 
-### FileWrite filepath$, content$
+### FILEWRITE filepath$, content$
 
 Writes content to a file, creating it if it doesn't exist or overwriting it completely if it does.
 
 **Syntax:**
 ```vb
-FileWrite filepath$, content$
+FILEWRITE filepath$, content$
 ```
 
 **Example with string:**
@@ -113,7 +113,7 @@ FileWrite filepath$, content$
 LET score$ = 12345
 LET playerName$ = "Alice"
 LET saveData$ = playerName$ + "\n" + STR(score$)
-FileWrite "savegame.txt", saveData$
+FILEWRITE "savegame.txt", saveData$
 PRINT "Game saved!"
 ```
 
@@ -126,8 +126,8 @@ a$("second") = 2
 a$("third") = 3
 a$("fourth") = "Four"
 a$("fourth", "temp") = "Temp"
-FileWrite FILENAME#, a$
-DIM b$ = FileRead(FILENAME#)
+FILEWRITE FILENAME#, a$
+DIM b$ = FILEREAD(FILENAME#)
 PRINT b$("fourth", "temp") ' Outputs: Temp
 ```
 
@@ -140,20 +140,20 @@ PRINT b$("fourth", "temp") ' Outputs: Temp
 
 ---
 
-### FileAppend filepath$, content$
+### FILEAPPEND filepath$, content$
 
 Appends content to the end of an existing file, or creates the file if it doesn't exist.
 
 **Syntax:**
 ```vb
-FileAppend filepath$, content$
+FILEAPPEND filepath$, content$
 ```
 
 **Example:**
 ```vb
 LET timestamp$ = "2025-01-04 15:30:00"
 LET logEntry$ = timestamp$ + " - Game started\n"
-FileAppend "gamelog.txt", logEntry$
+FILEAPPEND "gamelog.txt", logEntry$
 ```
 
 **Notes:**
@@ -164,20 +164,20 @@ FileAppend "gamelog.txt", logEntry$
 
 ---
 
-### FileDelete filepath$
+### FILEDELETE filepath$
 
 Deletes a file from the file system.
 
 **Syntax:**
 ```vb
-FileDelete filepath$
+FILEDELETE filepath$
 ```
 
 **Example:**
 ```vb
 REM Clean up temporary files
-IF FileExists("temp.dat") = 1 THEN
-    FileDelete "temp.dat"
+IF FILEEXISTS("temp.dat") = 1 THEN
+    FILEDELETE "temp.dat"
     PRINT "Temporary file removed"
 ENDIF
 ```
@@ -191,11 +191,11 @@ ENDIF
 
 ## Loading key=value Files into Arrays (.env support)
 
-When `FileRead` assigns to a `DIM`'d array, BazzBasic automatically parses the file contents line by line into array elements — using the `key=value` format that `.env` files use.
+When `FILEREAD` assigns to a `DIM`'d array, BazzBasic automatically parses the file contents line by line into array elements — using the `key=value` format that `.env` files use.
 
 ```vb
 DIM config$
-LET config$ = FileRead("settings.txt")
+LET config$ = FILEREAD("settings.txt")
 
 PRINT config$("width")      ' Output: 800
 PRINT config$("height")     ' Output: 600
@@ -224,13 +224,13 @@ fullscreen=0
 This makes standard `.env` files work directly for storing sensitive values such as API keys outside of source code:
 
 ```vb
-IF FileExists(".env") = 0 THEN
+IF FILEEXISTS(".env") = 0 THEN
     PRINT "Error: .env file not found"
     END
 END IF
 
 DIM env$
-LET env$ = FileRead(".env")
+LET env$ = FILEREAD(".env")
 
 LET ApiKey# = env$("OPENAI_API_KEY")
 LET OtherKey# = env$("OTHER_SERVICE_KEY")
@@ -247,7 +247,7 @@ OTHER_SERVICE_KEY=abc123...
 .env
 ```
 
-**Note:** This parsing only happens when assigning `FileRead` to a `DIM`'d array. Assigning to a regular variable (`LET data$`) always returns the raw file contents as a plain string.
+**Note:** This parsing only happens when assigning `FILEREAD` to a `DIM`'d array. Assigning to a regular variable (`LET data$`) always returns the raw file contents as a plain string.
 
 ---
 
@@ -257,23 +257,23 @@ OTHER_SERVICE_KEY=abc123...
 
 **Relative Paths** (recommended for game files):
 ```vb
-FileWrite "highscore.txt", "1000"           REM Same directory as program
-FileWrite "data/settings.txt", "sound=on"   REM Subdirectory
+FILEWRITE "highscore.txt", "1000"           REM Same directory as program
+FILEWRITE "data/settings.txt", "sound=on"   REM Subdirectory
 ```
 
 **Absolute Paths** (for system-wide access):
 ```vb
-FileWrite "C:/Users/Player/Documents/save.txt", "data"
+FILEWRITE "C:/Users/Player/Documents/save.txt", "data"
 ```
 
 **Note:** Use forward slashes `/` or escaped backslashes `\\` to avoid escape sequence issues:
 ```vb
 REM CORRECT:
-FileWrite "data/file.txt", "content"
-FileWrite "data\\file.txt", "content"
+FILEWRITE "data/file.txt", "content"
+FILEWRITE "data\\file.txt", "content"
 
 REM WRONG (escape sequences):
-FileWrite "data\file.txt", "content"  REM \f becomes form feed!
+FILEWRITE "data\file.txt", "content"  REM \f becomes form feed!
 ```
 
 ### PRG_ROOT# Constant
@@ -286,7 +286,7 @@ PRINT "Program root: "; PRG_ROOT#
 
 REM Build absolute paths
 LET savePath# = PRG_ROOT# + "/saves/game1.txt"
-FileWrite savePath#, "Player data"
+FILEWRITE savePath#, "Player data"
 ```
 
 **Use Cases:**
@@ -311,8 +311,8 @@ LET scoreFile$ = "highscore.txt"
 LET currentScore$
 
 REM Load existing highscore
-IF FileExists(scoreFile$) = 1 THEN
-    LET scoreData$ = FileRead(scoreFile$)
+IF FILEEXISTS(scoreFile$) = 1 THEN
+    LET scoreData$ = FILEREAD(scoreFile$)
     LET highScore# = VAL(scoreData$)
     PRINT "Current highscore: "; highScore$
 ELSE
@@ -330,7 +330,7 @@ PRINT ""
 REM Check if new highscore
 IF currentScore$ > highScore# THEN
     PRINT "NEW HIGHSCORE!"
-    FileWrite scoreFile$, STR(currentScore$)
+    FILEWRITE scoreFile$, STR(currentScore$)
     PRINT "Highscore saved!"
 ELSE
     PRINT "Better luck next time!"
@@ -354,9 +354,9 @@ LET musicVolume$ = "80"
 LET difficulty$ = "medium"
 
 REM Load settings if they exist
-IF FileExists(settingsFile$) = 1 THEN
+IF FILEEXISTS(settingsFile$) = 1 THEN
     PRINT "Loading settings..."
-    LET settings$ = FileRead(settingsFile$)
+    LET settings$ = FILEREAD(settingsFile$)
     
     REM Parse settings (simple format: one per line)
     REM In real game, you'd parse the string
@@ -370,7 +370,7 @@ ELSE
     settings$ = settings$ + "volume=" + musicVolume$ + "\n"
     settings$ = settings$ + "difficulty=" + difficulty$ + "\n"
     
-    FileWrite settingsFile$, settings$
+    FILEWRITE settingsFile$, settings$
     PRINT "Default settings saved"
 ENDIF
 
@@ -394,36 +394,36 @@ REM ============================================
 LET logFile$ = "gamelog.txt"
 
 REM Initialize log file
-IF FileExists(logFile$) = 0 THEN
-    FileWrite logFile$, "=== Game Log ===\n"
+IF FILEEXISTS(logFile$) = 0 THEN
+    FILEWRITE logFile$, "=== Game Log ===\n"
 ENDIF
 
 REM Function to log an event
 REM (In real code, use DEF FN)
 LET event$ = "Game started"
-FileAppend logFile$, event$ + "\n"
+FILEAPPEND logFile$, event$ + "\n"
 
 REM Simulate game events
 SLEEP 1000
 event$ = "Player spawned at (100, 200)"
-FileAppend logFile$, event$ + "\n"
+FILEAPPEND logFile$, event$ + "\n"
 
 SLEEP 1000  
 event$ = "Enemy encountered"
-FileAppend logFile$, event$ + "\n"
+FILEAPPEND logFile$, event$ + "\n"
 
 SLEEP 1000
 event$ = "Player health: 75"
-FileAppend logFile$, event$ + "\n"
+FILEAPPEND logFile$, event$ + "\n"
 
 SLEEP 1000
 event$ = "Game ended"
-FileAppend logFile$, event$ + "\n"
+FILEAPPEND logFile$, event$ + "\n"
 
 PRINT "Events logged!"
 PRINT ""
 PRINT "Log contents:"
-PRINT FileRead(logFile$)
+PRINT FILEREAD(logFile$)
 
 END
 ```
@@ -457,15 +457,15 @@ saveData$ = saveData$ + STR(playerHealth$) + "\n"
 saveData$ = saveData$ + STR(playerGold$) + "\n"
 saveData$ = saveData$ + currentMap$ + "\n"
 
-FileWrite saveFile$, saveData$
+FILEWRITE saveFile$, saveData$
 PRINT "Game saved!"
 PRINT ""
 
 REM === LOAD GAME ===
 PRINT "Loading game..."
 
-IF FileExists(saveFile$) = 1 THEN
-    LET loadedData$ = FileRead(saveFile$)
+IF FILEEXISTS(saveFile$) = 1 THEN
+    LET loadedData$ = FILEREAD(saveFile$)
     PRINT "Save file loaded:"
     PRINT loadedData$
     
@@ -484,14 +484,14 @@ END
 
 ### Automatic Directory Creation
 - Parent directories are created automatically when writing files
-- Example: `FileWrite "saves/slot1/data.txt", "..."` creates `saves/slot1/` if needed
+- Example: `FILEWRITE "saves/slot1/data.txt", "..."` creates `saves/slot1/` if needed
 - No need to manually create directory structure
 
 ### Error Handling
-- **FileRead**: Returns empty string on error (no exception)
-- **FileExists**: Returns 0 on error or non-existent file
-- **FileWrite/FileAppend/FileDelete**: Silent failures (no exceptions)
-- Check results with FileExists before/after operations if needed
+- **FILEREAD**: Returns empty string on error (no exception)
+- **FILEEXISTS**: Returns 0 on error or non-existent file
+- **FILEWRITE/FILEAPPEND/FILEDELETE**: Silent failures (no exceptions)
+- Check results with FILEEXISTS before/after operations if needed
 
 ### Character Encoding
 - Handles UTF-8 and other common text encodings automatically
@@ -515,8 +515,8 @@ END
 
 1. **Check File Existence Before Reading**
    ```vb
-   IF FileExists("data.txt") = TRUE THEN
-       LET data$ = FileRead("data.txt")
+   IF FILEEXISTS("data.txt") = TRUE THEN
+       LET data$ = FILEREAD("data.txt")
    ELSE
        LET data$ = ""  REM Default value
    ENDIF
@@ -525,8 +525,8 @@ END
 2. **Use Relative Paths for Game Files**
    ```vb
    REM Keep game files organized
-   FileWrite "saves/slot1.dat", saveData$
-   FileWrite "config/settings.txt", config$
+   FILEWRITE "saves/slot1.dat", saveData$
+   FILEWRITE "config/settings.txt", config$
    ```
 
 3. **Structure Your Save Data**
@@ -535,31 +535,31 @@ END
    LET data$ = ""
    data$ = data$ + "PlayerName=" + name$ + "\n"
    data$ = data$ + "Score=" + STR(score#) + "\n"
-   FileWrite "save.txt", data$
+   FILEWRITE "save.txt", data$
    ```
 
-4. **Use FileAppend for Logs**
+4. **Use FILEAPPEND for Logs**
    ```vb
    REM Accumulate log entries
-   FileAppend "debug.log", "Error occurred\n"
+   FILEAPPEND "debug.log", "Error occurred\n"
    ```
 
 5. **Clean Up Temporary Files**
    ```vb
    REM At program exit
-   IF FileExists("temp.dat") = 1 THEN
-       FileDelete "temp.dat"
+   IF FILEEXISTS("temp.dat") = 1 THEN
+       FILEDELETE "temp.dat"
    ENDIF
    ```
 
 6. **Escape Path Separators**
    ```vb
    REM CORRECT:
-   FileWrite "data/save.txt", content$
-   FileWrite "data\\save.txt", content$
+   FILEWRITE "data/save.txt", content$
+   FILEWRITE "data\\save.txt", content$
    
    REM WRONG:
-   FileWrite "data\save.txt", content$  REM \s might be escape!
+   FILEWRITE "data\save.txt", content$  REM \s might be escape!
    ```
 
 ---
@@ -569,47 +569,47 @@ END
 ### Save/Load Pattern
 ```vb
 REM Save
-FileWrite "game.sav", gameState$
+FILEWRITE "game.sav", gameState$
 
 REM Load
-IF FileExists("game.sav") = 1 THEN
-    gameState$ = FileRead("game.sav")
+IF FILEEXISTS("game.sav") = 1 THEN
+    gameState$ = FILEREAD("game.sav")
 ENDIF
 ```
 
 ### Config File Pattern
 ```vb
 REM Load or create default
-IF FileExists("config.txt") = 0 THEN
-    FileWrite "config.txt", defaultConfig$
+IF FILEEXISTS("config.txt") = 0 THEN
+    FILEWRITE "config.txt", defaultConfig$
 ENDIF
-config$ = FileRead("config.txt")
+config$ = FILEREAD("config.txt")
 ```
 
 ### Incremental Log Pattern
 ```vb
 REM Add entries over time
-FileAppend "log.txt", timestamp$ + ": " + message$ + "\n"
+FILEAPPEND "log.txt", timestamp$ + ": " + message$ + "\n"
 ```
 
 ### Multiple Save Slots
 ```vb
 LET slot$ = 1
 LET filename$ = "save" + STR(slot$) + ".dat"
-FileWrite filename$, data$
+FILEWRITE filename$, data$
 ```
 
 ---
 
 ## Troubleshooting
 
-**Problem:** FileRead returns empty string
-- Check file exists with FileExists first
+**Problem:** FILEREAD returns empty string
+- Check file exists with FILEEXISTS first
 - Verify file path is correct (use forward slashes)
 - Check file isn't locked by another program
 - Try absolute path to debug
 
-**Problem:** FileWrite doesn't create file
+**Problem:** FILEWRITE doesn't create file
 - Check path doesn't contain invalid characters
 - Verify disk isn't full or write-protected
 - Check permissions on target directory
