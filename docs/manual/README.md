@@ -1,5 +1,5 @@
 # BazzBasic
-BazzBasic is a BASIC interpreter built to work with the [.NET10](https://dotnet.microsoft.com/en-us) Framework.
+BazzBasic is a BASIC interpreter built to work with the [.NET 10](https://dotnet.microsoft.com/en-us) Framework.
 
 It supports many of the features of [BASIC interpreters](https://en.wikipedia.org/wiki/BASIC_interpreter) from the 80s, but also offers something modern.
 
@@ -70,13 +70,12 @@ DIM MyArray$
 MyArray$("name") = "John Smith"
 MyArray$("age") = 42
 ```
-See [Arrays](arrays.md)
+See [Arrays](arrays_and_json.md)
 
 ## Getting Started
 
 - [Installation](installation.md)
 - [IDE Usage](ide-usage.md)
-- [Hello World Tutorial](tutorial-hello-world.md)
 
 ## More Resources
 - [Example programs on GitHub](https://github.com/EkBass/BazzBasic/tree/main/Examples)
