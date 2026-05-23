@@ -1,6 +1,9 @@
 # News and changes
 These changes are about the current source code. These are effected once new binary release is published
 
+## 21st May 2026
+Releaased as ver. 1.4b
+
 ## 14th May 2026
 
 ### Bug fix: RGB() with low blue values
