@@ -1,5 +1,11 @@
 [
   {
+    "title": "BazzBasic 1.4b released",
+    "url": "https://github.com/EkBass/BazzBasic/discussions/62",
+    "createdAt": "2026-05-23T05:28:58Z",
+    "author": "EkBass"
+  },
+  {
     "title": "BazzBasic solved Rosetta tasks just reached the 150 milestone",
     "url": "https://github.com/EkBass/BazzBasic/discussions/60",
     "createdAt": "2026-05-15T08:28:39Z",
@@ -123,12 +129,6 @@
     "title": "V. 07 close.",
     "url": "https://github.com/EkBass/BazzBasic/discussions/6",
     "createdAt": "2026-01-30T14:00:14Z",
-    "author": "EkBass"
-  },
-  {
-    "title": "Planned road to version 1.0",
-    "url": "https://github.com/EkBass/BazzBasic/discussions/5",
-    "createdAt": "2026-01-21T18:11:06Z",
     "author": "EkBass"
   }
 ]
