@@ -1,0 +1,22 @@
+[data url='https://rosettacode.org/wiki/Hello_world/Newbie#BazzBasic']
+=={{header|BazzBasic}}==
+Getting started with BazzBasic is really easy.
+
+=== Download ===
+# Download the latest release: https://ekbass.github.io/BazzBasic/
+# Extract the .zip archive anywhere on your computer.
+
+=== With the built-in IDE ===
+Double-click '''bazzbasic.exe''' to open the IDE. Type:
+<code>PRINT "Hello World"</code>
+and press '''F5'''. The IDE will ask you to save the file first, then run it.
+
+=== From the console ===
+Open a terminal and <code>cd</code> into the folder where you extracted BazzBasic. Create a file with any editor, or directly from the console:
+<code>echo PRINT "Hello World" > hello.bas</code>
+Any filename ending with '''.bas''' works. Run it with:
+<code>bazzbasic.exe hello.bas</code>
+
+==== More CLI options ====
+See the manual: https://ekbass.github.io/BazzBasic/manual/#/cli_features
+[/data]

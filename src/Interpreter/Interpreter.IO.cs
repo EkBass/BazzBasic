@@ -371,7 +371,11 @@ public partial class Interpreter
         int b = (int)EvaluateExpression().AsNumber() & 255;
         Require(TokenType.TOK_RPAREN);
         
-        return Value.FromNumber((r << 16) | (g << 8) | b);
+        // Bit 24 (0x01000000) is a flag distinguishing packed RGB values from
+        // palette indices (0-15). Without this, RGB(0,0,255) = 255 would be
+        // indistinguishable from palette index 255 and fall through to white.
+        // Drawing primitives strip bit 24 implicitly via the r/g/b shifts.
+        return Value.FromNumber(0x01000000 | (r << 16) | (g << 8) | b);
     }
 
     // ========================================================================

@@ -1,7 +1,29 @@
 # News and changes
 These changes are about the current source code. These are effected once new binary release is published
 
-## April 2026
+## 14th May 2026
+
+### Bug fix: RGB() with low blue values
+
+Fixed a long-standing bug where `RGB(0, 0, b)` with `b` in the range 0–255 produced wrong colors. The classic example: `RGB(0, 0, 255)` drew **white** instead of blue, because the packed RGB value `255` collided with palette index 255 and fell through to the default "white" branch. The same bug also affected any `RGB(0, 0, b)` with `b ≤ 255` and `RGB(0, 0, 0)` happened to work only by coincidence (palette index 0 is also black).
+
+Internally, `RGB()` now sets bit 24 (`0x01000000`) as a flag so RGB values and palette indices can no longer collide. Drawing primitives (`PSET`, `LINE`, `CIRCLE`, `PAINT`, `DRAWSTRING`, `LOADSHAPE`) all route their color parameter through a single resolver in `Graphics.Graphics`.
+
+### DRAWSTRING and LOADSHAPE now accept palette indices
+
+As a side effect of the centralized color resolver, `DRAWSTRING` and `LOADSHAPE` now accept palette indices 0–15 as well as `RGB()` values. Previously they only worked correctly with `RGB()`.
+
+```basic
+DRAWSTRING "Hello", 10, 10, 12              ' Palette index 12 (light red) — now works
+LET S$ = LOADSHAPE("CIRCLE", 50, 50, 9)     ' Palette index 9 (light blue) — now works
+```
+
+### Compatibility note
+
+If you stored raw packed RGB integers in your code (e.g. `LINE (0,0)-(100,100), 16711680` for red), they will no longer be recognized as RGB and will be treated as out-of-range palette indices (defaulting to white). Use `RGB(255, 0, 0)` instead. There was never a documented way to construct raw packed RGB by hand, so this should affect very few programs.
+
+## 1st May 2026
+Released as ver. 1.4
 
 ## 1st May 2026
 
