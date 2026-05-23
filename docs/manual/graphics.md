@@ -68,7 +68,7 @@ PRINT "Header"
 
 
 ### COLOR
-Set foreground (text) and background colors.
+Set foreground (text) and background colors. Accepts palette indices 0–15 only — for full RGB on graphics primitives, use `RGB()` with `LINE`, `CIRCLE`, etc. instead.
 ```vb
 COLOR foreground, background
 
@@ -265,6 +265,22 @@ If your game runs at 30 FPS instead of 60 FPS with VSync enabled:
 
 ## Basic Graphics Primitives
 
+### About `color` parameters
+
+Every drawing command in this section (`PSET`, `LINE`, `CIRCLE`, `PAINT`, `DRAWSTRING`, `LOADSHAPE`) accepts a `color` parameter that can be either:
+
+- **A palette index 0–15** — the classic 16-color EGA/VGA palette (`0` = black, `15` = white, etc.)
+- **An `RGB(r, g, b)` value** — any of the 16 million colors, each channel `0–255`
+
+You can mix and match freely:
+
+```vb
+PSET (100, 100), 12              ' Palette index 12 = light red
+PSET (100, 100), RGB(255, 64, 0) ' Custom orange-red
+```
+
+The `COLOR` text-mode command is the exception — it only accepts palette indices 0–15.
+
 ### PSET - Draw Pixel
 Draw a single pixel at coordinates (x, y).
 ```vb
@@ -310,7 +326,7 @@ PAINT (150, 150), 12, 15                ' Fill red inside white border
 ```
 
 ### RGB - Create Color Value
-Create custom RGB color (0-255 per channel).
+Create custom RGB color (0-255 per channel). The returned value can be used with any drawing command (`PSET`, `LINE`, `CIRCLE`, `PAINT`, `DRAWSTRING`, `LOADSHAPE`) in place of a palette index.
 ```vb
 LET color$ = RGB(red, green, blue)
 

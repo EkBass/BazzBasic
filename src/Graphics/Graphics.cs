@@ -292,32 +292,75 @@ public static class Graphics
         bgA = (byte)Math.Clamp(a, 0, 255);
     }
     
+    // ========================================================================
+    // Color resolution — central place to translate a BazzBasic color int
+    // into actual (r, g, b) bytes. A color int is either:
+    //   * RGB packed by RGB() with bit 24 (0x01000000) set as a flag, or
+    //   * a palette index 0-15 (no flag bit; values outside 0-15 default to white).
+    // The flag bit is necessary because raw packed RGB and palette indices
+    // would otherwise collide (e.g. RGB(0,0,255) = 255 = palette index 255).
+    // ========================================================================
+
+    // Returns the (r, g, b) bytes for the 16-color EGA/VGA palette.
+    // Index out of range defaults to white, matching SetColorFromIndex.
+    private static (int r, int g, int b) GetPaletteRGB(int colorIndex)
+    {
+        return colorIndex switch
+        {
+            0  => (0, 0, 0),         // Black
+            1  => (0, 0, 170),       // Blue
+            2  => (0, 170, 0),       // Green
+            3  => (0, 170, 170),     // Cyan
+            4  => (170, 0, 0),       // Red
+            5  => (170, 0, 170),     // Magenta
+            6  => (170, 85, 0),      // Brown
+            7  => (170, 170, 170),   // Light Gray
+            8  => (85, 85, 85),      // Dark Gray
+            9  => (85, 85, 255),     // Light Blue
+            10 => (85, 255, 85),     // Light Green
+            11 => (85, 255, 255),    // Light Cyan
+            12 => (255, 85, 85),     // Light Red
+            13 => (255, 85, 255),    // Light Magenta
+            14 => (255, 255, 85),    // Yellow... kind of
+            15 => (255, 255, 255),   // White
+            _  => (255, 255, 255)    // Default to white
+        };
+    }
+
+    // Resolve any BazzBasic color int (RGB or palette) to (r, g, b) bytes.
+    public static (int r, int g, int b) ResolveColor(int color)
+    {
+        if ((color & 0x01000000) != 0)
+        {
+            int r = (color >> 16) & 0xFF;
+            int g = (color >> 8) & 0xFF;
+            int b = color & 0xFF;
+            return (r, g, b);
+        }
+        return GetPaletteRGB(color);
+    }
+
+    // Resolve and apply as the active renderer color in one call.
+    // Use this from drawing primitives (LINE, CIRCLE, PAINT, ...).
+    public static void ApplyColor(int color)
+    {
+        var (r, g, b) = ResolveColor(color);
+        SetColor(r, g, b);
+    }
+
+    // Return packed RGB (no flag bit) for any BazzBasic color int.
+    // Use this when handing the color off to APIs that expect raw packed RGB,
+    // such as shape storage or DRAWSTRING.
+    public static int ResolveColorPacked(int color)
+    {
+        var (r, g, b) = ResolveColor(color);
+        return (r << 16) | (g << 8) | b;
+    }
+
     // color from predefined default color index 0-15
     public static void SetColorFromIndex(int colorIndex)
     {
-        // Classic BASIC 16-color palette (EGA/VGA colors)
-        // This almost made me mad, those colors are weird as hell
-        var (r, g, b) = colorIndex switch
-        {
-            0 => (0, 0, 0),         // Black
-            1 => (0, 0, 170),       // Blue
-            2 => (0, 170, 0),       // Green
-            3 => (0, 170, 170),     // Cyan
-            4 => (170, 0, 0),       // Red
-            5 => (170, 0, 170),     // Magenta
-            6 => (170, 85, 0),      // Brown
-            7 => (170, 170, 170),   // Light Gray
-            8 => (85, 85, 85),      // Dark Gray
-            9 => (85, 85, 255),     // Light Blue
-            10 => (85, 255, 85),    // Light Green
-            11 => (85, 255, 255),   // Light Cyan
-            12 => (255, 85, 85),    // Light Red
-            13 => (255, 85, 255),   // Light Magenta
-            14 => (255, 255, 85),   // Yellow... kind of
-            15 => (255, 255, 255),  // White
-            _ => (255, 255, 255)    // Default to white
-        };
-        
+        var (r, g, b) = GetPaletteRGB(colorIndex);
         SetColor(r, g, b);
     }
     

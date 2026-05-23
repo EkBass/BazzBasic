@@ -185,17 +185,7 @@ public partial class Interpreter
             _pos++;
             int color = (int)EvaluateExpression().AsNumber();
             
-            if (color > 255)
-            {
-                int r = (color >> 16) & 0xFF;
-                int g = (color >> 8) & 0xFF;
-                int b = color & 0xFF;
-                Graphics.Graphics.SetColor(r, g, b);
-            }
-            else
-            {
-                Graphics.Graphics.SetColorFromIndex(color);
-            }
+            Graphics.Graphics.ApplyColor(color);
         }
         
         Graphics.Graphics.SetPixel(x, y);
@@ -225,17 +215,7 @@ public partial class Interpreter
             _pos++;
             int color = (int)EvaluateExpression().AsNumber();
             
-            if (color > 255)
-            {
-                int r = (color >> 16) & 0xFF;
-                int g = (color >> 8) & 0xFF;
-                int b = color & 0xFF;
-                Graphics.Graphics.SetColor(r, g, b);
-            }
-            else
-            {
-                Graphics.Graphics.SetColorFromIndex(color);
-            }
+            Graphics.Graphics.ApplyColor(color);
             
             if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_COMMA)
             {
@@ -283,17 +263,7 @@ public partial class Interpreter
             _pos++;
             int color = (int)EvaluateExpression().AsNumber();
             
-            if (color > 255)
-            {
-                int r = (color >> 16) & 0xFF;
-                int g = (color >> 8) & 0xFF;
-                int b = color & 0xFF;
-                Graphics.Graphics.SetColor(r, g, b);
-            }
-            else
-            {
-                Graphics.Graphics.SetColorFromIndex(color);
-            }
+            Graphics.Graphics.ApplyColor(color);
             
             if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_COMMA)
             {
@@ -328,17 +298,7 @@ public partial class Interpreter
         Require(TokenType.TOK_COMMA);
         int color = (int)EvaluateExpression().AsNumber();
         
-        if (color > 255)
-        {
-            int r = (color >> 16) & 0xFF;
-            int g = (color >> 8) & 0xFF;
-            int b = color & 0xFF;
-            Graphics.Graphics.SetColor(r, g, b);
-        }
-        else
-        {
-            Graphics.Graphics.SetColorFromIndex(color);
-        }
+        Graphics.Graphics.ApplyColor(color);
         
         Graphics.Graphics.SetPixel(x, y);
         Graphics.Graphics.Present();
@@ -492,7 +452,7 @@ public partial class Interpreter
             _ => Graphics.ShapeType.Rectangle
         };
         
-        string id = Graphics.ShapeManager.CreateShape(type, width, height, color);
+        string id = Graphics.ShapeManager.CreateShape(type, width, height, Graphics.Graphics.ResolveColorPacked(color));
         return Value.FromString(id);
     }
     
@@ -766,7 +726,7 @@ public partial class Interpreter
 
         try
         {
-            Graphics.Graphics.DrawString(text, x, y, color);
+            Graphics.Graphics.DrawString(text, x, y, Graphics.Graphics.ResolveColorPacked(color));
             Graphics.Graphics.Present();
         }
         catch (Exception ex) { Error($"DRAWSTRING: {ex.Message}"); }

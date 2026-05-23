@@ -1,10 +1,10 @@
 ' ============================================
-' OpenAI API call — BazzBasic
+' xAI Grok API call — BazzBasic
 ' https://github.com/EkBass/BazzBasic
-' Public domain
+' EkBass, Public domain
 ' ============================================
 ' Requires .env file in same directory as script:
-'   OPENAI_API_KEY=sk-proj-yourKeyHere
+'   XAI_API_KEY=xai-yourKeyHere
 ' ============================================
 
 [check:env]
@@ -16,14 +16,14 @@
 [inits]
     DIM env$
     env$ = FileRead(".env")
-    LET ApiKey# = env$("OPENAI_API_KEY")
+    LET ApiKey# = env$("XAI_API_KEY")
 
     DIM headers$
     headers$("Authorization") = "Bearer " + ApiKey#
     headers$("Content-Type")  = "application/json"
 
     DIM body$
-	body$("model")                = "gpt-5-mini"
+	body$("model")                = "grok-4.3"          ' Current flagship model
 	body$("max_completion_tokens") = 1000
     body$("messages,0,role")    = "user"
     body$("messages,0,content") = "Hello"
@@ -35,10 +35,10 @@
 
 [main]
     jsonBody$ = ASJSON(body$)
-    raw$      = HTTPPOST("https://api.openai.com/v1/chat/completions", jsonBody$, headers$)
+    raw$      = HTTPPOST("https://api.x.ai/v1/chat/completions", jsonBody$, headers$)
     count$    = ASARRAY(result$, raw$)
     PRINT result$("choices,0,message,content")
 END
 
-' Output (depends on the API response, e.g.):
-' Hello! How can I help you today?
+' Output example:
+' Hello! I'm Grok, built by xAI. How can I help you today?
