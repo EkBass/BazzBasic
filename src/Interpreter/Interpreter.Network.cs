@@ -21,11 +21,33 @@ namespace BazzBasic.Interpreter;
 
 public partial class Interpreter
 {
-    // Shared HttpClient to reuse connections and avoid socket exhaustion
+    // Shared HttpClient to reuse connections and avoid socket exhaustion.
+    // Per-request timeouts are driven by a CancellationTokenSource, so the
+    // client-level timeout is disabled here (otherwise it would fire first).
     private static readonly HttpClient _httpClient = new()
     {
-        Timeout = TimeSpan.FromSeconds(30)
+        Timeout = System.Threading.Timeout.InfiniteTimeSpan
     };
+
+    // Default request timeout in seconds, used when a call omits the argument.
+    private const double DefaultHttpTimeoutSeconds = 30.0;
+
+    // Send a prepared request with a per-call timeout (seconds). 0 or less = no timeout.
+    private static string SendWithTimeout(HttpRequestMessage request, double timeoutSeconds)
+    {
+        using var cts = timeoutSeconds > 0
+            ? new CancellationTokenSource(TimeSpan.FromSeconds(timeoutSeconds))
+            : new CancellationTokenSource();
+        try
+        {
+            var response = _httpClient.SendAsync(request, cts.Token).GetAwaiter().GetResult();
+            return response.Content.ReadAsStringAsync(cts.Token).GetAwaiter().GetResult();
+        }
+        catch (OperationCanceledException) when (cts.IsCancellationRequested)
+        {
+            throw new Exception($"timed out after {timeoutSeconds:0.##} s");
+        }
+    }
 
     // HTTPGET(url$) / HTTPGET(url$, headers$) -> returns response body as string
     private Value EvaluateHttpGet()
@@ -35,11 +57,19 @@ public partial class Interpreter
         string url = EvaluateExpression().AsString();
 
         string? headersArrayName = null;
+        double timeoutSeconds = DefaultHttpTimeoutSeconds;
         if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_COMMA)
         {
             _pos++; // consume comma
             headersArrayName = _tokens[_pos].StringValue ?? "";
             _pos++;
+
+            // Optional trailing argument: timeout in seconds
+            if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_COMMA)
+            {
+                _pos++; // consume comma
+                timeoutSeconds = EvaluateExpression().AsNumber();
+            }
         }
 
         Require(TokenType.TOK_RPAREN, "Expected ')' after HTTPGET arguments");
@@ -48,8 +78,7 @@ public partial class Interpreter
         {
             using var request = new HttpRequestMessage(HttpMethod.Get, url);
             ApplyHeaders(request, headersArrayName);
-            var response = _httpClient.SendAsync(request).GetAwaiter().GetResult();
-            return Value.FromString(response.Content.ReadAsStringAsync().GetAwaiter().GetResult());
+            return Value.FromString(SendWithTimeout(request, timeoutSeconds));
         }
         catch (Exception ex)
         {
@@ -67,11 +96,19 @@ public partial class Interpreter
         string body = EvaluateExpression().AsString();
 
         string? headersArrayName = null;
+        double timeoutSeconds = DefaultHttpTimeoutSeconds;
         if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_COMMA)
         {
             _pos++; // consume comma
             headersArrayName = _tokens[_pos].StringValue ?? "";
             _pos++;
+
+            // Optional trailing argument: timeout in seconds
+            if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_COMMA)
+            {
+                _pos++; // consume comma
+                timeoutSeconds = EvaluateExpression().AsNumber();
+            }
         }
 
         Require(TokenType.TOK_RPAREN, "Expected ')' after HTTPPOST arguments");
@@ -81,8 +118,7 @@ public partial class Interpreter
             using var request = new HttpRequestMessage(HttpMethod.Post, url);
             request.Content = new StringContent(body, System.Text.Encoding.UTF8, "application/json");
             ApplyHeaders(request, headersArrayName);
-            var response = _httpClient.SendAsync(request).GetAwaiter().GetResult();
-            return Value.FromString(response.Content.ReadAsStringAsync().GetAwaiter().GetResult());
+            return Value.FromString(SendWithTimeout(request, timeoutSeconds));
         }
         catch (Exception ex)
         {

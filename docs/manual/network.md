@@ -54,6 +54,40 @@ PRINT postResult$
 ```
 
 
+### Optional parameters: headers and timeout
+
+Both `HTTPGET` and `HTTPPOST` accept two optional trailing arguments. The order is fixed — headers first, then timeout:
+
+```
+HTTPGET(url$ [, headers$] [, timeout])
+HTTPPOST(url$, body$ [, headers$] [, timeout])
+```
+
+`headers$` is an array whose key/value pairs are sent as request headers. `timeout` is the number of seconds to wait for the response; the default is 30, and `0` (or less) means no limit. Because timeout comes after headers, pass an empty array if you want a custom timeout without sending any headers.
+
+```vb
+' Custom headers
+DIM headers$
+headers$("Authorization") = "Bearer mytoken"
+LET res$ = HTTPGET("https://api.example.com/data", headers$)
+
+' Longer timeout for a slow endpoint, e.g. a local LLM via Ollama.
+' Note the empty headers array h$ so the timeout lands in the right slot.
+DIM body$
+body$("model")              = "llama3.2"   ' a model you have pulled in Ollama
+body$("messages,0,role")    = "user"
+body$("messages,0,content") = "Say hi in three words."
+DIM h$
+LET raw$ = HTTPPOST("http://localhost:11434/v1/chat/completions", ASJSON(body$), h$, 120)
+
+DIM result$
+LET count$ = ASARRAY(result$, raw$)
+PRINT result$("choices,0,message,content")
+```
+
+If the timeout is exceeded the call fails with an error such as `HTTPPOST failed: timed out after 120 s`.
+
+
 ## HTTP Server (LISTEN)
 
 BazzBasic can act as a small local HTTP server to receive POST requests from a browser-side HTML page or other tooling. The intended use is **local-only** glue: a static HTML page on the user's machine talks to BazzBasic via `fetch()`.
