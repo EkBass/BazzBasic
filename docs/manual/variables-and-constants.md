@@ -12,26 +12,32 @@
 ```vb
 ' Basic init for variables
 LET a$ = "Foo"
-PRINT a$ ' Output: "Foo"
+PRINT a$ 		' Output: "Foo"
+
 LET b$ = 1
-PRINT b$ ' Output: 1
+PRINT b$ 		' Output: 1
+
 LET c$ = 1 + 2
-PRINT c$ ' Output: 3
+PRINT c$ 		' Output: 3
 ```
 
 ## Constants
 ```vb
 ' Basic init for constants'
-LET PI# = 3.14159
-LET MAX_PLAYERS# = 4
-LET GAME_TITLE# = "Space Invaders"
+
+LET PI# 				= 3.14159
+LET MAX_PLAYERS# 	= 4
+LET GAME_TITLE# 		= "Space Invaders"
 ```
 
 ## LET only when init
 ```vb
 ' Once variable is initialized, you do not need LET anymore
+
 LET a$ = 1
+
 a$ = 3
+
 PRINT a$ ' Output: 3
 ```
 
@@ -39,8 +45,10 @@ PRINT a$ ' Output: 3
 ```vb
 ' Variable stores either a number or a text.
 ' It is ok to change the type of data.
+
 LET a$ = 1
 PRINT a$ ' Output: 1
+
 a$ = "Foo"
 PRINT a$ ' Output: Foo
 ```
@@ -48,27 +56,32 @@ PRINT a$ ' Output: Foo
 ## Versatile usage
 ```vb
 ' Math with variables and multiple inits in single line
+
 LET a$ = 1, b$ = 2
 LET c$ = a$ + b$
-LET MyConst# = c$ * b$
+
+LET MY_CONST# = c$ * b$
 ```
 
 ## Error situation examples
 ```vb
 ' Some errors
+
 a$ = 1 ' error: a$ not initialized
 
-LET b# = 1
-b# = b# + 3 ' error: Constant b# had value 1 when initialized, not allowed to change anymore
+LET B# = 1
+B# = B# + 3 ' error: Constant B# had value 1 when initialized, not allowed to change anymore
 ```
 
 ## Init with out a value
 ```vb
 ' If you want just to init var and not give value yet
+
 LET a$ ' declares variable
+
 a$ = 1 ' inits value 1 to variable
 
-LET b# ' works, but is a bit stupid since now b# is constant with value of nothing
+LET B# ' works, but is a bit stupid since now B# is constant with value of nothing
 ```
 
 ## Concatenated values
@@ -79,6 +92,7 @@ x$ -= 3     ' 12
 x$ *= 2     ' 24
 x$ /= 4     ' 6
 PRINT x$    ' 6
+
 LET s$ = "Hello"
 s$ += " World"
 PRINT s$    ' Hello World
@@ -91,9 +105,10 @@ PRINT s$    ' Hello World
 ### FOR and INPUT
 When a variable is introduced with a `FOR...NEXT` or `INPUT` command, it does not need to be initialized with `LET`:
 ```vb
-REM Ok to use without prior LET
+REM name$ is initialized by INPUT
 INPUT "What is your name? ", name$
 
+REM i$ is initialized by FOR
 FOR i$ = 1 TO 10
     PRINT i$
 NEXT
@@ -106,10 +121,11 @@ A comparison is true if:
 - the value of the number in the string variable is the same as the number variable
 
 ```vb
-LET a$, b$
-a$ = "123"              ' a$ has now value "123"
-b$ = 123                ' b$ has now value 123
-LET c$ = "321"          ' c$ is now "321"
+LET a$, b$, c$
+
+a$ = "12"              	' a$ has now value "12"
+b$ = 12                	' b$ has now value 12
+c$ = b$ + a$				' c$ has now value "24"
 
 ' Output of this IF...THEN: Same
 IF a$ = b$ then
@@ -125,7 +141,7 @@ ELSE
 	print "Different"
 ENDIF
 
-c$ = 123
+c$ = c$ - b$
 ' Output of this IF...THEN: Same
 IF c$ = b$ then
 	print "Same"
@@ -144,7 +160,7 @@ BazzBasic provides a full range of automatically initialized constants
 **System:**
 | Constant | Description |
 |----------|-------------|
-| `PRG_ROOT#` | Full path to the program's base directory |
+| `PRG_ROOT#` | Full path to the program's base directory (always ends with a directory separator, so you can concatenate a relative path directly) |
 | `BBVER#` | BazzBasic version string (e.g. `"1.1d"`) |
 
 ```vb
@@ -260,19 +276,19 @@ PRINT x$                 ' Output: 10 (x$ is still accessible)
 - However, global constants are available.
 
 ```vb
-LET a$ = 1
-LET b$ = 100              ' Global variable
-LET C# = "Foo"            ' Global constant
+LET a$ = 1					' Global variable
+LET b$ = 100              	' Global variable
+LET C# = "Foo"            	' Global constant
 
-DEF FN test$(a$)           ' Local parameter a$ is initialized here
-    LET b$ = 2             ' Local b$ (separate from global b$)
-    PRINT b$               ' Output: 2
-    PRINT C#               ' Output: Foo
-    a$ = a$ * b$           ' Uses local a$ (100) and local b$ (2)
-    RETURN a$              ' Returns 200
+DEF FN test$(a$)           	' Local parameter a$ is initialized here
+    LET b$ = 2            	' Local b$ (separate from global b$)
+    PRINT b$               	' Output: 2
+    PRINT C#              	' Output: Foo
+    a$ = a$ * b$           	' Uses local a$ (100) and local b$ (2)
+    RETURN a$              	' Returns 200
 END DEF
 
-PRINT FN test$(b$)         ' Output: 200
-PRINT a$                   ' Output: 1
-PRINT b$                   ' Output: 100
+PRINT FN test$(b$)         	' Output: 200
+PRINT a$                   	' Output: 1
+PRINT b$                   	' Output: 100
 ```

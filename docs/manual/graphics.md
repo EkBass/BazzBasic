@@ -44,7 +44,7 @@ CLS                 ' Clear to blue
 Toggle fullscreen mode (borderless window).
 **Note:** Fullscreen is only supported in graphics modes (not console mode).
 ```vb
-SCREEN 640, 480, "My title"
+SCREEN 0, 640, 480, "My title"
 FULLSCREEN TRUE   ' borderless fullscreen on
 ' ...
 FULLSCREEN FALSE  ' Windowed mode
@@ -348,14 +348,14 @@ LET c$ = POINT(100, 100)
 Render text directly to the SDL2 graphics surface. Requires `SDL2_ttf.dll` in the same directory as the interpreter.
 
 ```basic
-' Default font (Arial, size 20)
+' Default font (Arial, size 16)
 DRAWSTRING "Hello!", 100, 200, RGB(255, 255, 255)
 
 ' Load alternative font — becomes the new active font
 LOADFONT "myfont.ttf", 24
 DRAWSTRING "Hello!", 100, 200, RGB(255, 255, 255)
 
-' Reset to default (Arial, size 20)
+' Reset to default (Arial, size 16)
 LOADFONT
 ```
 
@@ -363,7 +363,7 @@ LOADFONT
 
 #### Fonts
 
-SDL2_ttf loads any standard `.ttf` or `.otf` font file. BazzBasic defaults to **Arial** (size 20). To use a different font, call `LOADFONT` with a font filename and point size. The loaded font stays active until you call `LOADFONT` again or reset it.
+SDL2_ttf loads any standard `.ttf` or `.otf` font file. BazzBasic defaults to **Arial** (size 16). To use a different font, call `LOADFONT` with a font filename and point size. The loaded font stays active until you call `LOADFONT` again or reset it.
 
 **Bundling fonts with your program (recommended)**
 
@@ -461,6 +461,10 @@ Move shape to absolute screen position.
 ```vb
 MOVESHAPE ID#, x, y
 ```
+
+**Anchor point depends on shape type:**
+- `LOADSHAPE` primitives (`RECTANGLE`, `CIRCLE`, `TRIANGLE`) are positioned by their **center point** — `x, y` is the middle of the shape.
+- `LOADIMAGE` images are positioned by their **top-left point** — see [Image Transformations](#image-transformations) below.
 
 ### ROTATESHAPE - Rotate Shape
 
@@ -730,7 +734,7 @@ Once loaded, images work exactly like other shapes:
 ```vb
 LET IMG# = LOADIMAGE("logo.png")
 
-MOVESHAPE IMG#, x, y           ' Position (center point)
+MOVESHAPE IMG#, x, y           ' Position (top-left point)
 ROTATESHAPE IMG#, angle        ' Rotate (degrees)
 SCALESHAPE IMG#, scale         ' Scale (1.0 = original size)
 SHOWSHAPE IMG#                 ' Make visible

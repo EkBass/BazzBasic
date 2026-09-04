@@ -104,7 +104,10 @@ public partial class Interpreter
         _args = args ?? [];
         
         // System constants
-        _variables.SetConstant("PRG_ROOT#", Value.FromString(basePath));
+        // PRG_ROOT# always ends with a directory separator so PRG_ROOT# + "sub/file.txt"
+        // works directly without the caller needing to insert their own "/" or "\".
+        string prgRoot = basePath.TrimEnd('\\', '/') + Path.DirectorySeparatorChar;
+        _variables.SetConstant("PRG_ROOT#", Value.FromString(prgRoot));
 
         // BBVER# constant - BazzBasic version string
         _variables.SetConstant("BBVER#", Value.FromString(AppInfo.Version));
@@ -743,7 +746,18 @@ public partial class Interpreter
             }
         }
 
-        if (!Expect(TokenType.TOK_EQUALS)) return;
+        if (!Expect(TokenType.TOK_EQUALS))
+        {
+            // Not an array assignment at all. If this name is actually a DEF FN
+            // function, the coder almost certainly forgot the FN keyword
+            // (e.g. wrote "Foo$(1)" instead of "FN Foo$(1)"). Previously this
+            // silently did nothing and the function was never called.
+            if (_functions.ContainsKey(arrayName))
+            {
+                Error($"'{arrayName}' is a DEF FN function, not an array — did you forget the FN keyword? Use: FN {arrayName}(...)");
+            }
+            return;
+        }
 
         Value value = EvaluateExpression();
 

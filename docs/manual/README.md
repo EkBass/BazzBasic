@@ -56,9 +56,11 @@ Unlike many traditional BASIC interpreters, which required strong typing and oft
 Variables automatically hold either numbers or strings:
 
 ```vb
-LET num$ = 42            ' Number
-LET text$ = "Hello"      ' String
-LET mixed$ = "123"       ' String (quoted)
+LET num$ = 42            	' Number
+LET text$ = "Hello"      	' String
+LET mixed$ = "123"       	' String (quoted)
+LET MY_CONST# = "Foo"		' String constant
+LET MY_CONST2# = 1 + 2		' numerical constant
 ```
 See [Variables & Constants](variables-and-constants.md)
 
@@ -67,8 +69,8 @@ BazzBasic arrays are fully dynamic and support numeric, string, or mixed indexin
 
 ```basic
 DIM MyArray$
-MyArray$("name") = "John Smith"
-MyArray$("age") = 42
+	MyArray$("name") 	= "John Smith"
+	MyArray$("age") 		= 42
 ```
 See [Arrays](arrays_and_json.md)
 

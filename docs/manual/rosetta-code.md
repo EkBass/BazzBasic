@@ -8,4 +8,6 @@ BazzBasic has its own category on Rosetta Code:
 
 The same examples are also available in the BazzBasic GitHub repository:
 
-**[GitHub — Examples](https://github.com/EkBass/BazzBasic/tree/main/Examples)**
+**[GitHub — Examples](https://github.com/EkBass/BazzBasic/tree/main/Examples/rosetta-code)**
+
+And also they comes with each release, inside of **Examples** subfolder.

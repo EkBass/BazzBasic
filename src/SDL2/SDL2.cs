@@ -340,6 +340,15 @@ public static class SDL
     [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
     public static extern int SDL_RenderSetViewport(IntPtr renderer, IntPtr rect);  // pass IntPtr.Zero to reset
 
+    // Virtual resolution: draw coords map to a logical w×h canvas, SDL scales it to
+    // the real output (window or fullscreen) with aspect-preserving letterboxing.
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int SDL_RenderSetLogicalSize(IntPtr renderer, int w, int h);
+
+    // Convert window-pixel coords (e.g. from SDL_GetMouseState) back to logical coords.
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern void SDL_RenderWindowToLogical(IntPtr renderer, int windowX, int windowY, out float logicalX, out float logicalY);  // SDL 2.0.18+
+
     [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
     public static extern int SDL_RenderSetVSync(IntPtr renderer, int vsync);  // SDL 2.0.18+
 

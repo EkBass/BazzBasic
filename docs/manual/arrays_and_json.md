@@ -23,9 +23,9 @@ DIM a$, b$, c$
 Use numbers as indices (0-based):
 ```vb
 DIM scores$
-scores$(0) = 95
-scores$(1) = 87
-scores$(2) = 92
+	scores$(0) = 95
+	scores$(1) = 87
+	scores$(2) = 92
 
 PRINT scores$(0)         ' Output: 95
 ```
@@ -34,9 +34,9 @@ PRINT scores$(0)         ' Output: 95
 Use strings as keys:
 ```vb
 DIM player$
-player$("name") = "Alice"
-player$("score") = 1500
-player$("level") = 3
+	player$("name") 		= "Alice"
+	player$("score") 	= 1500
+	player$("level") 	= 3
 
 PRINT player$("name")    ' Output: Alice
 ```
@@ -46,10 +46,11 @@ Use multiple indices separated by commas:
 
 ```vb
 DIM matrix$
-matrix$(0, 0) = "A1"
-matrix$(0, 1) = "A2"
-matrix$(1, 0) = "B1"
-matrix$(1, 1) = "B2"
+	matrix$(0, 0) = "A1"
+	matrix$(0, 1) = "A2"
+	matrix$(1, 0) = "B1"
+	matrix$(1, 1) = "B2"
+	
 PRINT matrix$(1, 0)      ' Output: B1
 ```
 
@@ -57,10 +58,10 @@ PRINT matrix$(1, 0)      ' Output: B1
 Combine numeric and string indices:
 ```vb
 DIM data$
-data$(1, "header") = "Name"
-data$(1, "value") = "Alice"
-data$(2, "header") = "Age"
-data$(2, "value") = 30
+	data$(1, "header") 	= "Name"
+	data$(1, "value") 	= "Alice"
+	data$(2, "header") 	= "Age"
+	data$(2, "value") 	= 30
 
 PRINT data$(1, "value")  ' Output: Alice
 ```
@@ -71,10 +72,10 @@ PRINT data$(1, "value")  ' Output: Alice
 Removes the entire array and all its elements:
 ```vb
 DIM arr$
-arr$("name") = "Test"
-arr$(0) = "Zero"
+	arr$("name") 	= "Test"
+	arr$(0) 			= "Zero"
 
-PRINT LEN(arr$())             ' Output: 2
+PRINT LEN(arr$())	' Output: 2
 
 DELARRAY arr$
 
@@ -87,7 +88,8 @@ PRINT LEN(arr$())             ' Output: 0
 Removes an element from the array:
 ```vb
 DIM cache$
-cache$("temp") = "value"
+	cache$("temp") = "value"
+	
 PRINT HASKEY(cache$("temp"))  ' Output: 1
 
 DELKEY cache$("temp")
@@ -100,7 +102,7 @@ PRINT HASKEY(cache$("temp"))  ' Output: 0
 Returns 1 if the key exists, 0 otherwise:
 ```vb
 DIM config$
-config$("debug") = 1
+	config$("debug") = 1
 
 IF HASKEY(config$("debug")) THEN
     PRINT "Debug mode is set"
@@ -120,11 +122,11 @@ DIM a$
 DIM b$
 DIM c$
 
-a$("name") = "Alice"
-a$("score") = 100
+a$("name") 	= "Alice"
+a$("score") 	= 100
 
-b$("score") = 999   ' Same key as a$ — this wins
-b$("level") = 5
+b$("score") 	= 999   ' Same key as a$ — this wins
+b$("level") 	= 5
 
 JOIN c$, a$, b$
 
@@ -162,9 +164,9 @@ Arrays cannot be passed directly to functions. Instead, pass individual elements
 ### As single values
 ```vb
 DIM a$
-a$("name") = "Foo"
-a$("age") = 19
-a$(1) = 1
+	a$("name") = "Foo"
+	a$("age") = 19
+	a$(1) = 1
 
 DEF FN func$(a$, b$, c$)
     PRINT a$
@@ -181,6 +183,9 @@ LET b$ = FN func$(a$("name"), a$("age"), a$(1))
 ```
 
 ### As JSON
+
+The entire JSON dataset is processed as one large string, so it can be passed as a single parameter to a function.
+
 ```vb
 ' ==================================================
 ' Example how to pass array to user-defined function
@@ -205,17 +210,17 @@ END DEF
 
 [inits]
     DIM player$
-        player$("name") = "Alice"
-        player$("score") = 9999
-        player$("address,city") = "New York"
-        player$("skills,0") = "JavaScript"
-        player$("skills,1") = "Python"
+        player$("name") 			= "Alice"
+        player$("score") 		= 9999
+        player$("address,city") 	= "New York"
+        player$("skills,0") 		= "JavaScript"
+        player$("skills,1") 		= "Python"
 
     LET json$
 
 [main]
     json$ = ASJSON(player$)
-    ' json$ now: {"name":"Alice","score":9999,"address":{"city":"New York"},"skills":["JavaScript","Python"]}
+    ' json$ now: "{\"name\":\"Alice\",\"score\":9999,\"address\":{\"city\":\"New York\"},\"skills\":[\"JavaScript\",\"Python\"]}"
 
 [output]
     PRINT FN ArrayAsParam$(json$)
@@ -239,9 +244,8 @@ count$ = count$ + 1
 fruits$(count$) = "Banana"
 count$ = count$ + 1
 fruits$(count$) = "Cherry"
-count$ = count$ + 1
 
-FOR i$ = 0 TO count$ - 1
+FOR i$ = 0 TO count$
     PRINT fruits$(i$)
 NEXT
 ```
@@ -249,11 +253,13 @@ NEXT
 ### Dictionary / Map
 ```vb
 DIM translations$
-translations$("hello") = "hei"
-translations$("goodbye") = "nakemiin"
-translations$("thanks") = "kiitos"
+	translations$("hello") 		= "hei"
+	translations$("goodbye") 	= "nakemiin"
+	translations$("thanks")		 = "kiitos"
 
+' using INPUT auto-initialization here for word$'
 INPUT "English word: ", word$
+
 IF HASKEY(translations$(word$)) THEN
     PRINT "Finnish: "; translations$(word$)
 ELSE
@@ -320,11 +326,11 @@ BazzBasic arrays map naturally to JSON. Nested JSON objects and arrays become mu
 Converts a BazzBasic array to a JSON string:
 ```vb
 DIM player$
-player$("name") = "Alice"
-player$("score") = 9999
-player$("address,city") = "New York"
-player$("skills,0") = "JavaScript"
-player$("skills,1") = "Python"
+	player$("name") 			= "Alice"
+	player$("score") 		= 9999
+	player$("address,city") 	= "New York"
+	player$("skills,0") 		= "JavaScript"
+	player$("skills,1") 		= "Python"
 
 LET json$ = ASJSON(player$)
 PRINT json$
@@ -335,7 +341,7 @@ PRINT json$
 Converts a JSON string into a BazzBasic array. Returns number of elements loaded:
 ```vb
 DIM data$
-LET count$ = ASARRAY(data$, "{""name"":""Bob"",""score"":42}")
+LET count$ = ASARRAY(data$, "{\"name\":\"Bob\",\"score\":42}")
 
 PRINT data$("name")    ' Output: Bob
 PRINT data$("score")   ' Output: 42
@@ -344,14 +350,18 @@ PRINT count$           ' Output: 2
 
 Nested JSON becomes comma-separated keys:
 ```vb
-DIM data$
-LET json$ = "{""player"":{""name"":""Alice"",""hp"":100},""skills"":[""fire"",""ice""]}"
-ASARRAY data$, json$
+[inits]
+    DIM data$
+    LET json$ = "{\"player\":{\"name\":\"Alice\",\"hp\":100},\"skills\":[\"fire\",\"ice\"]}"
 
-PRINT data$("player,name")   ' Output: Alice
-PRINT data$("player,hp")     ' Output: 100
-PRINT data$("skills,0")      ' Output: fire
-PRINT data$("skills,1")      ' Output: ice
+[main]
+    LET count$ = ASARRAY(data$, json$)
+    PRINT data$("player,name")   ' Alice
+    PRINT data$("player,hp")     ' 100
+    PRINT data$("skills,0")      ' fire
+    PRINT data$("skills,1")      ' ice
+    PRINT count$                 ' alkioiden lukumäärä
+END
 ```
 
 ### LOADJSON
@@ -367,10 +377,10 @@ PRINT scores$("first,name")   ' Output: depends on file contents
 Saves an array as a formatted JSON file:
 ```vb
 DIM save$
-save$("level") = 3
-save$("hp") = 80
-save$("position,x") = 100
-save$("position,y") = 200
+	save$("level") = 3
+	save$("hp") = 80
+	save$("position,x") = 100
+	save$("position,y") = 200
 
 SAVEJSON save$, "savegame.json"
 ```
@@ -405,22 +415,22 @@ HTTPGET and HTTPPOST accept an optional `headers$` array as the last parameter. 
 
 ```vb
 DIM headers$
-headers$("Authorization") = "Bearer mytoken123"
-headers$("Content-Type") = "application/json"
+	headers$("Authorization") = "Bearer mytoken123"
+	headers$("Content-Type") = "application/json"
 
 LET raw$ = HTTPGET("https://api.example.com/data", headers$)
 ```
 
 ```vb
 DIM headers$
-headers$("Authorization") = "Bearer mytoken123"
-headers$("Content-Type") = "application/json"
+	headers$("Authorization") = "Bearer mytoken123"
+	headers$("Content-Type") = "application/json"
 
 DIM body$
-body$("model") = "gpt-4.1-mini"
-body$("messages,0,role") = "user"
-body$("messages,0,content") = "Hello"
-body$("max_tokens") = 100
+	body$("model") = "gpt-4.1-mini"
+	body$("messages,0,role") = "user"
+	body$("messages,0,content") = "Hello"
+	body$("max_tokens") = 100
 
 LET raw$ = HTTPPOST("https://api.openai.com/v1/chat/completions", ASJSON(body$), headers$)
 
@@ -433,11 +443,10 @@ PRINT result$("choices,0,message,content")
 
 ## Loading key=value Files into Arrays
 
-`FileRead` can populate an array directly from a `key=value` formatted text file. If the target variable is a `DIM`'d array, BazzBasic automatically parses the file contents line by line into array elements.
+`FILEREAD` can populate an array directly from a `key=value` formatted text file. If the target variable is a `DIM`'d array, BazzBasic automatically parses the file contents line by line into array elements.
 
 ```vb
-DIM config$
-LET config$ = FileRead("settings.txt")
+DIM config$ = FILEREAD("settings.txt")
 
 PRINT config$("width")    ' Output: 800
 PRINT config$("height")   ' Output: 600
@@ -447,39 +456,30 @@ Where `settings.txt` contains:
 ```
 width=800
 height=600
+# Comment, ignored, only when reading to array!
 title=My Game
 ```
 
-Lines beginning with `#` are treated as comments and ignored:
-```
-# Game settings
-width=800
-height=600
-
-# Display
-fullscreen=0
-```
 
 ### .env files
 
 This makes `.env` files work naturally for storing API keys and configuration outside of source code:
 
 ```vb
-IF FileExists(".env") = 0 THEN
+IF FILEEXISTS(".env") = 0 THEN
     PRINT "Error: .env file not found"
     END
 END IF
-
-DIM env$
-LET env$ = FileRead(".env")
-
-LET ApiKey# = env$("OPENAI_API_KEY")
+DIM env$ = FILEREAD(".env")
+PRINT env$("OPENAI_API_KEY")
 ```
 
 Where `.env` contains:
 ```
 OPENAI_API_KEY=sk-proj-...
+# Comment
 ANTHROPIC_API_KEY=sk-ant-...
+# Important! In-line comments not yet supported
 ```
 
 **Important:** Add `.env` to your `.gitignore` to keep API keys out of version control.

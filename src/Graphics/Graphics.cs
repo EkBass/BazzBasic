@@ -128,6 +128,11 @@ public static class Graphics
             SDL.SDL_Quit();
             throw new Exception($"Renderer could not be created! SDL Error: {SDL.SDL_GetErrorString()}");
         }
+
+        // Logical render size: all drawing maps to a virtual width x height canvas that
+        // SDL scales to fit the real output (windowed OR fullscreen), preserving aspect
+        // ratio with letterbox bars. Program coordinates stay identical in both modes.
+        _ = SDL.SDL_RenderSetLogicalSize(renderer, width, height);
         
         initialized = true;
 
@@ -502,8 +507,13 @@ public static class Graphics
 
 
         uint state = SDL.SDL_GetMouseState(out int x, out int y);
-        mouseX = x;
-        mouseY = y;
+
+        // Map window pixels -> logical coords so MOUSEX/MOUSEY stay in the same virtual
+        // screenWidth x screenHeight space as drawing. In fullscreen the window is bigger
+        // than the logical canvas; in windowed mode the two are identical (no-op there).
+        SDL.SDL_RenderWindowToLogical(renderer, x, y, out float lx, out float ly);
+        mouseX = (int)lx;
+        mouseY = (int)ly;
         mouseButtons = state;
     }
     
@@ -992,6 +1002,9 @@ public static class Graphics
         // Restore drawing state
         _= SDL.SDL_SetRenderDrawColor(renderer, currentR, currentG, currentB, currentA);
 
+        // Renderer was recreated — re-apply the logical render size or it reverts to 1:1.
+        _ = SDL.SDL_RenderSetLogicalSize(renderer, screenWidth, screenHeight);
+
         // Renderer recreation can cause the window to briefly lose focus, which
         // makes SDL zero out the keyboard state. Re-raise the window and flush
         // the event queue so input works normally on the very next frame.
@@ -1061,8 +1074,13 @@ public static class Graphics
                 SDL.SDL_Delay(10);
             }
             SDL.SDL_RaiseWindow(window);
-            _ = SDL.SDL_RenderSetViewport(renderer, IntPtr.Zero);
-            SDL.SDL_RenderPresent(renderer);
         }
+
+        // Re-assert the logical render size so SDL recomputes the scale + letterbox
+        // viewport for the new output size. Keeps draw coordinates in the same virtual
+        // screenWidth x screenHeight space in both windowed and fullscreen mode.
+        SDL.SDL_PumpEvents();
+        _ = SDL.SDL_RenderSetLogicalSize(renderer, screenWidth, screenHeight);
+        SDL.SDL_RenderPresent(renderer);
     }
 }

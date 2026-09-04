@@ -274,11 +274,14 @@ LET dice$ = RND(6) + 1
 ```
 
 ### ROUND(n)
-Rounds a number according to standard rules
+Rounds a number to the nearest integer. Halfway values (x.5) always round away from zero (up for positive numbers, down for negative numbers) — not to the nearest even number.
 ```vb
 PRINT ROUND(1.1)    ' Output: 1
 PRINT ROUND(1.5)	' Output: 2
 PRINT ROUND(1.9)    ' Output: 2
+PRINT ROUND(0.5)    ' Output: 1
+PRINT ROUND(10.5)   ' Output: 11
+PRINT ROUND(-0.5)   ' Output: -1
 ```
 
 ### SGN(n)

@@ -1,6 +1,52 @@
 # News and changes
 These changes are about the current source code. These are effected once new binary release is published
 
+## 4th September 2026
+
+### Bug fix: ROUND() used banker's rounding instead of always rounding halves up
+
+`ROUND()` called `Math.Round()` without a midpoint mode, so .NET defaulted to `MidpointRounding.ToEven` ("banker's rounding"): `ROUND(0.5)` gave `0`, `ROUND(10.5)` gave `10`, `ROUND(2.5)` gave `2` — always rounding `.5` to the nearest *even* number instead of always up. Now uses `MidpointRounding.AwayFromZero`, so `.5` always rounds away from zero:
+
+```basic
+PRINT ROUND(0.5)    ' now 1 (was 0)
+PRINT ROUND(10.5)   ' now 11 (was 10)
+PRINT ROUND(-0.5)   ' now -1
+```
+
+### Bug fix: SRAND() had a duplicate '0' and a stray '£' in its character set
+
+`SRAND(n)`'s allowed character set accidentally listed `0` twice (giving it double the chance of the other digits) and included the British pound sign `£`, a non-ASCII character that had no business being there. The set is now 81 characters, each with equal probability, `£` removed entirely.
+
+### Bug fix: PRG_ROOT# was missing its trailing directory separator
+
+`PRG_ROOT#` never ended with `\` or `/`, so concatenating a relative path directly (`PRG_ROOT# + "data/file.txt"`) merged the program's folder name with the subfolder name into one broken path (e.g. `...\MyProjectdata\file.txt`) and silently failed to create the file. `PRG_ROOT#` now always ends with a directory separator:
+
+```basic
+FILEWRITE PRG_ROOT# + "data/file.txt", content$   ' now works without adding your own separator
+```
+
+### Bug fix: FILEREAD-into-array (.env style parsing) broke completely on a single comment line
+
+Assigning `FILEREAD()`'s output to a `DIM`'d array (`DIM env$ = FILEREAD(".env")`) parses `KEY=value` lines into array elements. The parser required *every* line to contain `=`, so a single `#`-prefixed comment line (no `=` at all) made the whole population step silently fail — leaving the array completely empty, including keys that appeared *before* the comment. Blank lines and full-line `#` comments are now skipped before validation. Inline comments (`KEY=value # note`) are not yet supported.
+
+### Bug fix: calling a DEF FN function without the FN keyword silently did nothing
+
+Writing `Foo$(1)` on its own line (forgetting the `FN` keyword, e.g. instead of `FN Foo$(1)`) was silently swallowed — the parser treated it as an array-element assignment target, found no `=` sign after it, and just moved on without calling the function or reporting anything. Now, if the name matches a declared `DEF FN` function, this produces a clear error instead:
+
+```basic
+DEF FN Foo$(bar$)
+    RETURN bar$ + 1
+END DEF
+
+Foo$(1)   ' Error: 'FOO$' is a DEF FN function, not an array — did you forget the FN keyword? Use: FN FOO$(...)
+```
+
+### Examples folder reorganized
+
+`Examples/` was a flat pile of ~80 scripts. Split into `Examples/graphics/`, `Examples/audio/`, `Examples/console/` and `Examples/classics/` (ports of classic 1970s/80s BASIC games — Eliza, Acey Ducey, Robots, Towers of Hanoi, Trap, Russian Roulette, Rock-Paper-Scissors, the Wingbermuehle maze generator). Also removed 12 old internal regression-test scripts (`*_test.bas` style files exercising ISSET, FSTRING, line continuation, FastTrig, DISTANCE, HTTP listen/timeout, etc.) that had no demonstration value and were already covered by the automated test pass long ago. `rosetta-code/` is untouched and stays a separate, curated category.
+
+Going forward, more effort should go into graphics examples specifically. BazzBasic still gets mistaken for a console-only interpreter by a lot of people, partly because so many of the earlier example programs were console-based — the graphics/SDL2 side deserves better representation.
+
 ## 21st May 2026
 Releaased as ver. 1.4b
 

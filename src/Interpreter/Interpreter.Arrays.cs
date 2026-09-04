@@ -17,6 +17,7 @@
 
 using BazzBasic.Lexer;
 using BazzBasic.Parser;
+using System.Linq;
 
 namespace BazzBasic.Interpreter;
 
@@ -74,10 +75,17 @@ public partial class Interpreter
     // Returns true if content looked like key=value format.
     private bool TryPopulateArrayFromKeyValue(string arrName, string content)
     {
-        var lines = content.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+        var rawLines = content.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+        if (rawLines.Length == 0) return false;
+
+        // Blank lines already dropped above. Also skip full-line comments ('#').
+        // Inline comments (KEY=value # note) are NOT handled yet.
+        var lines = rawLines
+            .Where(l => !l.TrimEnd('\r').TrimStart().StartsWith('#'))
+            .ToArray();
         if (lines.Length == 0) return false;
 
-        // All lines must contain exactly one '=' to qualify
+        // All remaining lines must contain exactly one '=' to qualify
         foreach (var line in lines)
         {
             int eq = line.IndexOf('=');

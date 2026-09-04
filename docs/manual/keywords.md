@@ -233,7 +233,7 @@ These are auto-initialized at startup — no `LET` required.
 | Constant | Value |
 |----------|-------|
 | `BBVER#` | BazzBasic version string (e.g. `"1.1d"`) |
-| `PRG_ROOT#` | Program base directory path |
+| `PRG_ROOT#` | Program base directory path (ends with a directory separator) |
 | `TRUE` | 1 |
 | `FALSE` | 0 |
 | `PI#` | 3.14159265358979 |

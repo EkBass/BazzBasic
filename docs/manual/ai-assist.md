@@ -9,3 +9,5 @@ In the *AI service* you prefer, upload it directly as a file, add it as a projec
 With this guide, any AI can help you learn or use BazzBasic effectively.
 
 [BazzBasic Guide for AI](https://huggingface.co/datasets/EkBass/BazzBasic_AI_Guide)
+
+The guide is published under the MIT license and is constantly evolving, just like BazzBasic itself, so be sure to check your version from time to time.

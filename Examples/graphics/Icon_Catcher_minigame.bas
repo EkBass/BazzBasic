@@ -1,6 +1,8 @@
 ' ============================================================
 ' Fruit Catcher - BazzBasic port of SmallBasic minigame
 ' https://smallbasic.com/smallbasic.com/program/?nts150
+
+' https://github.com/EkBass/BazzBasic/blob/main/Examples/Icon_Catcher_minigame.bas
 ' ============================================================
 [inits]
     LET NUM_FRUITS# = 10
@@ -43,6 +45,7 @@
     
 
 [main]
+    HIDEMOUSE ON
     WHILE running$
         IF INKEY = KEY_ESC# THEN running$ = FALSE
         GOSUB [sub:update]
@@ -54,6 +57,7 @@
     NEXT
     REMOVESHAPE BUCKET#
     SOUNDSTOPALL
+    HIDEMOUSE OFF
 END
 
 [sub:update]

@@ -278,14 +278,14 @@ FILEWRITE "data\file.txt", "content"  REM \f becomes form feed!
 
 ### PRG_ROOT# Constant
 
-BazzBasic provides a `PRG_ROOT#` constant containing the program's base directory path.
+BazzBasic provides a `PRG_ROOT#` constant containing the program's base directory path. It always ends with a directory separator, so you can concatenate a relative path directly onto it without adding your own `/` or `\` first.
 
 **Example:**
 ```vb
 PRINT "Program root: "; PRG_ROOT#
 
-REM Build absolute paths
-LET savePath# = PRG_ROOT# + "/saves/game1.txt"
+REM Build absolute paths - no separator needed after PRG_ROOT#
+LET savePath# = PRG_ROOT# + "saves/game1.txt"
 FILEWRITE savePath#, "Player data"
 ```
 

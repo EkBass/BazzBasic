@@ -307,10 +307,12 @@ public partial class Interpreter
     }
 
     // ROUND function
+    // Uses AwayFromZero midpoint rounding (0.5 -> 1, 1.5 -> 2, -0.5 -> -1),
+    // NOT .NET's default ToEven/banker's rounding (0.5 -> 0, 1.5 -> 2, 2.5 -> 2).
     private Value EvaluateRoundFunc()
     {
         _pos++;
-        return Value.FromNumber(Math.Round(HelperGetDouble()));
+        return Value.FromNumber(Math.Round(HelperGetDouble(), MidpointRounding.AwayFromZero));
     }
 
     // SGN function

@@ -289,7 +289,7 @@ public partial class Interpreter
         Require(TokenType.TOK_RPAREN);
 
         // adjusted as raw string generation
-        const string chars = """ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz01234567890!@#£$%&/{([)]=}?+-_""";
+        const string chars = """ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&/{([)]=}?+-_""";
         var random = new Random();
         var result = new char[length];
         for (int i = 0; i < length; i++)

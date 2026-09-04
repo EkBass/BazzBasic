@@ -164,10 +164,13 @@ PRINT parts$(2)  ' "orange"
 
 ### SRAND(n)
 Returns random string length of *n* from allowed chars.  
-**Allowed chars:** *ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456780_*
+**Allowed chars:** *ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&/{([)]=}?+-_* (81 characters, each equally likely)
 ```vb
 PRINT SRAND(10)  ' Output example: noAR1S-Qw1
+PRINT SRAND(0)   ' Output: (empty string, nothing printed)
+PRINT SRAND(-1)  ' Error: Arithmetic operation resulted in an overflow.
 ```
+`n` must be zero or a positive integer. `SRAND(0)` returns an empty string. A negative `n` throws a runtime error rather than returning a value.
 
 ### STR(n)
 Converts number to string.

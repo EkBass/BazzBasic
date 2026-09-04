@@ -65,14 +65,17 @@ FastTrig(FALSE)
 
 ### FastRad(angle)
 Converts degrees to radians using an optimized formula.
-Angle is automatically normalized to 0-359.
+Angle is automatically normalized to 0-359 **before** conversion — so a full turn (360) wraps to 0.
 
-**Note:** Does not require `FastTrig(TRUE)`.
+**Note:** Does not require `FastTrig(TRUE)`. Unlike `FastSin`/`FastCos`, this function never checks whether fast trig tables are enabled — it works standalone.
+
+**Not the same as `RAD(angle)`:** `RAD()` does not normalize and converts the raw angle as given (`RAD(360)` = 6.283185307179586, i.e. 2×PI). `FastRad()` always normalizes first, so `FastRad(360)` = `FastRad(0)` = 0. Pick `RAD()` if you need the literal, un-wrapped radian value.
 
 ```vb
 PRINT FastRad(90)   ' Output: 1.5707963267948966 (HPI)
 PRINT FastRad(180)  ' Output: 3.141592653589793 (PI)
-PRINT FastRad(360)  ' Output: 6.283185307179586 (2*PI)
+PRINT FastRad(360)  ' Output: 0 (wraps to angle 0, NOT 2*PI)
+PRINT FastRad(450)  ' Output: 1.5707963267948966 (same as FastRad(90))
 ```
 
 ### When to Use Fast Trig
