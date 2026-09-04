@@ -3,6 +3,8 @@ These changes are about the current source code. These are effected once new bin
 
 ## 4th September 2026
 
+### Published as version 1.4c
+
 ### Bug fix: ROUND() used banker's rounding instead of always rounding halves up
 
 `ROUND()` called `Math.Round()` without a midpoint mode, so .NET defaulted to `MidpointRounding.ToEven` ("banker's rounding"): `ROUND(0.5)` gave `0`, `ROUND(10.5)` gave `10`, `ROUND(2.5)` gave `2` — always rounding `.5` to the nearest *even* number instead of always up. Now uses `MidpointRounding.AwayFromZero`, so `.5` always rounds away from zero:
