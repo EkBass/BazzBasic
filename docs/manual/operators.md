@@ -20,6 +20,7 @@ WEND
 | `-` | Subtraction | `5 - 3` → `2` |
 | `*` | Multiplication | `5 * 3` → `15` |
 | `/` | Division | `10 / 3` → `3.333...` |
+| `%` | Modulo (remainder) | `10 % 3` → `1` |
 
 ## Comparison Operators
 
@@ -52,7 +53,7 @@ From highest to lowest:
 
 1. `()` - Parentheses
 2. `NOT` - Logical NOT
-3. `*`, `/` - Multiplication, Division
+3. `*`, `/`, `%` - Multiplication, Division, Modulo
 4. `+`, `-` - Addition, Subtraction
 5. `=`, `<>`, `<`, `>`, `<=`, `>=` - Comparison
 6. `AND` - Logical AND

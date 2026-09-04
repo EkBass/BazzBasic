@@ -3,6 +3,10 @@ These changes are about the current source code. These are effected once new bin
 
 ## 4th September 2026
 
+### Documentation: % as modulo was undocumented
+
+`%` has always worked as the modulo (remainder) operator — `10 % 3` → `1`, same precedence as `*`/`/` — it just was never listed in `operators.md` or mentioned in `math_functions.md`. No code change, documentation only.
+
 ### Published as version 1.4c
 
 ### Bug fix: ROUND() used banker's rounding instead of always rounding halves up

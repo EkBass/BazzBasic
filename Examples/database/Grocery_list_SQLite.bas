@@ -1,5 +1,6 @@
 ' Grocery List - SQLite Version
 ' BazzBasic version 1.4
+' https://ekbass.github.io/BazzBasic/
 
 [inits]
     LET DB_FILE# = "grocery.db"

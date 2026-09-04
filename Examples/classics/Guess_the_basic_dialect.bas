@@ -1,6 +1,8 @@
 ' =============================================================
 ' Guess the basic dialect: mini guessing game
 ' BazzBasic version. Public domain
+' https://ekbass.github.io/BazzBasic/
+
 ' =============================================================
 
 DEF FN Scramble$(text$)

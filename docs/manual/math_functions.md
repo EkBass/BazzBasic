@@ -1,5 +1,7 @@
 ## Math Functions
 
+> Looking for modulo (remainder)? It's the `%` operator, not a function — see [Operators](operators.md#arithmetic-operators). `10 % 3` → `1`.
+
 ### ABS(n)
 Returns the absolute value of *n*.
 ```vb

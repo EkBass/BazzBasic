@@ -1,5 +1,6 @@
 ' Paper, Rock, Scissors - Ported from Python
-' BazzBasic version 1.4
+' BazzBasic version 1.4, EkBass
+' https://ekbass.github.io/BazzBasic/
 
 ' Original https://github.com/omonimus1/chicken_wings_and_PYTHON/blob/master/rock_scissor_paper/rock_scissor_paper.py
 

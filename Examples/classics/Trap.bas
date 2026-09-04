@@ -1,6 +1,8 @@
 ' TRAP - BazzBasic Edition
 ' Original by Steve Ullman (1972)
 ' BazzBasic version
+' https://ekbass.github.io/BazzBasic/
+
 
 [inits]
     LET max_guesses# = 6
