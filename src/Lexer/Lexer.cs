@@ -192,6 +192,7 @@ public class Lexer(string source)
         ["ROWCOUNT"]    = TokenType.TOK_ROWCOUNT,
         ["ARGS"]        = TokenType.TOK_ARGS,
         ["ARGCOUNT"]    = TokenType.TOK_ARGCOUNT,
+        ["ARRKEY"]      = TokenType.TOK_ARRKEY,
 
         // Time functions
         ["TICKS"]       = TokenType.TOK_TICKS,

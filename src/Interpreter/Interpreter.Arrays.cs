@@ -274,4 +274,37 @@ public partial class Interpreter
 
         return Value.FromNumber(_variables.GetArrayRowCount(arrName));
     }
+
+    // Return the key at a given 0-based index in insertion order.
+    // Pairs with LEN(arr$()) to loop over associative arrays with FOR/NEXT or WHILE/WEND.
+    // Syntax: ARRKEY(arr$(), i)
+    private Value EvaluateArrKeyFunc()
+    {
+        _pos++; // consume TOK_ARRKEY
+        Require(TokenType.TOK_LPAREN);
+
+        if (_pos >= _tokens.Count || _tokens[_pos].Type != TokenType.TOK_VARIABLE)
+        {
+            Error("ARRKEY: expected array name");
+            return Value.Empty;
+        }
+        string arrName = _tokens[_pos].StringValue ?? "";
+        _pos++;
+
+        Require(TokenType.TOK_LPAREN);  // inner (
+        Require(TokenType.TOK_RPAREN);  // inner )  -- empty parens: whole array, not one element
+
+        Require(TokenType.TOK_COMMA);
+        int index = (int)EvaluateExpression().AsNumber();
+
+        Require(TokenType.TOK_RPAREN);  // outer )
+
+        string? key = _variables.GetArrayKeyAt(arrName, index);
+        if (key == null)
+        {
+            Error($"ARRKEY: index {index} out of range for array {arrName}");
+            return Value.Empty;
+        }
+        return Value.FromString(key);
+    }
 }

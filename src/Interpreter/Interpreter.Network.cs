@@ -169,7 +169,9 @@ public partial class Interpreter
     }
 
     // Build nested object/array tree from flat comma-key dictionary
-    private static object BuildJsonTree(Dictionary<string, Value> elements)
+    // (IDictionary so it accepts both the OrderedDictionary array backing store
+    // and the plain Dictionary used internally for recursive sub-objects)
+    private static object BuildJsonTree(IDictionary<string, Value> elements)
     {
         // Collect all top-level keys
         var top = new Dictionary<string, List<(string rest, Value val)>>(StringComparer.OrdinalIgnoreCase);

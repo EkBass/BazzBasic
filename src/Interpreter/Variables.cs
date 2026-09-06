@@ -32,9 +32,13 @@ public class Variables
     // Constants (name ends with #) - immutable after first assignment
     private readonly Dictionary<string, Value> _constants = new(StringComparer.OrdinalIgnoreCase);
     
-    // Arrays - stored as Dictionary<string, Value> per array
-    // Key format: "arrayname$" -> Dictionary of (key -> value)
-    private readonly Dictionary<string, Dictionary<string, Value>> _arrays = new(StringComparer.OrdinalIgnoreCase);
+    // Arrays - stored as OrderedDictionary<string, Value> per array.
+    // OrderedDictionary (System.Collections.Generic, .NET 9+) guarantees insertion order
+    // and gives O(1) indexed access via GetAt() - a plain Dictionary only preserves
+    // insertion order as an implementation detail, not a documented guarantee, which
+    // matters once arrays are enumerated by index (see ARRKEY).
+    // Key format: "arrayname$" -> OrderedDictionary of (key -> value)
+    private readonly Dictionary<string, OrderedDictionary<string, Value>> _arrays = new(StringComparer.OrdinalIgnoreCase);
 
     // Scope management (for user functions)
     private readonly Stack<Dictionary<string, Value>> _localScopes = new();
@@ -149,7 +153,7 @@ public class Variables
         string key = name.ToUpperInvariant();
         if (!_arrays.ContainsKey(key))
         {
-            _arrays[key] = new Dictionary<string, Value>(StringComparer.OrdinalIgnoreCase);
+            _arrays[key] = new OrderedDictionary<string, Value>(StringComparer.OrdinalIgnoreCase);
         }
     }
 
@@ -163,7 +167,7 @@ public class Variables
         string key = arrayName.ToUpperInvariant();
         
         // Check if array is declared - do NOT auto-declare
-        if (!_arrays.TryGetValue(key, out Dictionary<string, Value>? value1))
+        if (!_arrays.TryGetValue(key, out OrderedDictionary<string, Value>? value1))
         {
             throw new InvalidOperationException($"Array not declared, use DIM first: {arrayName}");
         }
@@ -222,7 +226,7 @@ public class Variables
         return array.Count;
     }
 
-    public Dictionary<string, Value>? GetAllArrayElements(string arrayName)
+    public OrderedDictionary<string, Value>? GetAllArrayElements(string arrayName)
     {
         string key = arrayName.ToUpperInvariant();
         return _arrays.TryGetValue(key, out var array) ? array : null;
@@ -242,6 +246,22 @@ public class Variables
             uniqueFirst.Add(comma >= 0 ? k[..comma] : k);
         }
         return uniqueFirst.Count;
+    }
+
+    // Return the key at a given 0-based index, in insertion order.
+    // Used by ARRKEY() to loop over associative arrays with FOR/NEXT or WHILE/WEND.
+    // Returns null if the array doesn't exist or the index is out of range.
+    public string? GetArrayKeyAt(string arrayName, int index)
+    {
+        string key = arrayName.ToUpperInvariant();
+
+        if (!_arrays.TryGetValue(key, out var array))
+            return null;
+
+        if (index < 0 || index >= array.Count)
+            return null;
+
+        return array.GetAt(index).Key;
     }
 
     // ========================================================================

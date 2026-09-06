@@ -1,6 +1,28 @@
 # News and changes
 These changes are about the current source code. These are effected once new binary release is published
 
+## 6th September 2026
+
+### New: ARRKEY() — iterate associative arrays with FOR/NEXT or WHILE/WEND
+
+BazzBasic arrays have always supported string keys (`arr$("name") = ...`) as well as numeric ones, but there was no way to loop over the keys — only `LEN(arr$())` telling you *how many* there were. `ARRKEY(arr$(), i)` returns the key at a given 0-based index, in insertion order:
+
+```basic
+DIM car$
+	car$("manufacturer") = "Ford"
+	car$("engine") = "1.6 Eco"
+	car$("color") = "Blue"
+
+FOR i$ = 0 TO LEN(car$()) - 1
+	LET key$ = ARRKEY(car$(), i$)
+	PRINT key$; " = "; car$(key$)
+NEXT i$
+```
+
+No new loop keyword needed — `ARRKEY` plus the existing `LEN(arr$())` is enough for both `FOR/NEXT` and `WHILE/WEND`.
+
+Internally, array storage moved from `Dictionary<string, Dictionary<string, Value>>` to `Dictionary<string, OrderedDictionary<string, Value>>` (`OrderedDictionary`, .NET 9+). A plain `Dictionary` only preserves insertion order as an implementation detail, not a documented guarantee — `OrderedDictionary` makes it official and gives `ARRKEY` O(1) indexed lookup instead of an O(n) scan per call. No BASIC-level behavior changes as a result of this — `ROWCOUNT`, `ASJSON`, `JOIN`, `SAVEJSON`, and HTTP header arrays all still work exactly as before.
+
 ## 4th September 2026
 
 ### Documentation: % as modulo was undocumented

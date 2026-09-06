@@ -358,6 +358,8 @@ public partial class Interpreter
                 return EvaluateArgsFunc();
             case TokenType.TOK_ARGCOUNT:
                 return EvaluateArgCountFunc();
+            case TokenType.TOK_ARRKEY:
+                return EvaluateArrKeyFunc();
             case TokenType.TOK_LOADIMAGE:
                 return EvaluateLoadimageFunc();
             case TokenType.TOK_LOADSHAPE:

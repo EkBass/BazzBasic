@@ -210,6 +210,7 @@ public enum TokenType
     TOK_ROWCOUNT            = 375,
     TOK_ARGS                = 376,
     TOK_ARGCOUNT            = 377,
+    TOK_ARRKEY              = 378,
 
     // Time functions
     TOK_TICKS               = 380,

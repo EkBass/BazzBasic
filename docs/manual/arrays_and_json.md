@@ -139,6 +139,8 @@ PRINT c$("level")   ' Output: 5      (from b$)
 
 ### LEN and ROWCOUNT
 
+| Function | Meaning |
+|----------|---------|
 | `LEN(arr$())` | Total element count across **all** dimensions (note empty parens) |
 | `ROWCOUNT(arr$())` | Count of **first-dimension** keys only — use for FOR loops over multi-dim arrays |
 
@@ -150,8 +152,46 @@ DIM sounds$
     sounds$("guns", "ak47_reload")      = "reload_ak47.wav"
     sounds$("food", "ham_eat")          = "eat_ham.wav"
 
-PRINT LEN(sounds$())        ' 5 as full size of arrayas there is total of 4 values in array
+PRINT LEN(sounds$())        ' 5 - total elements across both "guns" and "food" groups
 PRINT ROWCOUNT(sounds$())   ' 2, "guns" & "food"
+```
+
+---
+
+### ARRKEY
+
+Returns the key at a given 0-based index, in insertion order. Pairs with `LEN(arr$())` to loop over associative (string-keyed) arrays using ordinary `FOR/NEXT` or `WHILE/WEND` — BazzBasic has no dedicated `FOREACH`.
+
+```vb
+DIM car$
+	car$("manufacturer") 	= "Ford"
+	car$("engine") 			= "1.6 Eco"
+	car$("color") 			= "Blue"
+
+FOR i$ = 0 TO LEN(car$()) - 1
+	LET key$ = ARRKEY(car$(), i$)
+	PRINT key$; " = "; car$(key$)
+NEXT i$
+' Output:
+' manufacturer = Ford
+' engine = 1.6 Eco
+' color = Blue
+```
+
+Also works with `WHILE/WEND`:
+```vb
+LET i$ = 0
+WHILE i$ < LEN(car$())
+	LET key$ = ARRKEY(car$(), i$)
+	PRINT key$; " = "; car$(key$)
+	i$ = i$ + 1
+WEND
+```
+
+Numeric-keyed arrays work the same way — `ARRKEY` returns the key as a string regardless of whether the array uses numbers or names as keys. An out-of-range index produces an error rather than an empty string, so a typo in the loop bound won't fail silently:
+```vb
+PRINT ARRKEY(car$(), 99)
+' ERROR: ARRKEY: index 99 out of range for array CAR$
 ```
 
 ---
@@ -265,6 +305,26 @@ IF HASKEY(translations$(word$)) THEN
 ELSE
     PRINT "Translation not found"
 END IF
+```
+
+### Iterating an Associative Array
+Combine `LEN` and `ARRKEY` to walk every key/value pair:
+```vb
+DIM scores$
+	scores$("Alice") = 95
+	scores$("Bob")   = 87
+	scores$("Carol") = 92
+
+FOR i$ = 0 TO LEN(scores$()) - 1
+    LET name$ = ARRKEY(scores$(), i$)
+    PRINT name$; ": "; scores$(name$)
+NEXT i$
+```
+Output:
+```
+Alice: 95
+Bob: 87
+Carol: 92
 ```
 
 ### 2D Grid
