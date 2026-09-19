@@ -29,6 +29,7 @@ END DEF
 PRINT FN factorial$(5) ' Output: 120
 PRINT FN factorial$(10) ' Output: 3628800
 ```
+See [User-defined Functions](https://ekbass.github.io/BazzBasic/manual/#/user-defined-functions)
 
 ### SDL2 Graphics & sounds
 BazzBasic offers a reasonable sampling of SDL2 features.
