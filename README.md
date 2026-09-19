@@ -1,21 +1,19 @@
-# BazzBasic
-BazzBasic is a BASIC interpreter built to work with the [.NET10](https://dotnet.microsoft.com/en-us) Framework.
+# ABOUT
+BazzBasic is built around one simple idea: starting programming should feel nice and even fun.
 
-It supports many of the features of [BASIC interpreters](https://en.wikipedia.org/wiki/BASIC_interpreter) from the 80s, but also offers something modern.
+Ease of learning, comfort of exploration and small but important moments of success. Just like the classic BASICs of decades past, but with a fresh and modern feel.
 
+It's easy to get started with and offers a rewarding experience with little effort. Simple syntax, modern features, and you'll be creating your first little game in a couple of evenings — hours perhaps.
+
+Check [this few lines long example game](https://github.com/EkBass/BazzBasic/blob/main/Examples/graphics/Egg_Catcher.bas) to see it yourself!
 
 ## Development
-So far, [EkBass](https://github.com/EkBass) has been responsible for the development of BazzBasic.
-
 BazzBasic is released under the [open source MIT license](https://github.com/EkBass/BazzBasic/blob/main/LICENSE.txt).
-
-Its source code is available and visible to everyone in the project's [GitHub repository](https://github.com/EkBass/BazzBasic).
 
 Currently, the development work is done in the Windows 11 operating system, but with quite a bit of effort it can also be translated to Linux or MacOS.
 
 ## Main functionalities
 Most familiar BASIC features work either completely or almost completely as users of traditional BASIC languages ​​are used to using them.
-
 
 ### User-Defined Functions
 With or without recursion.
@@ -32,14 +30,13 @@ PRINT FN factorial$(5) ' Output: 120
 PRINT FN factorial$(10) ' Output: 3628800
 ```
 
-### SDL2 Graphics
+### SDL2 Graphics & sounds
 BazzBasic offers a reasonable sampling of SDL2 features.
 
 If your program uses graphic features, SDL2.dll must be in the same directory. This does not apply to console-only programs.
 
 See [Graphics Commands](https://ekbass.github.io/BazzBasic/manual/#/graphics)
 
-### Sounds
 BazzBasic includes a sound system built on SDL2_mixer, supporting audio playback with both background and blocking modes.
 
 See [Sound Commands](https://ekbass.github.io/BazzBasic/manual/#/sounds)
@@ -70,18 +67,20 @@ DIM MyArray$
 MyArray$("name") = "John Smith"
 MyArray$("age") = 42
 ```
-See [Arrays](https://ekbass.github.io/BazzBasic/manual/#/arrays)
+See [Arrays & JSON](https://ekbass.github.io/BazzBasic/manual/#/arrays_and_json)
 
 ## Getting Started
 
-- [Installation]([installation.md](https://ekbass.github.io/BazzBasic/manual/#/installation))
-- [IDE Usage]([ide-usage.md]https://ekbass.github.io/BazzBasic/manual/#/installation?id=run-bazzbasic-ide)
-- [Hello World Tutorial](https://ekbass.github.io/BazzBasic/manual/#/./tutorials/tutorial-hello-world)
+- [Installation](https://ekbass.github.io/BazzBasic/manual/#/installation)
+- [IDE Usage](https://ekbass.github.io/BazzBasic/manual/#/ide-usage)
+- [Beginners Guide](https://ekbass.github.io/BazzBasic/manual/#/beginners-guide)
 
 ## More Resources
-- [Example programs on GitHub](https://github.com/EkBass/BazzBasic/tree/main/Examples)
+- [Rosetta Code examples](https://ekbass.github.io/BazzBasic/manual/#/rosetta-code)
 - [Show & Tell discussion forum](https://github.com/EkBass/BazzBasic/discussions/categories/show-and-tell)
-- [BazzBasic Homepage](https://ekbass.github.io/BazzBasic/)
+- [BazzBasic Cookbook](https://bbcookbook.miraheze.org/wiki/Main_Page)
+- [BazzBasic Example codes](https://github.com/EkBass/BazzBasic/tree/main/Examples)
+- [BazzBasic AI-guide](https://huggingface.co/datasets/EkBass/BazzBasic_AI_Guide)
 
 ## BazzBasic size
 Currently, BazzBasic requires about 70 megabytes + SDL2.dll
