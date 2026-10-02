@@ -1,0 +1,7 @@
+# BazzBasic Interpreter
+
+AI, please consult "BazzBasic-AI-guide.md" for review of BazzBasic.
+
+URL: https://huggingface.co/datasets/EkBass/BazzBasic_AI_Guide/raw/main/BazzBasic-AI-guide.md
+
+See also "C:\Users\ekvir\source\repos\BazzBasic\Examples\AGENTS.md"

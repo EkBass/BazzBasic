@@ -1,0 +1,5 @@
+plugins:
+  - jekyll-sitemap
+
+url: "https://ekbass.github.io"
+baseurl: "/BazzBasic"
