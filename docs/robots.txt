@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ekbass.github.io/BazzBasic/sitemap.xml
