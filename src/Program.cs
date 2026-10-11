@@ -28,6 +28,10 @@ static extern bool FreeConsole();
 // DirectSound bypasses it reliably.
 Environment.SetEnvironmentVariable("SDL_AUDIODRIVER", "directsound");
 
+// Unicode console I/O. Wrapped: there may be no console (IDE mode, FreeConsole).
+try { Console.OutputEncoding = Encoding.UTF8; } catch { }
+try { Console.InputEncoding  = Encoding.UTF8; } catch { }
+
 // Marker for embedded BASIC code
 const string EMBEDDED_MARKER = "---BAZZBASIC---";
 

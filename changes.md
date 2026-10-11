@@ -1,6 +1,39 @@
 # News and changes
 These changes are about the current source code. These are effected once new binary release is published
 
+## 11th October 2026
+
+### Bug fix: arrays DIM'd inside DEF FN kept their contents between calls
+
+All arrays lived in one global table, and `DIM` on an existing name was a no-op. An array declared inside a function therefore survived the call: the next call saw the previous call's keys, recursive calls all shared one array, and a `DIM` inside a function whose name matched a global array silently wrote into the global one. This also affected the documented `ASJSON`/`ASARRAY` pattern: stale keys from an earlier call stayed in the array.
+
+```basic
+DEF FN Count$(x$)
+    DIM t$
+    t$(x$) = 1
+    RETURN LEN(t$())
+END DEF
+
+PRINT FN Count$(1)   ' 1
+PRINT FN Count$(2)   ' was 2, now 1
+```
+
+Now each function call (and each recursion level) has its own array table. `DIM` inside a function always creates a fresh, empty local array, shadowing any global array of the same name. Functions can still read and write global arrays they did not `DIM` themselves, as before. `DIM` at the top level is unchanged.
+
+## 10th October 2026
+
+### Bug fix: FSTRING() did not recognize built-in constants
+
+`FSTRING()` placeholders only looked up user-defined variables and constants, so built-in constants such as `PI#`, `EULER#` or `KEY_A#` failed with `FSTRING: undefined variable 'EULER#'.`, even though they worked everywhere else in expressions. A constant declared in BazzBasic code itself (`LET FOO# = ...`) was not affected. The same bug also affected built-in constants used as array indexes inside a placeholder.
+
+Placeholders now check built-in constants first and then user variables/constants, in the same order as normal expression evaluation:
+
+```basic
+PRINT FSTRING("e = {{-EULER#-}}")          ' e = 2.718281828459045
+PRINT FSTRING("pi = {{-PI#-}}")            ' pi = 3.141592653589793
+PRINT FSTRING("key: {{-keys$(KEY_A#)-}}")  ' built-in constant as array index
+```
+
 ## 6th September 2026
 
 ### New: ARRKEY() — iterate associative arrays with FOR/NEXT or WHILE/WEND

@@ -46,7 +46,7 @@ public partial class Interpreter
             if (_tokens[_pos].Type == TokenType.TOK_VARIABLE)
             {
                 string arrName = _tokens[_pos].StringValue ?? "";
-                _variables.DeclareArray(arrName);
+                _variables.DimArray(arrName);
                 _pos++;
 
                 // Handle optional: DIM arr$ = expression

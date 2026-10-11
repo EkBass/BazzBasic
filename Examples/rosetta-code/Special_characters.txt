@@ -1,0 +1,84 @@
+# Special characters
+# https://rosettacode.org/wiki/Special_characters#BazzBasic
+
+=={{header|BazzBasic}}==
+
+=== Comments ===
+
+* ' comment (to end of line)
+* REM comment (to end of line)
+
+=== Name suffixes ===
+
+* $ every variable and array name ends with $ (it marks a variable, not a data type)
+* # every constant name ends with # (immutable value)
+
+=== Labels ===
+
+* [ ] encloses a jump label, e.g. [main], [sub:draw]
+
+=== Assignment operator symbols ===
+
+* = assignment
+* += add and assign (also string concatenation and assign)
+* -= subtract and assign
+* *= multiply and assign
+* /= divide and assign
+
+Compound assignment works with variables only, not with # constants.
+
+=== Arithmetic operator symbols ===
+
+* + addition
+* - subtraction
+* * multiplication
+* / division (always returns a float)
+* % modulo (same as MOD(a, b))
+
+There is no integer division operator; use INT(a / b), FLOOR(a / b) or CINT(a / b).
+
+=== String operator symbols ===
+
+* + concatenation (if either side is a string, the other side is converted automatically)
+
+=== Comparative operator symbols ===
+
+* = equality
+* <> inequality
+* < less than
+* > greater than
+* <= less than or equal to
+* >= greater than or equal to
+
+=== Statement and argument separators ===
+
+* : separates multiple statements on one line
+* , separates function arguments, multiple LET declarations and array dimensions, e.g. grid$(0, 1)
+
+=== Enclosures ===
+
+* " " string literals
+* ( ) function arguments, array element reference, mathematical precedence
+* {{- -}} placeholder inside an FSTRING template, e.g. FSTRING("Hi {{-name$-}}")
+
+=== Output separators ===
+
+* ; in PRINT, no spacing between items; trailing ; suppresses the newline
+* , in PRINT, move to the next tab stop
+
+=== Line continuation ===
+
+There is no line continuation character. A statement continues on the next line automatically when a line ends with an operator (+ - * / % = <> < <= > >= AND OR += -= *= /= ,) or while a ( is still unclosed.
+
+=== Escape sequences ===
+
+The accepted escape sequences in string literals are:
+<table border>
+<tr bgcolor="#C0C0C0" ><th>Escape Sequence<th class="head">Meaning
+<tr><td><span class="pre">\"</span><td>double quote
+<tr><td><span class="pre">\n</span><td>newline
+<tr><td><span class="pre">\t</span><td>horizontal tab
+<tr><td><span class="pre">\\</span><td>backslash
+</table>
+
+Because \ starts an escape sequence, file paths are written with / or \\.

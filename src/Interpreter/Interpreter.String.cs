@@ -438,6 +438,18 @@ public partial class Interpreter
         return Value.FromString(sb.ToString());
     }
 
+    // Look up a name for FSTRING: built-in constants (PI#, EULER#, KEY_*#...)
+    // first, then user variables/constants. Same order as EvaluatePrimary().
+    private bool TryGetFstringValue(string name, out Value value)
+    {
+        if (_builtinConstants.TryGetValue(name, out double constVal))
+        {
+            value = Value.FromNumber(constVal);
+            return true;
+        }
+        return _variables.TryGetVariable(name, out value);
+    }
+
     // Resolve a single placeholder content (already trimmed, non-empty)
     // and append the resulting text to sb. Returns false if an error was
     // emitted (caller should bail out).
@@ -448,7 +460,7 @@ public partial class Interpreter
         // ---- Plain variable / constant: no '(' present ----
         if (paren < 0)
         {
-            if (_variables.TryGetVariable(content, out Value v))
+            if (TryGetFstringValue(content, out Value v))
             {
                 sb.Append(v.AsString());
                 return true;
@@ -493,7 +505,7 @@ public partial class Interpreter
             // $-variable or #-constant: suffix tells us this is a lookup
             if (lastCh == '$' || lastCh == '#')
             {
-                if (_variables.TryGetVariable(idx, out Value indexVal))
+                if (TryGetFstringValue(idx, out Value indexVal))
                 {
                     resolved.Add(indexVal.AsString());
                 }

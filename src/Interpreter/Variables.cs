@@ -15,6 +15,7 @@ Copyright (c):
 */
 
 using BazzBasic.Parser;
+using System.Diagnostics.CodeAnalysis;
 
 namespace BazzBasic.Interpreter;
 
@@ -42,6 +43,11 @@ public class Variables
 
     // Scope management (for user functions)
     private readonly Stack<Dictionary<string, Value>> _localScopes = new();
+
+    // Function-local arrays, one table per call frame (pushed/popped together
+    // with _localScopes). Without this, arrays DIM'd inside DEF FN lived in the
+    // global table and kept their contents between calls.
+    private readonly Stack<Dictionary<string, OrderedDictionary<string, Value>>> _localArrayScopes = new();
 
     // ========================================================================
     // Variables
@@ -148,18 +154,54 @@ public class Variables
     // Arrays
     // ========================================================================
     
+    // Find an array: current function's local arrays first, then globals.
+    // The global fallback keeps the existing behavior of functions being able
+    // to read/write global arrays they did not DIM themselves.
+    private bool TryResolveArray(string key, [NotNullWhen(true)] out OrderedDictionary<string, Value>? array)
+    {
+        if (_localArrayScopes.Count > 0 && _localArrayScopes.Peek().TryGetValue(key, out array))
+            return true;
+        return _arrays.TryGetValue(key, out array);
+    }
+
+    private static OrderedDictionary<string, Value> NewArray() =>
+        new(StringComparer.OrdinalIgnoreCase);
+
+    // Implicit declaration (SPLIT, JOIN, network helpers...): no-op if the
+    // name already resolves to an array. Otherwise create it in the current
+    // scope - inside a function that means a local array.
     public void DeclareArray(string name)
     {
         string key = name.ToUpperInvariant();
-        if (!_arrays.ContainsKey(key))
+        if (TryResolveArray(key, out _))
+            return;
+
+        if (_localArrayScopes.Count > 0)
+            _localArrayScopes.Peek()[key] = NewArray();
+        else
+            _arrays[key] = NewArray();
+    }
+
+    // Explicit DIM. Inside a function it ALWAYS creates a fresh, empty local
+    // array (shadowing any global of the same name), so every call - and every
+    // recursion level - gets its own array. At global level it keeps the old
+    // behavior: re-DIM of an existing array is a no-op.
+    public void DimArray(string name)
+    {
+        string key = name.ToUpperInvariant();
+        if (_localArrayScopes.Count > 0)
         {
-            _arrays[key] = new OrderedDictionary<string, Value>(StringComparer.OrdinalIgnoreCase);
+            _localArrayScopes.Peek()[key] = NewArray();
+            return;
         }
+
+        if (!_arrays.ContainsKey(key))
+            _arrays[key] = NewArray();
     }
 
     public bool ArrayExists(string name)
     {
-        return _arrays.ContainsKey(name.ToUpperInvariant());
+        return TryResolveArray(name.ToUpperInvariant(), out _);
     }
 
     public void SetArrayElement(string arrayName, string index, Value value)
@@ -167,7 +209,7 @@ public class Variables
         string key = arrayName.ToUpperInvariant();
         
         // Check if array is declared - do NOT auto-declare
-        if (!_arrays.TryGetValue(key, out OrderedDictionary<string, Value>? value1))
+        if (!TryResolveArray(key, out var value1))
         {
             throw new InvalidOperationException($"Array not declared, use DIM first: {arrayName}");
         }
@@ -179,7 +221,7 @@ public class Variables
     {
         string key = arrayName.ToUpperInvariant();
         
-        if (!_arrays.TryGetValue(key, out var array))
+        if (!TryResolveArray(key, out var array))
         {
             throw new InvalidOperationException($"Array not declared, use DIM first: {arrayName}");
         }
@@ -194,7 +236,7 @@ public class Variables
     {
         string key = arrayName.ToUpperInvariant();
         
-        if (!_arrays.TryGetValue(key, out var array))
+        if (!TryResolveArray(key, out var array))
             return false;
         
         return array.ContainsKey(index);
@@ -204,7 +246,7 @@ public class Variables
     {
         string key = arrayName.ToUpperInvariant();
         
-        if (!_arrays.TryGetValue(key, out var array))
+        if (!TryResolveArray(key, out var array))
             return false;
         
         return array.Remove(index);
@@ -213,6 +255,8 @@ public class Variables
     public bool DeleteArray(string arrayName)
     {
         string key = arrayName.ToUpperInvariant();
+        if (_localArrayScopes.Count > 0 && _localArrayScopes.Peek().Remove(key))
+            return true;
         return _arrays.Remove(key);
     }
 
@@ -220,7 +264,7 @@ public class Variables
     {
         string key = arrayName.ToUpperInvariant();
         
-        if (!_arrays.TryGetValue(key, out var array))
+        if (!TryResolveArray(key, out var array))
             return 0;
         
         return array.Count;
@@ -229,7 +273,7 @@ public class Variables
     public OrderedDictionary<string, Value>? GetAllArrayElements(string arrayName)
     {
         string key = arrayName.ToUpperInvariant();
-        return _arrays.TryGetValue(key, out var array) ? array : null;
+        return TryResolveArray(key, out var array) ? array : null;
     }
 
     // Count unique first-dimension values (for ROWCOUNT)
@@ -255,7 +299,7 @@ public class Variables
     {
         string key = arrayName.ToUpperInvariant();
 
-        if (!_arrays.TryGetValue(key, out var array))
+        if (!TryResolveArray(key, out var array))
             return null;
 
         if (index < 0 || index >= array.Count)
@@ -271,12 +315,15 @@ public class Variables
     public void PushScope()
     {
         _localScopes.Push(new Dictionary<string, Value>(StringComparer.OrdinalIgnoreCase));
+        _localArrayScopes.Push(new Dictionary<string, OrderedDictionary<string, Value>>(StringComparer.OrdinalIgnoreCase));
     }
 
     public void PopScope()
     {
         if (_localScopes.Count > 0)
             _localScopes.Pop();
+        if (_localArrayScopes.Count > 0)
+            _localArrayScopes.Pop();
     }
 
     public void SetLocal(string name, Value value)
