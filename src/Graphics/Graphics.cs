@@ -615,6 +615,11 @@ public static class Graphics
         [263] = SDL.SDL_Scancode.SDL_SCANCODE_KP_7,
         [264] = SDL.SDL_Scancode.SDL_SCANCODE_KP_8,
         [265] = SDL.SDL_Scancode.SDL_SCANCODE_KP_9,
+        [266] = SDL.SDL_Scancode.SDL_SCANCODE_KP_PLUS,
+        [267] = SDL.SDL_Scancode.SDL_SCANCODE_KP_MINUS,
+        [268] = SDL.SDL_Scancode.SDL_SCANCODE_KP_MULTIPLY,
+        [269] = SDL.SDL_Scancode.SDL_SCANCODE_KP_DIVIDE,
+        [270] = SDL.SDL_Scancode.SDL_SCANCODE_KP_PERIOD,
         // Modifiers
         [340] = SDL.SDL_Scancode.SDL_SCANCODE_LSHIFT,
         [344] = SDL.SDL_Scancode.SDL_SCANCODE_RSHIFT,
@@ -668,6 +673,24 @@ public static class Graphics
             SDL.SDL_Keycode.SDLK_F10 => 324,
             SDL.SDL_Keycode.SDLK_F11 => 389,
             SDL.SDL_Keycode.SDLK_F12 => 390,
+            // Numpad - mapped to the same codes as KEY_NUMPAD*# so INKEY/WAITKEY
+            // match the constants (previously raw 0x400000xx values leaked through)
+            SDL.SDL_Keycode.SDLK_KP_0 => 256,
+            SDL.SDL_Keycode.SDLK_KP_1 => 257,
+            SDL.SDL_Keycode.SDLK_KP_2 => 258,
+            SDL.SDL_Keycode.SDLK_KP_3 => 259,
+            SDL.SDL_Keycode.SDLK_KP_4 => 260,
+            SDL.SDL_Keycode.SDLK_KP_5 => 261,
+            SDL.SDL_Keycode.SDLK_KP_6 => 262,
+            SDL.SDL_Keycode.SDLK_KP_7 => 263,
+            SDL.SDL_Keycode.SDLK_KP_8 => 264,
+            SDL.SDL_Keycode.SDLK_KP_9 => 265,
+            SDL.SDL_Keycode.SDLK_KP_PLUS => 266,
+            SDL.SDL_Keycode.SDLK_KP_MINUS => 267,
+            SDL.SDL_Keycode.SDLK_KP_MULTIPLY => 268,
+            SDL.SDL_Keycode.SDLK_KP_DIVIDE => 269,
+            SDL.SDL_Keycode.SDLK_KP_PERIOD => 270,
+            SDL.SDL_Keycode.SDLK_KP_ENTER => 13,   // numpad Enter == KEY_ENTER#
             // SDL2 letter keys return lowercase ASCII (97-122); normalize to uppercase (65-90)
             // so KEY_A# (=65) matches regardless of shift state, consistent with console mode
             _ => (int)key is >= 97 and <= 122 ? (int)key - 32 : (int)key
@@ -686,15 +709,33 @@ public static class Graphics
     public static bool IsKeyDown(int bazzKeyCode)
     {
         if (!initialized) return false;
-        if (!_keyMap.TryGetValue(bazzKeyCode, out var scancode))
-            return false;
+
+        int scancode;
+        if (bazzKeyCode is >= 33 and <= 126)
+        {
+            // Letters, digits and punctuation follow the key LABEL on the current
+            // keyboard layout (same meaning as INKEY): KEY_A# is the key that types "a".
+            // If no key on the layout produces the character unshifted, the result is false.
+            // (_keyMap entries in this range are no longer used for KEYDOWN.)
+            int sym = bazzKeyCode is >= 65 and <= 90 ? bazzKeyCode + 32 : bazzKeyCode;
+            scancode = SDL.SDL_GetScancodeFromKey((SDL.SDL_Keycode)sym);
+            if (scancode <= 0) return false;
+        }
+        else
+        {
+            // Special keys, numpad and modifiers: fixed physical keys
+            if (!_keyMap.TryGetValue(bazzKeyCode, out var sc))
+                return false;
+            scancode = (int)sc;
+        }
 
         ProcessEvents();  // Pump event queue so keyboard state is current
-        IntPtr state = SDL.SDL_GetKeyboardState(out _);
+        IntPtr state = SDL.SDL_GetKeyboardState(out int numKeys);
+        if (scancode >= numKeys) return false;
         unsafe
         {
             byte* keys = (byte*)state;
-            return keys[(int)scancode] != 0;
+            return keys[scancode] != 0;
         }
     }
 

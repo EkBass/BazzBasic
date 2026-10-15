@@ -104,6 +104,23 @@ public static class SDL
         SDLK_F10 = 1073741891,
         SDLK_F11 = 1073741892,
         SDLK_F12 = 1073741893,
+        // Numpad (0x40000000 | scancode) - layout independent
+        SDLK_KP_DIVIDE = 1073741908,
+        SDLK_KP_MULTIPLY = 1073741909,
+        SDLK_KP_MINUS = 1073741910,
+        SDLK_KP_PLUS = 1073741911,
+        SDLK_KP_ENTER = 1073741912,
+        SDLK_KP_1 = 1073741913,
+        SDLK_KP_2 = 1073741914,
+        SDLK_KP_3 = 1073741915,
+        SDLK_KP_4 = 1073741916,
+        SDLK_KP_5 = 1073741917,
+        SDLK_KP_6 = 1073741918,
+        SDLK_KP_7 = 1073741919,
+        SDLK_KP_8 = 1073741920,
+        SDLK_KP_9 = 1073741921,
+        SDLK_KP_0 = 1073741922,
+        SDLK_KP_PERIOD = 1073741923,
     }
 
     public enum SDL_Scancode : int
@@ -182,6 +199,12 @@ public static class SDL
         SDL_SCANCODE_LEFT = 80,
         SDL_SCANCODE_DOWN = 81,
         SDL_SCANCODE_UP = 82,
+        SDL_SCANCODE_KP_DIVIDE = 84,
+        SDL_SCANCODE_KP_MULTIPLY = 85,
+        SDL_SCANCODE_KP_MINUS = 86,
+        SDL_SCANCODE_KP_PLUS = 87,
+        SDL_SCANCODE_KP_ENTER = 88,
+        SDL_SCANCODE_KP_PERIOD = 99,
         SDL_SCANCODE_KP_0 = 98,
         SDL_SCANCODE_KP_1 = 89,
         SDL_SCANCODE_KP_2 = 90,
@@ -247,6 +270,11 @@ public static class SDL
     // Surface and Texture support
     [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
     public static extern IntPtr SDL_GetKeyboardState(out int numkeys);
+
+    // Returns the scancode of the key that produces this keycode on the CURRENT layout,
+    // or 0 (SDL_SCANCODE_UNKNOWN) if no key on the layout produces it.
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int SDL_GetScancodeFromKey(SDL_Keycode key);
 
     [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     public static extern IntPtr SDL_RWFromFile(string file, string mode);

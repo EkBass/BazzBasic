@@ -11,7 +11,7 @@
 	LET y# = 176
 	DIM sprites$
 	SCREEN 0, 640, 480, "Countdown!"
-	LOADSHEET sprites$, 128, 128, "images/sheet_numbers.png"
+	LOADSHEET sprites$, 128, 128, "assets/sheet_numbers.png"
 	
 [main]
 	' Count down from 9 to 0

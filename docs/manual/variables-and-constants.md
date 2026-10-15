@@ -205,7 +205,10 @@ PRINT "Root:    "; PRG_ROOT#  ' Output: C:\path\to\program\
 | `KEY_NUMPAD0#` | `KEY_NUMPAD1#` | `KEY_NUMPAD2#` |
 | `KEY_NUMPAD3#` | `KEY_NUMPAD4#` | `KEY_NUMPAD5#` |
 | `KEY_NUMPAD6#` | `KEY_NUMPAD7#` | `KEY_NUMPAD8#` |
-| `KEY_NUMPAD9#` | | |
+| `KEY_NUMPAD9#` | `KEY_NUMPAD_PLUS#` | `KEY_NUMPAD_MINUS#` |
+| `KEY_NUMPAD_MUL#` | `KEY_NUMPAD_DIV#` | `KEY_NUMPAD_DOT#` |
+
+Numpad keys give the same value on every keyboard layout. Numpad Enter returns the same value as `KEY_ENTER#`.
 
 ### Punctuation Keys
 | | | |
@@ -214,6 +217,8 @@ PRINT "Root:    "; PRG_ROOT#  ' Output: C:\path\to\program\
 | `KEY_EQUALS#` | `KEY_SLASH#` | `KEY_BACKSLASH#` |
 | `KEY_SEP#` | `KEY_GRAVE#` | `KEY_LBRACKET#` |
 | `KEY_RBRACKET#` | | |
+
+> Punctuation keys depend on the keyboard layout. A character that needs Shift or AltGr on the user's keyboard (for example `=` and `/` on a Finnish keyboard) cannot be detected with these constants. See [Keyboard layouts](input_functions.md?id=keyboard-layouts-and-portable-controls).
 
 ### Alphabet Keys
 | | | |

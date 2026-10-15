@@ -158,6 +158,11 @@ public partial class Interpreter
             ["KEY_NUMPAD7#"] = 263,
             ["KEY_NUMPAD8#"] = 264,
             ["KEY_NUMPAD9#"] = 265,
+            ["KEY_NUMPAD_PLUS#"] = 266,
+            ["KEY_NUMPAD_MINUS#"] = 267,
+            ["KEY_NUMPAD_MUL#"] = 268,
+            ["KEY_NUMPAD_DIV#"] = 269,
+            ["KEY_NUMPAD_DOT#"] = 270,
             // SHIFT, CTRL, ALT
             ["KEY_LSHIFT#"] = 340,
             ["KEY_RSHIFT#"] = 344,

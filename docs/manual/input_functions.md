@@ -11,13 +11,32 @@ Returns current key press (non-blocking). Returns 0 if no key pressed.
     GOTO [loop]
 ```
 
-Special keys return values > 256:
+Letters always return the uppercase code, whether Shift or Caps Lock is on or not: both "a" and "A" return `KEY_A#` (65).
+
+Special keys return values of 256 or more:
 - Arrow keys: KEY_UP#, KEY_DOWN#, KEY_LEFT#, KEY_RIGHT#
 - Function keys: KEY_F1# through KEY_F12#
+- Numpad keys (graphics screen): KEY_NUMPAD0# through KEY_NUMPAD9#, KEY_NUMPAD_PLUS#, KEY_NUMPAD_MINUS#, KEY_NUMPAD_MUL#, KEY_NUMPAD_DIV#, KEY_NUMPAD_DOT#
+
+Numpad Enter returns `KEY_ENTER#`, the same as the main Enter key.
+
+**INKEY reads one key at a time.** Each call takes the key out of the buffer, so a second `INKEY` in the same loop pass returns 0. Store the value once and compare the variable:
+```vb
+' WRONG - the second INKEY never sees the key
+IF INKEY = KEY_A# THEN speed$ = speed$ + 1
+IF INKEY = KEY_S# THEN speed$ = speed$ - 1
+
+' RIGHT
+LET k$ = INKEY
+IF k$ = KEY_A# THEN speed$ = speed$ + 1
+IF k$ = KEY_S# THEN speed$ = speed$ - 1
+```
 
 ### KEYDOWN
 Read key states via key constants  
-**Note:** KEYDOWN availale only when graphics screen used. Not via console
+**Note:** KEYDOWN is available only when the graphics screen is used. Not via console
+
+Letter, digit and punctuation constants follow the key's label on the user's keyboard layout, the same way as INKEY: `KEYDOWN(KEY_A#)` is TRUE while the key that types "a" is held. Arrow keys, function keys, numpad and modifier keys are the same on every layout.
 ```vb
 REM KEYDOWN Test
 SCREEN 12
@@ -76,6 +95,31 @@ PRINT "Key value: "; k$
 | Blocking | No | No | Yes |
 | Returns | Key value or 0 | TRUE/FALSE | Key value |
 | Use case | Game loops | Held keys | Menus, pauses |
+
+### Keyboard layouts and portable controls
+
+People run your program with different keyboard layouts (Finnish, US, German, French...). Some keys give the same value everywhere, some do not.
+
+**Same on every layout** (safe for controls):
+- Letters `KEY_A#`...`KEY_Z#` and digits `KEY_0#`...`KEY_9#` (they follow the key's label, so `KEY_A#` is always the key marked "A")
+- Arrows, `KEY_SPACE#`, `KEY_ENTER#`, `KEY_ESC#`, `KEY_TAB#`, `KEY_BACKSPACE#`, Insert/Delete/Home/End/PgUp/PgDn
+- Function keys `KEY_F1#`...`KEY_F12#`
+- Numpad keys `KEY_NUMPAD0#`...`KEY_NUMPAD9#`, `KEY_NUMPAD_PLUS#`, `KEY_NUMPAD_MINUS#`, `KEY_NUMPAD_MUL#`, `KEY_NUMPAD_DIV#`, `KEY_NUMPAD_DOT#` (graphics screen)
+- Modifier keys (`KEY_LSHIFT#`, `KEY_LCTRL#`, ...)
+
+**Depends on the layout** (avoid for controls):
+- Punctuation on the main keyboard: `+ - = , . / ; [ ] \` and the matching `KEY_*#` constants. In graphics mode INKEY and KEYDOWN see the key, not Shift or AltGr. On a US keyboard "+" is Shift plus the "=" key, so `INKEY` returns `ASC("=")`, never `ASC("+")`. On a Finnish keyboard "=" and "/" need Shift, so `KEY_EQUALS#` and `KEY_SLASH#` cannot be relied on.
+
+> **Tip:** For speed, zoom or volume controls, use letters (for example A/S) or the numpad `+`/`-` keys instead of main-keyboard `+` and `-`.
+
+```vb
+' Speed control that works on every keyboard
+LET k$ = INKEY
+IF k$ = KEY_A# OR k$ = KEY_NUMPAD_PLUS# THEN speed$ = speed$ + 1
+IF k$ = KEY_S# OR k$ = KEY_NUMPAD_MINUS# THEN speed$ = speed$ - 1
+```
+
+**Console mode differs:** without a graphics screen, INKEY and WAITKEY return the character that was actually typed (Shift and AltGr included), except for letters (always uppercase codes) and the special keys listed above. Numpad keys return the typed digit or operator, not the `KEY_NUMPAD*#` values. KEYDOWN is not available in console mode.
 
 ### CURPOS
 Returns the current cursor position. Useful for reading where the cursor is after PRINT or LOCATE.

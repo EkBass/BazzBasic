@@ -1,6 +1,28 @@
 # News and changes
 These changes are about the current source code. These are effected once new binary release is published
 
+## 15th October 2026
+
+### Bug fix: numpad keys did not match KEY_NUMPAD*# in INKEY and WAITKEY
+
+In graphics mode `INKEY` and `WAITKEY` returned raw SDL values for numpad keys (e.g. 1073741922 for numpad 0), so `KEY_NUMPAD0#`...`KEY_NUMPAD9#` only worked with `KEYDOWN`. Numpad keys now return the same codes as the constants. Numpad Enter now returns 13, the same as `KEY_ENTER#`.
+
+### New: numpad operator constants
+
+`KEY_NUMPAD_PLUS#` (266), `KEY_NUMPAD_MINUS#` (267), `KEY_NUMPAD_MUL#` (268), `KEY_NUMPAD_DIV#` (269), `KEY_NUMPAD_DOT#` (270). They work with `INKEY`, `WAITKEY` and `KEYDOWN` in graphics mode and are the same on every keyboard layout.
+
+### Bug fix: console WAITKEY used different key codes than console INKEY
+
+Console `WAITKEY` returned .NET `ConsoleKey` values, so `WAITKEY(KEY_UP#)`, `WAITKEY(KEY_F1#)` and punctuation never matched. It now uses the same mapping as console `INKEY`.
+
+### Change: console INKEY returns letters as uppercase codes
+
+Console `INKEY` returned 97 for "a" and 65 for "A", so `INKEY = KEY_A#` only matched with Shift or Caps Lock. Letters are now normalized to 65-90 as in graphics mode. Programs that compare console `INKEY` against `ASC("a")` need to use `KEY_A#` or `ASC("A")`.
+
+### Change: KEYDOWN follows the key label, not the key position
+
+`KEYDOWN` checked the physical key position of a US keyboard, while `INKEY` returns the key's label on the current layout. On a Finnish keyboard `KEYDOWN(KEY_MINUS#)` reacted to the "+" key and `KEYDOWN(KEY_EQUALS#)` to the "´" key; on AZERTY `KEYDOWN(KEY_A#)` reacted to the key labelled "Q". `KEYDOWN` now uses the same meaning as `INKEY`: letters, digits and punctuation constants refer to the key that types that character on the current layout. If no key types the character without modifiers (e.g. "=" on a Finnish keyboard), `KEYDOWN` returns FALSE. Arrows, function keys, numpad and modifiers are unchanged.
+
 ## 11th October 2026
 
 ### Bug fix: arrays DIM'd inside DEF FN kept their contents between calls

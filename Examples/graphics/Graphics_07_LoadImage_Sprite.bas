@@ -23,9 +23,9 @@
 ' size before relying on it.
 
 [inits]
-    SCREEN 0, 640, 480, "LOADIMAGE Demo (needs sprite.png)"
+    SCREEN 0, 640, 480, "LOADIMAGE Demo"
 
-    LET SPRITE# = LOADIMAGE("sprite.png")
+    LET SPRITE# = LOADIMAGE("assets/B-icon.png")
     MOVESHAPE SPRITE#, 320, 240
     SCALESHAPE SPRITE#, 1.5
 

@@ -301,7 +301,11 @@ public partial class Interpreter
             ConsoleKey.F10       => 324,
             ConsoleKey.F11       => 389,
             ConsoleKey.F12       => 390,
-            _                    => (double)key.KeyChar
+            // Letters normalized to uppercase so KEY_A# matches regardless of shift,
+            // consistent with graphics mode. Other keys return the typed character.
+            _                    => key.KeyChar is >= 'a' and <= 'z'
+                                        ? (double)(key.KeyChar - 32)
+                                        : (double)key.KeyChar
         };
     }
 
@@ -344,10 +348,9 @@ public partial class Interpreter
             }
             else if (Console.KeyAvailable)
             {
-                // Use ConsoleKey enum value (always uppercase/neutral) so
-                // KEY_A# matches both 'a' and 'A' — shift state is irrelevant
-                ConsoleKeyInfo info = Console.ReadKey(true);
-                key = (double)info.Key;
+                // Same mapping as console INKEY (previously ConsoleKey enum values,
+                // which broke KEY_UP#, KEY_F1#, punctuation etc. in console WAITKEY)
+                key = ReadConsoleKey();
             }
 
             if (key != 0)
