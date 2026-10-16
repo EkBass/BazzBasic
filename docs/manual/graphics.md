@@ -574,8 +574,8 @@ REMOVESHAPE SQUARE#             ' Delete and free memory
 **Note:** Images can be handled just as shapes
 ```vb
 [inits]
-	LET SPRITE# = LOADIMAGE("temp.bmp")
 	SCREEN 12
+	LET SPRITE# = LOADIMAGE("temp.bmp")
 
 	MOVESHAPE SPRITE#, 320, 240
 	ROTATESHAPE SPRITE#, 45      ' Rotate 45
@@ -753,7 +753,7 @@ REMOVESHAPE IMG#               ' Delete and free memory
 
 ## Why Constants, Not Variables?
 
-Sound IDs returned by `LOADIMAGE` and are handles assigned by SDL2. BazzBasic uses them only to point to the correct image resource — they never change during program execution.
+IDs returned by `LOADIMAGE` and are handles assigned by SDL2. BazzBasic uses them only to point to the correct image resource — they never change during program execution.
 
 Storing them in constants (`#` suffix) communicates this intent clearly:
 
