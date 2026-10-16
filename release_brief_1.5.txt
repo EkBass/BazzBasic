@@ -32,6 +32,10 @@ NEW
     x$ = x$ + PADAXIS(0, PAD_LX#) * SPEED#
     IF PADBUTTON(0, PAD_A#) THEN GOSUB [jump]
 
+DISCLAIMER:
+BazzBasic version 1.5 has been tested with only one PS4-compatible Bluetooth controller. Therefore, for the time being, I cannot guarantee that GamePad support will work with all different types of controllers.
+Got an Xbox, Switch Pro or Elite controller? Run gamepad_tester.bas from the v1.5 examples, press each button once, and post the header line plus anything that lit the wrong row (or didn’t light at all). Elite owners: which physical paddle lights (raw 16)…(raw 19)?
+
 * FILELIST(arr$, folder$ [, pattern$])
   Lists the files in a folder into an array, sorted, with * and ? wildcards.
 
@@ -50,6 +54,17 @@ NEW
   - View menu with Light and Dark mode (Dark mode is experimental).
   - Syntax highlighting now covers every keyword.
 
+* New page at online manual
+By clicking a new link on left panel on manual "Advanced CLI usage" you find
+some neat guides for more advanced use of BazzBasic.
+- Running BazzBasic from anywhere
+- Part 1: Add BazzBasic to PATH
+- Part 2: Run .bas files by double-clicking
+- Optional: add an "Edit" menu item
+- Optional: run programs without typing .bas
+- Undo everything
+
+See: https://ekbass.github.io/BazzBasic/manual/#/Running_BazzBasic_from_anywhere
 
 CHANGES THAT MAY AFFECT EXISTING PROGRAMS
 -----------------------------------------

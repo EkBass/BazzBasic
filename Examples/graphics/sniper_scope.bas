@@ -179,7 +179,7 @@ RETURN
     top$    = my$ - SCOPE_R#
     bottom$ = my$ + SCOPE_R#
 
-    IF top$ > 0 THEN LINE (0, 0)-(SCREEN_W#, top$ - 1), C_BLACK#, BF
+    IF top$ > 0 THEN LINE (0, 0)-(SCREEN_W#, top$), C_BLACK#, BF
     IF bottom$ < SCREEN_H# THEN LINE (0, bottom$ + 1)-(SCREEN_W#, SCREEN_H#), C_BLACK#, BF
 
     FOR row$ = 0 TO SCOPE_R# * 2
