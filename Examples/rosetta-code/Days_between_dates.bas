@@ -56,7 +56,6 @@ END
 ' Re-prompt until entry$ holds a valid date
 [sub:validateDate]
     WHILE NOT FN IsValidDate$(entry$)
-        BEEB
         LINE INPUT "Bad date -- try again: ", entry$
     WEND
 RETURN

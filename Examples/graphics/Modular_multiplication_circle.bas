@@ -7,6 +7,10 @@
 ' resulting cardioid / nephroid patterns depend
 ' on the pair (m, p).
 '
+' Controls:
+'   SPACE - next pattern immediately
+'   ESC   - quit
+'
 ' Port of a PC-BASIC program by Kurt Moerman,
 ' shared in the BASIC Programming Language
 ' Facebook Group:
@@ -14,61 +18,109 @@
 ' ============================================
 
 [inits]
+    ' --- Screen & geometry ---
     LET SCREEN_W# = 640
     LET SCREEN_H# = 480
     LET CX#       = 320
     LET CY#       = 240
     LET R#        = 220
+
+    ' --- Timing ---
+    LET HOLD_MS#  = 4000                ' how long each pattern stays on screen
+    LET POLL_MS#  = 16                  ' keyboard poll interval (~60 checks/s)
+
+    ' --- Colours ---
     LET LINE_CLR# = RGB(255, 255, 0)    ' yellow
     LET BG_CLR#   = RGB(0, 0, 0)        ' black
     LET TXT_CLR#  = RGB(255, 255, 255)  ' white
+    LET HINT_CLR# = RGB(150, 150, 150)  ' grey
 
     SCREEN 0, SCREEN_W#, SCREEN_H#, "Modular Multiplication Circle"
     FastTrig(TRUE)
 
-    LET m$     = 0
-    LET p$     = 0
-    LET k$     = 0
-    LET alpha$ = 0
+    ' --- State ---
+    LET m$         = 0
+    LET p$         = 0
+    LET k$         = 0
+    LET alpha$     = 0
+    LET key$       = 0
+    LET waitStart$ = 0
+    LET waiting$   = FALSE
+    LET running$   = TRUE
     DIM x$
     DIM y$
 
 [main]
-    WHILE NOT KEYDOWN(KEY_ESC#)
-        ' Pick a random number of points and multiplier
-        m$ = RND(300) + 1
-        p$ = RND(77)  + 1
+    WHILE running$
+        GOSUB [sub:newPattern]
+        GOSUB [sub:draw]
+        GOSUB [sub:wait]
+    WEND
 
-        ' Pre-compute the coordinates of the m points on the circle.
-        ' alpha is in degrees; +90 rotates the starting point to the top.
+    FastTrig(FALSE)
+END
+
+' ------------------------------------------------------------
+' Pick a random (m, p) and pre-compute the m points.
+' alpha is in degrees; +90 rotates the starting point to the top.
+' ------------------------------------------------------------
+[sub:newPattern]
+    m$ = RND(300) + 1
+    p$ = RND(77)  + 1
+
+    FOR n$ = 0 TO m$ - 1
+        alpha$ = 360 * n$ / m$ + 90
+        x$(n$) = CX# - R# * FastCos(alpha$)
+        y$(n$) = CY# - R# * FastSin(alpha$)
+    NEXT
+RETURN
+
+' ------------------------------------------------------------
+' Build the full frame off-screen, then present it in one flip.
+' ------------------------------------------------------------
+[sub:draw]
+    SCREENLOCK ON
+        LINE (0, 0)-(SCREEN_W#, SCREEN_H#), BG_CLR#, BF
+
+        ' Connect point (n * p) mod m to point n
         FOR n$ = 0 TO m$ - 1
-            alpha$ = 360 * n$ / m$ + 90
-            x$(n$) = CX# - R# * FastCos(alpha$)
-            y$(n$) = CY# - R# * FastSin(alpha$)
+            k$ = MOD(n$ * p$, m$)
+            LINE (x$(k$), y$(k$))-(x$(n$), y$(n$)), LINE_CLR#
         NEXT
 
-        ' Build the full frame off-screen, then present it in one flip.
-        SCREENLOCK ON
-            ' Clear with a filled box (faster than CLS)
-            LINE (0, 0)-(SCREEN_W#, SCREEN_H#), BG_CLR#, BF
+        DRAWSTRING "Modular Multiplication Circle",  10, 10, TXT_CLR#
+        DRAWSTRING FSTRING("m = {{-m$-}}"),          10, 30, TXT_CLR#
+        DRAWSTRING FSTRING("p = {{-p$-}}"),          10, 50, TXT_CLR#
+        DRAWSTRING "SPACE = next   ESC = quit",      10, SCREEN_H# - 26, HINT_CLR#
+    SCREENLOCK OFF
+RETURN
 
-            ' Draw a line from point (n * p) mod m to point n.
-            FOR n$ = 0 TO m$ - 1
-                k$ = MOD(n$ * p$, m$)
-                LINE (x$(k$), y$(k$))-(x$(n$), y$(n$)), LINE_CLR#
-            NEXT
+' ------------------------------------------------------------
+' Hold the current pattern for HOLD_MS#, but keep reading the
+' keyboard every POLL_MS# so the program stays responsive.
+'   ESC   -> stop waiting and end the main loop
+'   SPACE -> stop waiting, show the next pattern
+' ------------------------------------------------------------
+[sub:wait]
+    waitStart$ = TICKS
+    waiting$   = TRUE
 
-            ' Caption
-            DRAWSTRING "Modular Multiplication Circle", 10, 10, TXT_CLR#
-            DRAWSTRING "m = " + STR(m$),                10, 30, TXT_CLR#
-            DRAWSTRING "p = " + STR(p$),                10, 50, TXT_CLR#
-        SCREENLOCK OFF
-
-        SLEEP 4000
+    WHILE waiting$
+        key$ = INKEY
+        IF key$ = KEY_ESC# THEN
+            running$ = FALSE
+            waiting$ = FALSE
+        ELSEIF key$ = KEY_SPACE# THEN
+            waiting$ = FALSE
+        ELSEIF TICKS - waitStart$ >= HOLD_MS# THEN
+            waiting$ = FALSE
+        END IF
+        SLEEP POLL_MS#
     WEND
-END
+RETURN
 
 ' Output:
 '   A graphical window that keeps cycling through random
 '   (m, p) pairs. Each frame shows m chords across a circle
-'   of m points, held for ~4 s. Hold ESC to quit.
+'   of m points, held for ~4 s. SPACE skips to the next
+'   pattern, a single tap of ESC quits within ~16 ms.

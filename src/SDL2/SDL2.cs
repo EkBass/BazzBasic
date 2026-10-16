@@ -530,4 +530,63 @@ public static class SDL
         IntPtr srcrect,
         ref SDL_Rect dstrect
     );
+
+    // ========================================================================
+    // GameController (gamepad) - added 16.10.2026 for v1.5
+    // ========================================================================
+    public const uint SDL_INIT_JOYSTICK       = 0x00000200;
+    public const uint SDL_INIT_GAMECONTROLLER = 0x00002000;
+    public const int  SDL_IGNORE              = 0;
+
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int SDL_InitSubSystem(uint flags);
+
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern uint SDL_WasInit(uint flags);
+
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int SDL_NumJoysticks();
+
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int SDL_IsGameController(int joystick_index);
+
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int SDL_JoystickGetDeviceInstanceID(int device_index);
+
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int SDL_JoystickEventState(int state);
+
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int SDL_GameControllerEventState(int state);
+
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr SDL_GameControllerOpen(int joystick_index);
+
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern void SDL_GameControllerClose(IntPtr gamecontroller);
+
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int SDL_GameControllerGetAttached(IntPtr gamecontroller);
+
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr SDL_GameControllerGetJoystick(IntPtr gamecontroller);
+
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int SDL_JoystickInstanceID(IntPtr joystick);
+
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr SDL_GameControllerName(IntPtr gamecontroller);
+
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern void SDL_GameControllerUpdate();
+
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern byte SDL_GameControllerGetButton(IntPtr gamecontroller, int button);
+
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern short SDL_GameControllerGetAxis(IntPtr gamecontroller, int axis);
+
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int SDL_GameControllerRumble(IntPtr gamecontroller,
+        ushort low_frequency_rumble, ushort high_frequency_rumble, uint duration_ms);
 }

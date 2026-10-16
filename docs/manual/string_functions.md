@@ -151,7 +151,7 @@ LET hash$ = SHA256("password123")
 PRINT hash$                 ' ef92b778... (64-char lowercase hex)
 ```
 
-### SPLIT(s$, a$, b$)
+### SPLIT(arr$, s$, sep$)
 Splits string into array according to separator
 ```vb
 DIM parts$
@@ -161,6 +161,7 @@ PRINT parts$(0)  ' "apple"
 PRINT parts$(1)  ' "banana"
 PRINT parts$(2)  ' "orange"
 ```
+Returns the number of parts and stores them at keys `0` to `count - 1`. The array is emptied first, so splitting again into the same array leaves no old parts behind.
 
 ### SRAND(n)
 Returns random string length of *n* from allowed chars.  

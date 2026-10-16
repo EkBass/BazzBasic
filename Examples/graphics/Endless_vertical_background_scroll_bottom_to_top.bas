@@ -20,8 +20,8 @@
     SCREEN 0, SCREEN_W#, SCREEN_H#, "Scrolling background"
 
     ' Two handles for the same file: one per copy on screen.
-    LET BG_A# = LOADIMAGE(PRG_ROOT# + "background.png")
-    LET BG_B# = LOADIMAGE(PRG_ROOT# + "background.png")
+    LET BG_A# = LOADIMAGE(PRG_ROOT# + "assets/pori.png")
+    LET BG_B# = LOADIMAGE(PRG_ROOT# + "assets/pori.png")
 
     LET scrollY$   = 0               ' exact position, fractional
     LET drawY$     = 0               ' whole-pixel position used for drawing

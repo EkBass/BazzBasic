@@ -154,14 +154,23 @@ public class Variables
     // Arrays
     // ========================================================================
     
-    // Find an array: current function's local arrays first, then globals.
-    // The global fallback keeps the existing behavior of functions being able
-    // to read/write global arrays they did not DIM themselves.
+    // Find an array. Inside a function ONLY the function's own local arrays are
+    // visible - global arrays are not, same as global $ variables. Arrays go into
+    // a function as an ASJSON() string and are rebuilt there with ASARRAY().
     private bool TryResolveArray(string key, [NotNullWhen(true)] out OrderedDictionary<string, Value>? array)
     {
-        if (_localArrayScopes.Count > 0 && _localArrayScopes.Peek().TryGetValue(key, out array))
-            return true;
+        if (_localArrayScopes.Count > 0)
+            return _localArrayScopes.Peek().TryGetValue(key, out array);
         return _arrays.TryGetValue(key, out array);
+    }
+
+    // Error text for an array that doesn't resolve. Inside a function, if a global
+    // array of that name exists, say why it isn't visible instead of "use DIM".
+    private string ArrayNotDeclaredMessage(string arrayName)
+    {
+        if (_localArrayScopes.Count > 0 && _arrays.ContainsKey(arrayName.ToUpperInvariant()))
+            return $"Global array {arrayName} is not visible inside DEF FN - pass it as a parameter with ASJSON() and rebuild it with ASARRAY()";
+        return $"Array not declared, use DIM first: {arrayName}";
     }
 
     private static OrderedDictionary<string, Value> NewArray() =>
@@ -211,7 +220,7 @@ public class Variables
         // Check if array is declared - do NOT auto-declare
         if (!TryResolveArray(key, out var value1))
         {
-            throw new InvalidOperationException($"Array not declared, use DIM first: {arrayName}");
+            throw new InvalidOperationException(ArrayNotDeclaredMessage(arrayName));
         }
 
         value1[index] = value;
@@ -223,7 +232,7 @@ public class Variables
         
         if (!TryResolveArray(key, out var array))
         {
-            throw new InvalidOperationException($"Array not declared, use DIM first: {arrayName}");
+            throw new InvalidOperationException(ArrayNotDeclaredMessage(arrayName));
         }
         
         if (array.TryGetValue(index, out Value value))
@@ -255,8 +264,8 @@ public class Variables
     public bool DeleteArray(string arrayName)
     {
         string key = arrayName.ToUpperInvariant();
-        if (_localArrayScopes.Count > 0 && _localArrayScopes.Peek().Remove(key))
-            return true;
+        if (_localArrayScopes.Count > 0)
+            return _localArrayScopes.Peek().Remove(key);
         return _arrays.Remove(key);
     }
 

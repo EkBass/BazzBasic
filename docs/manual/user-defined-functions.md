@@ -172,6 +172,8 @@ User-defined functions have their own local scope that is completely isolated fr
 - Function parameters are local to the function
 - Variables declared with `LET` inside a function are local to that function  
 - Functions **cannot** access or modify global variables from the main program
+- The same goes for arrays: global arrays are **not** visible inside a function. Pass an array as a JSON string with `ASJSON()` and rebuild it inside with `ASARRAY()`
+- An array declared with `DIM` inside a function is local and starts empty on every call (and on every recursion level)
 - Parameters are passed **by value** - changes to parameters don't affect the original variables
 ```vb
 LET b$ = 100              ' Global variable

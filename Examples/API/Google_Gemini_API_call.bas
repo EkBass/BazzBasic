@@ -7,6 +7,20 @@
 '  GEMINI_API_KEY=your_api_key_here
 ' ============================================
 
+' DISCLAIMER:
+' This code was written around 04.2026 with help from the provider's own AI,
+' starting from a tested Claude example, and targets the model gemini-flash-latest.
+' It has not been tested by the BazzBasic author.
+' AI providers change their APIs, model names and headers over time,
+' so this example may stop working without any change in BazzBasic.
+'
+' If it fails, check the provider's current API documentation first.
+' Provider-specific settings are grouped at the top of this file.
+' You can also give this file together with the BazzBasic AI Guide
+' to an AI of your choice and ask it to update the code.
+'
+' https://huggingface.co/datasets/EkBass/BazzBasic_AI_Guide
+
 [check:env]
     IF FILEEXISTS(".env") = 0 THEN
         PRINT "Error: .env file not found."
@@ -18,8 +32,11 @@
     env$ = FILEREAD(".env")
     LET API_KEY# = env$("GEMINI_API_KEY")
 
+    ' gemini-flash-latest always points to Google's current Flash model
+    LET MODEL# = "gemini-flash-latest"
+
     ' Gemini uses a query parameter for the API key
-    LET URL# = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + API_KEY#
+    LET URL# = "https://generativelanguage.googleapis.com/v1beta/models/" + MODEL# + ":generateContent?key=" + API_KEY#
 
     DIM headers$
     headers$("Content-Type") = "application/json"

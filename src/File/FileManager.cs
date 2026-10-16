@@ -113,6 +113,40 @@ public class FileManager(string rootPath)
             return false;
         }
     }
+    // List file names (no paths, no directories) in a folder, sorted alphabetically.
+    // pattern uses Windows wildcards (* and ?), default "*". Not recursive.
+    // Missing folder or any error returns an empty list.
+    public List<string> ListFiles(string path, string pattern = "*")
+    {
+        try
+        {
+            string fullPath = ResolvePath(string.IsNullOrEmpty(path) ? "." : path);
+            if (!Directory.Exists(fullPath))
+                return [];
+
+            if (string.IsNullOrEmpty(pattern))
+                pattern = "*";
+
+            // Simple matching: * and ? only, no legacy DOS quirks.
+            // Default options also skip hidden and system files (desktop.ini, thumbs.db...).
+            var options = new EnumerationOptions
+            {
+                MatchType = MatchType.Simple,
+                RecurseSubdirectories = false,
+                IgnoreInaccessible = true
+            };
+            var names = Directory.GetFiles(fullPath, pattern, options)
+                .Select(f => Path.GetFileName(f))
+                .ToList();
+            names.Sort(StringComparer.OrdinalIgnoreCase);
+            return names;
+        }
+        catch
+        {
+            return [];
+        }
+    }
+
     // Execute SHELL command and return output
     // timeout: milliseconds to wait. 0 or omitted = 5000ms default
     public string ExecuteShellCommand(string command, int timeout = 5000)

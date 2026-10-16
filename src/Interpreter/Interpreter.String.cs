@@ -313,6 +313,11 @@ public partial class Interpreter
         
         string arrayName = _tokens[_pos].StringValue ?? "";
         _pos++;
+        // Allow arr$() as well as arr$
+        if (_pos + 1 < _tokens.Count
+            && _tokens[_pos].Type == TokenType.TOK_LPAREN
+            && _tokens[_pos + 1].Type == TokenType.TOK_RPAREN)
+            _pos += 2;
         Require(TokenType.TOK_COMMA);
         
         // Get string to split
@@ -323,11 +328,9 @@ public partial class Interpreter
         string delimiter = EvaluateExpression().AsString();
         Require(TokenType.TOK_RPAREN);
         
-        // Ensure array exists
-        if (!_variables.ArrayExists(arrayName))
-        {
-            _variables.DeclareArray(arrayName);
-        }
+        // Ensure array exists, and empty it so a shorter split leaves no old elements behind
+        _variables.DeclareArray(arrayName);
+        _variables.GetAllArrayElements(arrayName)?.Clear();
         
         // Split and populate array
         string[] parts = text.Split(delimiter);

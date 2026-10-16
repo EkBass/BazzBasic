@@ -19,9 +19,16 @@ public partial class MainForm : Form
     private string _lastSearchText = "";
     private FindReplaceDialog? _findReplaceDialog;
 
+    // Theme
+    private readonly IdeSettings _settings = IdeSettings.Load();
+    private EditorTheme _theme = EditorTheme.Light;
+
     public MainForm()
     {
         InitializeComponent();
+
+        _theme = EditorTheme.FromName(_settings.Theme);
+        ApplyChromeTheme();
         
         // Load icon
         var iconPath = IOPath.Combine(Application.StartupPath, "icon.png");
@@ -370,26 +377,25 @@ public partial class MainForm : Form
 
     #region Editor Creation
 
+    // Editor of the currently selected tab, or null if none
+    private Scintilla? ActiveEditor =>
+        tabControl.SelectedTab != null && _tabs.TryGetValue(tabControl.SelectedTab, out var tab)
+            ? tab.Editor
+            : null;
+
     private Scintilla CreateEditor()
     {
         var editor = new Scintilla();
         
-        //Why on shit this not working.......
         // Line number margin (margin 0)
         editor.Margins[0].Width = 45;
         editor.Margins[0].Type = MarginType.Number;
-        editor.Margins[0].BackColor = Color.FromArgb(224, 224, 224); // Light gray background
         
         // Small separator margin (margin 1) - creates gap between line numbers and code
         editor.Margins[1].Width = 8;
         editor.Margins[1].Type = MarginType.Symbol;
-        editor.Margins[1].BackColor = Color.FromArgb(224, 224, 224); // Match line number background
         
-        // Style for line numbers
-        editor.Styles[Style.LineNumber].ForeColor = Color.FromArgb(100, 100, 100); // Dark gray text
-        editor.Styles[Style.LineNumber].BackColor = Color.FromArgb(240, 240, 240); // Light gray background
-        
-        // Configure lexer for BASIC-like syntax
+        // Configure lexer for BASIC-like syntax (also applies theme colors)
         ConfigureBazzBasicSyntax(editor);
         
         // Events
@@ -430,16 +436,59 @@ public partial class MainForm : Form
 
     private void ConfigureBazzBasicSyntax(Scintilla editor)
     {
-        // Reset styles
+        // Use VB lexer (closest to BASIC) - Scintilla 5 uses LexerName
+        editor.LexerName = "vb";
+
+        // Keyword lists must match the keyword dictionary in src/Lexer/Lexer.cs.
+        // When adding a keyword there, add it here too (and to the syntax files in extras/).
+
+        // Control flow, declarations, logic
+        editor.SetKeywords(0,
+            "if then else elseif endif end while wend for to step next " +
+            "dim let goto gosub return def fn include rem sleep " +
+            "and or not true false on off");
+
+        // Math & string functions, constants
+        editor.SetKeywords(1,
+            "abs atan atan2 between inbetween ceil cint clamp cos deg distance exp floor int lerp log max min mod pow rad rnd round sgn sin sqr tan " +
+            "pi hpi qpi tau euler fasttrig fastsin fastcos fastrad " +
+            "asc chr instr invert lcase left len ltrim mid repeat replace right rtrim srand split str trim ucase val fstring " +
+            "ticks time rgb");
+
+        // I/O, files, network, arrays, program arguments
+        editor.SetKeywords(2,
+            "print input cls color locate curpos getconsole inkey keydown waitkey " +
+            "fileread filewrite fileappend fileexists filedelete filelist shell " +
+            "httpget httppost startlisten getrequest sendresponse stoplisten " +
+            "asjson asarray loadjson savejson base64encode base64decode sha256 " +
+            "isset haskey delkey delarray join rowcount arrkey args argcount");
+
+        // Graphics, mouse & sound
+        editor.SetKeywords(3,
+            "screen screenlock fullscreen vsync line circle pset point paint b bf " +
+            "loadimage loadshape loadsheet loadfont drawstring " +
+            "moveshape drawshape rotateshape scaleshape showshape hideshape removeshape " +
+            "mousex mousey mouseleft mouseright mousemiddle mousehide mouseshow " +
+            "gamepads padbutton padaxis padname padrumble " +
+            "loadsound soundonce soundoncewait soundrepeat soundstop soundstopall");
+
+        ApplyEditorColors(editor);
+    }
+
+    // Applies the current theme to one editor. Safe to call again on theme change.
+    private void ApplyEditorColors(Scintilla editor)
+    {
+        var t = _theme;
+
+        // Default style is copied to all styles by StyleClearAll
         editor.StyleResetDefault();
         editor.Styles[Style.Default].Font = "Consolas";
         editor.Styles[Style.Default].Size = 11;
+        editor.Styles[Style.Default].BackColor = t.Back;
+        editor.Styles[Style.Default].ForeColor = t.Fore;
         editor.StyleClearAll();
-        
-        // Use VB lexer (closest to BASIC) - Scintilla 5 uses LexerName
-        editor.LexerName = "vb";
-        
-        // VB style constants (from Scintilla documentation)
+
+        // VB lexer style constants (from Scintilla documentation)
         const int SCE_B_DEFAULT = 0;
         const int SCE_B_COMMENT = 1;
         const int SCE_B_NUMBER = 2;
@@ -450,46 +499,80 @@ public partial class MainForm : Form
         const int SCE_B_KEYWORD2 = 8;
         const int SCE_B_KEYWORD3 = 9;
         const int SCE_B_KEYWORD4 = 10;
-        
-        // Colors
-        editor.Styles[SCE_B_DEFAULT].ForeColor = Color.Black;
-        editor.Styles[SCE_B_COMMENT].ForeColor = Color.FromArgb(0, 128, 0); // Green
-        editor.Styles[SCE_B_NUMBER].ForeColor = Color.FromArgb(255, 128, 0); // Orange
-        editor.Styles[SCE_B_KEYWORD].ForeColor = Color.Blue;
+
+        editor.Styles[SCE_B_DEFAULT].ForeColor = t.Fore;
+        editor.Styles[SCE_B_COMMENT].ForeColor = t.Comment;
+        editor.Styles[SCE_B_NUMBER].ForeColor = t.Number;
+        editor.Styles[SCE_B_KEYWORD].ForeColor = t.Keyword;
         editor.Styles[SCE_B_KEYWORD].Bold = true;
-        editor.Styles[SCE_B_STRING].ForeColor = Color.FromArgb(163, 21, 21); // Dark red
-        editor.Styles[SCE_B_OPERATOR].ForeColor = Color.Black;
-        editor.Styles[SCE_B_IDENTIFIER].ForeColor = Color.Black;
-        editor.Styles[SCE_B_KEYWORD2].ForeColor = Color.DarkCyan; // Functions
-        editor.Styles[SCE_B_KEYWORD3].ForeColor = Color.DarkMagenta; // Built-ins
-        editor.Styles[SCE_B_KEYWORD4].ForeColor = Color.Teal; // Graphics
-        
-        // Control flow, declarations, logic
-        editor.SetKeywords(0,
-            "if then else elseif endif end while wend for to step next " +
-            "dim let goto gosub return def fn include rem sleep " +
-            "and or not true false on off");
+        editor.Styles[SCE_B_STRING].ForeColor = t.String;
+        editor.Styles[SCE_B_OPERATOR].ForeColor = t.Operator;
+        editor.Styles[SCE_B_IDENTIFIER].ForeColor = t.Fore;
+        editor.Styles[SCE_B_KEYWORD2].ForeColor = t.Keyword2; // Functions
+        editor.Styles[SCE_B_KEYWORD3].ForeColor = t.Keyword3; // I/O, files, arrays
+        editor.Styles[SCE_B_KEYWORD4].ForeColor = t.Keyword4; // Graphics & sound
 
-        // Math & string functions, constants
-        editor.SetKeywords(1,
-            "abs atan between ceil cint clamp cos deg distance exp floor int lerp log max min mod pow rad rnd round sgn sin sqr tan " +
-            "pi hpi qpi tau euler fasttrig fastsin fastcos fastrad " +
-            "asc chr instr invert lcase left len ltrim mid repeat replace right rtrim srand split str trim ucase val " +
-            "ticks time rgb");
+        // Line numbers: a Number margin takes its background from Style.LineNumber,
+        // Margins[n].BackColor only affects Symbol margins (that is why setting it on margin 0 did nothing).
+        editor.Styles[Style.LineNumber].BackColor = t.Gutter;
+        editor.Styles[Style.LineNumber].ForeColor = t.GutterFore;
+        editor.Margins[1].BackColor = t.Gutter;
 
-        // I/O, files, network, arrays
-        editor.SetKeywords(2,
-            "print input cls color locate curpos getconsole inkey keydown waitkey " +
-            "fileread filewrite fileappend fileexists filedelete filelist shell " +
-            "httpget httppost asjson asarray loadjson savejson base64encode base64decode sha256 " +
-            "haskey delkey delarray join beep");
+        editor.CaretForeColor = t.Caret;
+        editor.SelectionBackColor = t.Selection;
+    }
 
-        // Graphics & sound
-        editor.SetKeywords(3,
-            "screen screenlock fullscreen vsync line circle pset point paint " +
-            "loadimage loadshape loadsheet moveshape drawshape rotateshape scaleshape showshape hideshape removeshape " +
-            "mousex mousey mouseleft mouseright mousemiddle " +
-            "loadsound soundonce soundoncewait soundrepeat soundstop soundstopall");
+    // Switch theme for the whole IDE and remember the choice
+    private void SetTheme(EditorTheme theme)
+    {
+        _theme = theme;
+        _settings.Theme = theme.Name;
+        _settings.Save();
+
+        foreach (var tab in _tabs.Values)
+            ApplyEditorColors(tab.Editor);
+
+        ApplyChromeTheme();
+    }
+
+    // Menus, status bar, tabs and title bar
+    private void ApplyChromeTheme()
+    {
+        var t = _theme;
+
+        if (t.IsDark)
+        {
+            var renderer = new ThemeRenderer(t);
+            menuStrip.Renderer = renderer;
+            statusStrip.Renderer = renderer;
+        }
+        else
+        {
+            menuStrip.RenderMode = ToolStripRenderMode.ManagerRenderMode;
+            statusStrip.RenderMode = ToolStripRenderMode.ManagerRenderMode;
+        }
+
+        menuStrip.BackColor = t.ChromeBack;
+        menuStrip.ForeColor = t.ChromeFore;
+        statusStrip.BackColor = t.ChromeBack;
+        statusStrip.ForeColor = t.ChromeFore;
+        statusLabel.ForeColor = t.ChromeFore;
+        positionLabel.ForeColor = t.ChromeFore;
+        this.BackColor = t.ChromeBack;
+
+        lightModeMenuItem.Checked = !t.IsDark;
+        darkModeMenuItem.Checked = t.IsDark;
+
+        tabControl.Invalidate();
+
+        if (IsHandleCreated)
+            TitleBar.SetDark(Handle, t.IsDark);
+    }
+
+    protected override void OnHandleCreated(EventArgs e)
+    {
+        base.OnHandleCreated(e);
+        TitleBar.SetDark(Handle, _theme.IsDark);
     }
 
     #endregion

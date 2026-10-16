@@ -12,8 +12,8 @@
 ' ==========================================
 
 [inits]
-    LET SONG_PATH# = "Examples\\audio\\music-free-458044.mp3"
-    LET CLIP_PATH# = "Examples\\audio\\descent-whoosh-long-cinematic-sound-effect-405921.mp3"
+    LET SONG_PATH# = "assets/458044.mp3"
+    LET CLIP_PATH# = "assets/whoosh.mp3"
 
     LET song$ = LOADSOUND(SONG_PATH#)
     LET clip$ = LOADSOUND(CLIP_PATH#)

@@ -7,6 +7,20 @@
 '   XAI_API_KEY=xai-yourKeyHere
 ' ============================================
 
+' DISCLAIMER:
+' This code was written around 04.2026 with help from the provider's own AI,
+' starting from a tested Claude example, and targets the model grok-4.5.
+' It has not been tested by the BazzBasic author.
+' AI providers change their APIs, model names and headers over time,
+' so this example may stop working without any change in BazzBasic.
+'
+' If it fails, check the provider's current API documentation first.
+' Provider-specific settings are grouped at the top of this file.
+' You can also give this file together with the BazzBasic AI Guide
+' to an AI of your choice and ask it to update the code.
+'
+' https://huggingface.co/datasets/EkBass/BazzBasic_AI_Guide
+
 [check:env]
     IF FileExists(".env") = 0 THEN
         PRINT "Error: .env file not found."
@@ -23,7 +37,7 @@
     headers$("Content-Type")  = "application/json"
 
     DIM body$
-	body$("model")                = "grok-4.3"          ' Current flagship model
+	body$("model")                = "grok-4.5"          ' Flagship model as of 2026
 	body$("max_completion_tokens") = 1000
     body$("messages,0,role")    = "user"
     body$("messages,0,content") = "Hello"

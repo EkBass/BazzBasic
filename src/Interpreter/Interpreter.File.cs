@@ -57,6 +57,53 @@ public partial class Interpreter
         return Value.FromNumber(exists ? 1 : 0);
     }
 
+    // FILELIST(arr$, path$) or FILELIST(arr$, path$, pattern$)
+    // Fills arr$ with file names (no directories, no paths) in path$,
+    // sorted alphabetically, keys 0..n-1. Any previous contents of arr$ are cleared.
+    // pattern$ uses * and ? wildcards, default all files. Not recursive.
+    // Returns the number of files; 0 if the folder doesn't exist.
+
+    private Value EvaluateFileList()
+    {
+        _pos++; // Skip TOK_FILELIST
+        Require(TokenType.TOK_LPAREN, "Expected '(' after FILELIST");
+
+        if (_pos >= _tokens.Count || _tokens[_pos].Type != TokenType.TOK_VARIABLE)
+        {
+            Error("FILELIST requires array variable as first parameter");
+            return Value.Zero;
+        }
+
+        string arrayName = _tokens[_pos].StringValue ?? "";
+        _pos++;
+        // Allow arr$() as well as arr$
+        if (_pos + 1 < _tokens.Count
+            && _tokens[_pos].Type == TokenType.TOK_LPAREN
+            && _tokens[_pos + 1].Type == TokenType.TOK_RPAREN)
+            _pos += 2;
+
+        Require(TokenType.TOK_COMMA, "Expected ',' after FILELIST array");
+        string path = EvaluateExpression().AsString();
+
+        string pattern = "*";
+        if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_COMMA)
+        {
+            _pos++; // Skip comma
+            pattern = EvaluateExpression().AsString();
+        }
+
+        Require(TokenType.TOK_RPAREN, "Expected ')' after FILELIST arguments");
+
+        _variables.DeclareArray(arrayName);
+        _variables.GetAllArrayElements(arrayName)?.Clear();
+
+        var files = _fileManager.ListFiles(path, pattern);
+        for (int i = 0; i < files.Count; i++)
+            _variables.SetArrayElement(arrayName, i.ToString(), Value.FromString(files[i]));
+
+        return Value.FromNumber(files.Count);
+    }
+
     // ========================================================================
     // File Commands
     // ========================================================================

@@ -29,10 +29,24 @@ partial class MainForm
     private ToolStripMenuItem saveAsMenuItem = null!;
     private ToolStripMenuItem closeMenuItem = null!;
     private ToolStripMenuItem exitMenuItem = null!;
-    
+
+    // Edit
     private ToolStripMenuItem editMenu = null!;
-    private ToolStripMenuItem findMenuItem = null!;
+    private ToolStripMenuItem undoMenuItem = null!;
+    private ToolStripMenuItem redoMenuItem = null!;
+    private ToolStripMenuItem cutMenuItem = null!;
+    private ToolStripMenuItem copyMenuItem = null!;
+    private ToolStripMenuItem pasteMenuItem = null!;
+    private ToolStripMenuItem selectAllMenuItem = null!;
+    
+    private ToolStripMenuItem searchMenu = null!;
+    private ToolStripMenuItem searchMenuItem = null!;
     private ToolStripMenuItem replaceMenuItem = null!;
+
+    // View
+    private ToolStripMenuItem viewMenu = null!;
+    private ToolStripMenuItem lightModeMenuItem = null!;
+    private ToolStripMenuItem darkModeMenuItem = null!;
 
     // Run
     private ToolStripMenuItem runMenu = null!;
@@ -44,7 +58,9 @@ partial class MainForm
 
     private ToolStripMenuItem helpMenu = null!;
     private ToolStripMenuItem aboutMenuItem = null!;
+    private ToolStripMenuItem manualMenuItem = null!;
     private ToolStripMenuItem guideMenuItem = null!;
+    private ToolStripMenuItem rosettaMenuItem = null!;
 
     private TabControl tabControl = null!;
     
@@ -91,11 +107,54 @@ partial class MainForm
         
         // Edit Menu
         editMenu = new ToolStripMenuItem("&Edit");
-        findMenuItem = new ToolStripMenuItem("&Find...", null, (s, e) => ShowFindDialog(), Keys.Control | Keys.F);
+        undoMenuItem  = new ToolStripMenuItem("&Undo",  null, (s, e) => ActiveEditor?.Undo(),  Keys.Control | Keys.Z);
+        redoMenuItem  = new ToolStripMenuItem("&Redo",  null, (s, e) => ActiveEditor?.Redo(),  Keys.Control | Keys.Y);
+        cutMenuItem   = new ToolStripMenuItem("Cu&t",   null, (s, e) => ActiveEditor?.Cut(),   Keys.Control | Keys.X);
+        copyMenuItem  = new ToolStripMenuItem("&Copy",  null, (s, e) => ActiveEditor?.Copy(),  Keys.Control | Keys.C);
+        pasteMenuItem = new ToolStripMenuItem("&Paste", null, (s, e) => ActiveEditor?.Paste(), Keys.Control | Keys.V);
+        selectAllMenuItem = new ToolStripMenuItem("Select &All", null, (s, e) => ActiveEditor?.SelectAll(), Keys.Control | Keys.A);
+
+        editMenu.DropDownItems.AddRange(new ToolStripItem[] {
+            undoMenuItem, redoMenuItem, new ToolStripSeparator(),
+            cutMenuItem, copyMenuItem, pasteMenuItem, new ToolStripSeparator(),
+            selectAllMenuItem
+        });
+
+        // Grey out items that can't be used right now (only while the menu is open)
+        editMenu.DropDownOpening += (s, e) =>
+        {
+            var ed = ActiveEditor;
+            bool hasSel = ed != null && ed.SelectionStart != ed.SelectionEnd;
+            undoMenuItem.Enabled  = ed?.CanUndo ?? false;
+            redoMenuItem.Enabled  = ed?.CanRedo ?? false;
+            cutMenuItem.Enabled   = hasSel;
+            copyMenuItem.Enabled  = hasSel;
+            pasteMenuItem.Enabled = ed?.CanPaste ?? false;
+            selectAllMenuItem.Enabled = ed != null;
+        };
+
+        // Re-enable on close so keyboard shortcuts keep working
+        editMenu.DropDownClosed += (s, e) =>
+        {
+            foreach (ToolStripItem item in editMenu.DropDownItems)
+                item.Enabled = true;
+        };
+
+        // Search Menu
+        searchMenu = new ToolStripMenuItem("&Search");
+        searchMenuItem = new ToolStripMenuItem("&Find...", null, (s, e) => ShowFindDialog(), Keys.Control | Keys.F);
         replaceMenuItem = new ToolStripMenuItem("&Replace...", null, (s, e) => ShowReplaceDialog(), Keys.Control | Keys.H);
         
-        editMenu.DropDownItems.AddRange(new ToolStripItem[] {
-            findMenuItem, replaceMenuItem
+        searchMenu.DropDownItems.AddRange(new ToolStripItem[] {
+            searchMenuItem, replaceMenuItem
+        });
+
+        // View Menu
+        viewMenu = new ToolStripMenuItem("&View");
+        lightModeMenuItem = new ToolStripMenuItem("&Light Mode", null, (s, e) => SetTheme(EditorTheme.Light));
+        darkModeMenuItem = new ToolStripMenuItem("&Dark Mode (experimental)", null, (s, e) => SetTheme(EditorTheme.Dark));
+        viewMenu.DropDownItems.AddRange(new ToolStripItem[] {
+            lightModeMenuItem, darkModeMenuItem
         });
         
         // Run Menu
@@ -113,6 +172,15 @@ partial class MainForm
         aboutMenuItem = new ToolStripMenuItem("&About", null, (s, e) => ShowAbout());
         helpMenu.DropDownItems.Add(aboutMenuItem);
 
+        // Link to online manual
+        // cmd: start https://ekbass.github.io/BazzBasic/manual/#/
+        manualMenuItem = new ToolStripMenuItem("&Online Manual", null, (s, e) => System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+        {
+            FileName = "https://ekbass.github.io/BazzBasic/manual/#/",
+            UseShellExecute = true
+        }));
+        helpMenu.DropDownItems.Add(manualMenuItem);
+
         // Link to beginner's guide
         // cmd: start https://github.com/EkBass/BazzBasic-Beginners-Guide/releases
         guideMenuItem = new ToolStripMenuItem("&Beginner's Guide", null, (s, e) => System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
@@ -121,6 +189,15 @@ partial class MainForm
             UseShellExecute = true
         }));
         helpMenu.DropDownItems.Add(guideMenuItem);
+
+        // Link to Rosetta Code
+        // cmd: start https://rosettacode.org/wiki/Category:BazzBasic
+        rosettaMenuItem = new ToolStripMenuItem("&Rosetta Code", null, (s, e) => System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+        {
+            FileName = "https://rosettacode.org/wiki/Category:BazzBasic",
+            UseShellExecute = true
+        }));
+        helpMenu.DropDownItems.Add(rosettaMenuItem);
 
         // Check for updates
         var checkUpdateMenuItem = new ToolStripMenuItem("&Check for Updates...", null, async (s, e) =>
@@ -131,7 +208,7 @@ partial class MainForm
         helpMenu.DropDownItems.Add(checkUpdateMenuItem);
 
 
-        menuStrip.Items.AddRange(new ToolStripItem[] { fileMenu, editMenu, runMenu, helpMenu });
+        menuStrip.Items.AddRange(new ToolStripItem[] { fileMenu, editMenu, searchMenu, viewMenu, runMenu, helpMenu });
         
         // Tab Control for editor tabs - with close button support
         tabControl = new TabControl
@@ -172,19 +249,19 @@ partial class MainForm
         
         // Draw background
         bool isSelected = tabControl.SelectedIndex == e.Index;
-        using var bgBrush = new SolidBrush(isSelected ? SystemColors.Window : SystemColors.Control);
+        using var bgBrush = new SolidBrush(isSelected ? _theme.TabActive : _theme.TabInactive);
         e.Graphics.FillRectangle(bgBrush, tabRect);
         
         // Draw tab text
         var textRect = new Rectangle(tabRect.X + 4, tabRect.Y + 4, tabRect.Width - 24, tabRect.Height - 4);
         TextRenderer.DrawText(e.Graphics, tabPage.Text, tabControl.Font, textRect, 
-            SystemColors.ControlText, TextFormatFlags.Left | TextFormatFlags.VerticalCenter);
+            _theme.ChromeFore, TextFormatFlags.Left | TextFormatFlags.VerticalCenter);
         
         // Draw close button (X)
         var closeRect = GetCloseButtonRect(tabRect);
         using var closeFont = new Font("Arial", 8, FontStyle.Bold);
         TextRenderer.DrawText(e.Graphics, "×", closeFont, closeRect, 
-            Color.FromArgb(120, 120, 120), TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
+            _theme.TabClose, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
     }
 
     private Rectangle GetCloseButtonRect(Rectangle tabRect)
@@ -219,6 +296,12 @@ partial class MainForm
             "  Ctrl+O  Open file\n" +
             "  Ctrl+S  Save\n" +
             "  Ctrl+W  Close tab\n" +
+            "  Ctrl+Z  Undo\n" +
+            "  Ctrl+Y  Redo\n" +
+            "  Ctrl+X  Cut\n" +
+            "  Ctrl+C  Copy\n" +
+            "  Ctrl+V  Paste\n" +
+            "  Ctrl+A  Select all\n" +
             "  Ctrl+F  Find\n" +
             "  Ctrl+H  Replace\n" +
             "  F5      Run program\n\n" +

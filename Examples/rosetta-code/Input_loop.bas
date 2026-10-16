@@ -12,7 +12,7 @@
     DIM lines$
 
 [main]
-    raw$ = FileRead("input.txt")
+    raw$ = FileRead("assets/input_loop.txt")
     LET count$ = SPLIT(lines$, raw$, CHR(13) + CHR(10))
 
     FOR i$ = 0 TO count$ - 1

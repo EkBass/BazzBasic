@@ -298,6 +298,8 @@ LINE (x1, y1)-(x2, y2), color, B        ' Box (outline)
 LINE (x1, y1)-(x2, y2), color, BF       ' Box Filled
 ```
 
+Both corners are **inclusive** in all three forms: `(x2, y2)` is drawn as part of the line or box. `LINE (10, 10)-(12, 12), c, BF` fills a 3×3 area. Corners can be given in any order. To cover a 640×480 screen exactly, use `LINE (0, 0)-(639, 479), 0, BF` — coordinates outside the window are clipped, so `(640, 480)` also works.
+
 #### Examples
 ```vb
 LINE (10, 10)-(100, 50), 15             ' White line

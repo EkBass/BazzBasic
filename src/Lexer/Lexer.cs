@@ -105,6 +105,7 @@ public class Lexer(string source)
         ["FILEWRITE"]       = TokenType.TOK_FILEWRITE,
         ["FILEAPPEND"]      = TokenType.TOK_FILEAPPEND,
         ["FILEDELETE"]      = TokenType.TOK_FILEDELETE,
+        ["FILELIST"]        = TokenType.TOK_FILELIST,
         ["SHELL"]           = TokenType.TOK_SHELL,
 
         // Math functions
@@ -184,6 +185,13 @@ public class Lexer(string source)
         ["MOUSEHIDE"]    = TokenType.TOK_MOUSEHIDE,
         ["MOUSESHOW"]    = TokenType.TOK_MOUSESHOW,
 
+        // Gamepad
+        ["GAMEPADS"]     = TokenType.TOK_GAMEPADS,
+        ["PADBUTTON"]    = TokenType.TOK_PADBUTTON,
+        ["PADAXIS"]      = TokenType.TOK_PADAXIS,
+        ["PADNAME"]      = TokenType.TOK_PADNAME,
+        ["PADRUMBLE"]    = TokenType.TOK_PADRUMBLE,
+
         // Array functions
         ["HASKEY"]      = TokenType.TOK_HASKEY,
         ["DELKEY"]      = TokenType.TOK_DELKEY,
@@ -206,10 +214,6 @@ public class Lexer(string source)
         ["ON"]          = TokenType.TOK_ON,
         ["OR"]          = TokenType.TOK_OR,
         ["TRUE"]        = TokenType.TOK_TRUE,
-
-
-        // Special
-        ["BEEB"] = TokenType.TOK_BEEB,
     };
 
     private readonly string _source = source;

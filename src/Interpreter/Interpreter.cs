@@ -225,6 +225,34 @@ public partial class Interpreter
 
             // Mouse
 
+            // Gamepad buttons -> PADBUTTON(pad, PAD_A#). Values = SDL_GameControllerButton.
+            // Labels follow Xbox layout; PlayStation: A=Cross, B=Circle, X=Square, Y=Triangle
+            ["PAD_A#"] = 0,
+            ["PAD_B#"] = 1,
+            ["PAD_X#"] = 2,
+            ["PAD_Y#"] = 3,
+            ["PAD_BACK#"] = 4,
+            ["PAD_GUIDE#"] = 5,
+            ["PAD_START#"] = 6,
+            ["PAD_LSTICK#"] = 7,
+            ["PAD_RSTICK#"] = 8,
+            ["PAD_LB#"] = 9,
+            ["PAD_RB#"] = 10,
+            ["PAD_UP#"] = 11,
+            ["PAD_DOWN#"] = 12,
+            ["PAD_LEFT#"] = 13,
+            ["PAD_RIGHT#"] = 14,
+            ["PAD_MISC#"] = 15,
+            ["PAD_TOUCHPAD#"] = 20,
+
+            // Gamepad axes -> PADAXIS(pad, PAD_LX#). Values = SDL_GameControllerAxis.
+            ["PAD_LX#"] = 0,
+            ["PAD_LY#"] = 1,
+            ["PAD_RX#"] = 2,
+            ["PAD_RY#"] = 3,
+            ["PAD_LT#"] = 4,
+            ["PAD_RT#"] = 5,
+
             // Math constants with # suffix (PI# etc.) â€” backward-compatible aliases
             ["PI#"]    = Math.PI,
             ["HPI#"]   = Math.PI / 2.0,
@@ -347,14 +375,14 @@ public partial class Interpreter
             case TokenType.TOK_MOUSESHOW:
                 ExecuteMouseShow();
                 break;
+            case TokenType.TOK_PADRUMBLE:
+                ExecutePadRumble();
+                break;
             case TokenType.TOK_LOCATE:
                 ExecuteLocate();
                 break;
             case TokenType.TOK_COLOR:
                 ExecuteColor();
-                break;
-            case TokenType.TOK_BEEB:
-                ExecuteBeeb();
                 break;
             case TokenType.TOK_SLEEP:
                 ExecuteSleep();

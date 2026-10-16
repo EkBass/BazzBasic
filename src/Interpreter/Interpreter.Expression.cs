@@ -378,6 +378,14 @@ public partial class Interpreter
                 return EvaluateMousemiddleFunc();
             case TokenType.TOK_MOUSERIGHT:
                 return EvaluateMouserightFunc();
+            case TokenType.TOK_GAMEPADS:
+                return EvaluateGamepadsFunc();
+            case TokenType.TOK_PADBUTTON:
+                return EvaluatePadButtonFunc();
+            case TokenType.TOK_PADAXIS:
+                return EvaluatePadAxisFunc();
+            case TokenType.TOK_PADNAME:
+                return EvaluatePadNameFunc();
             case TokenType.TOK_LOADSOUND:
                 return EvaluateLoadSound();
             case TokenType.TOK_HTTPGET:
@@ -400,6 +408,8 @@ public partial class Interpreter
                 return EvaluateFileRead();
             case TokenType.TOK_FILEEXISTS:
                 return EvaluateFileExists();
+            case TokenType.TOK_FILELIST:
+                return EvaluateFileList();
             case TokenType.TOK_SHELL:
                 return EvaluateShell();
             case TokenType.TOK_FN:

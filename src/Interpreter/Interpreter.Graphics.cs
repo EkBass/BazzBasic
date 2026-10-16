@@ -222,17 +222,18 @@ public partial class Interpreter
                 _pos++;
                 if (_pos < _tokens.Count)
                 {
-                    if (_tokens[_pos].Type == TokenType.TOK_BF)
+                    bool isBF = _tokens[_pos].Type == TokenType.TOK_BF;
+                    bool isB  = _tokens[_pos].Type == TokenType.TOK_B;
+                    if (isBF || isB)
                     {
                         _pos++;
-                        Graphics.Graphics.DrawRect(x1, y1, x2 - x1, y2 - y1, true);
-                        Graphics.Graphics.Present();
-                        return;
-                    }
-                    else if (_tokens[_pos].Type == TokenType.TOK_B)
-                    {
-                        _pos++;
-                        Graphics.Graphics.DrawRect(x1, y1, x2 - x1, y2 - y1, false);
+                        // Both corners are inclusive (QBasic semantics, same as plain LINE).
+                        // Corners may be given in any order.
+                        int left = Math.Min(x1, x2);
+                        int top  = Math.Min(y1, y2);
+                        int w    = Math.Abs(x2 - x1) + 1;
+                        int h    = Math.Abs(y2 - y1) + 1;
+                        Graphics.Graphics.DrawRect(left, top, w, h, isBF);
                         Graphics.Graphics.Present();
                         return;
                     }

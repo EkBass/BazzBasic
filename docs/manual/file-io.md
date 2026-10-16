@@ -10,6 +10,7 @@ The file system allows you to:
 - Append content to existing files
 - Check if files exist
 - Delete files
+- List the files in a folder
 - Work with both relative and absolute paths
 - Automatically create directories as needed
 
@@ -186,6 +187,44 @@ ENDIF
 - Silent operation if file doesn't exist
 - Irreversible operation - use with caution
 - Useful for cleanup and reset operations
+
+---
+
+### FILELIST(array$, folder$ [, pattern$])
+
+Fills an array with the names of the files in a folder and returns how many there are.
+
+**Syntax:**
+```vb
+count$ = FILELIST(array$, folder$)
+count$ = FILELIST(array$, folder$, pattern$)
+```
+
+**Example:**
+```vb
+DIM files$
+LET count$ = FILELIST(files$, PRG_ROOT# + "levels", "*.txt")
+
+PRINT count$; " level files found"
+FOR i$ = 0 TO count$ - 1
+    PRINT files$(i$)
+NEXT i$
+
+REM Load the first one - FILELIST gives names only, so add the folder back
+IF count$ > 0 THEN
+    LET level$ = FILEREAD(PRG_ROOT# + "levels/" + files$(0))
+ENDIF
+```
+
+**Notes:**
+- Only files are listed, not folders. Subfolders are not searched.
+- Returns file names only (`level1.txt`), not full paths.
+- Names are sorted alphabetically, ignoring case, and stored at keys `0` to `count - 1`.
+- The array is emptied first, so calling `FILELIST` again with the same array leaves no old names behind.
+- `pattern$` uses `*` (any characters) and `?` (one character), e.g. `"*.bas"` or `"save?.dat"`. Without it, all files are listed.
+- Hidden and system files are skipped.
+- If the folder doesn't exist, returns `0` and the array is empty.
+- Relative folders are resolved from the program's folder, like the other file commands.
 
 ---
 

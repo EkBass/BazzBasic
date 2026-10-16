@@ -8,7 +8,7 @@ DIM row$
 
 PRINT "ROWCOUNT: "; ROWCOUNT(row$())
 
-PRINT "ASJSON: "; ASJSON(row$())
+PRINT "ASJSON: "; ASJSON(row$)
 
 DIM a$
 	a$("x") = 1

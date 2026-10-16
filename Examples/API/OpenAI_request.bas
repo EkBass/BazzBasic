@@ -7,6 +7,18 @@
 '   OPENAI_API_KEY=sk-proj-yourKeyHere
 ' ============================================
 
+' DISCLAIMER:
+' This code was last verified on 04.04.2026 using gpt-5-mini.
+' AI providers change their APIs, model names and headers over time,
+' so this example may stop working without any change in BazzBasic.
+'
+' If it fails, check the provider's current API documentation first.
+' Provider-specific settings are grouped at the top of this file.
+' You can also give this file together with the BazzBasic AI Guide
+' to an AI of your choice and ask it to update the code.
+'
+' https://huggingface.co/datasets/EkBass/BazzBasic_AI_Guide
+
 [check:env]
     IF FileExists(".env") = 0 THEN
         PRINT "Error: .env file not found."

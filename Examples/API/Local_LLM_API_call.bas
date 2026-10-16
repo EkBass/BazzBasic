@@ -8,12 +8,24 @@
 '   ollama pull llama3.2
 ' ============================================
 
+' DISCLAIMER:
+' This code was last verified on 04.04.2026 using llama3.1.
+' AI providers change their APIs, model names and headers over time,
+' so this example may stop working without any change in BazzBasic.
+'
+' If it fails, check the provider's current API documentation first.
+' Provider-specific settings are grouped at the top of this file.
+' You can also give this file together with the BazzBasic AI Guide
+' to an AI of your choice and ask it to update the code.
+'
+' https://huggingface.co/datasets/EkBass/BazzBasic_AI_Guide
+
 [inits]
     DIM headers$
     headers$("Content-Type") = "application/json"
 
     DIM body$
-    body$("model")              = "bazzbasic:latest"   ' a model you have actually pulled
+    body$("model")              = "llama3.1"   ' a model you have actually pulled
     body$("messages,0,role")    = "user"
     body$("messages,0,content") = "Say hello in three words."
     body$("max_tokens")         = 100

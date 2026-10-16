@@ -241,6 +241,24 @@ Numpad keys give the same value on every keyboard layout. Numpad Enter returns t
 | `KEY_6#` | `KEY_7#` | `KEY_8#` |
 | `KEY_9#` | | |
 
+**Gamepad:** (see [Gamepad](input_functions.md?id=gamepad))
+
+### Gamepad Buttons
+| | | |
+|---|---|---|
+| `PAD_A#` | `PAD_B#` | `PAD_X#` |
+| `PAD_Y#` | `PAD_UP#` | `PAD_DOWN#` |
+| `PAD_LEFT#` | `PAD_RIGHT#` | `PAD_LB#` |
+| `PAD_RB#` | `PAD_LSTICK#` | `PAD_RSTICK#` |
+| `PAD_BACK#` | `PAD_START#` | `PAD_GUIDE#` |
+| `PAD_MISC#` | `PAD_TOUCHPAD#` | |
+
+### Gamepad Axes
+| | | |
+|---|---|---|
+| `PAD_LX#` | `PAD_LY#` | `PAD_RX#` |
+| `PAD_RY#` | `PAD_LT#` | `PAD_RT#` |
+
 ## Naming Rules
 1. Must end with `$` (variable) or `#` (constant)
 2. Can contain letters, numbers, and underscores

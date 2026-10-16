@@ -249,11 +249,6 @@ public partial class Interpreter
         }
     }
 
-    private void ExecuteBeeb()
-    {
-        _pos++;
-        Console.Beep();
-    }
 
     private Value EvaluateInkeyFunc()
     {

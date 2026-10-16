@@ -2,45 +2,48 @@
 <root>
 	<metadata>
 		<description>list of all reserved keywords</description>
-		<bazzbasic-version>1.1</bazzbasic-version>
-		<date>01.05.2026</date>
+		<bazzbasic-version>1.5</bazzbasic-version>
+		<date>16.10.2026</date>
 		<author>krisu.virtanen@gmail.com</author>
 	</metadata>
 	<cli>
 		-exe, -lib, -v, -version
 	</cli>
 	<control-flow>
-		def, dim, end, endif, else, elseif, fn, for, gosub, goto, if, include, let, next, rem, return, step, then, to, wend, while
+		def, dim, else, elseif, end, endif, fn, for, gosub, goto, if, include, let, next, rem, return, step, then, to, wend, while
 	</control-flow>
 	<io>
 		cls, color, curpos, getconsole, input, locate, sleep, print, inkey, keydown, waitkey
 	</io>
 	<graphics>
-		b, bf, circle, drawshape, hideshape, line, loadimage, loadshape, moveshape, paint, point, pset, rgb, removeshape, rotateshape, scaleshape, screen, screenlock, showshape, vsync, fullscreen, loadsheet
+		b, bf, circle, drawshape, hideshape, line, loadimage, loadshape, moveshape, paint, point, pset, rgb, removeshape, rotateshape, scaleshape, screen, screenlock, showshape, vsync, fullscreen, loadsheet, loadfont, drawstring
 	</graphics>
 	<network>
-		httpget, httppost
+		httpget, httppost, startlisten, getrequest, sendresponse, stoplisten
 	</network>
 	<json>
-		asjson, loadjson, savejson
+		asjson, asarray, loadjson, savejson
 	</json>
 	<sound>
 		loadsound, soundonce, soundoncewait, soundrepeat, soundstop, soundstopall
 	</sound>
 	<file>
-		fileread, fileexists, filewrite, fileappend, filedelete, shell, base64encode, base64decode, sha256
+		fileread, fileexists, filewrite, fileappend, filedelete, filelist, shell, base64encode, base64decode, sha256
 	</file>
 	<built-in-math>
-		abs, atan, cint, cos, ceil, exp, floor, int, log, max, min, mod, pow, rnd, round, sgn, sin, sqr, tan, pi, rad, deg, hpi, fasttrig, fastsin, fastcos, fastrad, qpi, tau, between, euler, distance, clamp, lerp
+		abs, atan, atan2, cint, cos, ceil, exp, floor, int, log, max, min, mod, pow, rnd, round, sgn, sin, sqr, tan, pi, rad, deg, hpi, fasttrig, fastsin, fastcos, fastrad, qpi, tau, between, inbetween, euler, distance, clamp, lerp
 	</built-in-math>
 	<built-in-string>
 		asc, chr, fstring, instr, invert, lcase, left, len, ltrim, mid, repeat, replace, right, rtrim, srand, split, str, trim, ucase, val
 	</built-in-string>
 	<input-mouse>
-		mousex, mousey, mouseleft, mouseright, mousemiddle
+		mousex, mousey, mouseleft, mouseright, mousemiddle, mousehide, mouseshow
 	</input-mouse>
+	<input-gamepad>
+		gamepads, padbutton, padaxis, padname, padrumble
+	</input-gamepad>
 	<array>
-		delarray, delkey, haskey, asarray, join
+		delarray, delkey, haskey, join, rowcount, arrkey
 	</array>
 	<time>
 		ticks, time
@@ -49,9 +52,12 @@
 		and, false, not, off, on, or, true
 	</logic>
 	<special>
-		beep, bbver, isset
+		isset, args, argcount, bbver, prg_root
 	</special>
 	<key-constants>
-		key_esc, key_tab, key_backspace, key_enter, key_space, key_up, key_down, key_left, key_right, key_insert, key_delete, key_home, key_end, key_pgup, key_pgdn, key_f1, key_f2, key_f3, key_f4, key_f5, key_f6, key_f7, key_f8, key_f9, key_f10, key_f11, key_f12, key_numpad0, key_numpad1, key_numpad2, key_numpad3, key_numpad4, key_numpad5, key_numpad6, key_numpad7, key_numpad8, key_numpad9, key_lshift, key_rshift, key_lctrl, key_rctrl, key_lalt, key_ralt, key_lwin, key_rwin, key_0, key_1, key_2, key_3, key_4, key_5, key_6, key_7, key_8, key_9, key_a, key_b, key_c, key_d, key_e, key_f, key_g, key_h, key_i, key_j, key_k, key_l, key_m, key_n, key_o, key_p, key_q, key_r, key_s, key_t, key_u, key_v, key_w, key_x, key_y, key_z, key_sep, key_equals, key_comma, key_minus, key_dot, key_slash, key_grave, key_lbracket, key_rbracket, key_backslash
+		key_backspace, key_tab, key_enter, key_esc, key_space, key_up, key_down, key_left, key_right, key_insert, key_delete, key_home, key_end, key_pgup, key_pgdn, key_f1, key_f2, key_f3, key_f4, key_f5, key_f6, key_f7, key_f8, key_f9, key_f10, key_f11, key_f12, key_numpad0, key_numpad1, key_numpad2, key_numpad3, key_numpad4, key_numpad5, key_numpad6, key_numpad7, key_numpad8, key_numpad9, key_numpad_plus, key_numpad_minus, key_numpad_mul, key_numpad_div, key_numpad_dot, key_lshift, key_rshift, key_lctrl, key_rctrl, key_lalt, key_ralt, key_lwin, key_rwin, key_0, key_1, key_2, key_3, key_4, key_5, key_6, key_7, key_8, key_9, key_a, key_b, key_c, key_d, key_e, key_f, key_g, key_h, key_i, key_j, key_k, key_l, key_m, key_n, key_o, key_p, key_q, key_r, key_s, key_t, key_u, key_v, key_w, key_x, key_y, key_z, key_sep, key_equals, key_comma, key_minus, key_dot, key_slash, key_grave, key_lbracket, key_rbracket, key_backslash
 	</key-constants>
+	<pad-constants>
+		pad_a, pad_b, pad_x, pad_y, pad_back, pad_guide, pad_start, pad_lstick, pad_rstick, pad_lb, pad_rb, pad_up, pad_down, pad_left, pad_right, pad_misc, pad_touchpad, pad_lx, pad_ly, pad_rx, pad_ry, pad_lt, pad_rt
+	</pad-constants>
 </root>

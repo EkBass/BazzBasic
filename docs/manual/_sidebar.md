@@ -8,6 +8,7 @@
 - [Creating EXE](packaging.md)
 - [Creating Libraries](libraries.md)
 - [More CLI features](cli_features.md)
+- [Advanced CLI usage](Running_BazzBasic_from_anywhere.md)
 - [AI assisted help](ai-assist.md)
 - [Rosetta Code](rosetta-code.md)
 - [Beginner's Guide](beginners-guide.md)

@@ -22,14 +22,5 @@
 
 **How-to (windows)**  
 1. Download file to your computer
-2. Copy it to *C:\Users\<YOUR USERNAME HERE\%AppData%\geany\filedefs\filetypes.BazzBasic.conf*
+2. Copy it to *C:\Program Files\Geany/data/filedefs*
 3. Restart Geany if open
-
-## bazzbasic-0.5.0.vsix
-**Desc:** BazzBasic syntac colors for [VS Code](https://code.visualstudio.com/)  
-**Url:** https://github.com/EkBass/BazzBasic/blob/main/extras/bazzbasic-0.5.0.vsix
-
-**How-to:**
-1. Download file to your computer
-2. Head to folder your download is.
-3. On terminal: *code --install-extension bazzbasic-0.5.0.vsix*
