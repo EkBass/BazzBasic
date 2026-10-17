@@ -5034,8 +5034,8 @@ memory!</p>
 <h3 id="loadimage">LOADIMAGE</h3>
 <p><strong>Note:</strong> Images can be handled just as shapes</p>
 <div class="sourceCode" id="cb289"><pre class="sourceCode vb"><code class="sourceCode monobasic"><span id="cb289-1"><a href="#cb289-1" aria-hidden="true" tabindex="-1"></a>[inits]</span>
-<span id="cb289-2"><a href="#cb289-2" aria-hidden="true" tabindex="-1"></a>    LET SPRITE# = LOADIMAGE(<span class="st">&quot;temp.bmp&quot;</span>)</span>
-<span id="cb289-3"><a href="#cb289-3" aria-hidden="true" tabindex="-1"></a>    SCREEN 12</span>
+<span id="cb289-2"><a href="#cb289-2" aria-hidden="true" tabindex="-1"></a>    SCREEN 12</span>
+<span id="cb289-3"><a href="#cb289-3" aria-hidden="true" tabindex="-1"></a>    LET SPRITE# = LOADIMAGE(<span class="st">&quot;temp.bmp&quot;</span>)</span>
 <span id="cb289-4"><a href="#cb289-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb289-5"><a href="#cb289-5" aria-hidden="true" tabindex="-1"></a>    MOVESHAPE SPRITE#, 320, 240</span>
 <span id="cb289-6"><a href="#cb289-6" aria-hidden="true" tabindex="-1"></a>    ROTATESHAPE SPRITE#, 45      <span class="co">&#39; Rotate 45</span></span>
@@ -5194,9 +5194,9 @@ needed.</p>
 <li>Larger images use more memory</li>
 </ul>
 <h2 id="why-constants-not-variables">Why Constants, Not Variables?</h2>
-<p>Sound IDs returned by <code>LOADIMAGE</code> and are handles assigned
-by SDL2. BazzBasic uses them only to point to the correct image resource
-— they never change during program execution.</p>
+<p>IDs returned by <code>LOADIMAGE</code> and are handles assigned by
+SDL2. BazzBasic uses them only to point to the correct image resource —
+they never change during program execution.</p>
 <p>Storing them in constants (<code>#</code> suffix) communicates this
 intent clearly:</p>
 <pre class="basic"><code>LET PISTOL# = LOADIMAGE(&quot;pistol.png&quot;)

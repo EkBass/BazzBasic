@@ -38,6 +38,12 @@ namespace BazzBasic.Gamepad;
  *   after init. With polling + update this is a non-issue: DS4 over Bluetooth shows up
  *   immediately on SDL 2.28.5 (verified with padprobe 16.10.2026).
  */
+
+/* DISCLAIMER:
+BazzBasic version 1.5 has been tested with only one PS4-compatible Bluetooth controller. Therefore, for the time being, I cannot guarantee that GamePad support will work with all different types of controllers.
+Got an Xbox, Switch Pro or Elite controller? Run gamepad_tester.bas from the v1.5 examples, press each button once, and post the header line plus anything that lit the wrong row (or didn’t light at all). Elite owners: which physical paddle lights (raw 16)…(raw 19)?
+*/
+
 public static class GamepadManager
 {
     public const int MaxPads = 8;
@@ -68,7 +74,7 @@ public static class GamepadManager
 
         try
         {
-            // Must be set before the joystick subsystem starts. Without it SDL drops
+            // Must be set before the joystick subsystem starts. Without it DSL drops
             // pad input whenever an SDL window exists but doesn't have focus.
             SDL.SDL_SetHint("SDL_JOYSTICK_ALLOW_BACKGROUND_EVENTS", "1");
             if (SDL.SDL_InitSubSystem(SDL.SDL_INIT_JOYSTICK | SDL.SDL_INIT_GAMECONTROLLER) != 0)
@@ -79,7 +85,7 @@ public static class GamepadManager
             SDL.SDL_JoystickEventState(SDL.SDL_IGNORE);
             SDL.SDL_GameControllerEventState(SDL.SDL_IGNORE);
         }
-        catch (Exception)   // SDL2.dll missing / wrong arch -> gamepads simply unavailable
+        catch (Exception)   // SDL2.dll missing wrong arch -> gamepads unavailable
         {
             _failed = true;
             return false;
@@ -151,9 +157,8 @@ public static class GamepadManager
         return _pads[pad];
     }
 
-    // ---------------------------------------------------------------- public API
 
-    /// <summary>Number of connected gamepads.</summary>
+    //Number of connected gamepads.
     public static int Count()
     {
         if (!EnsureInit()) return 0;
@@ -163,7 +168,7 @@ public static class GamepadManager
         return c;
     }
 
-    /// <summary>True while button is held. False if pad not connected.</summary>
+    // True while button is held. False if pad not connected.
     public static bool Button(int pad, int button)
     {
         IntPtr p = Get(pad);
@@ -171,7 +176,7 @@ public static class GamepadManager
         return SDL.SDL_GameControllerGetButton(p, button) != 0;
     }
 
-    /// <summary>Sticks -1.0 .. 1.0, triggers 0.0 .. 1.0, with dead zone. 0 if not connected.</summary>
+    // Sticks -1.0 .. 1.0, triggers 0.0 .. 1.0, with dead zone. 0 if not connected.
     public static double Axis(int pad, int axis)
     {
         IntPtr p = Get(pad);
@@ -185,7 +190,7 @@ public static class GamepadManager
         return Math.Sign(v) * (a - DeadZone) / (1.0 - DeadZone);
     }
 
-    /// <summary>Controller name, "" if not connected.</summary>
+    // Controller name, "" if not connected.
     public static string Name(int pad)
     {
         IntPtr p = Get(pad);
@@ -194,7 +199,7 @@ public static class GamepadManager
         return s == IntPtr.Zero ? "" : Marshal.PtrToStringUTF8(s) ?? "";
     }
 
-    /// <summary>Rumble both motors. strength 0..1, ms = duration. Silently ignored if unsupported.</summary>
+    // Rumble both motors. strength 0..1, ms = duration. Silently ignored if unsupported.
     public static void Rumble(int pad, double strength, int ms)
     {
         IntPtr p = Get(pad);

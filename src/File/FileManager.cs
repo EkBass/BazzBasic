@@ -113,9 +113,9 @@ public class FileManager(string rootPath)
             return false;
         }
     }
-    // List file names (no paths, no directories) in a folder, sorted alphabetically.
-    // pattern uses Windows wildcards (* and ?), default "*". Not recursive.
-    // Missing folder or any error returns an empty list.
+    // List file namesbut no paths/directories in folder, sorted alphabetically.
+    // pattern uses Windows wildcards (* and ?), default "*".
+    // Missing folder or any error returns an empty list
     public List<string> ListFiles(string path, string pattern = "*")
     {
         try
@@ -127,8 +127,6 @@ public class FileManager(string rootPath)
             if (string.IsNullOrEmpty(pattern))
                 pattern = "*";
 
-            // Simple matching: * and ? only, no legacy DOS quirks.
-            // Default options also skip hidden and system files (desktop.ini, thumbs.db...).
             var options = new EnumerationOptions
             {
                 MatchType = MatchType.Simple,

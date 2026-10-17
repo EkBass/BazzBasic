@@ -3,6 +3,29 @@ These changes are about the current source code. They take effect once a new bin
 
 Changes in version 1.4 and older are in [changes-archive.md](changes-archive.md).
 
+## 17th October 2026
+
+### New: IDE screenshot to clipboard
+
+New menu item **View → Take Screenshot to Clipboard**. It copies an image of the IDE window (only the IDE, not the whole desktop) to the clipboard, ready to paste with Ctrl+V into Discord, a forum post or an image editor. No file is saved.
+
+Tip for anyone asking for help: share the code itself as text (Ctrl+A, Ctrl+C, Ctrl+V) whenever you can. Text can be copied, run and fixed; a picture cannot. Use the screenshot when the layout or an error dialog is what matters.
+
+Implementation: `TakeScreenshot()` in `src/IDE/` captures `this.Bounds` with `Graphics.CopyFromScreen` and stores it with `Clipboard.SetImage`. Does not depend on the Windows Print Screen key setting.
+
+## 16th October 2026 (after the 1.5 release)
+
+### Bug fix: filled `LOADSHAPE` rectangles and triangles lost their fill when rotated
+
+`LOADSHAPE("RECTANGLE", ...)` was drawn filled only at exactly 0°. At any other angle set with `ROTATESHAPE`, only the outline was drawn. `LOADSHAPE("TRIANGLE", ...)` was never properly filled at any angle: it was drawn as an outline plus three lines from the centre to the corners. Both are now solid at every angle. `"CIRCLE"` and `LOADIMAGE` shapes were not affected.
+
+Typical symptom: a car drawn as a filled rectangle looks solid at the start and turns into a hollow outline as soon as it steers.
+
+- Rotated rectangles with odd width or height are no longer one pixel narrower than at 0°.
+- Programs that used `LOADIMAGE` sprites as a workaround keep working unchanged.
+
+Implementation: new scanline helper `FillConvexPolygon` in `src/Graphics/ShapeManager.cs`, used by `DrawRotatedRectangle` and `DrawRotatedTriangle`. It uses only `SDL_RenderDrawLine`, so no newer SDL2 version is needed. Test: `Examples/rotated_fill_test.bas`.
+
 ## 16th October 2026
 
 ### Fix: `LINE ... B` and `LINE ... BF` now include the second corner

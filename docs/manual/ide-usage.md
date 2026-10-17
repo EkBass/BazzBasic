@@ -36,6 +36,7 @@ Run `bazzbasic.exe` without any arguments to open the IDE.
 | Search | Ctrl+H | Replace | none |
 | View | none | Light Mode[4] | none |
 | View | none | Dark Mode (experimental)[4] | none |
+| View | none | Take Screenshot to Clipboard[5] | none |
 | Run | F5 | Run Program | bazzbasic.exe file.bas |
 | Run | none | Compile as Exe | bazzbasic.exe -exe file.bas |
 | Run | none | Compile as Library (.bb) | bazzbasic.exe -lib file.bas |
@@ -48,7 +49,8 @@ Run `bazzbasic.exe` without any arguments to open the IDE.
 **[1]** Opens the [online manual](https://ekbass.github.io/BazzBasic/manual/#/) in default browser.  
 **[2]** Opens [BazzBasic-Beginners-Guide/releases](https://github.com/EkBass/BazzBasic-Beginners-Guide/releases) in default browser.  
 **[3]** Opens the [BazzBasic category on Rosetta Code](https://rosettacode.org/wiki/Category:BazzBasic) in default browser.  
-**[4]** The choice is saved to `%AppData%\BazzBasic\ide.json` and restored when the IDE starts. Dark Mode is experimental: the Find/Replace dialog, message boxes and the empty area next to the editor tabs stay light.
+**[4]** The choice is saved to `%AppData%\BazzBasic\ide.json` and restored when the IDE starts. Dark Mode is experimental: the Find/Replace dialog, message boxes and the empty area next to the editor tabs stay light.  
+**[5]** Copies an image of the IDE window to the clipboard. Paste it with Ctrl+V. No file is saved. When asking for help, prefer sharing the code as text (Ctrl+A, Ctrl+C, Ctrl+V): others can then copy and run it.
 
 ## Running Programs
 

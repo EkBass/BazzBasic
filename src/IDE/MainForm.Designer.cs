@@ -47,6 +47,7 @@ partial class MainForm
     private ToolStripMenuItem viewMenu = null!;
     private ToolStripMenuItem lightModeMenuItem = null!;
     private ToolStripMenuItem darkModeMenuItem = null!;
+    private ToolStripMenuItem takeScreenshotItem = null;
 
     // Run
     private ToolStripMenuItem runMenu = null!;
@@ -153,10 +154,14 @@ partial class MainForm
         viewMenu = new ToolStripMenuItem("&View");
         lightModeMenuItem = new ToolStripMenuItem("&Light Mode", null, (s, e) => SetTheme(EditorTheme.Light));
         darkModeMenuItem = new ToolStripMenuItem("&Dark Mode (experimental)", null, (s, e) => SetTheme(EditorTheme.Dark));
+        takeScreenshotItem = new ToolStripMenuItem("&Take Screenshot to Clipboard", null, (s, e) => TakeScreenshot());
+        //If this screenshot thing does not work now, I will f... shoot someone
         viewMenu.DropDownItems.AddRange(new ToolStripItem[] {
-            lightModeMenuItem, darkModeMenuItem
+            lightModeMenuItem, darkModeMenuItem,
+            new ToolStripSeparator(),
+            takeScreenshotItem
         });
-        
+
         // Run Menu
         runMenu = new ToolStripMenuItem("&Run");
         runMenuItem = new ToolStripMenuItem("&Run Program", null, (s, e) => RunProgram(), Keys.F5);
@@ -311,5 +316,17 @@ partial class MainForm
             "About BazzBasic IDE",
             MessageBoxButtons.OK,
             MessageBoxIcon.Information);
+    }
+
+    // now work damn you piece of shit
+    private void TakeScreenshot()
+    {
+        var bounds = this.Bounds;
+        using var bmp = new Bitmap(bounds.Width, bounds.Height);
+        using (var g = System.Drawing.Graphics.FromImage(bmp))
+        {
+            g.CopyFromScreen(bounds.Location, Point.Empty, bounds.Size);
+        }
+        Clipboard.SetImage(bmp);
     }
 }

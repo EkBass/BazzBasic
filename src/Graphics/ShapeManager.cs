@@ -406,33 +406,59 @@ public static class ShapeManager
         double cos = Math.Cos(rad);
         double sin = Math.Sin(rad);
         
-        // corner points. 
-        int hw = w / 2;
-        int hh = h / 2;
+        // corner points (half sizes as double so odd sizes don't lose a pixel)
+        double hw = w / 2.0;
+        double hh = h / 2.0;
         
         var corners = new (int x, int y)[4];
-        corners[0] = (cx + (int)(-hw * cos - (-hh) * sin), cy + (int)(-hw * sin + (-hh) * cos)); // Top-left
-        corners[1] = (cx + (int)(hw * cos - (-hh) * sin), cy + (int)(hw * sin + (-hh) * cos));   // Top-right
-        corners[2] = (cx + (int)(hw * cos - hh * sin), cy + (int)(hw * sin + hh * cos));         // Bottom-right
-        corners[3] = (cx + (int)(-hw * cos - hh * sin), cy + (int)(-hw * sin + hh * cos));       // Bottom-left
+        corners[0] = (cx + (int)Math.Round(-hw * cos - (-hh) * sin), cy + (int)Math.Round(-hw * sin + (-hh) * cos)); // Top-left
+        corners[1] = (cx + (int)Math.Round(hw * cos - (-hh) * sin), cy + (int)Math.Round(hw * sin + (-hh) * cos));   // Top-right
+        corners[2] = (cx + (int)Math.Round(hw * cos - hh * sin), cy + (int)Math.Round(hw * sin + hh * cos));         // Bottom-right
+        corners[3] = (cx + (int)Math.Round(-hw * cos - hh * sin), cy + (int)Math.Round(-hw * sin + hh * cos));       // Bottom-left
         
         if (filled)
+            FillConvexPolygon(renderer, corners);
+
+        // outline (also covers edge pixels of the filled version)
+        for (int i = 0; i < 4; i++)
         {
-            // Fill with scanlines, very simplified
-            for (int i = 0; i < 4; i++)
-            {
-                int next = (i + 1) % 4;
-                _ = SDL.SDL_RenderDrawLine(renderer, corners[i].x, corners[i].y, corners[next].x, corners[next].y);
-            }
+            int next = (i + 1) % 4;
+            _ = SDL.SDL_RenderDrawLine(renderer, corners[i].x, corners[i].y, corners[next].x, corners[next].y);
         }
-        else
+    }
+
+    // Fills a convex polygon with horizontal spans, one per pixel row.
+    private static void FillConvexPolygon(IntPtr renderer, (int x, int y)[] pts)
+    {
+        int minY = int.MaxValue, maxY = int.MinValue;
+        foreach (var p in pts)
         {
-            // outline
-            for (int i = 0; i < 4; i++)
+            if (p.y < minY) minY = p.y;
+            if (p.y > maxY) maxY = p.y;
+        }
+
+        for (int y = minY; y <= maxY; y++)
+        {
+            double scanY = y + 0.5;                 // sample at pixel-row centres
+            double left = double.MaxValue, right = double.MinValue;
+
+            for (int i = 0; i < pts.Length; i++)
             {
-                int next = (i + 1) % 4;
-                _ = SDL.SDL_RenderDrawLine(renderer, corners[i].x, corners[i].y, corners[next].x, corners[next].y);
+                var a = pts[i];
+                var b = pts[(i + 1) % pts.Length];
+                if (a.y == b.y) continue;           // horizontal edge: outline covers it
+
+                double y0 = Math.Min(a.y, b.y), y1 = Math.Max(a.y, b.y);
+                if (scanY < y0 || scanY >= y1) continue;
+
+                double x = a.x + (scanY - a.y) / (b.y - a.y) * (b.x - a.x);
+                if (x < left) left = x;
+                if (x > right) right = x;
             }
+
+            if (left <= right)
+                _ = SDL.SDL_RenderDrawLine(renderer,
+                        (int)Math.Round(left), y, (int)Math.Round(right), y);
         }
     }
     
@@ -499,19 +525,12 @@ public static class ShapeManager
             rotated[i] = (cx + (int)rx, cy + (int)ry);
         }
         
-        // draw triangle
+        if (filled)
+            FillConvexPolygon(renderer, rotated);
+
+        // draw triangle outline
         _ = SDL.SDL_RenderDrawLine(renderer, rotated[0].x, rotated[0].y, rotated[1].x, rotated[1].y);
         _ = SDL.SDL_RenderDrawLine(renderer, rotated[1].x, rotated[1].y, rotated[2].x, rotated[2].y);
         _ = SDL.SDL_RenderDrawLine(renderer, rotated[2].x, rotated[2].y, rotated[0].x, rotated[0].y);
-        
-        if (filled)
-        {
-            // Simple fill, could be improved but Im tirred now
-            // For now just draw multiple lines from center
-            for (int i = 0; i < 3; i++)
-            {
-                _ = SDL.SDL_RenderDrawLine(renderer, cx, cy, rotated[i].x, rotated[i].y);
-            }
-        }
     }
 }
