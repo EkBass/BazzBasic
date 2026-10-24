@@ -41,7 +41,7 @@ a$ = 3
 PRINT a$ ' Output: 3
 ```
 
-## Unsigned data type
+## Untyped data type
 ```vb
 ' Variable stores either a number or a text.
 ' It is ok to change the type of data.

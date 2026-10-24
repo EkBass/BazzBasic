@@ -36,7 +36,8 @@ Key facts for writing BazzBasic code correctly:
 ## AI resources
 
 - [BazzBasic AI Guide](https://huggingface.co/datasets/EkBass/BazzBasic_AI_Guide): SKILL file written to help AI assistants write correct BazzBasic code
-- [BazzBasic dataset](https://huggingface.co/datasets/EkBass/BazzBasic): dataset with thousands of Q&A pairs about BazzBasic ready to used for fine tuning.
+- [BazzBasic dataset](https://huggingface.co/datasets/EkBass/BazzBasic): dataset with thousands of Q&A pairs about BazzBasic ready to be used for finetuning.
+
 ## Source and downloads
 
 - [GitHub repository](https://github.com/EkBass/BazzBasic): C# source (.NET 10), MIT license
@@ -52,3 +53,6 @@ Key facts for writing BazzBasic code correctly:
 - [Gallery](https://ekbass.github.io/BazzBasic/gallery.html): screenshots of BazzBasic programs
 - [Community](https://ekbass.github.io/BazzBasic/communities.html): forums and discussion places
 - [GitHub Discussions](https://github.com/EkBass/BazzBasic/discussions): questions and show & tell
+
+## Sitemap
+- [sitemap.xml](sitemap.xml)
