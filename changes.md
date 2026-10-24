@@ -5,6 +5,11 @@ They take effect once a new binary release is published.
 
 Changes for older versions are in [changes-archive.md](changes-archive.md).
 
+## 25th October 2026
+
+- BazzBasic-AI-guide.md renamed to SKILL.md (it is a valid Agent Skills file)
+- Manual page "AI assisted learning" (ai-assist.md) rewritten: explains what a SKILL is and how to use the guide
+
 ## 24th October 2026
 
 Some tweaks to homepage.

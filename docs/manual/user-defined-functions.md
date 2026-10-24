@@ -188,7 +188,7 @@ END DEF
 
 **In this example:**
 - The global `b$` has value 100
-- When calling `FN test(b$)`, the **value** 100 is passed to parameter `a$`
+- When calling `FN test$(b$)`, the **value** 100 is passed to parameter `a$`
 - Inside the function, a new **local** variable `b$` is created with value 2
 - The local `b$` is completely separate from the global `b$`
 - The function calculates `a$ * b$` = 100 × 2 = 200
@@ -269,7 +269,7 @@ Code below causes error: _Error: Line 1: 'ADD' is not a valid variable name (mus
 ' incorrect way
 PRINT FN ADD$(1, 2)
 
-DEF FN ADD($a$, b$)
+DEF FN ADD$($a$, b$)
 	RETURN a$ + b$
 END DEF
 ```
