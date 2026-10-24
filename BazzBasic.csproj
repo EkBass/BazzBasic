@@ -1,54 +1,42 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <!-- BazzBasic interpreter (console). The IDE is IDE\BazzBasic-IDE.csproj.
+       Shared metadata (version, company...) comes from Directory.Build.props. -->
   <PropertyGroup>
-    <Company>Kristian Virtanen</Company>
-    <Product>BazzBasic</Product>
-    <FileVersion>0.8.0.0</FileVersion>
-    <AssemblyVersion>0.8.0.0</AssemblyVersion>
-    <Copyright>MIT License</Copyright>
-
     <OutputType>Exe</OutputType>
+    <!-- -windows is needed for System.Drawing.Common (LOADIMAGE/LOADSHEET).
+         No UseWindowsForms: it would pull in the WindowsDesktop runtime (~40 MB). -->
     <TargetFramework>net10.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <UseWindowsForms>true</UseWindowsForms>
     <NoWarn>IDE0130;NU1510</NoWarn>
 
-    <!-- Assembly metadata -->
     <AssemblyName>BazzBasic</AssemblyName>
     <RootNamespace>BazzBasic</RootNamespace>
-
     <AssemblyTitle>BazzBasic</AssemblyTitle>
-    <AssemblyDescription>BASIC interpreter with integrated IDE</AssemblyDescription>
-    <Company>Kristian Virtanen</Company>
-    <Product>BazzBasic</Product>
-    <Authors>Kristian Virtanen</Authors>
-    <Version>0.8.0</Version>
-    <FileVersion>0.8.0.0</FileVersion>
-    <AssemblyVersion>0.8.0.0</AssemblyVersion>
-    <Copyright>
-      Copyright © 2026 Kristian Virtanen
-    </Copyright>
+    <Description>BazzBasic BASIC interpreter</Description>
 
-    <!-- Optional: icon + manifest -->
     <ApplicationIcon>icon.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-
-    <!-- Assembly info -->
-    <AssemblyName>BazzBasic</AssemblyName>
-    <RootNamespace>BazzBasic</RootNamespace>
-    <Version>0.8.0</Version>
-    <Authors>Kristian Virtanen</Authors>
-    <Description>BASIC interpreter with integrated IDE</Description>
-
-    <!-- Manifest & icon -->
-    <ApplicationManifest>app.manifest</ApplicationManifest>
-    <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
 
+  <!-- Trimming: ~72 MB -> ~15 MB. Compiled user programs are copies of this exe,
+       so they shrink too. Keep the build free of IL2xxx trim warnings
+       (e.g. JSON must not use reflection-based JsonSerializer). -->
+  <PropertyGroup Condition="'$(SelfContained)' == 'true'">
+    <PublishTrimmed>true</PublishTrimmed>
+  </PropertyGroup>
+
+  <!-- The IDE project lives in IDE\ and must not be compiled into the interpreter -->
   <ItemGroup>
-    <PackageReference Include="Scintilla5.NET" Version="5.6.0" />
+    <Compile Remove="IDE\**" />
+    <EmbeddedResource Remove="IDE\**" />
+    <None Remove="IDE\**" />
+    <Content Remove="IDE\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="System.Drawing.Common" Version="9.0.5" />
   </ItemGroup>
 

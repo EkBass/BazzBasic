@@ -1,0 +1,13 @@
+<Project>
+  <!-- Shared by BazzBasic.csproj (interpreter) and IDE\BazzBasic-IDE.csproj.
+       Display version shown to users is AppInfo.Version in src\Version.cs. -->
+  <PropertyGroup>
+    <Version>1.6.0</Version>
+    <FileVersion>1.6.0.0</FileVersion>
+    <AssemblyVersion>1.6.0.0</AssemblyVersion>
+    <Company>Kristian Virtanen</Company>
+    <Product>BazzBasic</Product>
+    <Authors>Kristian Virtanen</Authors>
+    <Copyright>Copyright © 2026 Kristian Virtanen</Copyright>
+  </PropertyGroup>
+</Project>

@@ -9,13 +9,14 @@ DEF FN limit$(c$)
 END DEF
 
 PRINT FN limit$(0)
-
+SLEEP 10000
 ' Output
 ' 0
 ' 1
 ' ...
 ' ...
 ' ...
-' 513
-' 514
-' Stack overflow.
+' 141883
+' 141884
+' 141885
+' Error at line 8: Recursion too deep in FN LIMIT$ - out of stack space

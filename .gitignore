@@ -36,5 +36,10 @@ desktop.ini
 # long-lived runtime folders
 runtimes/
 
-# TODO's and such
-RELEASE_CHECKLIST.md
+
+
+# Chats, TODO's and such
+*_bu
+.dev-docs
+Backup/
+kill_BU.bat

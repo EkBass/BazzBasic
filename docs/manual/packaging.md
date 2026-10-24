@@ -8,19 +8,28 @@ BazzBasic can package your BASIC program into a standalone .exe file.
 bazzbasic.exe -exe yourprogram.bas
 ```
 
-This creates *yourprogram.exe* in the same folder as the .bas file.
+This creates *yourprogram.exe* in the same folder as the .bas file. In the IDE, use **Run → Compile as Exe**.
 
+### Size
+
+The packaged exe is a copy of the BazzBasic interpreter with your program inside, so it is about **15 MB** regardless of how short your program is.
+
+> Before version 1.6 the interpreter and the IDE were the same program, and packaged programs were about 111 MB. Since 1.6 the IDE is a separate program and is not included in your packaged exe.
+
+### No .NET installation needed
+
+The packaged exe contains the .NET runtime it needs. The target machine does not need .NET installed.
 
 ### Required Files for Distribution
-
-The standalone exe needs only one additional file:
 
 | File | Required | Purpose |
 |------|----------|---------|
 | yourprogram.exe | Yes | Your packaged program |
 | SDL2.dll | Yes | Graphics and input |
-| SDL2_mixer.dll | Yes | Audio |
-| SDL2_mixer.dll
+| SDL2_mixer.dll | If sound is used | Audio |
+| SDL2_ttf.dll | If fonts are used | TrueType fonts |
+
+`BazzBasic-IDE.exe` and the `runtimes` folder are **not** needed: they belong to the IDE only.
 
 #### Your assets:
 
@@ -28,6 +37,7 @@ The standalone exe needs only one additional file:
 |------|----------|---------|
 | *.png, *.bmp | If used | Image files |
 | *.wav, *.mp3 | If used | Sound files |
+| *.ttf | If used | Font files |
 
 ### Minimal Distribution
 
@@ -57,46 +67,25 @@ mygame/
 
 **Binary download:**
 
-If you downloaded the binary file, __bazzbasic.exe__ the required SDL2.dll in the same folder.
+The SDL2 dll files are in the same folder as __bazzbasic.exe__.
 
 **If you build from the source:**
 
-After building BazzBasic, SDL2.dll is in:
+After running _build.bat_, they are in:
 
 ```
-BazzBasic\bin\Debug\net10.0-windows\
+BazzBasic\bin\Release\net10.0-windows\win-x64\publish\
 ```
 
-Or after publishing:
-
-```
-BazzBasic\bin\Release\net10.0-windows\publish\
-```
-
-Copy SDL2.dll alongside your packaged exe.
+Copy them alongside your packaged exe.
 
 ### Console Window
 
-The standalone exe runs with a console window visible. This is intentional for showing error messages.  
-A feature with what to hide console is coming on version 1.0
+The standalone exe runs with a console window visible. This is intentional for showing error messages.
 
 ### Notes
 
-- The packaged exe contains the full BazzBasic interpreter
+- The packaged exe contains the full BazzBasic interpreter, but not the IDE
 - File paths in your BASIC code are relative to the exe location
 - INCLUDE files are processed at packaging time (embedded in exe)
-
-### .NET Runtime Requirement
-
-The packaged exe inherits the same runtime requirements as the BazzBasic.exe used to create it:
-
-- **If using release build**: Target machine needs .NET 10 runtime
-- **If using self-contained publish**: No runtime needed (larger file size)
-
-To create a fully self-contained BazzBasic for packaging:
-
-```
-dotnet publish -c Release -r win-x64 --self-contained true
-```
-
-Then use that published BazzBasic.exe for packaging your programs.
+- After an error, the packaged exe exits with code 1

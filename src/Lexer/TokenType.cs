@@ -48,6 +48,7 @@ public enum TokenType
     TOK_TO                  = 20,
     TOK_WEND                = 21,
     TOK_WHILE               = 22,
+    TOK_EXIT                = 23,   // EXIT WHILE / EXIT FOR (1.6)
 
     // ========================================================================
     // I/O Keywords 51 - 100

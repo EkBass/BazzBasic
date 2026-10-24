@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- BazzBasic IDE. Separate from the interpreter (BazzBasic.exe), which it runs as a process.
+       Shared metadata (version, company...) comes from ..\Directory.Build.props. -->
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <NoWarn>IDE0130;NU1510</NoWarn>
+
+    <AssemblyName>BazzBasic-IDE</AssemblyName>
+    <RootNamespace>BazzBasic.IDE</RootNamespace>
+    <AssemblyTitle>BazzBasic IDE</AssemblyTitle>
+    <Description>Code editor for BazzBasic</Description>
+
+    <ApplicationIcon>..\icon.ico</ApplicationIcon>
+    <ApplicationManifest>..\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Scintilla5.NET" Version="5.6.0" />
+  </ItemGroup>
+
+  <!-- Shared with the interpreter as linked files, not a library project -->
+  <ItemGroup>
+    <Compile Include="..\src\Version.cs" Link="Shared\Version.cs" />
+    <Compile Include="..\src\UpdateChecker.cs" Link="Shared\UpdateChecker.cs" />
+  </ItemGroup>
+
+  <!-- Clean up publish: remove win-x86 natives, .pdb and the extra root copies of
+       Scintilla.dll/Lexilla.dll. The IDE loads them from runtimes\win-x64\native\
+       (tested 18.10.2026: root copies alone do NOT work, runtimes\ copies do).
+       KEEP runtimes\win-x64\native\ in the release package. -->
+  <Target Name="CleanPublishOutput" AfterTargets="Publish">
+    <RemoveDir Directories="$(PublishDir)runtimes\win-x86" Condition="Exists('$(PublishDir)runtimes\win-x86')" />
+    <Delete Files="$(PublishDir)BazzBasic-IDE.pdb" Condition="Exists('$(PublishDir)BazzBasic-IDE.pdb')" />
+    <Delete Files="$(PublishDir)Scintilla.dll;$(PublishDir)Lexilla.dll" />
+  </Target>
+
+</Project>

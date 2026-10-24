@@ -1,6 +1,6 @@
 ' ============================================
 ' Special variables
-' https://rosettacode.org/wiki/21_game
+' https://rosettacode.org/wiki/Special_variables
 ' BazzBasic: https://github.com/EkBass/BazzBasic
 ' ============================================
 
@@ -25,7 +25,7 @@ PRINT FALSE
 PRINT OFF   ' examples in VSYNC
 
 ' TRUE and ON are 1
-PRINT TRUE#
+PRINT TRUE
 PRINT ON    ' examples in VSYNC
 
 ' Returns version of BazzBasic in use

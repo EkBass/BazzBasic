@@ -28,6 +28,16 @@ public struct ForState
     public double EndValue;
     public double StepValue;
     public int LoopPosition;
+    public int IfDepth;      // _ifStack.Count when the FOR was entered (EXIT FOR cleanup)
+    public int WhileDepth;   // _whileStack.Count when the FOR was entered (EXIT FOR cleanup)
+}
+
+// WHILE state
+public struct WhileState
+{
+    public int Position;     // position of the WHILE token
+    public int IfDepth;      // _ifStack.Count when the WHILE was entered (EXIT WHILE cleanup)
+    public int ForDepth;     // _forStack.Count when the WHILE was entered (EXIT WHILE cleanup)
 }
 
 // User-defined functions
@@ -48,11 +58,12 @@ public partial class Interpreter
     private int _pos;
     private bool _running;
     private bool _hasError;
-    
+    public bool HasError => _hasError;
+
     // Stackss
     private readonly Stack<int> _gosubStack = new();
     private readonly Stack<ForState> _forStack = new();
-    private readonly Stack<int> _whileStack = new();
+    private readonly Stack<WhileState> _whileStack = new();
     private readonly Stack<bool> _ifStack = new();
     
     // User-defined functions
@@ -348,6 +359,9 @@ public partial class Interpreter
             case TokenType.TOK_WEND:
                 ExecuteWend();
                 break;
+            case TokenType.TOK_EXIT:
+                ExecuteExit();
+                break;
             case TokenType.TOK_DIM:
                 ExecuteDim();
                 break;
@@ -512,11 +526,27 @@ public partial class Interpreter
             case TokenType.TOK_NEWLINE:
                 _pos++;
                 break;
+            case TokenType.TOK_COLON:
+                // Statement separator: PRINT "a" : PRINT "b"
+                _pos++;
+                break;
             case TokenType.TOK_VARIABLE:
+            case TokenType.TOK_CONSTANT:
+                // Constants without LET are rejected inside ExecuteAssignment
                 ExecuteAssignment();
                 break;
+            case TokenType.TOK_FN:
+                Error("A function call is not a statement on its own - use its result, e.g. LET r$ = FN Name$(...)");
+                break;
+            case TokenType.TOK_SHELL:
+                // SHELL("cmd") as a statement, output discarded (documented usage).
+                // Before 1.6 this was skipped silently and the command never ran.
+                EvaluateShell();
+                break;
             default:
-                _pos++;
+                // Previously unknown tokens were skipped silently, so e.g. a stray
+                // "SIN(1)" or a typo did nothing without any error message.
+                Error($"Unexpected {DescribeToken(token)} - not a valid statement");
                 break;
         }
     }
@@ -546,6 +576,16 @@ public partial class Interpreter
                 break;
             
             string varName = varToken.StringValue ?? "";
+
+            // Constants are created only with LET and never changed afterwards
+            if (!isNewDeclaration && varToken.Type == TokenType.TOK_CONSTANT)
+            {
+                Error(_variables.IsConstant(varName)
+                    ? $"Cannot change constant {varName}"
+                    : $"Constants must be declared with LET: LET {varName} = ...");
+                return;
+            }
+
             _pos++;
             
             // Check array assignment, only for single variable case
@@ -567,8 +607,21 @@ public partial class Interpreter
                 if (t == TokenType.TOK_PLUS_ASSIGN || t == TokenType.TOK_MINUS_ASSIGN ||
                     t == TokenType.TOK_MULTIPLY_ASSIGN || t == TokenType.TOK_DIVIDE_ASSIGN)
                 {
+                    if (varName.EndsWith('#'))
+                    {
+                        Error($"Cannot change constant {varName}");
+                        return;
+                    }
                     _pos++; // skip operator
                     Value right = EvaluateExpression();
+                    if (_hasError) return;
+                    // Previously GetVariable threw past the interpreter here and killed
+                    // the program without a line number.
+                    if (!_variables.VariableExists(varName))
+                    {
+                        Error($"Undefined variable: {varName} (use LET for first assignment)");
+                        return;
+                    }
                     Value left = _variables.GetVariable(varName);
                     Value result = t switch
                     {
@@ -682,6 +735,14 @@ public partial class Interpreter
     
     private void AssignValueToVariable(string varName, Value value, bool isNewDeclaration)
     {
+        if (!isNewDeclaration && varName.EndsWith('#'))
+        {
+            Error(_variables.IsConstant(varName)
+                ? $"Cannot change constant {varName}"
+                : $"Constants must be declared with LET: LET {varName} = ...");
+            return;
+        }
+
         if (!isNewDeclaration && !varName.EndsWith('#') && !_variables.VariableExists(varName))
         {
             Error($"Undefined variable: {varName} (use LET for first assignment)");
@@ -727,7 +788,7 @@ public partial class Interpreter
         _pos++;
 
         var indices = new List<string>();
-        while (_pos < _tokens.Count && _tokens[_pos].Type != TokenType.TOK_RPAREN)
+        while (_pos < _tokens.Count && !_hasError && _tokens[_pos].Type != TokenType.TOK_RPAREN)
         {
             if (_tokens[_pos].Type == TokenType.TOK_COMMA)
             {
@@ -850,18 +911,64 @@ public partial class Interpreter
         
         if (string.IsNullOrEmpty(errorMsg))
         {
-            errorMsg = $"Expected {type}";
+            string found = _pos < _tokens.Count ? DescribeToken(_tokens[_pos]) : "end of file";
+            errorMsg = $"Expected '{TokenDisplayName(type)}' but found {found}";
         }
         Error(errorMsg);
     }
 
     private void Error(string message)
     {
+        // Report only the first error. Once the program has failed, any further
+        // errors are just follow-up noise from the same broken statement.
+        if (_hasError) return;
+
         int line = _pos < _tokens.Count ? _tokens[_pos].Line : 0;
         Console.WriteLine($"Error at line {line}: {message}");
         _running = false;
         _hasError = true;
     }
+
+    // Human-readable name of a token type for error messages: "(" instead of TOK_LPAREN,
+    // "PRINT" instead of TOK_PRINT.
+    private static string TokenDisplayName(TokenType type) => type switch
+    {
+        TokenType.TOK_COLON           => ":",
+        TokenType.TOK_COMMA           => ",",
+        TokenType.TOK_DIVIDE          => "/",
+        TokenType.TOK_EQUALS          => "=",
+        TokenType.TOK_GREATER         => ">",
+        TokenType.TOK_GREATER_EQ      => ">=",
+        TokenType.TOK_LESS            => "<",
+        TokenType.TOK_LESS_EQ         => "<=",
+        TokenType.TOK_LPAREN          => "(",
+        TokenType.TOK_MINUS           => "-",
+        TokenType.TOK_MODULO          => "%",
+        TokenType.TOK_MULTIPLY        => "*",
+        TokenType.TOK_NOT_EQUALS      => "<>",
+        TokenType.TOK_PLUS            => "+",
+        TokenType.TOK_RPAREN          => ")",
+        TokenType.TOK_SEMICOLON       => ";",
+        TokenType.TOK_PLUS_ASSIGN     => "+=",
+        TokenType.TOK_MINUS_ASSIGN    => "-=",
+        TokenType.TOK_MULTIPLY_ASSIGN => "*=",
+        TokenType.TOK_DIVIDE_ASSIGN   => "/=",
+        TokenType.TOK_NEWLINE         => "end of line",
+        TokenType.TOK_EOF             => "end of file",
+        _ => type.ToString().StartsWith("TOK_") ? type.ToString()[4..] : type.ToString()
+    };
+
+    // Describe an actual token found in the source, for "unexpected ..." messages.
+    private static string DescribeToken(Token token) => token.Type switch
+    {
+        TokenType.TOK_VARIABLE or TokenType.TOK_CONSTANT => $"'{token.StringValue}'",
+        TokenType.TOK_LABEL    => $"'[{token.StringValue}]'",
+        TokenType.TOK_NUMBER   => $"number {token.NumValue.ToString(System.Globalization.CultureInfo.InvariantCulture)}",
+        TokenType.TOK_STRING   => "a string",
+        TokenType.TOK_NEWLINE  => "end of line",
+        TokenType.TOK_EOF      => "end of file",
+        _ => $"'{TokenDisplayName(token.Type)}'"
+    };
 
     // ========================================================================
     // ARGS / ARGCOUNT â€” command-line arguments

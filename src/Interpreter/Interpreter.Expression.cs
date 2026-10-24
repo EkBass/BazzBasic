@@ -204,18 +204,21 @@ public partial class Interpreter
             case TokenType.TOK_CONSTANT:
                 return EvaluateVariableOrArray();
                 
+            // ON/OFF are the same values as TRUE/FALSE (SCREENLOCK ON reads better than TRUE)
             case TokenType.TOK_TRUE:
+            case TokenType.TOK_ON:
                 _pos++;
                 return Value.FromNumber(1);
                 
             case TokenType.TOK_FALSE:
+            case TokenType.TOK_OFF:
                 _pos++;
                 return Value.FromNumber(0);
                 
             case TokenType.TOK_LPAREN:
                 _pos++;
                 Value result = EvaluateExpression();
-                Expect(TokenType.TOK_RPAREN);
+                Require(TokenType.TOK_RPAREN, $"Missing ')' - found {(_pos < _tokens.Count ? DescribeToken(_tokens[_pos]) : "end of file")}");
                 return result;
 
             // Math functions
@@ -422,6 +425,9 @@ public partial class Interpreter
                 return EvaluateTicksFunc();
                 
             default:
+                // Not a value. Previously this silently returned 0 without advancing,
+                // which let loops such as PRINT spin forever on a typo.
+                Error($"Unexpected {DescribeToken(token)} in expression");
                 return Value.Zero;
         }
     }
@@ -458,7 +464,7 @@ public partial class Interpreter
             _pos++;
             
             var indices = new List<string>();
-            while (_pos < _tokens.Count && _tokens[_pos].Type != TokenType.TOK_RPAREN)
+            while (_pos < _tokens.Count && !_hasError && _tokens[_pos].Type != TokenType.TOK_RPAREN)
             {
                 if (_tokens[_pos].Type == TokenType.TOK_COMMA)
                 {

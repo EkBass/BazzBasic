@@ -30,6 +30,7 @@ public class Lexer(string source)
         ["ELSEIF"]      = TokenType.TOK_ELSEIF,
         ["END"]         = TokenType.TOK_END,
         ["ENDIF"]       = TokenType.TOK_ENDIF,
+        ["EXIT"]        = TokenType.TOK_EXIT,
         ["FN"]          = TokenType.TOK_FN,
         ["FOR"]         = TokenType.TOK_FOR,
         ["GOSUB"]       = TokenType.TOK_GOSUB,

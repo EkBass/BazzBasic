@@ -14,6 +14,7 @@ Variables must end with `$`, constants with `#` — they cannot share names with
 | `ELSEIF` | Chained condition in IF block |
 | `END` | Terminate program; also `END IF`, `END DEF` |
 | `ENDIF` | Close IF block (alias for `END IF`) |
+| `EXIT` | Leave a loop early: `EXIT WHILE`, `EXIT FOR` |
 | `FN` | Call user-defined function (`FN name$(...)`) |
 | `FOR` | Begin counted loop |
 | `GOSUB` | Call subroutine at label |
@@ -43,6 +44,7 @@ Variables must end with `$`, constants with `#` — they cannot share names with
 | `CURPOS` | Read cursor row or col: `CURPOS("row")` / `CURPOS("col")` |
 | `GETCONSOLE` | Read character or color from console position |
 | `INPUT` | Read user input |
+| `ISSET` | TRUE if a variable or constant exists (`ISSET(name$)`); array elements are always FALSE |
 | `LINE INPUT` | Read full line including spaces |
 | `LOCATE` | Move text cursor |
 | `SLEEP` | Pause execution (milliseconds) |
@@ -52,6 +54,8 @@ Variables must end with `$`, constants with `#` — they cannot share names with
 ## Graphics
 | Keyword | Description |
 |---------|-------------|
+| `B` | Draw box outline instead of line (`LINE (x1,y1)-(x2,y2), color, B`) |
+| `BF` | Draw filled box instead of line (`LINE (x1,y1)-(x2,y2), color, BF`) |
 | `CIRCLE` | Draw circle or filled circle |
 | `DRAWSHAPE` | Render a shape/image to screen |
 | `DRAWSTRING` | Render a text to screen |
@@ -95,6 +99,7 @@ Variables must end with `$`, constants with `#` — they cannot share names with
 | `FILEAPPEND` | Append string to file |
 | `FILEDELETE` | Delete a file |
 | `FILEEXISTS` | Returns 1 if file exists |
+| `FILELIST` | Fill array with file names in a folder, return count: `FILELIST(arr$, path$ [, pattern$])`; `*`/`?` wildcards |
 | `FILEREAD` | Read file as string or key=value array |
 | `FILEWRITE` | Write string or array to file |
 | `SHELL` | Run system command, returns output |
@@ -108,11 +113,15 @@ Variables must end with `$`, constants with `#` — they cannot share names with
 | `ASJSON` | Convert array to JSON string |
 | `BASE64DECODE` | Decode Base64 string |
 | `BASE64ENCODE` | Encode string to Base64 |
+| `GETREQUEST` | Wait for an HTTP request (blocks); returns POST/PUT/PATCH body or GET query string without `?`; `""` on timeout |
 | `HTTPGET` | HTTP GET request |
 | `HTTPPOST` | HTTP POST request |
 | `LOADJSON` | Load JSON file into array |
 | `SAVEJSON` | Save array as JSON file |
+| `SENDRESPONSE` | Send text response to the pending request (200 OK, CORS enabled) |
 | `SHA256` | SHA256 hash (64-char hex) |
+| `STARTLISTEN` | Start local HTTP server bound to 127.0.0.1: `STARTLISTEN port [, timeout_ms]` |
+| `STOPLISTEN` | Stop the local HTTP server (silent no-op if none active) |
 
 ---
 
@@ -121,6 +130,7 @@ Variables must end with `$`, constants with `#` — they cannot share names with
 |---------|-------------|
 | `ABS` | Absolute value |
 | `ATAN` | Arc tangent |
+| `ATAN2` | Arc tangent of y/x: `ATAN2(y, x)` |
 | `BETWEEN` | TRUE if value is within range |
 | `CEIL` | Round up |
 | `CINT` | Round to nearest integer |
@@ -136,6 +146,7 @@ Variables must end with `$`, constants with `#` — they cannot share names with
 | `FASTTRIG` | Enable/disable fast trig lookup tables |
 | `FLOOR` | Round down |
 | `HPI` | π/2 (90°) |
+| `INBETWEEN` | TRUE only if strictly between bounds; unlike `BETWEEN`, equal to a bound is FALSE |
 | `INT` | Truncate toward zero |
 | `LERP` | Linear interpolation |
 | `LOG` | Natural logarithm |
@@ -161,6 +172,7 @@ Variables must end with `$`, constants with `#` — they cannot share names with
 |---------|-------------|
 | `ASC` | Character to ASCII code |
 | `CHR` | ASCII code to character |
+| `FSTRING` | Format a template; `{{-name-}}` placeholders are replaced with variable/constant values |
 | `INSTR` | Find substring position |
 | `INVERT` | Reverse string |
 | `LCASE` | Convert to lowercase |
@@ -187,17 +199,35 @@ Variables must end with `$`, constants with `#` — they cannot share names with
 | `INKEY` | Non-blocking key check |
 | `KEYDOWN` | TRUE if key is held (graphics mode only) |
 | `MOUSEMIDDLE` | 1 if middle button pressed (graphics mode) |
+| `MOUSEHIDE` | Hide mouse cursor (graphics mode) |
 | `MOUSELEFT` | 1 if left button pressed (graphics mode) |
 | `MOUSERIGHT` | 1 if right button pressed (graphics mode) |
+| `MOUSESHOW` | Show mouse cursor (graphics mode) |
 | `MOUSEX` | Mouse cursor X position (graphics mode) |
 | `MOUSEY` | Mouse cursor Y position (graphics mode) |
 | `WAITKEY` | Block until key pressed |
 
 ---
 
+## Gamepad
+
+Works in console and graphics mode. A pad that is not connected reads as
+"nothing pressed" (FALSE / 0 / `""`) — no error is raised, so games need no guard code.
+
+| Keyword | Description |
+|---------|-------------|
+| `GAMEPADS` | Number of connected pads (`GAMEPADS()`) |
+| `PADAXIS` | Axis value: sticks -1..1, triggers 0..1 (`PADAXIS(pad, PAD_LX#)`) |
+| `PADBUTTON` | 1 if button is pressed (`PADBUTTON(pad, PAD_A#)`) |
+| `PADNAME` | Controller name or `""` (`PADNAME(pad)`) |
+| `PADRUMBLE` | Rumble the pad: `PADRUMBLE pad, strength, ms` (parentheses optional) |
+
+---
+
 ## Arrays
 | Keyword | Description |
 |---------|-------------|
+| `ARRKEY` | Key at 0-based index in insertion order: `ARRKEY(arr$(), i)`; pairs with `LEN(arr$())` for loops |
 | `DELARRAY` | Remove entire array |
 | `DELKEY` | Remove one array element |
 | `HASKEY` | 1 if array element exists |
@@ -252,3 +282,27 @@ These are auto-initialized at startup — no `LET` required.
 `KEY_NUMPAD0#` … `KEY_NUMPAD9#` `KEY_NUMPAD_PLUS#` `KEY_NUMPAD_MINUS#` `KEY_NUMPAD_MUL#` `KEY_NUMPAD_DIV#` `KEY_NUMPAD_DOT#`  
 `KEY_LSHIFT#` `KEY_RSHIFT#` `KEY_LCTRL#` `KEY_RCTRL#` `KEY_LALT#` `KEY_RALT#` `KEY_LWIN#` `KEY_RWIN#`  
 `KEY_COMMA#` `KEY_DOT#` `KEY_MINUS#` `KEY_EQUALS#` `KEY_SLASH#` `KEY_BACKSLASH#` `KEY_GRAVE#` `KEY_LBRACKET#` `KEY_RBRACKET#` `KEY_SEP#`
+
+### Gamepad constants
+
+Buttons (use with `PADBUTTON(pad, PAD_A#)`):  
+`PAD_A#` `PAD_B#` `PAD_X#` `PAD_Y#` `PAD_BACK#` `PAD_GUIDE#` `PAD_START#`  
+`PAD_LSTICK#` `PAD_RSTICK#` `PAD_LB#` `PAD_RB#` `PAD_UP#` `PAD_DOWN#` `PAD_LEFT#` `PAD_RIGHT#` `PAD_MISC#` `PAD_TOUCHPAD#`  
+
+Axes (use with `PADAXIS(pad, PAD_LX#)`):  
+`PAD_LX#` `PAD_LY#` `PAD_RX#` `PAD_RY#` `PAD_LT#` `PAD_RT#`
+
+Button labels follow the Xbox layout; on PlayStation: A=Cross, B=Circle, X=Square, Y=Triangle.
+
+---
+
+## Command Line
+
+Switches for `BazzBasic.exe` itself — not language keywords.
+
+| Switch | Description |
+|--------|-------------|
+| `-exe` | Compile a program to a standalone .exe: `BazzBasic.exe -exe program.bas` |
+| `-lib` | Compile a library to .bb: `BazzBasic.exe -lib library.bas` |
+| `-v` | Show version |
+| `-version` | Show version (alias of `-v`) |

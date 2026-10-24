@@ -34,12 +34,13 @@ public partial class Interpreter
         
         StringBuilder output = new();
         
-        while (_pos < _tokens.Count)
+        while (_pos < _tokens.Count && !_hasError)
         {
             Token token = _tokens[_pos];
             
+            // ELSE ends the PRINT list in a one-line IF: IF x THEN PRINT "a" ELSE PRINT "b"
             if (token.Type == TokenType.TOK_NEWLINE || token.Type == TokenType.TOK_EOF ||
-                token.Type == TokenType.TOK_COLON)
+                token.Type == TokenType.TOK_COLON || token.Type == TokenType.TOK_ELSE)
                 break;
             
             if (token.Type == TokenType.TOK_COMMA)
@@ -61,6 +62,9 @@ public partial class Interpreter
             output.Append(value.AsString());
             endsWithSemicolon = false;
         }
+
+        // An error inside the PRINT list: print nothing (no half-evaluated output)
+        if (_hasError) return;
         
         if (Graphics.Graphics.IsInitialized)
         {

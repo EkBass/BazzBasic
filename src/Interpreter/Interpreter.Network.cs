@@ -164,15 +164,19 @@ public partial class Interpreter
         }
 
         var root = BuildJsonTree(elements);
-        return Value.FromString(System.Text.Json.JsonSerializer.Serialize(root,
-            new System.Text.Json.JsonSerializerOptions { WriteIndented = false }));
+        return Value.FromString(root.ToJsonString());
     }
 
     // Build nested object/array tree from flat comma-key dictionary
     // (IDictionary so it accepts both the OrderedDictionary array backing store
     // and the plain Dictionary used internally for recursive sub-objects)
-    private static object BuildJsonTree(IDictionary<string, Value> elements)
+    // Builds a JsonNode tree (not Dictionary/List) so serialization needs no
+    // reflection and works with PublishTrimmed.
+    private static System.Text.Json.Nodes.JsonNode BuildJsonTree(IDictionary<string, Value> elements)
     {
+        if (elements.Count == 0)
+            return new System.Text.Json.Nodes.JsonObject();
+
         // Collect all top-level keys
         var top = new Dictionary<string, List<(string rest, Value val)>>(StringComparer.OrdinalIgnoreCase);
 
@@ -190,33 +194,34 @@ public partial class Interpreter
 
         if (isArray)
         {
-            var list = new List<object?>();
+            var list = new System.Text.Json.Nodes.JsonArray();
             int max = top.Keys.Select(k => int.Parse(k)).Max();
             for (int i = 0; i <= max; i++)
             {
                 string idx = i.ToString();
-                if (!top.ContainsKey(idx)) { list.Add(null); continue; }
-                list.Add(ResolveNode(top[idx]));
+                System.Text.Json.Nodes.JsonNode? node = top.ContainsKey(idx) ? ResolveNode(top[idx]) : null;
+                list.Add(node);
             }
             return list;
         }
         else
         {
-            var dict = new Dictionary<string, object?>();
+            var dict = new System.Text.Json.Nodes.JsonObject();
             foreach (var kv in top)
                 dict[kv.Key] = ResolveNode(kv.Value);
             return dict;
         }
     }
 
-    private static object? ResolveNode(List<(string rest, Value val)> entries)
+    private static System.Text.Json.Nodes.JsonNode? ResolveNode(List<(string rest, Value val)> entries)
     {
         // Leaf node — single entry with no further path
         if (entries.Count == 1 && entries[0].rest == "")
         {
             Value v = entries[0].val;
-            if (v.Type == BazzBasic.Parser.BazzValueType.Number) return v.NumValue;
-            return v.AsString();
+            if (v.Type == BazzBasic.Parser.BazzValueType.Number)
+                return System.Text.Json.Nodes.JsonValue.Create(v.NumValue);
+            return System.Text.Json.Nodes.JsonValue.Create(v.AsString());
         }
 
         // Recurse: rebuild sub-dictionary
@@ -344,7 +349,7 @@ public partial class Interpreter
         try
         {
             var root = BuildJsonTree(elements);
-            string json = System.Text.Json.JsonSerializer.Serialize(root,
+            string json = root.ToJsonString(
                 new System.Text.Json.JsonSerializerOptions { WriteIndented = true });
             System.IO.File.WriteAllText(_fileManager.ResolvePath(path), json);
         }

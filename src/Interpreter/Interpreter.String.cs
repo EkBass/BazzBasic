@@ -69,7 +69,7 @@ public partial class Interpreter
 
         // Collect all parameters into a list first
         var parms = new List<Value>();
-        while (_pos < _tokens.Count && _tokens[_pos].Type != TokenType.TOK_RPAREN)
+        while (_pos < _tokens.Count && !_hasError && _tokens[_pos].Type != TokenType.TOK_RPAREN)
         {
             if (_tokens[_pos].Type == TokenType.TOK_COMMA) { _pos++; continue; }
             parms.Add(EvaluateExpression());

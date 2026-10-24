@@ -18,6 +18,9 @@
 ' Returns an index in the range 0 .. size$-1.
 ' Adding size$ before MOD keeps the left operand non-negative,
 ' so -1 wraps cleanly to size$-1.
+
+
+
 ' --------------------------------------------
 DEF FN WrapIndex$(i$, size$)
     RETURN MOD(i$ + size$, size$)

@@ -43,23 +43,53 @@ public static class UpdateChecker
                 return "Could not parse release version from GitHub.";
 
             string latestTag = finalUrl[(idx + tagPrefix.Length)..].Trim().TrimEnd('/');
-            // Tags may be "v1.2b", "BazzBasic_1.2b" etc. — strip known prefixes
-            string latestVersion = latestTag
-                .TrimStart('v')
-                .Replace("BazzBasic_", "")
-                .Replace("bazzbasic_", "")
-                .Trim();
+            string download = $"Download: {ReleasesLatestUrl}";
 
-            if (string.Equals(latestVersion, AppInfo.Version, StringComparison.OrdinalIgnoreCase))
+            var latest = ParseVersion(latestTag);
+            var current = ParseVersion(AppInfo.Version);
+
+            // Unparseable tag: fall back to plain text comparison
+            if (latest == null || current == null)
+            {
+                string latestText = latestTag.TrimStart('v').Replace("BazzBasic_", "", StringComparison.OrdinalIgnoreCase).Trim();
+                return string.Equals(latestText, AppInfo.Version, StringComparison.OrdinalIgnoreCase)
+                    ? $"You are running the latest version ({AppInfo.Version})."
+                    : $"Latest release is {latestText} (you have {AppInfo.Version})\n{download}";
+            }
+
+            int cmp = CompareVersions(latest.Value, current.Value);
+            string latestStr = FormatVersion(latest.Value);
+
+            if (cmp > 0)
+                return $"New version available: {latestStr} (you have {AppInfo.Version})\n{download}";
+            if (cmp == 0)
                 return $"You are running the latest version ({AppInfo.Version}).";
-
-            // DEbUG: remove after confirming correct behavior
-            return $"New version available: {latestVersion} (you have {AppInfo.Version})\n" +
-                   $"Download: https://github.com/EkBass/BazzBasic/releases/latest";
+            return $"You are running {AppInfo.Version}, which is newer than the latest release ({latestStr}).";
         }
         catch (Exception ex)
         {
             return $"Update check failed: {ex.Message}";
         }
     }
+
+    // Parses "1.5b", "v1.2b", "BazzBasic_1.3b" and dotless tags like "BazzBasic_15" / "BazzBasic_14c"
+    // (release tags since 1.4 have no dot: BazzBasic_15 = 1.5).
+    // Dots are optional: first digit = major, remaining digits = minor,
+    // trailing letters = interim release ("" < "b" < "c"). Returns null if no version found.
+    internal static (int Major, int Minor, string Suffix)? ParseVersion(string s)
+    {
+        var m = System.Text.RegularExpressions.Regex.Match(s ?? "", @"(\d)\.?(\d+)([a-z]*)\s*$",
+            System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+        if (!m.Success) return null;
+        return (int.Parse(m.Groups[1].Value), int.Parse(m.Groups[2].Value), m.Groups[3].Value.ToLowerInvariant());
+    }
+
+    private static int CompareVersions((int Major, int Minor, string Suffix) a, (int Major, int Minor, string Suffix) b)
+    {
+        if (a.Major != b.Major) return a.Major.CompareTo(b.Major);
+        if (a.Minor != b.Minor) return a.Minor.CompareTo(b.Minor);
+        return string.CompareOrdinal(a.Suffix, b.Suffix);
+    }
+
+    private static string FormatVersion((int Major, int Minor, string Suffix) v) => $"{v.Major}.{v.Minor}{v.Suffix}";
 }

@@ -80,6 +80,15 @@ FOR row$ = 1 TO 3
 NEXT
 ```
 
+### Leaving a FOR Early: EXIT FOR
+`EXIT FOR` stops the innermost FOR loop and continues after its `NEXT`. The loop variable keeps the value it had when the loop was left.
+```vb
+FOR i$ = 1 TO 100
+    IF i$ * i$ > 50 THEN EXIT FOR
+NEXT
+PRINT "First square over 50: "; i$   ' 8
+```
+
 ## WHILE Loops
 Repeat while condition is true:
 ```vb
@@ -90,17 +99,24 @@ WHILE count$ < 5
 WEND
 ```
 
-### Infinite Loop with Exit Condition
+### Infinite Loop with Exit Condition: EXIT WHILE
+`EXIT WHILE` stops the innermost WHILE loop and continues after its `WEND`.
 ```vb
 WHILE 1
     LET key$ = INKEY
-    IF key$ = KEY_ESC# THEN GOTO [exit]
+    IF key$ = KEY_ESC# THEN EXIT WHILE
     ' Game logic here
 WEND
 
-[exit]
 PRINT "Goodbye"
 ```
+
+### Notes on EXIT WHILE and EXIT FOR
+- They work anywhere inside the loop: in a one-line IF, inside an IF...END IF block, or inside an inner loop of the other kind. `EXIT WHILE` inside a FOR that sits in a WHILE leaves both loops.
+- Only the innermost loop of the named kind is left. To leave several nested loops at once, use a flag variable.
+- Inside `DEF FN`, EXIT can only leave loops that are inside the function.
+- `EXIT` without a loop of that kind is an error: `EXIT WHILE without WHILE`.
+- Prefer EXIT over `GOTO` out of a loop. A GOTO leaves the loop's bookkeeping behind; doing it repeatedly (for example once per frame) slowly fills up memory and can confuse later `NEXT` statements.
 
 ## Labels and GOTO
 Labels are marked with square brackets:

@@ -2,18 +2,19 @@
 <root>
 	<metadata>
 		<description>list of all reserved keywords</description>
-		<bazzbasic-version>1.5</bazzbasic-version>
-		<date>16.10.2026</date>
+		<bazzbasic-version>1.6</bazzbasic-version>
+		<date>24.10.2026</date>
 		<author>krisu.virtanen@gmail.com</author>
 	</metadata>
 	<cli>
 		-exe, -lib, -v, -version
 	</cli>
 	<control-flow>
-		def, dim, else, elseif, end, endif, fn, for, gosub, goto, if, include, let, next, rem, return, step, then, to, wend, while
+		def, dim, else, elseif, end, endif, exit, fn, for, gosub, goto, if, include, let, next, rem, return, step, then, to, wend, while
 	</control-flow>
 	<io>
-		cls, color, curpos, getconsole, input, locate, sleep, print, inkey, keydown, waitkey
+		<!-- "line input" is a two-word statement (reads a full line including spaces). "input" (console input) and "line" (graphics draw) are also used independently of it. -->
+		cls, color, curpos, getconsole, input, line input, locate, sleep, print, inkey, keydown, waitkey
 	</io>
 	<graphics>
 		b, bf, circle, drawshape, hideshape, line, loadimage, loadshape, moveshape, paint, point, pset, rgb, removeshape, rotateshape, scaleshape, screen, screenlock, showshape, vsync, fullscreen, loadsheet, loadfont, drawstring

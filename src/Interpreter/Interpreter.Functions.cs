@@ -129,7 +129,7 @@ public partial class Interpreter
         var args = new List<Value>();
         if (Expect(TokenType.TOK_LPAREN))
         {
-            while (_pos < _tokens.Count && _tokens[_pos].Type != TokenType.TOK_RPAREN)
+            while (_pos < _tokens.Count && !_hasError && _tokens[_pos].Type != TokenType.TOK_RPAREN)
             {
                 if (_tokens[_pos].Type == TokenType.TOK_COMMA)
                 {
@@ -152,6 +152,15 @@ public partial class Interpreter
         if (!_functions.TryGetValue(funcName, out UserFunction func))
         {
             Error($"Function not found: {funcName}");
+            return Value.Zero;
+        }
+
+        // Each BASIC call nests several C# frames. Stop with a BASIC error while there
+        // is still stack left, instead of letting .NET kill the process with an
+        // uncatchable StackOverflowException.
+        if (!System.Runtime.CompilerServices.RuntimeHelpers.TryEnsureSufficientExecutionStack())
+        {
+            Error($"Recursion too deep in FN {funcName} - out of stack space");
             return Value.Zero;
         }
         

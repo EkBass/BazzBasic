@@ -3,7 +3,7 @@
  Url: https://github.com/EkBass/BazzBasic
  
  File: Program.cs
- BazzBasic - BASIC Interpreter with integrated IDE
+ BazzBasic - BASIC Interpreter (console). The IDE is a separate exe: BazzBasic-IDE.exe
 
  Copyright (c):
 	- 2025 - 2026
@@ -18,17 +18,20 @@ using System.Text;
 using BazzBasic.Lexer;
 using BazzBasic.Interpreter;
 using BazzBasic.Preprocessor;
-using BazzBasic.IDE;
 
-// Win32 API for console management
+// Win32 API: number of processes attached to this console.
+// 1 = only us, i.e. started by double-click and the window closes when we exit.
 [DllImport("kernel32.dll")]
-static extern bool FreeConsole();
+static extern uint GetConsoleProcessList(uint[] processList, uint processCount);
+
+// IDE exe that "BazzBasic.exe" without arguments starts (must match IDE AssemblyName)
+const string IDE_EXE_NAME = "BazzBasic-IDE.exe";
 
 // Nahimic audio middleware on this system breaks WASAPI device enumeration.
 // DirectSound bypasses it reliably.
 Environment.SetEnvironmentVariable("SDL_AUDIODRIVER", "directsound");
 
-// Unicode console I/O. Wrapped: there may be no console (IDE mode, FreeConsole).
+// Unicode console I/O. Wrapped: there may be no console (e.g. output redirected oddly).
 try { Console.OutputEncoding = Encoding.UTF8; } catch { }
 try { Console.InputEncoding  = Encoding.UTF8; } catch { }
 
@@ -44,7 +47,8 @@ if (embeddedCode != null)
     {
         string exePath = Environment.ProcessPath ?? "";
         string basePath = Path.GetDirectoryName(exePath) ?? Directory.GetCurrentDirectory();
-        RunProgram(embeddedCode, basePath, null);
+        if (!RunProgram(embeddedCode, basePath, null))
+            return 1;
     }
     catch (Exception ex)
     {
@@ -85,35 +89,50 @@ if (args.Length == 1 && (args[0].ToLower() == "-guide" || args[0].ToLower() == "
 }
 
 // Check for -checkupdate
-if (args.Length == 1 && args[0].ToLower() == "-checkupdate")
+// (-checkupdates accepted too: older manual pages used that spelling)
+if (args.Length == 1 && (args[0].ToLower() == "-checkupdate" || args[0].ToLower() == "-checkupdates"))
 {
     string result = await BazzBasic.UpdateChecker.CheckAsync();
     Console.WriteLine(result);
     return 0;
 }
 
-// Normal operation: IDE or interpreter
+// Normal operation: no arguments -> start the IDE next to us, otherwise run a file
 if (args.Length == 0)
 {
-    // No arguments - launch IDE on STA thread
-    FreeConsole();
-    
-    var thread = new Thread(() =>
+    // Backward compatibility: double-clicking BazzBasic.exe used to open the IDE
+    string exeDir = Path.GetDirectoryName(Environment.ProcessPath ?? "") ?? "";
+    string idePath = Path.Combine(exeDir, IDE_EXE_NAME);
+    if (File.Exists(idePath))
     {
         try
         {
-            ApplicationConfiguration.Initialize();
-            Application.Run(new MainForm());
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+            {
+                FileName = idePath,
+                WorkingDirectory = exeDir,
+                UseShellExecute = true
+            });
+            return 0;
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"IDE Error: {ex.Message}\n\n{ex.StackTrace}", "BazzBasic Error", 
-                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            Console.WriteLine($"Error: could not start {IDE_EXE_NAME}: {ex.Message}");
         }
-    });
-    thread.SetApartmentState(ApartmentState.STA);
-    thread.Start();
-    thread.Join();
+    }
+
+    PrintUsage();
+
+    // Started by double-click: keep the window open so the text can be read
+    bool ownConsole = false;
+    try { ownConsole = GetConsoleProcessList(new uint[2], 2) == 1; } catch { }
+    if (ownConsole)
+    {
+        Console.WriteLine();
+        Console.Write("Press any key to close...");
+        try { Console.ReadKey(true); } catch { }
+    }
+    return 0;
 }
 else
 {
@@ -131,7 +150,8 @@ else
     {
         string source = File.ReadAllText(filename);
         string basePath = Path.GetDirectoryName(Path.GetFullPath(filename)) ?? Directory.GetCurrentDirectory();
-        RunProgram(source, basePath, filename, userArgs);
+        if (!RunProgram(source, basePath, filename, userArgs))
+            return 1;
     }
     catch (Exception ex)
     {
@@ -146,14 +166,57 @@ return 0;
 // Helper functions
 // ============================================================================
 
-static void RunProgram(string source, string basePath = "", string? filename = null, string[]? userArgs = null)
+static void PrintUsage()
+{
+    Console.WriteLine($"{BazzBasic.AppInfo.Name} {BazzBasic.AppInfo.Version} - {BazzBasic.AppInfo.Url}");
+    Console.WriteLine();
+    Console.WriteLine("Usage:");
+    Console.WriteLine("  BazzBasic.exe program.bas [args...]   Run a program");
+    Console.WriteLine("  BazzBasic.exe -exe program.bas        Compile to a standalone .exe");
+    Console.WriteLine("  BazzBasic.exe -lib library.bas        Compile a library to .bb");
+    Console.WriteLine("  BazzBasic.exe -v | -version           Show version");
+    Console.WriteLine("  BazzBasic.exe -checkupdate            Check for a newer version");
+    Console.WriteLine("  BazzBasic.exe -guide | -help          Beginner's guide link");
+    Console.WriteLine();
+    Console.WriteLine($"The editor is {IDE_EXE_NAME} (not found next to BazzBasic.exe).");
+}
+
+// Runs the program on its own thread with a large stack.
+// DEF FN calls recurse on the C# call stack (~13 frames per BASIC call), so the default
+// 1 MB main-thread stack crashed the whole process with "Stack overflow" at only
+// ~500-700 levels of BASIC recursion. 256 MB is reserved virtually and committed only
+// as it is used. CallUserFunction also checks the remaining stack and reports a clean
+// BASIC error before it runs out.
+static bool RunProgram(string source, string basePath = "", string? filename = null, string[]? userArgs = null)
+{
+    const int INTERPRETER_STACK_SIZE = 256 * 1024 * 1024;
+    bool ok = false;
+    Exception? failure = null;
+
+    var thread = new System.Threading.Thread(() =>
+    {
+        try { ok = RunProgramCore(source, basePath, filename, userArgs); }
+        catch (Exception ex) { failure = ex; }
+    }, INTERPRETER_STACK_SIZE);
+
+    thread.Start();
+    thread.Join();
+
+    // Re-throw on the caller's thread so the existing "Error: ..." handlers still apply
+    if (failure != null)
+        System.Runtime.ExceptionServices.ExceptionDispatchInfo.Capture(failure).Throw();
+
+    return ok;
+}
+
+static bool RunProgramCore(string source, string basePath, string? filename, string[]? userArgs)
 {
     try
     {
         // Preprocess - handle INCLUDE directives for .bas files
         var preprocessor = new Preprocessor(basePath);
         string processedSource = preprocessor.Process(source, filename);
-        
+
         // Tokenize
         var lexer = new Lexer(processedSource);
         var tokens = lexer.Tokenize();
@@ -162,10 +225,11 @@ static void RunProgram(string source, string basePath = "", string? filename = n
         // .bb are tokenized libraries, so this step adds their tokens into the main token list
         var libraryLoader = new LibraryLoader(basePath);
         tokens = libraryLoader.ProcessLibraries(tokens);
-        
+
         // Run
         var interpreter = new Interpreter(tokens, basePath, userArgs);
         interpreter.Run();
+        return !interpreter.HasError;
     }
     finally
     {

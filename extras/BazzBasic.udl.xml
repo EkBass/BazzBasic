@@ -28,7 +28,7 @@
             <Keywords name="Comments">00REM 00&apos; 01 02 03 04</Keywords>
 
             <!-- Keywords1: Control Flow & Declarations -->
-            <Keywords name="Keywords1">DEF DIM ELSE ELSEIF END ENDIF FN FOR GOSUB GOTO IF INCLUDE LET NEXT REM RETURN STEP THEN TO WEND WHILE</Keywords>
+            <Keywords name="Keywords1">DEF DIM ELSE ELSEIF END ENDIF EXIT FN FOR GOSUB GOTO IF INCLUDE LET NEXT REM RETURN STEP THEN TO WEND WHILE</Keywords>
 
             <!-- Keywords2: I/O, Keyboard, Mouse & Gamepad -->
             <Keywords name="Keywords2">CLS COLOR CURPOS GETCONSOLE INPUT LOCATE SLEEP PRINT INKEY KEYDOWN WAITKEY MOUSEX MOUSEY MOUSELEFT MOUSERIGHT MOUSEMIDDLE MOUSEHIDE MOUSESHOW GAMEPADS PADBUTTON PADAXIS PADNAME PADRUMBLE</Keywords>

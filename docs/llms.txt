@@ -1,7 +1,54 @@
-# BazzBasic Interpreter
+# BazzBasic
 
-AI, please consult "BazzBasic-AI-guide.md" for review of BazzBasic.
+> BazzBasic is a modern, beginner-friendly BASIC interpreter for Windows x64, built on .NET 10 with SDL2 graphics and SDL2_mixer sound. It keeps the feel of classic BASICs (QBasic, GW-BASIC, MSX, C64, Spectrum) while adding modern features such as typeless variables, dynamic associative arrays, JSON support, recursive user-defined functions, INCLUDE files and tokenized libraries. Open source under the MIT license, created and maintained by Kristian Virtanen (EkBass).
 
-URL: https://huggingface.co/datasets/EkBass/BazzBasic_AI_Guide/raw/main/BazzBasic-AI-guide.md
+Key facts for writing BazzBasic code correctly:
 
-See also "https://github.com/EkBass/BazzBasic/blob/main/Examples/AGENTS.md"
+- All variables end with `$` and all constants end with `#`. The suffix does NOT mean "string": variables are typeless and hold either numbers or strings (`LET n$ = 42`, `LET s$ = "Hello"`).
+- Arrays are declared with `DIM name$` and are fully dynamic, indexed by numbers, strings or both (`a$("name") = "John"`).
+- Functions are defined with `DEF FN name$(args$) ... END DEF`, return values with `RETURN`, and are called with `FN name$(...)`. Recursion is supported.
+- Graphics and sound programs need `SDL2.dll` (and SDL2_mixer for sound) in the same folder; console-only programs do not.
+- Command line: `bazzbasic.exe file.bas` runs a program, `bazzbasic.exe -exe file.bas` builds a standalone executable, `bazzbasic.exe -lib file.bas` builds a tokenized library.
+- Do not assume QBasic or FreeBASIC syntax applies unchanged; check the manual pages below.
+
+## Documentation
+
+- [Installation](https://ekbass.github.io/BazzBasic/manual/installation.md): download, first run, external editors, command-line options
+- [Variables & Constants](https://ekbass.github.io/BazzBasic/manual/variables-and-constants.md): the `$` and `#` suffixes and typeless values
+- [Arrays & JSON](https://ekbass.github.io/BazzBasic/manual/arrays_and_json.md): dynamic and associative arrays, JSON handling
+- [User-defined Functions](https://ekbass.github.io/BazzBasic/manual/user-defined-functions.md): DEF FN, parameters, RETURN, recursion
+- [Graphics](https://ekbass.github.io/BazzBasic/manual/graphics.md): SDL2 screen modes, shapes, images, sprites, animation
+- [Sounds](https://ekbass.github.io/BazzBasic/manual/sounds.md): SDL2_mixer playback, background and blocking modes
+- [Preprocessor](https://ekbass.github.io/BazzBasic/manual/preprocessor.md): INCLUDE and splitting code across files
+- [Libraries](https://ekbass.github.io/BazzBasic/manual/libraries.md): generating and using tokenized libraries
+- [IDE Usage](https://ekbass.github.io/BazzBasic/manual/ide-usage.md): the bundled editor
+- [Beginner's Guide (manual)](https://ekbass.github.io/BazzBasic/manual/beginners-guide.md): first steps in programming with BazzBasic
+- [Online Manual](https://ekbass.github.io/BazzBasic/manual/#/): full browsable manual
+- [Quick Guide](https://ekbass.github.io/BazzBasic/start.html): short introduction
+
+## Examples
+
+- [Example programs](https://github.com/EkBass/BazzBasic/tree/main/Examples): official example code
+- [Egg Catcher](https://github.com/EkBass/BazzBasic/blob/main/Examples/graphics/Egg_Catcher.bas): a complete small game in a few lines
+- [Raycaster 3D](https://github.com/EkBass/BazzBasic/blob/main/Examples/graphics/Raycaster_3d_optimized.bas): larger graphics example
+- [Rosetta Code examples](https://ekbass.github.io/BazzBasic/manual/rosetta-code.md): standard tasks solved in BazzBasic
+
+## AI resources
+
+- [BazzBasic AI Guide](https://huggingface.co/datasets/EkBass/BazzBasic_AI_Guide): dataset written to help AI assistants write correct BazzBasic code
+
+## Source and downloads
+
+- [GitHub repository](https://github.com/EkBass/BazzBasic): C# source (.NET 10), MIT license
+- [Releases](https://github.com/EkBass/BazzBasic/releases): Windows x64 binaries
+- [Changelog](https://github.com/EkBass/BazzBasic/blob/main/changes.md): version history
+- [Editor syntax files](https://github.com/EkBass/BazzBasic/tree/main/extras): Notepad++, Geany and VS Code highlighting
+
+## Optional
+
+- [BazzBasic Cookbook](https://bbcookbook.miraheze.org/wiki/Main_Page): community wiki with recipes
+- [Beginner's Guide (book)](https://github.com/EkBass/BazzBasic-Beginners-Guide/releases): downloadable beginner's book
+- [News](https://ekbass.github.io/BazzBasic/news.html): project news
+- [Gallery](https://ekbass.github.io/BazzBasic/gallery.html): screenshots of BazzBasic programs
+- [Community](https://ekbass.github.io/BazzBasic/communities.html): forums and discussion places
+- [GitHub Discussions](https://github.com/EkBass/BazzBasic/discussions): questions and show & tell

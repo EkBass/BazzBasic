@@ -163,6 +163,29 @@ internal sealed class IdeSettings
 {
     public string Theme { get; set; } = EditorTheme.Light.Name;
 
+    // Session: files open when the IDE was last closed (saved files only)
+    public bool RestoreSession { get; set; } = false;
+    public List<string> SessionFiles { get; set; } = new();
+    public int SessionActiveIndex { get; set; } = 0;
+
+    // Left side panel listing DEF FN functions and [labels]
+    public bool ShowTreeView { get; set; } = false;
+    public int TreeViewWidth { get; set; } = 200;
+
+    // View → Syntax Coloring. Off = editor text in one plain colour.
+    public bool SyntaxColoring { get; set; } = true;
+
+    // Main window: normal (not maximized) position and size, plus maximized state.
+    // null = never saved, use the default centered 1200x800 window.
+    public int? WindowX { get; set; }
+    public int? WindowY { get; set; }
+    public int? WindowWidth { get; set; }
+    public int? WindowHeight { get; set; }
+    public bool WindowMaximized { get; set; } = false;
+
+    // Run → Path to BazzBasic.exe. null = automatic lookup (IDE folder, then PATH).
+    public string? InterpreterPath { get; set; }
+
     private static string FilePath => System.IO.Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "BazzBasic", "ide.json");
 

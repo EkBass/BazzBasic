@@ -14,7 +14,6 @@
 */
 using BazzBasic.Lexer;
 using BazzBasic.Parser;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace BazzBasic.Interpreter;
 
@@ -269,7 +268,7 @@ public partial class Interpreter
             if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_COMMA)
             {
                 _pos++;
-                while (_pos < _tokens.Count && !IsEndOfStatement())
+                while (_pos < _tokens.Count && !_hasError && !IsEndOfStatement())
                 {
                     if (_tokens[_pos].Type == TokenType.TOK_NUMBER)
                     {

@@ -85,6 +85,11 @@ public partial class Interpreter
                 ExecuteGosub();
                 return;
             }
+            else if (token.Type == TokenType.TOK_EXIT)
+            {
+                ExecuteExit();
+                return;
+            }
             else if (token.Type == TokenType.TOK_END)
             {
                 _pos++;
@@ -321,7 +326,9 @@ public partial class Interpreter
                 VarName = varName,
                 EndValue = endVal,
                 StepValue = stepVal,
-                LoopPosition = _pos
+                LoopPosition = _pos,
+                IfDepth = _ifStack.Count,
+                WhileDepth = _whileStack.Count
             });
         }
         else
@@ -367,7 +374,7 @@ public partial class Interpreter
         int depth = 1;
         while (_pos < _tokens.Count && depth > 0)
         {
-            if (_tokens[_pos].Type == TokenType.TOK_FOR)
+            if (_tokens[_pos].Type == TokenType.TOK_FOR && !IsAfterExit(_pos))
                 depth++;
             else if (_tokens[_pos].Type == TokenType.TOK_NEXT)
             {
@@ -397,7 +404,12 @@ public partial class Interpreter
         
         if (condition.IsTrue())
         {
-            _whileStack.Push(whilePos);
+            _whileStack.Push(new WhileState
+            {
+                Position = whilePos,
+                IfDepth = _ifStack.Count,
+                ForDepth = _forStack.Count
+            });
         }
         else
         {
@@ -415,8 +427,7 @@ public partial class Interpreter
             return;
         }
         
-        int whilePos = _whileStack.Pop();
-        _pos = whilePos;
+        _pos = _whileStack.Pop().Position;
     }
 
     private void SkipToWend()
@@ -424,7 +435,7 @@ public partial class Interpreter
         int depth = 1;
         while (_pos < _tokens.Count && depth > 0)
         {
-            if (_tokens[_pos].Type == TokenType.TOK_WHILE)
+            if (_tokens[_pos].Type == TokenType.TOK_WHILE && !IsAfterExit(_pos))
                 depth++;
             else if (_tokens[_pos].Type == TokenType.TOK_WEND)
             {
@@ -437,5 +448,69 @@ public partial class Interpreter
             }
             _pos++;
         }
+    }
+
+    // ========================================================================
+    // EXIT WHILE / EXIT FOR
+    // ========================================================================
+
+    // True when the token at pos is the WHILE/FOR of an "EXIT WHILE"/"EXIT FOR".
+    // Skippers must not count those as loop openers.
+    private bool IsAfterExit(int pos)
+    {
+        return pos > 0 && _tokens[pos - 1].Type == TokenType.TOK_EXIT;
+    }
+
+    private void ExecuteExit()
+    {
+        _pos++;
+
+        TokenType kind = _pos < _tokens.Count ? _tokens[_pos].Type : TokenType.TOK_EOF;
+        if (kind != TokenType.TOK_WHILE && kind != TokenType.TOK_FOR)
+        {
+            Error("Expected WHILE or FOR after EXIT");
+            return;
+        }
+        _pos++;
+
+        if (kind == TokenType.TOK_WHILE)
+        {
+            if (_whileStack.Count == 0 || !LoopBelongsToCurrentScope(_whileStack.Peek().Position))
+            {
+                Error("EXIT WHILE without WHILE");
+                return;
+            }
+
+            WhileState state = _whileStack.Pop();
+            while (_ifStack.Count > state.IfDepth) _ifStack.Pop();
+            while (_forStack.Count > state.ForDepth) _forStack.Pop();
+
+            // Skip from the loop's own WHILE so nested loops are counted correctly
+            _pos = state.Position + 1;
+            SkipToWend();
+        }
+        else
+        {
+            if (_forStack.Count == 0 || !LoopBelongsToCurrentScope(_forStack.Peek().LoopPosition))
+            {
+                Error("EXIT FOR without FOR");
+                return;
+            }
+
+            ForState state = _forStack.Pop();
+            while (_ifStack.Count > state.IfDepth) _ifStack.Pop();
+            while (_whileStack.Count > state.WhileDepth) _whileStack.Pop();
+
+            // Loop variable keeps its current value (QBasic behavior)
+            _pos = state.LoopPosition;
+            SkipToNext();
+        }
+    }
+
+    // Inside DEF FN, EXIT may only leave loops that are inside the function body
+    private bool LoopBelongsToCurrentScope(int loopPos)
+    {
+        if (!_inFunction) return true;
+        return loopPos >= _functionStartPos && loopPos < _functionEndPos;
     }
 }

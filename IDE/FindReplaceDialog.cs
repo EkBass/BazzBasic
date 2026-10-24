@@ -53,11 +53,11 @@ public class FindReplaceDialog : Form
 
     public FindReplaceDialog()
     {
-        InitializeComponent();
+        BuildUi();
         WireEvents();
     }
 
-    private void InitializeComponent()
+    private void BuildUi()
     {
         findLabel = new Label();
         searchTextBox = new TextBox();

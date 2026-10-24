@@ -32,7 +32,7 @@ public partial class Interpreter
     {
         _pos++;
         
-        while (_pos < _tokens.Count)
+        while (_pos < _tokens.Count && !_hasError)
         {
             if (_tokens[_pos].Type == TokenType.TOK_NEWLINE || _tokens[_pos].Type == TokenType.TOK_EOF)
                 break;
@@ -130,7 +130,7 @@ public partial class Interpreter
         }
         
         var indices = new List<string>();
-        while (_pos < _tokens.Count && _tokens[_pos].Type != TokenType.TOK_RPAREN)
+        while (_pos < _tokens.Count && !_hasError && _tokens[_pos].Type != TokenType.TOK_RPAREN)
         {
             if (_tokens[_pos].Type == TokenType.TOK_COMMA)
             {
