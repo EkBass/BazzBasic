@@ -7,6 +7,16 @@ Changes for older versions are in [changes-archive.md](changes-archive.md).
 
 ## 24th October 2026
 
+Some tweaks to homepage.
+- Fixed typos
+- Adjusted metadata: page descriptions, link previews (og:image) for Discord, forums etc.
+- New examples.html with a few short example codes, now its own "Examples" button in the menu
+- "About" is a plain menu link again instead of a dropdown
+- Added llms.txt, a short summary of BazzBasic for AI assistants
+- Added sitemap.xml and generate_sitemap script to rebuild it
+
+## 24th October 2026
+
 Released as version 1.6
 
 ### New: EXIT WHILE and EXIT FOR

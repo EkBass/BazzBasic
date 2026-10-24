@@ -55,4 +55,4 @@ Key facts for writing BazzBasic code correctly:
 - [GitHub Discussions](https://github.com/EkBass/BazzBasic/discussions): questions and show & tell
 
 ## Sitemap
-- [sitemap.xml](sitemap.xml)
+- [sitemap.xml](https://github.com/EkBass/BazzBasic/blob/main/docs/sitemap.xml)

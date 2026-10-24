@@ -3,18 +3,32 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>BazzBasic — Example Code</title>
-		<meta name="author" content="Kristian Virtanen" href="https://github.com/EkBass">
-		<meta name="keywords" content="BazzBasic, BASIC, example code, QBasic, GWBasic, SDL2">
-		<meta name="description" content="Short BazzBasic example programs showing what the BASIC language looks like in practice.">
-		<meta property="og:title" content="BazzBasic Example Code">
-		<meta property="og:description" content="A taste of BazzBasic: short, runnable example programs.">
+		<title>BazzBasic — Gallery</title>
+		<link rel="author" href="https://github.com/EkBass">
+		<meta name="keywords" content="BazzBasic, QBasic, GWBasic, MSX, Atari, Spectrum, BASIC">
+		<meta name="description" content="Example codes for BazzBasic interpreter.">
 		<meta name="llms-txt" content="https://ekbass.github.io/BazzBasic/llms.txt">
-		<meta name="facts" content="Windows x64, .NET 10, SDL2, MIT-license, free">		
+		<meta name="facts" content="Windows x64, .NET 10, SDL2, MIT-license, free">
+		
+		<link rel="canonical" href="https://ekbass.github.io/BazzBasic/examples.html">
 		<link rel="alternate" type="text/markdown" href="https://ekbass.github.io/BazzBasic/llms.txt" title="LLM-friendly summary">
 		<link rel="stylesheet" href="styles.css">
 		<link rel="icon" href="img/icon.png" type="image/png">
+
+		<meta property="og:url" content="https://ekbass.github.io/BazzBasic/examples.html">
+		<meta property="og:type" content="website">
+		<meta property="og:title" content="BazzBasic Gallery">
+		<meta property="og:description" content="Example codes for BazzBasic interpreter.">
+		<meta property="og:image" content="https://ekbass.github.io/BazzBasic/img/bb-ide.png">
+		<meta property="og:image:width" content="1200">
+		<meta property="og:image:height" content="630">
+		<meta property="og:image:alt" content="BazzBasic — Release your curiosity">
+		<meta property="og:site_name" content="BazzBasic">
+
+		<meta name="twitter:card" content="summary_large_image">
+
 	</head>
+
 	<body>
 		<!-- HEADER -->
 		<header class="site-header">
@@ -26,13 +40,8 @@
 					</div>
 				</div>
 				<nav class="header-right" aria-label="Primary navigation">
-					<div class="nav-dropdown">
-						<a class="nav-link" href="#" onclick="return false;">About</a>
-						<div class="dropdown-menu">
-							<a href="index.html">About BazzBasic</a>
-							<a href="examples.html">Example Code</a>
-						</div>
-					</div>
+					<a class="nav-link" href="index.html">About</a>
+					<a class="nav-link" href="examples.html">Examples</a>
 					<a class="nav-link" href="news.html">News</a>
 					<div class="nav-dropdown">
 						<a class="nav-link" href="#" onclick="return false;">Support</a>
@@ -66,57 +75,51 @@
 					Remember to escape:  <  ->  &lt;    >  ->  &gt;    &  ->  &amp;
 					Whitespace and tabs are kept exactly as pasted.
 				-->
-
 				<!-- EXAMPLE 1: white on black -->
 				<section class="code-showcase">
 					<h2>Function_names_and_labels.bas</h2>
 					<p class="code-showcase-desc">BazzBasic solution for Rosetta Code task.</p>
-					<pre class="code-box code-box--dark">
-						<code>
-							' ============================================
-							' https://rosettacode.org/wiki/Scope/Function_names_and_labels
-							' BazzBasic: https://github.com/EkBass/BazzBasic
-							' ============================================
+					<pre class="code-box code-box--dark"><code>
+					' ============================================
+					' https://rosettacode.org/wiki/Scope/Function_names_and_labels
+					' BazzBasic: https://github.com/EkBass/BazzBasic
+					' ============================================
 
-							' Functions are visible as soon as they are entered
-							DEF FN MyFunction$(param$)      ' auto-declares 'param$ for MyFunction$
-								LET MyLocalVar$ = "Hello"   ' Just for local use
-								PRINT param$
-								RETURN MyLocalVar$
-							END DEF
+					' Functions are visible as soon as they are entered
+					DEF FN MyFunction$(param$)      ' auto-declares param$ for MyFunction$
+						LET MyLocalVar$ = "Hello"   ' Just for local use
+						PRINT param$
+						RETURN MyLocalVar$
+					END DEF
 
 
-							' Labels are important part to structure your code,
-							' even when there is no need to jump around.
+					' Labels are important part to structure your code,
+					' even when there is no need to jump around.
 							
-							' They bring clarity
-							[inits]
-								LET varA$ = "[sub:jumpMe]"      ' Variables not visible to functions by default
-								LET CONST_A# = "[sub:jumpMe]"   ' Constants are visible everywhere in program
+					' They bring clarity
+					[inits]
+						LET varA$ = "[sub:jumpMe]"      ' Variables not visible to functions by default
+						LET CONST_A# = "[sub:jumpMe]"   ' Constants are visible everywhere in program
 
+					[main]
+						PRINT "Inside [main]"
+						PRINT "Calling MyFunction with param 'Foo'"
+						PRINT FN MyFunction$("Foo")
 
-							[main]
-								PRINT "Inside [main]"
-								PRINT "Calling MyFunction with param 'Foo'"
-								PRINT FN MyFunction$("Foo")
+						GOSUB varA$ ' CONST_A# would work too here
+					END
 
-								GOSUB varA$ ' CONST_A# would work too here
-							END
+					[sub:jumpMe]
+						PRINT "Inside " ; varA$         ' Variables visible here, inside of main program
+					RETURN
 
-							[sub:jumpMe]
-								PRINT "Inside " ; varA$         ' Variables visible here, inside of main program
-							RETURN
-
-							' Output:
-							' Inside [main]
-							' Calling MyFunction with param 'Foo'
-							' Foo
-							' Hello
-							' Inside [sub:jumpMe]
-						</code>
-					</pre>
+					' Output:
+					' Inside [main]
+					' Calling MyFunction with param 'Foo'
+					' Foo
+					' Hello
+					' Inside [sub:jumpMe]</code></pre>
 				</section>
-
 				<!-- EXAMPLE 2: dark blue on light grey -->
 				<section class="code-showcase">
 					<h2>3D_glowing_orbs.bas</h2>
@@ -159,16 +162,16 @@
 									SLEEP 16
 								WEND
 							END
+						
 						</code>
 					</pre>
 				</section>
-
 				<!-- EXAMPLE 3: white on black -->
 				<section class="code-showcase">
 					<h2>Anthropic_Claude_API_call.bas</h2>
 					<p class="code-showcase-desc">Shall we call Claude?</p>
 					<pre class="code-box code-box--dark">
-						<code>
+				<code>
 							' ============================================
 							' Anthropic Claude API call — BazzBasic
 							' https://github.com/EkBass/BazzBasic
@@ -226,18 +229,19 @@
 								PRINT result$("content,0,text")
 							END
 						</code>
-					</pre>
+			</pre>
 				</section>
-				<p>Hundreds of code examples and Rosetta Code solutions <a href="https://github.com/EkBass/BazzBasic/tree/main/Examples">here</a>.</p>
+				<p>Hundreds of code examples and Rosetta Code solutions <a href="https://github.com/EkBass/BazzBasic/tree/main/Examples">here</a>. </p>
 			</div>
 		</main>
 		<!-- /MAIN -->
 		<!-- FOOTER -->
 		<footer class="site-footer">
 			<div class="container footer-inner">
-				<p>© <span id="year"></span> © Kristian Virtanen · MIT License </p>
+				<p>© <span id="year"></span> Kristian Virtanen · MIT License </p>
 				<p class="footer-small">Made with BASIC-flavored stubbornness.</p>
-				<p class="footer-llm">LLM-friendly summary: <a href="https://ekbass.github.io/BazzBasic/llms.txt">llms.txt</a></p>
+				<p class="footer-llm">LLM-friendly summary: <a href="https://ekbass.github.io/BazzBasic/llms.txt">llms.txt</a>
+				</p>
 			</div>
 		</footer>
 		<!-- /FOOTER -->

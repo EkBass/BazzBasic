@@ -4,7 +4,7 @@
 ' ============================================
 
 ' Functions are visible as soon as they are entered
-DEF FN MyFunction$(param$)      ' auto-declares 'param$ for MyFunction$
+DEF FN MyFunction$(param$)      ' auto-declares param$ for MyFunction$
     LET MyLocalVar$ = "Hello"   ' Just for local use
     PRINT param$
     RETURN MyLocalVar$
