@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>BazzBasic — Example Code</title>
+		<meta name="author" content="Kristian Virtanen" href="https://github.com/EkBass">
+		<meta name="keywords" content="BazzBasic, BASIC, example code, QBasic, GWBasic, SDL2">
+		<meta name="description" content="Short BazzBasic example programs showing what the BASIC language looks like in practice.">
+		<meta property="og:title" content="BazzBasic Example Code">
+		<meta property="og:description" content="A taste of BazzBasic: short, runnable example programs.">
+		<meta name="llms-txt" content="https://ekbass.github.io/BazzBasic/llms.txt">
+		<meta name="facts" content="Windows x64, .NET 10, SDL2, MIT-license, free">		
+		<link rel="alternate" type="text/markdown" href="https://ekbass.github.io/BazzBasic/llms.txt" title="LLM-friendly summary">
+		<link rel="stylesheet" href="styles.css">
+		<link rel="icon" href="img/icon.png" type="image/png">
+	</head>
+	<body>
+		<!-- HEADER -->
+		<header class="site-header">
+			<div class="container header-grid">
+				<div class="header-left">
+					<div class="brand">
+						<h1 class="brand-title">BazzBasic</h1>
+						<p class="brand-slogan">Release your curiosity</p>
+					</div>
+				</div>
+				<nav class="header-right" aria-label="Primary navigation">
+					<div class="nav-dropdown">
+						<a class="nav-link" href="#" onclick="return false;">About</a>
+						<div class="dropdown-menu">
+							<a href="index.html">About BazzBasic</a>
+							<a href="examples.html">Example Code</a>
+						</div>
+					</div>
+					<a class="nav-link" href="news.html">News</a>
+					<div class="nav-dropdown">
+						<a class="nav-link" href="#" onclick="return false;">Support</a>
+						<div class="dropdown-menu">
+							<a href="start.html">Quick Guide</a>
+							<a href="https://github.com/EkBass/BazzBasic-Beginners-Guide/releases" target="_blank" rel="noopener">Beginner's Guide</a>
+							<a href="https://ekbass.github.io/BazzBasic/manual" target="_blank" rel="noopener">Online Manual</a>
+							<a href="https://github.com/EkBass/BazzBasic/blob/main/docs/BazzBasic-Manual-HTML.zip" target="_blank" rel="noopener">Download Manual (HTML)</a>
+							<a href="https://bbcookbook.miraheze.org/wiki/Main_Page" target="_blank" rel="noopener">BazzBasic Cookbook</a>
+							<a href="https://huggingface.co/datasets/EkBass/BazzBasic_AI_Guide" target="_blank" rel="noopener">AI Guide</a>
+						</div>
+					</div>
+					<a class="nav-link" href="gallery.html">Gallery</a>
+					<div class="nav-dropdown">
+						<a class="nav-link" href="#" onclick="return false;">Download</a>
+						<div class="dropdown-menu">
+							<a href="https://github.com/EkBass/BazzBasic/releases" target="_blank" rel="noopener">Download Binary</a>
+							<a href="https://github.com/EkBass/BazzBasic" target="_blank" rel="noopener">Download Source</a>
+						</div>
+					</div>
+					<a class="nav-link" href="communities.html">Community</a>
+				</nav>
+			</div>
+		</header>
+		<!-- /HEADER -->
+		<!-- MAIN -->
+		<main class="site-main">
+			<div class="container">
+				<!--
+					PASTE CODE between <code> and </code>.
+					Remember to escape:  <  ->  &lt;    >  ->  &gt;    &  ->  &amp;
+					Whitespace and tabs are kept exactly as pasted.
+				-->
+
+				<!-- EXAMPLE 1: white on black -->
+				<section class="code-showcase">
+					<h2>Function_names_and_labels.bas</h2>
+					<p class="code-showcase-desc">BazzBasic solution for Rosetta Code task.</p>
+					<pre class="code-box code-box--dark">
+						<code>
+							' ============================================
+							' https://rosettacode.org/wiki/Scope/Function_names_and_labels
+							' BazzBasic: https://github.com/EkBass/BazzBasic
+							' ============================================
+
+							' Functions are visible as soon as they are entered
+							DEF FN MyFunction$(param$)      ' auto-declares 'param$ for MyFunction$
+								LET MyLocalVar$ = "Hello"   ' Just for local use
+								PRINT param$
+								RETURN MyLocalVar$
+							END DEF
+
+
+							' Labels are important part to structure your code,
+							' even when there is no need to jump around.
+							
+							' They bring clarity
+							[inits]
+								LET varA$ = "[sub:jumpMe]"      ' Variables not visible to functions by default
+								LET CONST_A# = "[sub:jumpMe]"   ' Constants are visible everywhere in program
+
+
+							[main]
+								PRINT "Inside [main]"
+								PRINT "Calling MyFunction with param 'Foo'"
+								PRINT FN MyFunction$("Foo")
+
+								GOSUB varA$ ' CONST_A# would work too here
+							END
+
+							[sub:jumpMe]
+								PRINT "Inside " ; varA$         ' Variables visible here, inside of main program
+							RETURN
+
+							' Output:
+							' Inside [main]
+							' Calling MyFunction with param 'Foo'
+							' Foo
+							' Hello
+							' Inside [sub:jumpMe]
+						</code>
+					</pre>
+				</section>
+
+				<!-- EXAMPLE 2: dark blue on light grey -->
+				<section class="code-showcase">
+					<h2>3D_glowing_orbs.bas</h2>
+					<p class="code-showcase-desc">Simple, a BASIC like graphics.</p>
+					<pre class="code-box code-box--light">
+						<code>
+							' Glowing orb's
+							' Stupid neat 3D closing balls effect
+
+							' BazzBasic version 1.3
+							' https://ekbass.github.io/BazzBasic/
+
+							[inits]
+								LET SCREEN_W# = 1280
+								LET SCREEN_H# = 1024
+								SCREEN 0, SCREEN_W#, SCREEN_H#, "Glowing Orbs"
+
+								LET x$  = 0
+								LET y$  = 0
+								LET r$  = 0
+								LET s$  = 0
+								LET m$  = 0
+								LET col$ = 0
+
+							[main]
+								WHILE INKEY <> KEY_ESC#
+									x$ = RND(SCREEN_W#)
+									y$ = RND(SCREEN_H#)
+									r$ = RND(48) + 32
+									s$ = r$ / 15
+
+									SCREENLOCK ON
+									FOR m$ = 1 TO 15
+										col$ = RGB(16 * m$, 14 * m$, 12 * m$)
+										CIRCLE (x$, y$), r$, col$, 1
+										r$ = r$ - s$
+									NEXT
+									SCREENLOCK OFF
+
+									SLEEP 16
+								WEND
+							END
+						</code>
+					</pre>
+				</section>
+
+				<!-- EXAMPLE 3: white on black -->
+				<section class="code-showcase">
+					<h2>Anthropic_Claude_API_call.bas</h2>
+					<p class="code-showcase-desc">Shall we call Claude?</p>
+					<pre class="code-box code-box--dark">
+						<code>
+							' ============================================
+							' Anthropic Claude API call — BazzBasic
+							' https://github.com/EkBass/BazzBasic
+							' Public domain
+							' ============================================
+							' Requires .env file in same directory as script:
+							'   ANTHROPIC_API_KEY=sk-ant-yourKeyHere
+							' ============================================
+
+							' DISCLAIMER:
+							' This code was last verified on 04.04.2026 using claude-sonnet-4-20250514.
+							' AI providers change their APIs, model names and headers over time,
+							' so this example may stop working without any change in BazzBasic.
+							'
+							' If it fails, check the provider's current API documentation first.
+							' Provider-specific settings are grouped at the top of this file.
+							' You can also give this file together with the BazzBasic AI Guide
+							' to an AI of your choice and ask it to update the code.
+							'
+							' https://huggingface.co/datasets/EkBass/BazzBasic_AI_Guide
+
+
+							[check:env]
+								IF FileExists(".env") = 0 THEN
+									PRINT "Error: .env file not found."
+									END
+								END IF
+
+							[inits]
+								DIM env$
+								env$ = FileRead(".env")
+								LET ApiKey# = env$("ANTHROPIC_API_KEY")
+
+								DIM headers$
+								headers$("x-api-key")         = ApiKey#
+								headers$("anthropic-version") = "2023-06-01"
+								headers$("Content-Type")      = "application/json"
+
+								DIM body$
+								body$("model")              = "claude-sonnet-4-20250514"
+								body$("max_tokens")         = 100
+								body$("messages,0,role")    = "user"
+								body$("messages,0,content") = "Hello"
+
+								DIM result$
+								LET jsonBody$ = ""
+								LET raw$      = ""
+								LET count$    = 0
+
+							[main]
+								jsonBody$ = ASJSON(body$)
+								raw$      = HTTPPOST("https://api.anthropic.com/v1/messages", jsonBody$, headers$)
+								count$    = ASARRAY(result$, raw$)
+
+								PRINT result$("content,0,text")
+							END
+						</code>
+					</pre>
+				</section>
+				<p>Hundreds of code examples and Rosetta Code solutions <a href="https://github.com/EkBass/BazzBasic/tree/main/Examples">here</a>.</p>
+			</div>
+		</main>
+		<!-- /MAIN -->
+		<!-- FOOTER -->
+		<footer class="site-footer">
+			<div class="container footer-inner">
+				<p>© <span id="year"></span> © Kristian Virtanen · MIT License </p>
+				<p class="footer-small">Made with BASIC-flavored stubbornness.</p>
+				<p class="footer-llm">LLM-friendly summary: <a href="https://ekbass.github.io/BazzBasic/llms.txt">llms.txt</a></p>
+			</div>
+		</footer>
+		<!-- /FOOTER -->
+		<script>
+			document.getElementById("year").textContent = new Date().getFullYear();
+			// Dropdown navigation
+			document.querySelectorAll('.nav-dropdown > .nav-link').forEach(btn => {
+				btn.addEventListener('click', e => {
+					e.preventDefault();
+					const dd = btn.closest('.nav-dropdown');
+					const isOpen = dd.classList.contains('is-open');
+					document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('is-open'));
+					if (!isOpen) dd.classList.add('is-open');
+				});
+			});
+			document.addEventListener('click', e => {
+				if (!e.target.closest('.nav-dropdown')) {
+					document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('is-open'));
+				}
+			});
+		</script>
+	</body>
+</html>

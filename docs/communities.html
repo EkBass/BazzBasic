@@ -26,7 +26,13 @@
 					</div>
 				</div>
 				<nav class="header-right" aria-label="Primary navigation">
-					<a class="nav-link" href="index.html">About</a>
+					<div class="nav-dropdown">
+						<a class="nav-link" href="#" onclick="return false;">About</a>
+						<div class="dropdown-menu">
+							<a href="index.html">About BazzBasic</a>
+							<a href="examples.html">Example Code</a>
+						</div>
+					</div>
 					<a class="nav-link" href="news.html">News</a>
 					<div class="nav-dropdown">
 						<a class="nav-link" href="#" onclick="return false;">Support</a>
@@ -136,7 +142,7 @@
 		<!-- FOOTER -->
 		<footer class="site-footer">
 			<div class="container footer-inner">
-				<p>© <span id="year"></span> BazzBasic. All rights reserved. </p>
+				<p>© <span id="year"></span> © Kristian Virtanen · MIT License </p>
 				<p class="footer-small">Made with BASIC-flavored stubbornness.</p>
 				<p class="footer-llm">LLM-friendly summary: <a href="https://ekbass.github.io/BazzBasic/llms.txt">llms.txt</a></p>
 			</div>

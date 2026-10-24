@@ -30,6 +30,13 @@ PRINT i$   ' 8 - the loop variable keeps its value
 - Internals: new token `TOK_EXIT = 23`. WHILE and FOR stack entries now remember the IF/FOR/WHILE stack depths at loop entry. The WHILE/WEND and FOR/NEXT skippers ignore the `WHILE`/`FOR` of an `EXIT WHILE`/`EXIT FOR`.
 - `EXIT` added to the IDE highlighting, `extras` syntax files, manual and AI guide. Example: `Examples\console\exit_loops.bas`.
 
+### Homepage: Example Code page
+
+- New page `docs/examples.html` with three code boxes (white on black, dark blue on light grey, white on black) ready for short example programs. Paste code between `<code>` and `</code>`; escape `<`, `>` and `&`.
+- Navigation: `About` is now a dropdown on every page with *About BazzBasic* and *Example Code*.
+- New CSS section 13 (`.code-showcase`, `.code-box`, `.code-box--dark`, `.code-box--light`) in `styles.css`.
+- `sitemap.xml`: added `examples.html`.
+
 ## 23rd October 2026
 
 Robustness fixes from a source audit. A typo or a mistake in a BASIC program now stops with a clear error message instead of hanging, crashing the whole interpreter, or being silently ignored.

@@ -608,6 +608,10 @@ body {
     color: var(--header-fg);
 }
 
+.pre {
+	font-size: 0.66em;
+}
+
 /* ============================================================
    10. FOOTER
    ============================================================ */
@@ -682,4 +686,52 @@ body {
 .site-gallery a,
 .site-examples a {
     color: var(--header-bg);
+}
+/* ============================================================
+   13. EXAMPLE CODE  (examples.html)
+   ============================================================ */
+.code-showcase {
+    margin-bottom: 36px;
+}
+
+.code-showcase h2 {
+    color: var(--header-bg);
+    border-bottom: 2px solid var(--header-bg);
+    padding-bottom: 6px;
+    margin-bottom: 8px;
+}
+
+.code-showcase-desc {
+    margin: 0 0 12px 0;
+}
+
+/* the code box itself */
+.code-box {
+    margin: 0;
+    padding: 18px 20px;
+    border-radius: 14px;
+    overflow-x: auto;
+    font: 15px/1.5 Consolas, "Cascadia Mono", "Courier New", monospace;
+    tab-size: 4;
+    white-space: pre;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+}
+
+.code-box code {
+    font: inherit;
+    background: none;
+    padding: 0;
+}
+
+/* white text on black */
+.code-box--dark {
+    background: var(--story-bg);
+    color: var(--story-fg);
+}
+
+/* dark blue text on light grey */
+.code-box--light {
+    background: var(--main-bg);
+    color: var(--main-fg);
+    border: 2px solid var(--main-fg);	/* main area is the same grey, border keeps it visible */
 }
