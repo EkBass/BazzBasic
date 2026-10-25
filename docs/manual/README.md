@@ -3,7 +3,6 @@ BazzBasic is a BASIC interpreter built to work with the [.NET 10](https://dotnet
 
 It supports many of the features of [BASIC interpreters](https://en.wikipedia.org/wiki/BASIC_interpreter) from the 80s, but also offers something modern.
 
-
 ## Development
 So far, [EkBass](https://github.com/EkBass) has been responsible for the development of BazzBasic.
 
@@ -12,6 +11,12 @@ BazzBasic is released under the [open source MIT license](https://github.com/EkB
 Its source code is available and visible to everyone in the project's [GitHub repository](https://github.com/EkBass/BazzBasic).
 
 Currently, the development work is done in the Windows 11 operating system, but with quite a bit of effort it can also be translated to Linux or MacOS.
+
+## Offline Manual
+
+You can download this manual in HTML format to your own computer.
+
+Download [BazzBasic-Manual-HTML.zip](https://github.com/EkBass/BazzBasic/blob/main/docs/BazzBasic-Manual-HTML.zip)
 
 ## Main functionalities
 Most familiar BASIC features work either completely or almost completely as users of traditional BASIC languages ​​are used to using them.

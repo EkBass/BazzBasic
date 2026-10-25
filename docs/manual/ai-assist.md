@@ -46,7 +46,7 @@ After that the AI uses the guide automatically whenever BazzBasic comes up.
 
 ### Native SKILL.md support
 
-These tools can load `SKILL.md` as a skill automatically (as of October 2026):
+These popular AI services can all load `SKILL.md` as a skill automatically (as of October 2026):
 
 - Anthropic Claude (Claude.ai, Claude Code)
 - OpenAI ChatGPT and Codex
@@ -60,9 +60,10 @@ These tools can load `SKILL.md` as a skill automatically (as of October 2026):
 - OpenClaw.AI
 - OpenCode.AI
 - Tricentis Tabnine
+- ...and many more.
 
 The list grows all the time.  
-See [agentskills.io/clients](https://agentskills.io/clients) for more.
+See [agentskills.io/clients](https://agentskills.io/clients) for them all.
 
 **Every other AI** understands it too. `SKILL.md` is plain Markdown, so just attach it to the chat or paste it into your project instructions.
 
