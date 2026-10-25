@@ -61,7 +61,7 @@ public static class TokenSerializer
         return ms.ToArray();
     }
 
-    // Deserialize binary .bb format to tokens
+    // Deserialise binary .bb format to tokens
     public static (string LibraryName, List<Token> Tokens) Deserialize(byte[] data)
     {
         using var ms = new MemoryStream(data);
@@ -75,11 +75,14 @@ public static class TokenSerializer
         }
 
         // Version check
+        // Newer library format: refuse, this interpreter cant know what changed.
+        // Older library format: warn but allow. It may well work; user is responsible for compatibility.
         var version = reader.ReadByte();
         if (version > VERSION)
-        {
-            throw new Exception($"Library file version {version} not supported (max: {VERSION})");
-        }
+            throw new InvalidDataException(
+                $"Library was compiled with a newer BazzBasic (format {version}, this interpreter supports {VERSION}). Please update BazzBasic.");
+        if (version < VERSION)
+            Console.Error.WriteLine($"Warning: Library format {version} is older than current ({VERSION}). It may or may not work, but recompiling is recommended.");
 
         // Header
         var libraryName = reader.ReadString();

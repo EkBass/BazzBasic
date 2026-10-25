@@ -57,7 +57,7 @@ public class LibraryLoader
             i++;
         }
 
-        // Merge: libraries first, then program
+        // Merge: libraries first, then program or it gets ugly
         if (libraryTokens.Count > 0)
         {
             // Add newline separator
@@ -84,7 +84,9 @@ public class LibraryLoader
         string fullPath = Path.GetFullPath(filePath);
         if (_loadedLibraries.Contains(fullPath))
         {
-            // Already loaded - skip silently
+            // Already loaded - skip silently tho I would like to remind the user about it... a little
+            // Ok, lets be nice and throw a warning while skipping
+            Console.Error.WriteLine($"Warning: Line {includeLine}: Library '{filename}' already loaded, skipping.");
             return new List<Token>();
         }
         _loadedLibraries.Add(fullPath);

@@ -426,6 +426,7 @@ public class Lexer(string source)
         }
     }
 
+    // Loop babe, loop
     private void SkipToEndOfLine()
     {
         while (_pos < _source.Length && _source[_pos] != '\n')
@@ -434,6 +435,7 @@ public class Lexer(string source)
         }
     }
 
+    // Get value inside of [whatever]
     private Token ReadLabel()
     {
         _pos++; // Skip '['
@@ -452,6 +454,7 @@ public class Lexer(string source)
         return new Token(TokenType.TOK_LABEL, labelName.ToUpperInvariant(), _line);
     }
 
+    // it is a number, not a letter
     private Token ReadNumber()
     {
         int start = _pos;
@@ -481,6 +484,7 @@ public class Lexer(string source)
         return new Token(TokenType.TOK_NUMBER, value, _line);
     }
 
+    // It is not a number, it is a string
     private Token ReadString()
     {
         _pos++; // Skip opening "
@@ -488,7 +492,7 @@ public class Lexer(string source)
 
         while (_pos < _source.Length)
         {
-            // End of string
+            // End of string, not life
             if (_source[_pos] == '"')
             {
                 // "" inside string = escaped quote (BASIC style)

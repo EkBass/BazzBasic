@@ -18,6 +18,7 @@ namespace BazzBasic.File;
 public class FileManager(string rootPath)
 {
     private readonly string _rootPath = rootPath;
+    private const int ShellCommandTimeout = 5000; // Default timeout for shell commands in milliseconds
 
     public string RootPath => _rootPath;
 
@@ -147,13 +148,13 @@ public class FileManager(string rootPath)
 
     // Execute SHELL command and return output
     // timeout: milliseconds to wait. 0 or omitted = 5000ms default
-    public string ExecuteShellCommand(string command, int timeout = 5000)
+    public string ExecuteShellCommand(string command, int timeout = ShellCommandTimeout)
     {
         if (string.IsNullOrWhiteSpace(command))
             return string.Empty;
 
         if (timeout <= 0)
-            timeout = 5000;
+            timeout = ShellCommandTimeout;
 
         try
         {

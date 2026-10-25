@@ -1,5 +1,5 @@
 # News and changes
-These changes are about the current source code and latest release version.
+These changes are about the current source code.
 
 They take effect once a new binary release is published.
 
@@ -7,8 +7,18 @@ Changes for older versions are in [changes-archive.md](changes-archive.md).
 
 ## 25th October 2026
 
+### Homepage several small changes
+Lots of small changes to the website. It highlights the technical side a bit more, rather than just "emotional fluff."
+
+### Library loading
+- Including the same library more than once now prints a warning with the line number of the duplicate `INCLUDE`. The duplicate is skipped and the program continues normally.
+- Libraries compiled with an older BazzBasic now load with a warning instead of being rejected. Recompiling is recommended.
+- Libraries compiled with a newer BazzBasic are refused with a clear error message asking to update BazzBasic.
+
+### Other
 - BazzBasic-AI-guide.md renamed to SKILL.md (it is a valid Agent Skills file)
 - Manual page "AI assisted learning" (ai-assist.md) rewritten: explains what a SKILL is and how to use the guide
+- That was done by Claude.
 
 ## 24th October 2026
 

@@ -40,7 +40,7 @@ namespace BazzBasic.Gamepad;
  */
 
 /* DISCLAIMER:
-BazzBasic version 1.5 has been tested with only one PS4-compatible Bluetooth controller. Therefore, for the time being, I cannot guarantee that GamePad support will work with all different types of controllers.
+BazzBasic version 1.5 and onward so far has been tested with only one PS4-compatible Bluetooth controller. Therefore, for the time being, I cannot guarantee that GamePad support will work with all different types of controllers.
 Got an Xbox, Switch Pro or Elite controller? Run gamepad_tester.bas from the v1.5 examples, press each button once, and post the header line plus anything that lit the wrong row (or didn’t light at all). Elite owners: which physical paddle lights (raw 16)…(raw 19)?
 */
 
