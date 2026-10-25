@@ -1,26 +1,31 @@
 <!doctype html>
 <html lang="en">
 	<head>
+		<title>BazzBasic Home — Release your curiosity</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>BazzBasic — Quick guide</title>
+		<link rel="stylesheet" href="styles.css">
+		<link rel="icon" href="img/icon.png" type="image/png">
+		
 		<link rel="author" href="https://github.com/EkBass">
 		<meta name="keywords" content="BazzBasic, QBasic, GWBasic, MSX, Atari, Spectrum, BASIC">
-		<meta name="description" content="BazzBasic Quick Guide: a beginner-friendly introduction to getting started with the BASIC interpreter in a few simple steps.">
+		<meta name="description" content="BazzBasic. Download, extract and run.">
+
+		<link rel="alternate" type="text/markdown" href="https://ekbass.github.io/BazzBasic/llms.txt" title="LLM-friendly summary">
+		<link rel="alternate" type="text/markdown" href="https://huggingface.co/datasets/EkBass/BazzBasic_AI_Guide/raw/main/SKILL.md" title="BazzBasic SKILL.md">
+
+		<link rel="canonical" href="https://ekbass.github.io/BazzBasic/start.html">
+
+		<meta property="og:url" content="https://ekbass.github.io/BazzBasic/start.html">
+		<meta property="og:type" content="website">
+		<meta property="og:title" content="BazzBasic - Download, extract and run.">
+		<meta property="og:description" content="BazzBasic is a MIT licensed free and Open Source interpreter for Windows x64.">
 		<meta property="og:image" content="https://ekbass.github.io/BazzBasic/img/bb-ide.png">
 		<meta property="og:image:width" content="1200">
 		<meta property="og:image:height" content="630">
 		<meta property="og:image:alt" content="BazzBasic — Release your curiosity">
 		<meta property="og:site_name" content="BazzBasic">
 		<meta name="twitter:card" content="summary_large_image">
-		<meta property="og:title" content="BazzBasic Quick Guide">
-		<meta property="og:description" content="Learn the basics of BazzBasic in a few simple steps and start creating programs quickly.">
-		<meta name="llms-txt" content="https://ekbass.github.io/BazzBasic/llms.txt">
-		<meta name="facts" content="Windows x64, .NET 10, SDL2, MIT-license, free">
-		<link rel="alternate" type="text/markdown" href="https://ekbass.github.io/BazzBasic/llms.txt" title="LLM-friendly summary">
-		<link rel="alternate" type="text/markdown" href="https://huggingface.co/datasets/EkBass/BazzBasic_AI_Guide/raw/main/SKILL.md" title="BazzBasic SKILL.md">
-		<link rel="stylesheet" href="styles.css">
-		<link rel="icon" href="img/icon.png" type="image/png">
 	</head>
 	<body>
 		<!-- HEADER -->
@@ -64,23 +69,33 @@
 		<main class="site-main">
 			<div class="container main-grid">
 				<section class="main-left">
-					<h2>1. Download</h2>
-					<p>Download the BazzBasic binary from <a target="_blank" rel="noopener" href="https://github.com/EkBass/BazzBasic/releases">GitHub Releases</a>. </p>
-					<p>Extract the <i>.zip</i> package to a folder of your choice. </p>
-					<p>If your firewall warns you about BazzBasic, you can safely ignore it. You may need to set an exception in some cases.</p>
+					<h2>Download</h2>
+					<p>1. Download the BazzBasic binary from <a target="_blank" rel="noopener" href="https://github.com/EkBass/BazzBasic/releases">GitHub Releases</a>. </p>
+					<p>2. Extract the <i>.zip</i> package to a folder of your choice. </p>
+					<p>3. Browse to the folder where you extracted BazzBasic.</p>
+					<p>4. Double-click <i>BazzBasic-IDE.exe</i> — the IDE opens. ( <i>bazzbasic.exe</i> opens it too.) </p>
+					<p>5. Explore the <i>Examples</i> subfolder to start the fun. </p>
 				</section>
 				<section class="main-middle">
-					<h2>2. Run</h2>
-					<p>Browse to the folder where you extracted BazzBasic.</p>
-					<p>Double-click <i>BazzBasic-IDE.exe</i> — the IDE opens. ( <i>bazzbasic.exe</i> opens it too.) </p>
-					<p>Explore the <i>Examples</i> subfolder to start the fun. </p>
-					<p>Read the <a target="_blank" rel="noopener" href="https://ekbass.github.io/BazzBasic/manual/">Manual</a> or the <a target="_blank" rel="noopener" href="BazzBasic-Beginners-Guide.pdf">Beginner's Guide</a> to learn more. </p>
+					<h2>Run</h2>
+					<p>The IDE is intentionally simple — just enough to get curious.</p>
+					<p>BazzBasic syntax highlighting is also available for <b>Notepad++</b> and <b>Geany</b>.</p>
+					<p>Read more <a target="_blank" rel="noopener" href="https://github.com/EkBass/BazzBasic/tree/main/extras">at GitHub</a>. </p>
 				</section>
 				<section class="main-right">
-					<h2>3. Editor</h2>
-					<p>The built-in IDE is intentionally simple — just enough to get curious.</p>
-					<p>BazzBasic syntax highlighting is also available for <b>Notepad++</b>, <b>Geany</b> and <b>Visual Studio Code</b>. </p>
-					<p>Read more <a target="_blank" rel="noopener" href="https://github.com/EkBass/BazzBasic/tree/main/extras">at GitHub</a>. </p>
+					<h2>The Code</h2>
+					<section class="code-showcase">
+					<p class="code-showcase-desc"><code>' === ARGCOUNT<br>
+						' Return the amount of arguments passed to program.<br>
+						' BazzBasic.exe test.bas arg1 arg2<br>
+						PRINT ARGCOUNT ' Output: 2<br>
+						<br>
+						' === ARGS()<br>
+						' Returns certain argument, if passed.<br>
+						' BazzBasic.exe test.bas arg1 arg2<br>
+						PRINT ARGS(0) ' Output: arg1<br>
+						PRINT ARGS(1) ' arg2<br>
+					</code></p>
 				</section>
 			</div>
 		</main>
