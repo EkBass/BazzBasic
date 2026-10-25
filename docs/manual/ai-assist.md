@@ -60,6 +60,7 @@ These popular AI services can all load `SKILL.md` as a skill automatically (as o
 - OpenClaw.AI
 - OpenCode.AI
 - Tricentis Tabnine
+- Kimi.com
 - ...and many more.
 
 The list grows all the time.  
