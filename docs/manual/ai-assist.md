@@ -44,9 +44,27 @@ A skill folder may also contain extra files such as examples or scripts, but the
 
 After that the AI uses the guide automatically whenever BazzBasic comes up.
 
-**Any other AI service:** `SKILL.md` is ordinary Markdown, so it works everywhere. Upload it as a file in the chat, add it as a project file, or paste it into a custom instruction / agent guide. The header is just a few extra lines the AI will read along with the rest.
+### Native SKILL.md support
 
-With the guide in place, an AI can help you learn BazzBasic, explain code, find bugs and write new programs that actually run.
+These tools can load `SKILL.md` as a skill automatically (as of October 2026):
+
+- Anthropic Claude (Claude.ai, Claude Code)
+- OpenAI ChatGPT and Codex
+- Google Gemini CLI
+- Mistral Vibe
+- GitHub Copilot (VS Code agent mode, Copilot CLI)
+- Microsoft 365 Copilot (Cowork)
+- xAI Grok
+- OpenCode.AI
+- DeepSeek Seek Code
+- OpenClaw.AI
+- OpenCode.AI
+- Tricentis Tabnine
+
+The list grows all the time.  
+See [agentskills.io/clients](https://agentskills.io/clients) for more.
+
+**Every other AI** understands it too. `SKILL.md` is plain Markdown, so just attach it to the chat or paste it into your project instructions.
 
 ## License and updates
 
