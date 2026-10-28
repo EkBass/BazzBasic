@@ -4,6 +4,10 @@
 ' Translation of: #BASIC256
 ' ============================================
 
+' BB needs fixing. POINT in large loops makes computer freeze.
+' POINT in a large loop freezes the whole system
+
+END
 [inits]
 LET wid# = 293
 LET hgt# = 341
