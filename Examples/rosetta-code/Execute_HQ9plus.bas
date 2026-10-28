@@ -1,5 +1,7 @@
 ' =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 ' https://rosettacode.org/wiki/Execute_HQ9%2B
+' FILE: Execute_HQ9plus.bas
+' Bit adjusted version of original by: https://github.com/Mkratzen
 ' BazzBasic: https://ekbass.github.io/BazzBasic/
 ' =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
