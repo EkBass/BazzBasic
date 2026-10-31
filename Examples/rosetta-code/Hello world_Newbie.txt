@@ -1,3 +1,15 @@
+```text
+' ============================================
+' ROSETTA: https://rosettacode.org/wiki/Hello_world/Newbie
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Explains how to download BazzBasic and run a Hello World program from the built-in IDE and from the console.
+' CATEGORY: basics
+' TAGS: getting started, hello world, ide, command line
+' MINVERSION: 1.5
+' ============================================
+```
+
 =={{header|BazzBasic}}==
 Getting started with BazzBasic is really easy.
 

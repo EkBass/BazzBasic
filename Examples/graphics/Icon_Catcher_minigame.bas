@@ -1,11 +1,16 @@
-' ============================================================
+' ============================================
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Catch falling icons in a bucket steered with the mouse; faster icons are drawn larger, each catch plays a coin sound, and the HUD counts caught, missed and total icons.
+' CATEGORY: games
+' TAGS: mouse, falling objects, collision detection, score, sound effects
+' REQUIRES: assets/B-icon.png, assets/coin.mp3
+' MINVERSION: 1.5
+' ============================================
 ' Icon Catcher - BazzBasic port of a SmallBasic minigame
 ' Original: https://smallbasic.com/smallbasic.com/program/?nts150
-' BazzBasic: https://github.com/EkBass/BazzBasic
-' ============================================================
 ' Move the bucket with the mouse and catch the falling icons.
 ' ESC quits.
-' ============================================================
 
 [inits]
     ' --- Screen & layout ---

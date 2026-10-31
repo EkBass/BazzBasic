@@ -1,8 +1,12 @@
 ' ============================================
-' Tile-based race track: 64x64 tiles, automatic kerbs
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Drives a car around a race track built from a text map of 64x64 tiles, with automatic red and white kerbs, road and grass surfaces that change speed and drag, and tree trunks that the car bounces off.
+' CATEGORY: simulation
+' TAGS: tile map, race track, driving, collision, sprite rotation
+' REQUIRES: assets/plr_car.png
+' MINVERSION: 1.5
 ' ============================================
-'
 ' Controls: UP = throttle, DOWN = brake/reverse,
 '           LEFT/RIGHT = steer, ESC = quit
 '

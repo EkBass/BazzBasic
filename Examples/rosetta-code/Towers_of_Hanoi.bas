@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Towers_of_Hanoi
+' ROSETTA: https://rosettacode.org/wiki/Towers_of_Hanoi
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Solves the Towers of Hanoi puzzle recursively for four disks and prints each of the 15 moves from peg A to peg C, using peg B as the spare peg.
+' CATEGORY: algorithms
+' TAGS: recursion, towers of hanoi, def fn
+' MINVERSION: 1.5
 ' ============================================
 
 ' Recursive solution: move n disks from peg 'from' to peg 'to'

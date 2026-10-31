@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/URL_decoding
+' ROSETTA: https://rosettacode.org/wiki/URL_decoding
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Decodes percent-encoded URL strings by replacing every %XX sequence with the character of that hex code, and prints two decoded example URLs.
+' CATEGORY: strings
+' TAGS: url decoding, percent encoding, hexadecimal, chr
+' MINVERSION: 1.5
 ' ============================================
 
 ' Convert two-char hex string to decimal value

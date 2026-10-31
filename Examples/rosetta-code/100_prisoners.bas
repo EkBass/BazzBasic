@@ -1,7 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/100_prisoners
+' ROSETTA: https://rosettacode.org/wiki/100_prisoners
 ' BazzBasic: https://github.com/EkBass/BazzBasic
-' Simulate random vs. optimal (cycle-following) drawer strategies
+' --------------------------------------------
+' DESCRIPTION: Simulates the 100 prisoners puzzle many times with a random drawer strategy and with the optimal cycle-following strategy, and prints how often all prisoners find their own number with each.
+' CATEGORY: simulation
+' TAGS: monte carlo, probability, fisher-yates shuffle, puzzle
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

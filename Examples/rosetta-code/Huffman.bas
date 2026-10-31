@@ -1,16 +1,20 @@
 ' ============================================
-' Huffman Coding - encode / decode from the command line
+' ROSETTA: https://rosettacode.org/wiki/Huffman_coding
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Huffman coding from the command line: encodes text into a code table and a self-contained package, and decodes such a package back to text.
+' CATEGORY: algorithms
+' TAGS: huffman coding, compression, binary tree, command line arguments
+' MINVERSION: 1.5
 ' ============================================
 ' Usage:
-'   BazzBasic.exe huffman.bas -encode "Hello World"
-'   BazzBasic.exe huffman.bas -decode "72:1,101:1,.../1110..."
+'   BazzBasic.exe huffman.bas -encode "this is an example for huffman encoding"
+'   BazzBasic.exe huffman.bas -decode "116:1,104:2,105:3,115:2,32:6,97:3,110:4,101:3,120:1,109:2,112:1,108:1,102:3,111:2,114:1,117:1,99:1,100:1,103:1/0101011111100100101011001001010111000001011101010111100001101100011011101101111001000111010111111011111110111000111100000101110100010000010010001100100011110"
 '
 ' -encode prints a code table and a self-contained PACKAGE:
 '     <ascii>:<count>,<ascii>:<count>,.../<bits>
 ' The header (counts) is what lets -decode rebuild the exact same tree.
 ' A bare bit string alone cannot be decoded - the tree is part of the data.
-' ============================================
 
 [inits]
     LET SEP_PACKAGE# = "/"      ' header / bits separator (safe in cmd.exe, unlike "|")
@@ -334,23 +338,54 @@ RETURN
 RETURN
 
 ' Output:
-' > BazzBasic.exe huffman.bas -encode "Hello World"
+' > BazzBasic.exe huffman.bas -encode "this is an example for huffman encoding"
 ' Symbol  Count  Code
-' 'H'     1      1110
-' 'e'     1      1111
-' 'l'     3      10
-' 'o'     2      110
-' ' '     1      000
-' 'W'     1      001
-' 'r'     1      010
-' 'd'     1      011
-'
-' Original : 88 bits (8 bits per char)
-' Encoded  : 32 bits (36.4% of original, header not counted)
-' Bits     : 11101111101011000000111001010011
-' Package  : 72:1,101:1,108:3,111:2,32:1,87:1,114:1,100:1/11101111101011000000111001010011
-'
-' > BazzBasic.exe huffman.bas -decode "72:1,101:1,108:3,111:2,32:1,87:1,114:1,100:1/11101111101011000000111001010011"
-' (same table)
-'
-' Decoded  : Hello World
+' 't'     1      01010
+' 'h'     2      11111
+' 'i'     3      1001
+' 's'     2      0010
+' ' '     6      101
+' 'a'     3      1100
+' 'n'     4      000
+' 'e'     3      1101
+' 'x'     1      01011
+' 'm'     2      0011
+' 'p'     1      01100
+' 'l'     1      01101
+' 'f'     3      1110
+' 'o'     2      0100
+' 'r'     1      01110
+' 'u'     1      01111
+' 'c'     1      10000
+' 'd'     1      10001
+' 'g'     1      11110
+
+' Original : 312 bits (8 bits per char)
+' Encoded  : 157 bits (50.3% of original, header not counted)
+' Bits     : 0101011111100100101011001001010111000001011101010111100001101100011011101101111001000111010111111011111110111000111100000101110100010000010010001100100011110
+' Package  : 116:1,104:2,105:3,115:2,32:6,97:3,110:4,101:3,120:1,109:2,112:1,108:1,102:3,111:2,114:1,117:1,99:1,100:1,103:1/0101011111100100101011001001010111000001011101010111100001101100011011101101111001000111010111111011111110111000111100000101110100010000010010001100100011110
+
+' Output:
+' > BazzBasic.exe huffman.bas -decode "116:1,104:2,105:3,115:2,32:6,97:3,110:4,101:3,120:1,109:2,112:1,108:1,102:3,111:2,114:1,117:1,99:1,100:1,103:1/0101011111100100101011001001010111000001011101010111100001101100011011101101111001000111010111111011111110111000111100000101110100010000010010001100100011110"
+' Symbol  Count  Code
+' 't'     1      01010
+' 'h'     2      11111
+' 'i'     3      1001
+' 's'     2      0010
+' ' '     6      101
+' 'a'     3      1100
+' 'n'     4      000
+' 'e'     3      1101
+' 'x'     1      01011
+' 'm'     2      0011
+' 'p'     1      01100
+' 'l'     1      01101
+' 'f'     3      1110
+' 'o'     2      0100
+' 'r'     1      01110
+' 'u'     1      01111
+' 'c'     1      10000
+' 'd'     1      10001
+' 'g'     1      11110
+
+' Decoded  : this is an example for huffman encoding

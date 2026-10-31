@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Evaluate_binomial_coefficients
+' ROSETTA: https://rosettacode.org/wiki/Evaluate_binomial_coefficients
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Calculates the binomial coefficient C(5, 3) with the multiplicative formula and prints Pascal's triangle for rows 0 to 14.
+' CATEGORY: math
+' TAGS: binomial coefficient, pascal's triangle, combinations, multiplicative formula
+' MINVERSION: 1.5
 ' ============================================
 
 ' Binomial coefficient C(n, k) via the multiplicative formula.

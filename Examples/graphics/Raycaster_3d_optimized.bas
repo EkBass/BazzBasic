@@ -1,13 +1,15 @@
-' ==========================================
-' raycaster_3d.bas — BazzBasic
-' Classic Wolf3D-style renderer.
+' ============================================
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Walk through a maze rendered as a Wolf3D-style first-person 3D view by casting one ray per screen slice, with distance shading, a minimap and an FPS counter.
+' CATEGORY: drawing
+' TAGS: raycasting, 3d graphics, fasttrig, minimap, first-person view
+' MINVERSION: 1.5
+' ============================================
 ' FastTrig lookup tables for fast sin/cos.
-' https://ekbass.github.io/BazzBasic/
-' ==========================================
 ' Controls:
 '   Arrow keys  = Move / Rotate
 '   ESC         = Quit
-' ==========================================
 
 [inits]
     ' Screen

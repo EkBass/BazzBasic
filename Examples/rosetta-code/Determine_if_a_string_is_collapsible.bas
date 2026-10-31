@@ -1,7 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Determine_if_a_string_is_collapsible
+' ROSETTA: https://rosettacode.org/wiki/Determine_if_a_string_is_collapsible
 ' BazzBasic: https://github.com/EkBass/BazzBasic
-' Collapse immediately repeated characters in a string
+' --------------------------------------------
+' DESCRIPTION: Collapses immediately repeated characters in each test string and prints the original and collapsed strings with their lengths.
+' CATEGORY: strings
+' TAGS: collapse repeated characters, string squeeze, repeat
+' MINVERSION: 1.5
 ' ============================================
 
 ' Keep the first character of every run, drop the repeats

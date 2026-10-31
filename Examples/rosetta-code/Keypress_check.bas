@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Keyboard_input/Keypress_check
+' ROSETTA: https://rosettacode.org/wiki/Keyboard_input/Keypress_check
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Waits in a polling loop for any key press without pausing the program, using INKEY, and prints the key code.
+' CATEGORY: input
+' TAGS: inkey, keypress, non-blocking input
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

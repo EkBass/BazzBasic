@@ -1,8 +1,12 @@
-' =====================================
-' Lane Racer — Part I
-' A simple lane-change driving example
-' for BazzBasic.
-'
+' ============================================
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Drives a car along a scrolling road: RIGHT accelerates, LEFT brakes, UP and DOWN change lane position depending on speed, the road shoulder caps the speed, a crash zone stops the car, and a speed bar shows the current speed (Part I).
+' CATEGORY: simulation
+' TAGS: driving, scrolling road, acceleration, speed bar, keydown
+' REQUIRES: assets/background.png, assets/plr_car.png
+' MINVERSION: 1.5
+' ============================================
 ' Controls:
 '   RIGHT  — accelerate
 '   LEFT   — brake
@@ -14,9 +18,6 @@
 '   assets/background.png  800x600 — road UI with "Speed" label and key hints
 '   assets/plr_car.png     200x92  — player car sprite (top-left positioned)
 '                          source: https://looneybits.itch.io/2d-urban-cars
-'
-' https://ekbass.github.io/BazzBasic/
-' =====================================
 
 ' ---- SCREEN & IMAGES ----
 [inits]

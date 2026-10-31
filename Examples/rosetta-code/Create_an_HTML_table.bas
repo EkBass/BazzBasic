@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Create_an_HTML_table
+' ROSETTA: https://rosettacode.org/wiki/Create_an_HTML_table
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Prints an HTML page with a table of four rows of random numbers under the column headings X, Y and Z.
+' CATEGORY: data
+' TAGS: html, table, markup generation, random numbers
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

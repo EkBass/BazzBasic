@@ -1,9 +1,14 @@
 ' ============================================
-' https://rosettacode.org/wiki/Almost_prime
+' ROSETTA: https://rosettacode.org/wiki/Almost_prime
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Prints the first ten k-almost primes (numbers with exactly k prime factors, counted with repeats) for k = 1 to 5.
+' CATEGORY: math
+' TAGS: almost primes, prime factors, factorization
+' MINVERSION: 1.5
+' ============================================
 ' Task: show the first ten k-almost primes for 1 <= k <= 5
 '       (numbers with exactly k prime factors, counting repeats).
-' ============================================
 
 ' TRUE if n$ has exactly k$ prime factors (counted with multiplicity)
 DEF FN IsKPrime$(n$, k$)

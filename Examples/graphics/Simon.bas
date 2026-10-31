@@ -1,14 +1,17 @@
 ' ============================================
-' Simon Says
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Simon Says memory game: watch the growing sequence of flashing coloured tiles, then click them back in the same order; each correct round adds one tile and a wrong click ends the game with a score.
+' CATEGORY: games
+' TAGS: memory game, mouse, sequence, flashing tiles, score
+' MINVERSION: 1.5
+' ============================================
 ' Ported from Python (turtle-based) to BazzBasic
 ' Original concept: freegames "simonsays" example
-' BazzBasic: https://github.com/EkBass/BazzBasic
-' ============================================
 ' Click any tile to begin. Watch the flashing
 ' pattern, then click the tiles back in the same
 ' order. Each correct round adds one more tile.
 ' ESC quits at any time.
-' ============================================
 
 [inits]
     ' --- Window ---

@@ -1,9 +1,14 @@
 ' ============================================
-' https://rosettacode.org/wiki/Square_but_not_cube
+' ROSETTA: https://rosettacode.org/wiki/Square_but_not_cube
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Prints the first 30 positive integers that are squares but not cubes, and marks the squares that are also cubes (1, 64, 729) without counting them.
+' CATEGORY: math
+' TAGS: squares, cubes, cube root, pow, fstring
+' MINVERSION: 1.5
+' ============================================
 ' Show the first 30 positive integers which are squares but not cubes,
 ' and mark the squares that are also cubes along the way.
-' ============================================
 
 [inits]
     LET LIMIT# = 30     ' how many square-but-not-cube numbers to show

@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/String_matching
+' ROSETTA: https://rosettacode.org/wiki/String_matching
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Checks whether a string starts with, ends with or contains another string and prints every position where it occurs.
+' CATEGORY: strings
+' TAGS: string matching, instr, left, right, substring search
+' MINVERSION: 1.5
 ' ============================================
 [inits]
     LET s1$      = "Hello World Hello"

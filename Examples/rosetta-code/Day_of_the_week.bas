@@ -1,7 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Day_of_the_week
+' ROSETTA: https://rosettacode.org/wiki/Day_of_the_week
 ' BazzBasic: https://github.com/EkBass/BazzBasic
-' Years between 2008 and 2121 in which 25 December falls on a Sunday
+' --------------------------------------------
+' DESCRIPTION: Lists the years between 2008 and 2121 in which 25 December falls on a Sunday.
+' CATEGORY: system
+' TAGS: day of the week, christmas, leap years, calendar arithmetic
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

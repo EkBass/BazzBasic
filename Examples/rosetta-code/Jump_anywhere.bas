@@ -1,8 +1,11 @@
 ' ============================================
-' GOTO / GOSUB presentation for BazzBasic
-' BazzBasic supports dynamic calls
-' https://rosettacode.org/wiki/Jump_anywhere
+' ROSETTA: https://rosettacode.org/wiki/Jump_anywhere
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Demonstrates GOTO and GOSUB jumps: straight to a label, dynamically through a variable or constant that holds the label name, from inside a function with a function-local label, and to the label [1].
+' CATEGORY: basics
+' TAGS: goto, gosub, labels, dynamic jump
+' MINVERSION: 1.5
 ' ============================================
 
 DEF FN FuncHello$(msg$)

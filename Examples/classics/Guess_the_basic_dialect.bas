@@ -1,8 +1,12 @@
 ' ============================================
-' Guess the BASIC dialect - scrambled-name memory game
 ' BazzBasic: https://github.com/EkBass/BazzBasic
-' Public domain
+' --------------------------------------------
+' DESCRIPTION: Shows a list of BASIC dialect names for 15 seconds, then scrambles one name and asks the player to guess which dialect it is.
+' CATEGORY: games
+' TAGS: word game, memory game, string scrambling
+' MINVERSION: 1.5
 ' ============================================
+' Public domain
 
 ' Returns text$ with its characters in random order.
 ' It repeatedly removes one random character from what is left and

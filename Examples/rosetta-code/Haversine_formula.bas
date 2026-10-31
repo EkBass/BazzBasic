@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Haversine_formula
+' ROSETTA: https://rosettacode.org/wiki/Haversine_formula
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Calculates the great-circle distance between Nashville (BNA) and Los Angeles (LAX) with the haversine formula, using two different earth radii.
+' CATEGORY: math
+' TAGS: haversine, great-circle distance, trigonometry, atan2
+' MINVERSION: 1.5
 ' ============================================
 ' Great-circle distance between two points given in degrees.
 '   a = sin^2(dLat/2) + cos(lat1) * cos(lat2) * sin^2(dLon/2)

@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Generic_swap
+' ROSETTA: https://rosettacode.org/wiki/Generic_swap
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Swaps the contents of two variables without a temporary variable, once for two numbers and once for two strings.
+' CATEGORY: basics
+' TAGS: swap, generic swap, compound assignment
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/User_input/Text
+' ROSETTA: https://rosettacode.org/wiki/User_input/Text
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Asks the user for a string and for the integer 75000 with INPUT and prints both back.
+' CATEGORY: input
+' TAGS: input statement, text input, val
+' MINVERSION: 1.5
 ' ============================================
 [inits]
     LET text$

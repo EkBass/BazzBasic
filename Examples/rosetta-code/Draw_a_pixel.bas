@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Draw_a_pixel
+' ROSETTA: https://rosettacode.org/wiki/Draw_a_pixel
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Opens a 320x240 window, draws a single red pixel at (100, 100) and waits for a key press.
+' CATEGORY: drawing
+' TAGS: pixel, pset, rgb, screen
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

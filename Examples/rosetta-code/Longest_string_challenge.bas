@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Longest_string_challenge
+' ROSETTA: https://rosettacode.org/wiki/Longest_string_challenge
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Prints the longest strings of a list, once with LEN and two passes and once without LEN by chopping one character at a time from two candidates until one runs out.
+' CATEGORY: algorithms
+' TAGS: longest string, string length, comparison, split
+' MINVERSION: 1.5
 ' ============================================
 '
 ' Two different approaches.
@@ -15,7 +20,6 @@
 '                one character from each candidate
 '                per round and watching which one
 '                empties first.
-' ============================================
 
 DEF FN Longer$(a$, b$)
     ' Returns:

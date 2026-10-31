@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Find_limit_of_recursion
+' ROSETTA: https://rosettacode.org/wiki/Find_limit_of_recursion
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Calls a function recursively without end, printing the depth each time, until the interpreter stops with a recursion-too-deep error.
+' CATEGORY: algorithms
+' TAGS: recursion, recursion limit, stack overflow, def fn
+' MINVERSION: 1.5
 ' ============================================
 
 DEF FN limit$(c$)

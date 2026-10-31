@@ -1,7 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Rainbow
+' ROSETTA: https://rosettacode.org/wiki/Rainbow
 ' BazzBasic: https://github.com/EkBass/BazzBasic
-' Print "RAINBOW" with every letter in a different rainbow color
+' --------------------------------------------
+' DESCRIPTION: Draws the word RAINBOW in a graphics window with every letter in a different rainbow colour, using RGB colours and DRAWSTRING.
+' CATEGORY: drawing
+' TAGS: rainbow, rgb, drawstring, colors
+' MINVERSION: 1.5
 ' ============================================
 '
 ' Console COLOR is limited to the 16-color palette (no orange, indigo

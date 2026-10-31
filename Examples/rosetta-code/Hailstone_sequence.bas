@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Hailstone_sequence
+' ROSETTA: https://rosettacode.org/wiki/Hailstone_sequence
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Prints the hailstone (Collatz) sequence for 27 and finds the starting number below 100,000 with the longest sequence.
+' CATEGORY: math
+' TAGS: hailstone sequence, collatz, sequence length, gosub
+' MINVERSION: 1.5
 ' ============================================
 ' [sub:hailstone] builds the full sequence for n$ into seq$.
 ' HailLength$ only counts the steps - used for the big search,

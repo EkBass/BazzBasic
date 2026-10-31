@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Variables
+' ROSETTA: https://rosettacode.org/wiki/Variables
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Demonstrates declaring and using variables and constants: LET with and without values, multiple declarations, type conversion by assignment, constants visible everywhere and variables local to a function.
+' CATEGORY: basics
+' TAGS: variables, constants, let, scope
+' MINVERSION: 1.5
 ' ============================================
 
 ' user-defined function

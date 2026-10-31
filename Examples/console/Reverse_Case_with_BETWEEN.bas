@@ -1,7 +1,11 @@
-REM ================================================
-REM Reverse_Case_with_BETWEEN.bas
-REM BazzBasic - github.com/EkBass/BazzBasic
-REM ================================================
+' ============================================
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Reverses the case of every letter in a string, using BETWEEN to detect the upper and lower case ASCII ranges.
+' CATEGORY: strings
+' TAGS: case conversion, between, ascii
+' MINVERSION: 1.5
+' ============================================
 
 DEF FN ReverseCase$(s$)
     LET result$ = ""

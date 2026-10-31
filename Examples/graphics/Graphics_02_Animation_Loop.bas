@@ -1,10 +1,12 @@
 ' ============================================
-' GRAPHICS SNIPPET 2: The Animation Loop Pattern
-' SCREENLOCK, LINE...BF clearing instead of CLS, SLEEP framing,
-' and why math/logic stays OUTSIDE the SCREENLOCK block.
-' Self-contained - no external files needed.
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Graphics snippet 2: the animation loop pattern, shown with a bouncing ball (SCREENLOCK, clearing with LINE ... BF instead of CLS, SLEEP frame pacing, and keeping math outside the SCREENLOCK block).
+' CATEGORY: drawing
+' TAGS: graphics tutorial, animation loop, screenlock, frame pacing
+' MINVERSION: 1.5
 ' ============================================
+' Self-contained - no external files needed.
 
 [inits]
     SCREEN 12   ' 640x480

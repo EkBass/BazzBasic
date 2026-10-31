@@ -1,12 +1,15 @@
 ' ============================================
-' Local LLM API call (Ollama) — BazzBasic
-' https://github.com/EkBass/BazzBasic
-' Public domain
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Sends a short prompt to a local Ollama server through its OpenAI-compatible chat endpoint and prints the reply.
+' CATEGORY: api
+' TAGS: ollama, local llm, httppost, json
+' MINVERSION: 1.5
 ' ============================================
+' Public domain
 ' No .env / API key needed — the server is local.
 ' Requires: Ollama running with a model pulled, e.g.
 '   ollama pull llama3.2
-' ============================================
 
 ' DISCLAIMER:
 ' This code was last verified on 04.04.2026 using llama3.1.

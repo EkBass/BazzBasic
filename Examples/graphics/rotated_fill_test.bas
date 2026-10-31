@@ -1,6 +1,10 @@
 ﻿' ============================================
-' Test: filled LOADSHAPE shapes stay filled when rotated
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Visual test that filled LOADSHAPE shapes stay solid at every angle: a rectangle and a triangle rotate continuously next to a static circle while the current angle is shown.
+' CATEGORY: drawing
+' TAGS: loadshape, rotateshape, filled shapes, test
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

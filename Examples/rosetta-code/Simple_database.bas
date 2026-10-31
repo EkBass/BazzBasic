@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Simple_database
+' ROSETTA: https://rosettacode.org/wiki/Simple_database
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: A tiny command-line diary that stores entries (title, category, date, notes) in a JSON file and prints the latest entry, the latest entry of each category, or all entries sorted by date.
+' CATEGORY: data
+' TAGS: json, database, command line arguments, insertion sort, savejson
+' MINVERSION: 1.5
 ' ============================================
 ' A tiny command-line diary/organizer. Data is kept as JSON.
 '

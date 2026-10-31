@@ -1,7 +1,11 @@
-' BazzBasic version 1.4c
-' https://ekbass.github.io/BazzBasic/
-
-' Returns 1 (TRUE) if variable/constant is initialized
+' ============================================
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Demonstrates ISSET, which returns 1 for a declared variable or constant (even without a value) and 0 for an undeclared one.
+' CATEGORY: basics
+' TAGS: isset, variables, constants, declaration
+' MINVERSION: 1.5
+' ============================================
 
 LET a$ = "hello"
 LET b$                  ' declared with no value

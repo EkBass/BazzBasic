@@ -1,7 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Chinese_zodiac
+' ROSETTA: https://rosettacode.org/wiki/Chinese_zodiac
 ' BazzBasic: https://github.com/EkBass/BazzBasic
-' Determine the Chinese zodiac animal, element, yin/yang and cycle year for given years
+' --------------------------------------------
+' DESCRIPTION: Prints the Chinese zodiac element, animal, yin/yang polarity and cycle year for a list of given years.
+' CATEGORY: system
+' TAGS: chinese zodiac, calendar, modulo, lookup tables
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

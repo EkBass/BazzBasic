@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Random_number_generator_(included)
+' ROSETTA: https://rosettacode.org/wiki/Random_number_generator_(included)
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Prints a random integer from 0 to 99 and a random float between 0 and 1 with the built-in generator RND, which needs no manual seeding.
+' CATEGORY: math
+' TAGS: rnd, random numbers, built-in generator
+' MINVERSION: 1.5
 ' ============================================
 
 ' BazzBasic uses .NET's Random class.

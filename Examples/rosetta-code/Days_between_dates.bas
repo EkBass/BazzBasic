@@ -1,7 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Days_between_dates
+' ROSETTA: https://rosettacode.org/wiki/Days_between_dates
 ' BazzBasic: https://github.com/EkBass/BazzBasic
-' Number of days between two dates given as YYYY-MM-DD
+' --------------------------------------------
+' DESCRIPTION: Asks for two dates in YYYY-MM-DD format, validates them and prints the number of days between them.
+' CATEGORY: system
+' TAGS: days between dates, date validation, line input, day number
+' MINVERSION: 1.5
 ' ============================================
 
 ' TRUE if the string looks like YYYY-MM-DD with a sane month and day

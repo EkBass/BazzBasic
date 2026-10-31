@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Calculating_the_value_of_e
+' ROSETTA: https://rosettacode.org/wiki/Calculating_the_value_of_e
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Calculates Euler's number e by summing the series of 1/n! until the sum stops changing, and compares it with the built-in EULER# constant.
+' CATEGORY: math
+' TAGS: euler number, infinite series, factorial, floating point
+' MINVERSION: 1.5
 ' ============================================
 
 ' While BazzBasic has Euler as built-in constant (EULER#)

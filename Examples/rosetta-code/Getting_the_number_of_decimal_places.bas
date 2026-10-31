@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Getting_the_number_of_decimal_places
+' ROSETTA: https://rosettacode.org/wiki/Getting_the_number_of_decimal_places
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Prints how many decimal places each of five sample values has, including one given as a string to keep its trailing zero.
+' CATEGORY: math
+' TAGS: decimal places, instr, numeric strings, def fn
+' MINVERSION: 1.5
 ' ============================================
 ' Works on numbers and numeric strings alike. A numeric literal
 ' drops trailing zeros (12.3450 -> 12.345), so to keep them the

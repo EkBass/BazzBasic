@@ -1,11 +1,14 @@
 ' ============================================
-' 24 GAME - BazzBasic Edition
-' https://rosettacode.org/wiki/24_game
+' ROSETTA: https://rosettacode.org/wiki/24_game
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Console 24 game: four random digits are given and the player enters a Reverse Polish Notation expression that uses each digit once to make 24; a brute-force solver checks that the digits are solvable.
+' CATEGORY: games
+' TAGS: rpn, expression evaluator, brute force solver, puzzle
+' MINVERSION: 1.5
 ' ============================================
 ' Use  +  -  *  /  with four given digits to make 24.
 ' Enter your expression in Reverse Polish Notation (RPN).
-' ============================================
 
 [inits]
 	' Color constants

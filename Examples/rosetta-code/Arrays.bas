@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Arrays
+' ROSETTA: https://rosettacode.org/wiki/Arrays
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Shows how to create and read numeric, associative, two-dimensional and two-dimensional associative arrays.
+' CATEGORY: basics
+' TAGS: arrays, dim, associative arrays, multi-dimensional arrays
+' MINVERSION: 1.5
 ' ============================================
 
 ' dynamic-array

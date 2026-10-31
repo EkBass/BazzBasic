@@ -1,11 +1,14 @@
 ' ============================================
-' TOWERS OF HANOI - BazzBasic Edition
-' Original: Creative Computing, Morristown NJ
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Interactive Towers of Hanoi puzzle with 1 to 7 disks drawn in ASCII, move validation and a comparison to the optimal move count.
+' CATEGORY: games
+' TAGS: towers of hanoi, puzzle game, ascii art, 2d arrays
+' MINVERSION: 1.5
 ' ============================================
+' Original: Creative Computing, Morristown NJ
 ' Move all disks from tower 1 to tower 3.
 ' Never place a larger disk on a smaller one!
-' ============================================
 
 [inits]
     LET BLACK#    = 0

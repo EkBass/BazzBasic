@@ -1,7 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Dutch_national_flag_problem
+' ROSETTA: https://rosettacode.org/wiki/Dutch_national_flag_problem
 ' BazzBasic: https://github.com/EkBass/BazzBasic
-' Sort random red/white/blue balls into Dutch flag order (Dijkstra's 3-way partition)
+' --------------------------------------------
+' DESCRIPTION: Sorts a random line of red, white and blue balls into Dutch flag order with Dijkstra's three-way partition and verifies the result.
+' CATEGORY: algorithms
+' TAGS: dutch national flag, three-way partition, sorting, random
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

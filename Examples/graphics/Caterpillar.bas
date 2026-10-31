@@ -1,5 +1,12 @@
+' ============================================
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Steer a caterpillar with the arrow keys to eat leaves; each leaf scores points and lengthens the caterpillar, and touching the screen edge ends the game.
+' CATEGORY: games
+' TAGS: snake-like, arrow keys, score
+' MINVERSION: 1.5
+' ============================================
 ' Caterpillar Game - Ported from Python
-' BazzBasic version 1.4
 ' original https://github.com/SmallLion/Python-Projects/blob/main/Caterpillar.py
 
 [inits]

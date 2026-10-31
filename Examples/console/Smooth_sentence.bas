@@ -1,8 +1,12 @@
 ' ============================================
-' Smooth Sentence - Edabit challenge in BazzBasic
-' https://edabit.com/challenge/SkY5Nw3rS7WvkQmFc
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Checks whether a sentence is "smooth", i.e. the last letter of each word matches the first letter of the next word (Edabit challenge).
+' CATEGORY: strings
+' TAGS: edabit, word puzzles, split, string comparison
+' MINVERSION: 1.5
 ' ============================================
+' https://edabit.com/challenge/SkY5Nw3rS7WvkQmFc
 ' A sentence is "smooth" when the last letter of
 ' every word matches the first letter of the next
 ' word, case-insensitively.
@@ -15,7 +19,6 @@
 '   - Bail out with FALSE the moment a seam fails;
 '     otherwise return TRUE. A 0- or 1-word
 '     sentence is vacuously smooth.
-' ============================================
 
 DEF FN IsSmooth$(sentence$)
     DIM words$

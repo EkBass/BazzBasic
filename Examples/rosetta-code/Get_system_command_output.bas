@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Get_system_command_output
+' ROSETTA: https://rosettacode.org/wiki/Get_system_command_output
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Runs ping google.com through SHELL, captures the command's output and writes it to temp.txt.
+' CATEGORY: api
+' TAGS: shell, system command output, ping, filewrite
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

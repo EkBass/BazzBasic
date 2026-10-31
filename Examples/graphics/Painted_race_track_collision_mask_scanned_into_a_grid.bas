@@ -1,8 +1,11 @@
 ' ============================================
-' Painted race track: collision mask scanned into a grid
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Drives a car around a track whose road and grass collision grid is scanned once from a painted mask image with POINT, so the surface under the car sets its top speed and drag; falls back to a built-in ring track when the optional images are missing.
+' CATEGORY: simulation
+' TAGS: race track, collision mask, point, grid, driving
+' MINVERSION: 1.5
 ' ============================================
-'
 ' Controls: UP = throttle, DOWN = brake/reverse,
 '           LEFT/RIGHT = steer, ESC = quit
 '

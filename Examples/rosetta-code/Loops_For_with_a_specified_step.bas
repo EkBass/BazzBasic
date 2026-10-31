@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Loops/For_with_a_specified_step
+' ROSETTA: https://rosettacode.org/wiki/Loops/For_with_a_specified_step
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Prints the numbers 1 to 9 with a FOR loop using STEP 2, then the numbers 10 down to 2 using STEP -2.
+' CATEGORY: basics
+' TAGS: for loop, step, negative step
+' MINVERSION: 1.5
 ' ============================================
 [pos-step]
     PRINT "# Step 2:"

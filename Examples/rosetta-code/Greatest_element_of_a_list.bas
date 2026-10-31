@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Greatest_element_of_a_list
+' ROSETTA: https://rosettacode.org/wiki/Greatest_element_of_a_list
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Fills a list with 5 to 14 random numbers between -100 and 100, prints them and finds the greatest element.
+' CATEGORY: algorithms
+' TAGS: maximum, list, max, asjson, asarray
+' MINVERSION: 1.5
 ' ============================================
 ' Arrays can't be passed to DEF FN directly, so the list travels
 ' as a JSON string and is rebuilt inside the function.

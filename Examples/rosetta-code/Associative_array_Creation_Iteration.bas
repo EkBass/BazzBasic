@@ -1,7 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Associative_array/Creation
-' https://rosettacode.org/wiki/Associative_array/Iteration
+' ROSETTA: https://rosettacode.org/wiki/Associative_array/Creation, https://rosettacode.org/wiki/Associative_array/Iteration
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Creates an associative array with string keys and prints its values, then iterates over it using an ordered list of keys.
+' CATEGORY: basics
+' TAGS: associative arrays, dim, string keys, iteration
+' MINVERSION: 1.5
 ' ============================================
 ' In BazzBasic, any DIM array accepts string keys,
 ' making it a natural associative array / dictionary.

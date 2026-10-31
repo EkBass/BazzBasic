@@ -1,9 +1,14 @@
 ' ============================================
-' https://rosettacode.org/wiki/Anti-primes
+' ROSETTA: https://rosettacode.org/wiki/Anti-primes
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Finds and prints the first twenty anti-primes (numbers with more divisors than any smaller number).
+' CATEGORY: math
+' TAGS: anti-primes, divisors, highly composite numbers
+' MINVERSION: 1.5
+' ============================================
 ' Task: generate and show the first twenty anti-primes
 '       (numbers with more divisors than any smaller number).
-' ============================================
 
 ' Count divisors by pairing d$ with n$ / d$ up to the square root
 DEF FN CountDivisors$(n$)

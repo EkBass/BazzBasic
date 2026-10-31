@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Find_squares_n_where_n%2B1_is_prime
+' ROSETTA: https://rosettacode.org/wiki/Find_squares_n_where_n%2B1_is_prime
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Prints the squares below 1000 whose successor n + 1 is prime.
+' CATEGORY: math
+' TAGS: squares, primes, trial division
+' MINVERSION: 1.5
 ' ============================================
 
 DEF FN IsPrime$(n$)

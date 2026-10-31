@@ -1,7 +1,11 @@
-' ================================================
-' Solar System Weight Calculator
-' BazzBasic - github.com/EkBass/BazzBasic
-' ================================================
+' ============================================
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Asks for a weight on Earth and prints what it would be on the Sun, each planet and Pluto.
+' CATEGORY: math
+' TAGS: gravity, planets, calculator, user input
+' MINVERSION: 1.5
+' ============================================
 
 [inits]
     DIM planets$

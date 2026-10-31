@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Egyptian_division
+' ROSETTA: https://rosettacode.org/wiki/Egyptian_division
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Divides 580 by 34 using Egyptian division (a table of doublings and powers of two) and prints the quotient and remainder.
+' CATEGORY: math
+' TAGS: egyptian division, doubling, powers of two, integer division
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

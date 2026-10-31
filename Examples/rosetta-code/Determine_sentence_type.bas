@@ -1,8 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Determine_sentence_type
+' ROSETTA: https://rosettacode.org/wiki/Determine_sentence_type
 ' BazzBasic: https://github.com/EkBass/BazzBasic
-' Classify sentences by their final punctuation:
-' E = Exclamation!, Q = Question?, S = Serious., N = Neutral
+' --------------------------------------------
+' DESCRIPTION: Classifies each sentence of a paragraph by its final punctuation: Q for a question, E for an exclamation, S for a serious statement ending in a full stop and N for a neutral sentence without closing punctuation.
+' CATEGORY: strings
+' TAGS: sentence type, punctuation, parsing, instr
+' MINVERSION: 1.5
 ' ============================================
 
 ' Type letter is picked by position: ? -> Q, ! -> E, . -> S

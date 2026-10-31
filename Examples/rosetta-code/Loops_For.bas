@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Loops/For
+' ROSETTA: https://rosettacode.org/wiki/Loops/For
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Prints a triangle of asterisks, one more asterisk on each of five rows, with nested FOR loops.
+' CATEGORY: basics
+' TAGS: for loop, nested loops
+' MINVERSION: 1.5
 ' ============================================
 
 [main]

@@ -1,6 +1,12 @@
 ' ============================================
-' https://rosettacode.org/wiki/Letter_frequency
+' ROSETTA: https://rosettacode.org/wiki/Letter_frequency
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Counts how often each letter A to Z occurs in the program's own source file and prints the frequency table.
+' CATEGORY: strings
+' TAGS: letter frequency, character counting, fileread, associative array
+' REQUIRES: Letter_frequency.bas
+' MINVERSION: 1.5
 ' ============================================
 
 ' INSTRUCTIONS:

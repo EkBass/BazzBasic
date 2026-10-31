@@ -1,7 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Display_a_linear_combination
+' ROSETTA: https://rosettacode.org/wiki/Display_a_linear_combination
 ' BazzBasic: https://github.com/EkBass/BazzBasic
-' Display a finite linear combination of basis vectors e(i) in natural notation
+' --------------------------------------------
+' DESCRIPTION: Displays vectors of integer coefficients as linear combinations of basis vectors e(i) in natural notation, for example e(1) + 2*e(2) + 3*e(3).
+' CATEGORY: strings
+' TAGS: linear combination, string formatting, split, vectors
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

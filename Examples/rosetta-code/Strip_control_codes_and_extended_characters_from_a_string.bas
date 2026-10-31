@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Strip_control_codes_and_extended_characters_from_a_string
+' ROSETTA: https://rosettacode.org/wiki/Strip_control_codes_and_extended_characters_from_a_string
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Removes control codes (0 to 31 and 127) from a test string, and separately both control codes and extended characters (128 and up), by checking the ASC code of each character.
+' CATEGORY: strings
+' TAGS: control codes, extended characters, asc, strip
+' MINVERSION: 1.5
 ' ============================================
 
 DEF FN StripControl$(s$)

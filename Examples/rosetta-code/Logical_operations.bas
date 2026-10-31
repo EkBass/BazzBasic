@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Logical_operations
+' ROSETTA: https://rosettacode.org/wiki/Logical_operations
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Prints the results of the logical operations AND, OR, NOT and XOR for the values TRUE and FALSE.
+' CATEGORY: basics
+' TAGS: logical operators, and, or, not, xor
+' MINVERSION: 1.5
 ' ============================================
 
 DEF FN LogicalOps$(a$, b$)

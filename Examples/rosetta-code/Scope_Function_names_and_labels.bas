@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Scope/Function_names_and_labels
+' ROSETTA: https://rosettacode.org/wiki/Scope/Function_names_and_labels
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Demonstrates the scope of function names and labels: functions are visible once defined and keep their own private variables, main-program variables are not visible inside functions, constants are visible everywhere, and a label is reached with GOSUB through a variable.
+' CATEGORY: basics
+' TAGS: scope, functions, labels, gosub, constants
+' MINVERSION: 1.5
 ' ============================================
 
 ' Functions are visible as soon as they are entered

@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Split_a_character_string_based_on_change_of_character
+' ROSETTA: https://rosettacode.org/wiki/Split_a_character_string_based_on_change_of_character
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Splits the string gHHH5YY++///\ into runs of identical characters and prints the runs separated by a comma and a space.
+' CATEGORY: strings
+' TAGS: split string, runs of characters, mid, character comparison
+' MINVERSION: 1.5
 ' ============================================
 [inits]
     LET s$      = "gHHH5YY++///\\" ' Extra \ at the end to escape the escape

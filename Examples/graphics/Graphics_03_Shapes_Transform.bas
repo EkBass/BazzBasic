@@ -1,11 +1,12 @@
 ' ============================================
-' GRAPHICS SNIPPET 3: The Shape System
-' LOADSHAPE, MOVESHAPE, ROTATESHAPE, SCALESHAPE, DRAWSHAPE,
-' SHOWSHAPE / HIDESHAPE, REMOVESHAPE - and a debounced key
-' toggle (press-and-release, not press-and-hold-fires-60x).
-' Self-contained - shapes are procedural, no image file needed.
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Graphics snippet 3: the shape system - LOADSHAPE, MOVESHAPE, ROTATESHAPE, SCALESHAPE, DRAWSHAPE, SHOWSHAPE / HIDESHAPE and REMOVESHAPE on a spinning square, a pulsing circle and a counter-spinning triangle, plus a debounced SPACE key toggle.
+' CATEGORY: drawing
+' TAGS: graphics tutorial, loadshape, rotateshape, scaleshape, key debounce
+' MINVERSION: 1.5
 ' ============================================
+' Self-contained - shapes are procedural, no image file needed.
 
 [inits]
     SCREEN 0, 640, 480, "Shapes & Transforms"

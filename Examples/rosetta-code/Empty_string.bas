@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Empty_string
+' ROSETTA: https://rosettacode.org/wiki/Empty_string
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Shows that a string variable declared without a value is empty and tests a string for being empty and not empty.
+' CATEGORY: strings
+' TAGS: empty string, string comparison, variables
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

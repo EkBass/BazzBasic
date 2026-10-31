@@ -1,9 +1,14 @@
 ' ============================================
-' Pad-steered plane with screen wrap
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Flies a plane sprite steered with the gamepad's left stick or D-pad, with A for boost, and wraps it to the opposite screen edge once it has fully left the screen.
+' CATEGORY: input
+' TAGS: gamepad, analog stick, sprite rotation, screen wrap, delta time
+' REQUIRES: assets/plane.png
+' MINVERSION: 1.5
+' ============================================
 ' Left stick (analog) or D-pad turns the plane.
 ' Hold A for boost. BACK or ESC quits.
-' BazzBasic: https://github.com/EkBass/BazzBasic
-' ============================================
 
 [inits]
     ' --- Screen ---

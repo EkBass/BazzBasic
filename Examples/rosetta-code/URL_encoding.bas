@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/URL_encoding
+' ROSETTA: https://rosettacode.org/wiki/URL_encoding
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Percent-encodes a string by replacing every character except 0-9, A-Z and a-z with % and its two-digit hex code, and prints the encoded form of http://foo bar/.
+' CATEGORY: strings
+' TAGS: url encoding, percent encoding, hexadecimal, asc
+' MINVERSION: 1.5
 ' ============================================
 
 ' Convert decimal value to two-char uppercase hex string

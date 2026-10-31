@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Harmonic_series
+' ROSETTA: https://rosettacode.org/wiki/Harmonic_series
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Prints the first 20 harmonic numbers and the first position where the harmonic series exceeds each whole number from 1 to 10.
+' CATEGORY: math
+' TAGS: harmonic series, harmonic numbers, running sum, def fn
+' MINVERSION: 1.5
 ' ============================================
 ' H(n) = 1 + 1/2 + 1/3 + ... + 1/n
 ' Harmonic$ gives any single H(n). The threshold search keeps a

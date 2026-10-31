@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Dinesman%27s_multiple-dwelling_problem
+' ROSETTA: https://rosettacode.org/wiki/Dinesman%27s_multiple-dwelling_problem
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Solves Dinesman's multiple-dwelling puzzle by brute force: finds the floor of a five-storey building on which each of Baker, Cooper, Fletcher, Miller and Smith lives, given the puzzle's rules.
+' CATEGORY: algorithms
+' TAGS: dinesman, constraint puzzle, brute force, nested loops
+' MINVERSION: 1.5
 ' ============================================
 
 ' ---- Setup ----

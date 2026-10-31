@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Tokenize_a_string
+' ROSETTA: https://rosettacode.org/wiki/Tokenize_a_string
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Splits the string Hello,How,Are,You,Today at the commas with SPLIT and prints the tokens separated by periods.
+' CATEGORY: strings
+' TAGS: tokenize, split string, delimiter
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

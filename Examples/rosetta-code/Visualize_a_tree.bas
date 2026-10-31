@@ -1,7 +1,11 @@
 ' ============================================
-' Visualize a tree
-' https://rosettacode.org/wiki/Visualize_a_tree#FreeBASIC
+' ROSETTA: https://rosettacode.org/wiki/Visualize_a_tree#FreeBASIC
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Prints a Markdown-style text as an indented outline: each line is indented with tabs according to the level (number of # characters) of the most recent heading.
+' CATEGORY: strings
+' TAGS: tree visualization, indentation, markdown headings, split, repeat
+' MINVERSION: 1.5
 ' ============================================
 
 DEF FN GetHeaderLevel$(l$)

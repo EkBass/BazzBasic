@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Hello_world/Graphical
+' ROSETTA: https://rosettacode.org/wiki/Hello_world/Graphical
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Opens a 600x480 graphics window titled Goodbye, World! and draws the same text in it until a key is pressed.
+' CATEGORY: drawing
+' TAGS: hello world, graphics window, drawstring, waitkey
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

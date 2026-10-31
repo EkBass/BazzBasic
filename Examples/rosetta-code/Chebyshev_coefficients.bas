@@ -1,7 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Chebyshev_coefficients
+' ROSETTA: https://rosettacode.org/wiki/Chebyshev_coefficients
 ' BazzBasic: https://github.com/EkBass/BazzBasic
-' Chebyshev coefficients of cos(x) on the interval [0, 1], 10 terms
+' --------------------------------------------
+' DESCRIPTION: Computes the first ten Chebyshev coefficients of cos(x) on the interval [0, 1].
+' CATEGORY: math
+' TAGS: chebyshev coefficients, numerical analysis, discrete cosine transform, approximation
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Terminal_control/Coloured_text
+' ROSETTA: https://rosettacode.org/wiki/Terminal_control/Coloured_text
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Prints text in six foreground colours, then white or black text on six background colours with the COLOR command, and resets the colours at the end.
+' CATEGORY: screen
+' TAGS: color, coloured text, terminal control, palette
+' MINVERSION: 1.5
 ' ============================================
 ' COLOR fg, bg  (0-15 palette)
 

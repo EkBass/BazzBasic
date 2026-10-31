@@ -595,8 +595,18 @@ public partial class Interpreter
             return Value.FromNumber(0);
         }
         
-        int color = Graphics.Graphics.GetPixelColor(x, y);
-        return Value.FromNumber(color);
+        if (_hasError) return Value.Zero;
+
+        try
+        {
+            int color = Graphics.Graphics.GetPixelColor(x, y);
+            return Value.FromNumber(color);
+        }
+        catch (Exception ex)
+        {
+            Error($"POINT failed: {ex.Message}");
+            return Value.Zero;
+        }
     }
 
     // ========================================================================
@@ -730,5 +740,36 @@ public partial class Interpreter
             Graphics.Graphics.Present();
         }
         catch (Exception ex) { Error($"DRAWSTRING: {ex.Message}"); }
+    }
+
+    // ========================================================================
+    // SAVESCREEN — save the graphics screen as a PNG file (30.10.2026)
+    // SAVESCREEN "file.png"   (relative paths resolve against the program folder)
+    // ========================================================================
+
+    private void ExecuteSaveScreen()
+    {
+        _pos++; // consume SAVESCREEN
+
+        string path = EvaluateExpression().AsString();
+        if (_hasError) return;
+
+        if (!Graphics.Graphics.IsInitialized)
+        {
+            Error("SAVESCREEN: graphics mode not initialized. Use SCREEN first.");
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(path))
+        {
+            Error("SAVESCREEN: file name is empty.");
+            return;
+        }
+
+        if (!Path.IsPathRooted(path))
+            path = Path.Combine(_fileManager.RootPath, path);
+
+        try { Graphics.Graphics.SaveScreen(path); }
+        catch (Exception ex) { Error($"SAVESCREEN: {ex.Message}"); }
     }
 }

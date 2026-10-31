@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Create_a_two-dimensional_array_at_runtime
+' ROSETTA: https://rosettacode.org/wiki/Create_a_two-dimensional_array_at_runtime
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Asks for a number of rows and columns, creates a two-dimensional array of that size at runtime, writes and reads back one element and then destroys the array.
+' CATEGORY: basics
+' TAGS: two-dimensional array, dim, delarray, rowcount, input
+' MINVERSION: 1.5
 ' ============================================
 ' BazzBasic arrays have no declared size: DIM only names the array,
 ' and every index comes into existence when it is first assigned.

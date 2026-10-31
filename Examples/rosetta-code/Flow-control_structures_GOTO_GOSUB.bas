@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Flow-control_structures
+' ROSETTA: https://rosettacode.org/wiki/Flow-control_structures
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Demonstrates BazzBasic's flow control: GOTO, GOSUB with RETURN, a computed GOSUB target held in a variable, RETURN inside a DEF FN, and END.
+' CATEGORY: basics
+' TAGS: goto, gosub, labels, return, flow control
+' MINVERSION: 1.5
 ' ============================================
 ' Labels are names in square brackets. [inits], [main] and
 ' [sub:...] are just labels too - a naming convention, not syntax.

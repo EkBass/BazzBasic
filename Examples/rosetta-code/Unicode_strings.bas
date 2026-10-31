@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Unicode_strings
+' ROSETTA: https://rosettacode.org/wiki/Unicode_strings
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Demonstrates BazzBasic's Unicode support: Unicode literals and identifiers, UCASE, LCASE, INVERT, MID and LEN on Greek, Russian and Japanese text, CHR and ASC code points and a UTF-8 file round trip.
+' CATEGORY: strings
+' TAGS: unicode, utf-8, string functions, chr, asc
+' MINVERSION: 1.5
 ' ============================================
 '
 ' How well prepared is BazzBasic for Unicode?

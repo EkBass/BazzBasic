@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Palindrome_detection
+' ROSETTA: https://rosettacode.org/wiki/Palindrome_detection
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Asks for a word and tells whether it is a palindrome by comparing the lower-cased text with its reverse.
+' CATEGORY: strings
+' TAGS: palindrome, invert, line input, string comparison
+' MINVERSION: 1.5
 ' ============================================
 
 [main]

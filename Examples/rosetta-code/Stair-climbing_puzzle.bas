@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Stair-climbing_puzzle
+' ROSETTA: https://rosettacode.org/wiki/Stair-climbing_puzzle
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Solves the stair-climbing puzzle: a step that randomly climbs or falls, and a recursive StepUp function that climbs exactly one step without variables or numbers, with an iterative variant defined as well.
+' CATEGORY: algorithms
+' TAGS: recursion, stair climbing, random, def fn
+' MINVERSION: 1.5
 ' ============================================
 
 ' One step attempt: TRUE = climbed up, FALSE = fell down

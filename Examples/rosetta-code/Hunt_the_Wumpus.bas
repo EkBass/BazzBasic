@@ -1,8 +1,13 @@
-' =================================================
-' https://rosettacode.org/wiki/Hunt_the_Wumpus
+' ============================================
+' ROSETTA: https://rosettacode.org/wiki/Hunt_the_Wumpus
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Text adventure in which the player hunts the Wumpus through 20 cave rooms joined by tunnels, avoiding bats and bottomless pits and shooting an arrow into the right room.
+' CATEGORY: games
+' TAGS: hunt the wumpus, text adventure, cave, random events
+' MINVERSION: 1.5
+' ============================================
 ' Bit adjusted version of original by: https://github.com/Mkratzen
-' BazzBasic: https://ekbass.github.io/BazzBasic/
-' =================================================
 
 ' TRUE if room$ is one of the three given rooms
 DEF FN Near$(room$, a$, b$, c$)

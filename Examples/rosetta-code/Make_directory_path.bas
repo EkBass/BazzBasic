@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Make_directory_path
+' ROSETTA: https://rosettacode.org/wiki/Make_directory_path
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Creates a nested directory path (test\sub\deeper) with all missing parent directories through the Windows md command called with SHELL, without an error if it already exists.
+' CATEGORY: file-io
+' TAGS: make directory, mkdir, shell, fstring
+' MINVERSION: 1.5
 ' ============================================
 ' Create a directory and any missing parents, like "mkdir -p".
 ' Running it again when the path already exists is not an error.

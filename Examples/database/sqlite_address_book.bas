@@ -1,14 +1,16 @@
-REM ============================================================
+' ============================================
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Address book demo for SQLite using the sqlite3 command-line tool: creates a table, inserts, lists, updates, counts, searches and deletes contacts, and shows SQL error handling.
+' CATEGORY: data
+' TAGS: sqlite, sqlite3, sql, shell, crud
+' MINVERSION: 1.5
+' ============================================
 REM SQLite Address Book - companion example for docs/manual/sqlite.md
 REM
 REM Requires sqlite3 in PATH:
 REM    winget install SQLite.SQLite
 REM    (then open a fresh terminal)
-REM
-REM Walks through every operation covered in the manual page:
-REM   create table, insert, select, update, delete, count, search,
-REM   error handling.
-REM ============================================================
 
 LET DB# = "contacts.db"
 
@@ -33,7 +35,7 @@ PRINT ""
 
 PRINT "=== Inserting rows ==="
 LET sql$ = "INSERT INTO contacts (name, phone, address, email) VALUES " +
-           "('Krisu Virtanen', '+358 45 340 1515', 'Viljakkala', 'krisu.virtanen@gmail.com'), " +
+           "('Krisu Virtanen', '+358 145 333 1515', 'Viljakkala', 'krisu.foo@gmail.com'), " +
            "('Jane Doe',       '+1 555 1234',      'New York',  'jane@example.com'), " +
            "('John Smith',     '+44 20 7946 0958', 'London',    'john.s@example.com')"
 LET cmd$ = "sqlite3 " + DB# + " \"" + sql$ + "\" 2>&1"

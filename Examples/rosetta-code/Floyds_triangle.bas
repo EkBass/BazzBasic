@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Floyd%27s_triangle
+' ROSETTA: https://rosettacode.org/wiki/Floyd%27s_triangle
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Prints Floyd's triangle of consecutive numbers, with right-aligned columns, for 5 rows and for 14 rows.
+' CATEGORY: math
+' TAGS: floyd's triangle, number triangle, right alignment, repeat
+' MINVERSION: 1.5
 ' ============================================
 ' Each column is as wide as the number below it in the last row.
 ' The last row starts at n*(n-1)/2 + 1, so column c is as wide as

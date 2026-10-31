@@ -1,6 +1,10 @@
 ' ============================================
-' Analog Clock (300x300)
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Draws a 300x300 analog clock with hour, minute and second hands that show the current system time and update every second.
+' CATEGORY: drawing
+' TAGS: analog clock, system time, trigonometry, hands
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

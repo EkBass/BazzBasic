@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Literals/String
+' ROSETTA: https://rosettacode.org/wiki/Literals/String
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Demonstrates BazzBasic string literals: double-quoted strings, character literals, escape sequences, embedded quotes, multi-line text built with \n and a trailing +, and the absence of variable expansion.
+' CATEGORY: strings
+' TAGS: string literals, escape sequences, fstring
+' MINVERSION: 1.5
 ' ============================================
 ' BazzBasic has a single string literal form: "double quotes".
 ' There is no separate character type; a character is simply a

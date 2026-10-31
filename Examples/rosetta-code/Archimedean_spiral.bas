@@ -1,8 +1,13 @@
 ' ============================================
-' https://rosettacode.org/wiki/Archimedean_spiral
+' ROSETTA: https://rosettacode.org/wiki/Archimedean_spiral
 ' BazzBasic: https://github.com/EkBass/BazzBasic
-' Task: draw an Archimedean spiral, r = a + b * theta.
+' --------------------------------------------
+' DESCRIPTION: Draws an Archimedean spiral (r = a + b * theta) as a yellow line in a 640x480 window.
+' CATEGORY: drawing
+' TAGS: spiral, polar coordinates, line
+' MINVERSION: 1.5
 ' ============================================
+' Task: draw an Archimedean spiral, r = a + b * theta.
 
 [inits]
     LET SCREEN_W# = 640

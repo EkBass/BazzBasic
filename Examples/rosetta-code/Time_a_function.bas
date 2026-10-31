@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Time_a_function
+' ROSETTA: https://rosettacode.org/wiki/Time_a_function
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Times a user-defined function by calling it 1000 times and measuring the elapsed milliseconds with TICKS, printing the total and the time per call.
+' CATEGORY: system
+' TAGS: timing, ticks, benchmark, def fn
+' MINVERSION: 1.5
 ' ============================================
 
 ' Calculates the sum of characters (ASCII codes)

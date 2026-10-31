@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Terminal_control/Preserve_screen
+' ROSETTA: https://rosettacode.org/wiki/Terminal_control/Preserve_screen
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Saves every character cell of the visible console (character, foreground and background colour) with GETCONSOLE, shows a temporary screen and, after a key press, restores the original screen cell by cell.
+' CATEGORY: screen
+' TAGS: preserve screen, getconsole, save and restore, terminal control, locate
+' MINVERSION: 1.5
 ' ============================================
 ' BazzBasic has no built-in screen save/restore command, but it can be
 ' done manually: GETCONSOLE(row, col, type) reads any cell's character

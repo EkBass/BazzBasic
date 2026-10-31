@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Detect_division_by_zero
+' ROSETTA: https://rosettacode.org/wiki/Detect_division_by_zero
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Detects a division by zero (BazzBasic returns 0 instead of raising an error) and reports it for each of three test divisions.
+' CATEGORY: math
+' TAGS: division by zero, error detection, arithmetic
+' MINVERSION: 1.5
 ' ============================================
 ' BazzBasic has no exceptions: x / 0 silently returns 0.
 ' A non-zero numerator divided by any non-zero number can never be 0,

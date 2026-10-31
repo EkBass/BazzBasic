@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Strip_comments_from_a_string
+' ROSETTA: https://rosettacode.org/wiki/Strip_comments_from_a_string
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Strips everything from the first comment marker (# or ;) to the end of a line and trims the remaining whitespace, shown on three test lines.
+' CATEGORY: strings
+' TAGS: strip comments, instr, trim, parsing
+' MINVERSION: 1.5
 ' ============================================
 
 DEF FN StripComment$(line$, markers$)

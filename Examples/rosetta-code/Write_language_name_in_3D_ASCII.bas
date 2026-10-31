@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Write_language_name_in_3D_ASCII
+' ROSETTA: https://rosettacode.org/wiki/Write_language_name_in_3D_ASCII
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Prints the language name BAZZ BASIC as 3D ASCII art, decoded from a string of three-digit character codes, and waits for ESC.
+' CATEGORY: drawing
+' TAGS: ascii art, 3d text, chr, mid
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

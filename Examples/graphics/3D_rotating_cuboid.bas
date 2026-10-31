@@ -1,9 +1,11 @@
 ' ============================================
 ' BazzBasic: https://github.com/EkBass/BazzBasic
-' 3D rotating cuboid
+' --------------------------------------------
+' DESCRIPTION: Draws a 2 x 3 x 4 wireframe cuboid in 3D with perspective projection, rotated continuously around the X and Y axes.
+' CATEGORY: drawing
+' TAGS: 3d graphics, wireframe, perspective projection, rotation
+' MINVERSION: 1.5
 ' ============================================
-' Draws a 2 x 3 x 4 cuboid in 3D with perspective projection,
-' rotated continuously around the X and Y axes.
 ' Three faces remain visible at virtually any rotation angle.
 ' Press ESC to exit.
 

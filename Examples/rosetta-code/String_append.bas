@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/String_append
+' ROSETTA: https://rosettacode.org/wiki/String_append
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Appends text and a number to string variables with concatenation and prints the results.
+' CATEGORY: strings
+' TAGS: string append, concatenation
+' MINVERSION: 1.5
 ' ============================================
 
 ' BazzBasic uses = for append; += operator does not exist.

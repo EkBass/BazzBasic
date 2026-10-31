@@ -1,10 +1,12 @@
 ' ============================================
-' GRAPHICS SNIPPET 1: Drawing Primitives
-' PSET, LINE (line / outline box / filled box), CIRCLE
-' (outline / filled), PAINT (flood fill), RGB(), POINT()
-' Self-contained - no external image/font/sound files needed.
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Graphics snippet 1: draws labelled examples of the drawing primitives PSET, LINE (line, outline box, filled box), CIRCLE (outline, filled) and PAINT (flood fill) with RGB colors, then reads a pixel back with POINT.
+' CATEGORY: drawing
+' TAGS: graphics tutorial, pset, line, circle, paint
+' MINVERSION: 1.5
 ' ============================================
+' Self-contained - no external image/font/sound files needed.
 
 [inits]
     SCREEN 0, 640, 480, "Drawing Primitives"

@@ -1,9 +1,13 @@
 ' ============================================
-' Flappy — flap-to-survive mini game
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Flap-to-survive mini game: flap a falling bird with a mouse click or SPACE to dodge black balls scrolling in from the right; each dodged ball scores a point, and a hit or leaving the play field ends the round.
+' CATEGORY: games
+' TAGS: flappy bird, gravity, mouse click, space key, score
+' MINVERSION: 1.5
+' ============================================
 ' Ported from the Python/turtle "flappy" example
 ' (freegames library, Grant Jenks) to BazzBasic
-' BazzBasic: https://github.com/EkBass/BazzBasic
-' ============================================
 ' Original mechanics (1:1 ported):
 '   - the bird falls constantly under gravity
 '   - clicking gives the bird a single upward flap
@@ -17,7 +21,6 @@
 ' Fix (v2): ball array indices are now tracked with our own
 ' monotonic counter (nextBallId$ / maxBallId$) instead of relying
 ' on ROWCOUNT() after DELKEY - see chat explanation for why.
-' ============================================
 
 DEF FN HitTest$(x1$, y1$, x2$, y2$, r$)
     IF DISTANCE(x1$, y1$, x2$, y2$) < r$ THEN RETURN 1

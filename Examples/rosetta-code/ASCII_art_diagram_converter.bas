@@ -1,11 +1,12 @@
 ' ============================================
-' https://rosettacode.org/wiki/ASCII_art_diagram_converter
+' ROSETTA: https://rosettacode.org/wiki/ASCII_art_diagram_converter
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Parses an RFC-style ASCII bit-field diagram (a DNS header) into a field map of names, start bits and widths, and uses it to decode a hexadecimal header buffer.
+' CATEGORY: strings
+' TAGS: parsing, bit fields, hexadecimal, json
+' MINVERSION: 1.5
 ' ============================================
-' Parses an RFC-style ASCII bit diagram (separator rows of '+--+...' and
-' content rows of '|field|field|...') and uses the resulting field map to
-' decode a real header buffer.
-'
 ' BazzBasic has no macros or compile-time codegen, so the task's bonus
 ' (define the struct statically from the string at compile time) is not
 ' applicable -- this is a runtime parser. The field map is returned as

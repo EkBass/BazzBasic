@@ -1,11 +1,15 @@
 ' ============================================
-' OpenAI API call — BazzBasic
-' https://github.com/EkBass/BazzBasic
-' Public domain
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Sends a "Hello" message to the OpenAI chat completions API and prints the text of the reply.
+' CATEGORY: api
+' TAGS: openai, gpt, llm, httppost, json
+' REQUIRES: .env
+' MINVERSION: 1.5
 ' ============================================
+' Public domain
 ' Requires .env file in same directory as script:
 '   OPENAI_API_KEY=sk-proj-yourKeyHere
-' ============================================
 
 ' DISCLAIMER:
 ' This code was last verified on 04.04.2026 using gpt-5-mini.

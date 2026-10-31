@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Terminal_control/Hiding_the_cursor
+' ROSETTA: https://rosettacode.org/wiki/Terminal_control/Hiding_the_cursor
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Hides the text cursor with an ANSI escape sequence, waits for a key press and then shows the cursor again.
+' CATEGORY: screen
+' TAGS: hide cursor, ansi escape sequences, terminal control, waitkey
+' MINVERSION: 1.5
 ' ============================================
 ' ANSI/VT escape sequences control cursor visibility.
 ' They are sent directly to the terminal via PRINT CHR(27) + "...";

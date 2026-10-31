@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Sum_of_squares
+' ROSETTA: https://rosettacode.org/wiki/Sum_of_squares
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Computes the sum of the squares of a numeric vector given as a comma-separated string, and of an empty vector, which gives 0.
+' CATEGORY: math
+' TAGS: sum of squares, vector, split, pow
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

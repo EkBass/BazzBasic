@@ -1,7 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Ethiopian_multiplication
+' ROSETTA: https://rosettacode.org/wiki/Ethiopian_multiplication
 ' BazzBasic: https://github.com/EkBass/BazzBasic
-' Multiply two integers using only halving, doubling and an even test.
+' --------------------------------------------
+' DESCRIPTION: Multiplies 17 by 34 using only halving, doubling and an even test, printing the working table with kept and struck rows and the product.
+' CATEGORY: math
+' TAGS: ethiopian multiplication, halving, doubling, def fn
+' MINVERSION: 1.5
 ' ============================================
 
 DEF FN Halve$(n$)

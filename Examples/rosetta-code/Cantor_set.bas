@@ -1,7 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Cantor_set
+' ROSETTA: https://rosettacode.org/wiki/Cantor_set
 ' BazzBasic: https://github.com/EkBass/BazzBasic
-' Draw a Cantor set.
+' --------------------------------------------
+' DESCRIPTION: Draws the Cantor set as four rows of text, removing the middle third of every segment at each level.
+' CATEGORY: drawing
+' TAGS: cantor set, fractals, ascii art
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

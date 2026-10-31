@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Find_adjacent_primes_which_differ_by_a_square_integer
+' ROSETTA: https://rosettacode.org/wiki/Find_adjacent_primes_which_differ_by_a_square_integer
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Finds adjacent primes under 1,000,000 whose difference, greater than 36, is a perfect square, using a sieve of Eratosthenes.
+' CATEGORY: math
+' TAGS: primes, sieve of eratosthenes, perfect squares, adjacent primes
+' MINVERSION: 1.5
 ' ============================================
 ' Find adjacent primes under 1,000,000 whose difference
 ' (greater than 36) is a perfect square.

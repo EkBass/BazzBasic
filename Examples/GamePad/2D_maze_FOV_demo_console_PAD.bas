@@ -1,11 +1,13 @@
-' ==========================================
-' 2D_maze_FOV_demo_console_PAD.bas — BazzBasic
-' 2D Field-of-View: 90-ray casting on a
-' console map. Walls stored in array.
+' ============================================
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Console field-of-view demo that casts 90 rays from the player across a maze map stored in an array and lights only the visible cells while the player moves with a gamepad (D-pad or left stick) or the arrow keys.
+' CATEGORY: algorithms
+' TAGS: field of view, ray casting, maze, gamepad, arrow keys
+' MINVERSION: 1.5
+' ============================================
 ' Move with gamepad D-pad / left stick or arrow keys.
 ' Holding a direction repeats the step. BACK or ESC quits.
-' https://ekbass.github.io/BazzBasic/
-' ==========================================
 
 [inits]
     LET NUM_RAYS#  = 90

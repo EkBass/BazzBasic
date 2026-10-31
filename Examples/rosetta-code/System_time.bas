@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/System_time
+' ROSETTA: https://rosettacode.org/wiki/System_time
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Prints the current system time and date in several formats with TIME(): time, date, weekday name and month name.
+' CATEGORY: system
+' TAGS: system time, time, date format
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

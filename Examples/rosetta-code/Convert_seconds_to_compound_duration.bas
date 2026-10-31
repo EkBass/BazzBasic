@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Convert_seconds_to_compound_duration
+' ROSETTA: https://rosettacode.org/wiki/Convert_seconds_to_compound_duration
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Converts a number of seconds into a compound duration in weeks, days, hours, minutes and seconds, first for four test values and then for values typed by the user.
+' CATEGORY: system
+' TAGS: duration, time units, seconds, def fn, formatting
+' MINVERSION: 1.5
 ' ============================================
 
 ' Time-unit constants — accessible inside DEF FN via # scope

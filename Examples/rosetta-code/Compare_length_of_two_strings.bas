@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Compare_length_of_two_strings
+' ROSETTA: https://rosettacode.org/wiki/Compare_length_of_two_strings
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Compares the lengths of two strings and prints them from longest to shortest, each with its length.
+' CATEGORY: strings
+' TAGS: string length, len, comparison
+' MINVERSION: 1.5
 ' ============================================
 
 ' LEN returns the length of a string in characters.

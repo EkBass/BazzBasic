@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/RPG_attributes_generator
+' ROSETTA: https://rosettacode.org/wiki/RPG_attributes_generator
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Generates six RPG character attributes by rolling 4d6 and dropping the lowest die, re-rolling until the total is at least 75 and at least two attributes are 15 or more, then prints the attribute table.
+' CATEGORY: algorithms
+' TAGS: rpg, dice, random numbers, 4d6, attributes
+' MINVERSION: 1.5
 ' ============================================
 ' Attributes: Strength, Dexterity, Constitution,
 '             Intelligence, Wisdom, Charisma

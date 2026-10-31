@@ -1,10 +1,14 @@
 ' ============================================
-' https://rosettacode.org/wiki/Show_ASCII_table
+' ROSETTA: https://rosettacode.org/wiki/Show_ASCII_table
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Prints the ASCII characters from code 32 to 127 as a table of 16 rows and 6 columns, each cell showing the code and its character.
+' CATEGORY: strings
+' TAGS: ascii table, character codes, chr
+' MINVERSION: 1.5
 ' ============================================
 ' Task: Show the ASCII character set from values 32 to 127
 ' (decimal) in a table format.
-' ============================================
 
 [inits]
     LET daString$ = ""

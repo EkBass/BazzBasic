@@ -1,7 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Cartesian_product_of_two_or_more_lists
+' ROSETTA: https://rosettacode.org/wiki/Cartesian_product_of_two_or_more_lists
 ' BazzBasic: https://github.com/EkBass/BazzBasic
-' Cartesian product of two lists, plus the n-ary product of a list of lists
+' --------------------------------------------
+' DESCRIPTION: Computes the Cartesian product of two lists and the n-ary product of a list of lists, including the cases with an empty list.
+' CATEGORY: algorithms
+' TAGS: cartesian product, lists, tuples, asjson
+' MINVERSION: 1.5
 ' ============================================
 '
 ' Representation:

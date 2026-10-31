@@ -17,6 +17,7 @@ namespace BazzBasic;
 
 public static class AppInfo
 {
+	// Currently under development
     public const string Version = "1.6"; // IDE & "BBVER#" reads this too
     public const string Url = "https://ekbass.github.io/BazzBasic/";
     public const string Name = "BazzBasic";

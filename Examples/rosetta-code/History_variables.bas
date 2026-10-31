@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/History_variables
+' ROSETTA: https://rosettacode.org/wiki/History_variables
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Keeps the full history of a variable's values by pushing each new value onto an array, then prints the history and recalls older values by index.
+' CATEGORY: basics
+' TAGS: history variables, arrays, gosub
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

@@ -1,6 +1,11 @@
 ' ============================================
-' Turtle Graphics with a Windows input box
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Turtle graphics driven by typed commands (rotate, move, draw on/off, color, size, jump, reset, exit) entered in a Windows input box opened through PowerShell; lines wrap around the screen edges.
+' CATEGORY: api
+' TAGS: turtle graphics, input box, powershell, shell, command parser
+' REQUIRES: assets/turtle.png
+' MINVERSION: 1.5
 ' ============================================
 ' Commands (typed into the Windows input box):
 '   rotate left|right <degrees>    e.g. rotate left 5
@@ -11,7 +16,6 @@
 '   jump <x> <y>                   teleport, never draws
 '   reset                          clear screen, turtle to middle
 '   exit                           quit
-' ============================================
 
 ' ---- FUNCTIONS -------------------------------------------------
 

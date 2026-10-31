@@ -1,14 +1,16 @@
 ' ============================================
-' Voxel Terrain — optimized, with FPS counter
-' Comanche-style heightmap renderer (Voxel Space)
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Comanche-style Voxel Space renderer that flies a camera over a procedurally generated, smoothed and colour-banded heightmap terrain, with camera height, horizon tilt and an FPS counter.
+' CATEGORY: drawing
+' TAGS: voxel space, heightmap, procedural terrain, 3d rendering, delta time
+' MINVERSION: 1.5
 ' ============================================
 ' Controls:
 '   Arrow keys  = Move / Rotate
 '   PgUp/PgDn   = Camera height
 '   W / S       = Horizon tilt
 '   ESC         = Quit
-' ============================================
 
 ' UPDATED 15th Oct. 2026
 ' I think I was able to double the speed of this one

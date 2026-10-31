@@ -1,7 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Colour_pinstripe/Display
+' ROSETTA: https://rosettacode.org/wiki/Colour_pinstripe/Display
 ' BazzBasic: https://github.com/EkBass/BazzBasic
-' Vertical colour pinstripes 1, 2, 3 and 4 pixels wide, one quarter of the screen each
+' --------------------------------------------
+' DESCRIPTION: Draws four horizontal bands of vertical colour pinstripes 1, 2, 3 and 4 pixels wide, cycling through eight colours, and waits for a key press.
+' CATEGORY: drawing
+' TAGS: colour pinstripe, rgb, box fill, test pattern
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

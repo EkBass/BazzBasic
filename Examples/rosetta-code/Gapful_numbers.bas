@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Gapful_numbers
+' ROSETTA: https://rosettacode.org/wiki/Gapful_numbers
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Lists the first 30 gapful numbers from 100, the first 15 from 1,000,000 and the first 10 from 1,000,000,000.
+' CATEGORY: math
+' TAGS: gapful numbers, divisibility, digits, modulo
+' MINVERSION: 1.5
 ' ============================================
 ' A gapful number (>= 100) is evenly divisible by the
 ' number formed from its first and last decimal digits.

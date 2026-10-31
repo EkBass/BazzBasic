@@ -1,14 +1,11 @@
 ' ============================================
-' GRAPHICS SNIPPET 7: LOADIMAGE - Images As Shapes
-' Once loaded, an image handle works with the exact same
-' MOVESHAPE / ROTATESHAPE / SCALESHAPE / DRAWSHAPE / REMOVESHAPE
-' calls as a procedural LOADSHAPE shape.
-'
-' NEEDS AN ASSET: put a PNG (recommended, has alpha transparency)
-' or BMP named "sprite.png" in the same folder as this .bas file
-' before running. Without it, LOADIMAGE will fail to find the file.
-'
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Graphics snippet 7: LOADIMAGE - loads a PNG as a sprite and spins and scales it with the same MOVESHAPE / ROTATESHAPE / SCALESHAPE / DRAWSHAPE / REMOVESHAPE calls as a LOADSHAPE shape.
+' CATEGORY: drawing
+' TAGS: graphics tutorial, loadimage, sprite, rotateshape, scaleshape
+' REQUIRES: assets/B-icon.png
+' MINVERSION: 1.5
 ' ============================================
 
 ' --- FLAGGED DOCUMENTATION CONFLICT (not resolved here) ---

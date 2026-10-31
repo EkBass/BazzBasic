@@ -1,13 +1,12 @@
-' BazzBasic version 1.3b
-' https://ekbass.github.io/BazzBasic/
-
-' ==========================================
-' Rotating Shapes — BazzBasic
-' Three shapes, each with a different rotation
-' speed and direction.
+' ============================================
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Spins a red square, a green circle and a blue triangle, each with a different rotation speed and direction.
+' CATEGORY: drawing
+' TAGS: rotateshape, loadshape, animation
+' MINVERSION: 1.5
+' ============================================
 ' Press ESC to exit.
-' https://github.com/EkBass/BazzBasic
-' ==========================================
 
 [inits]
     LET SCREEN_W#  = 640

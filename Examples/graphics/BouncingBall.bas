@@ -1,9 +1,12 @@
-' ==========================================
-' Bouncing Ball — BazzBasic
-' Makes yellow ball wonder around screen.
+' ============================================
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Moves a yellow ball around the window, bouncing it off the edges.
+' CATEGORY: simulation
+' TAGS: bouncing ball, animation, loadshape
+' MINVERSION: 1.5
+' ============================================
 ' Press ESC to exit
-' https://github.com/EkBass/BazzBasic
-' ==========================================
 
 [inits]
     LET SCREEN_W#  = 640

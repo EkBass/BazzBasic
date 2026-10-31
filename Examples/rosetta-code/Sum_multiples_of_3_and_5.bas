@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Sum_multiples_of_3_and_5
+' ROSETTA: https://rosettacode.org/wiki/Sum_multiples_of_3_and_5
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Sums all positive integers below 1000 that are multiples of 3 or 5 and prints the result (233168).
+' CATEGORY: math
+' TAGS: multiples, sum, modulo, def fn
+' MINVERSION: 1.5
 ' ============================================
 
 DEF FN IsMultiple$(n$)

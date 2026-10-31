@@ -1,5 +1,11 @@
-' Grocery List - JSON Version
-' BazzBasic version 1.4
+' ============================================
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Console grocery list manager that saves the list to a JSON file between runs; supports /add, /list, /delete and /stop commands.
+' CATEGORY: data
+' TAGS: json, loadjson, savejson, persistent storage, line input
+' MINVERSION: 1.5
+' ============================================
 
 [inits]
     LET LIST_FILE# = "list.json"

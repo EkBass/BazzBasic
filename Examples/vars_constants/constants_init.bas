@@ -1,7 +1,11 @@
-' BazzBasic version 1.4c
-' https://ekbass.github.io/BazzBasic/
-
-' Basic initialization and use for constants
+' ============================================
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Shows basic initialization of constants and variables with LET, including a constant calculated from other values and several constants in one statement.
+' CATEGORY: basics
+' TAGS: constants, variables, initialization
+' MINVERSION: 1.5
+' ============================================
 
 [inits] ' not mandatory, but common
     LET a$      = 1

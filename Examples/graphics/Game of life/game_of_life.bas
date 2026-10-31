@@ -1,6 +1,11 @@
 ' ============================================
-' Conway's Game of Life - with adjustable speed
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Conway's Game of Life on a 64x48 wrap-around grid with adjustable speed, pause/resume and random restart; uses the helper functions in life_functions.bas.
+' CATEGORY: simulation
+' TAGS: game of life, cellular automaton, wrap-around grid, double buffering, speed control
+' REQUIRES: life_functions.bas
+' MINVERSION: 1.5
 ' ============================================
 ' Controls:
 '   A      faster
@@ -12,7 +17,6 @@
 ' Letter keys are used for speed on purpose: "+" and "-" sit in
 ' different places on different keyboard layouts, and the numpad
 ' versions send different key codes. A and S exist on every layout.
-' ============================================
 
 INCLUDE "life_functions.bas"
 

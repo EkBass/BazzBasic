@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/UPC
+' ROSETTA: https://rosettacode.org/wiki/UPC
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Decodes UPC-A bar codes drawn with spaces and # characters into their 12 digits, checks the checksum and detects upside-down bar codes by reversing the input; prints the digits of ten sample bar codes.
+' CATEGORY: strings
+' TAGS: upc-a, barcode decoding, checksum, mid
+' MINVERSION: 1.5
 ' ============================================
 ' Decodes UPC-A bar codes from ASCII representations
 ' (spaces and # characters).

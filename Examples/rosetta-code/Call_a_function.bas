@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Call_a_function
+' ROSETTA: https://rosettacode.org/wiki/Call_a_function
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Demonstrates calling a function with and without arguments and calling a subroutine with GOSUB, both directly and through a label stored in a variable.
+' CATEGORY: basics
+' TAGS: def fn, function call, gosub, dynamic label
+' MINVERSION: 1.5
 ' ============================================
 DEF FN add$(a$, b$)
     RETURN a$ + b$

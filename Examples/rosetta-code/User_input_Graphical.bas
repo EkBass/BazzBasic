@@ -1,5 +1,11 @@
-' https://rosettacode.org/wiki/User_input/Graphical
+' ============================================
+' ROSETTA: https://rosettacode.org/wiki/User_input/Graphical
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Opens a 640x480 graphics window titled User Input, asks for a string and for the integer 75000 with INPUT, prints both back and waits for ESC.
+' CATEGORY: input
+' TAGS: input statement, text input, graphics screen, waitkey
+' MINVERSION: 1.5
 ' ============================================
 [inits]
     LET text$

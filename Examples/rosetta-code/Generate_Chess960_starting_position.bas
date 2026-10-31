@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Generate_Chess960_starting_position
+' ROSETTA: https://rosettacode.org/wiki/Generate_Chess960_starting_position
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Generates five random Chess960 starting positions, with the bishops on opposite-coloured squares and the king between the rooks, and prints each as an eight-letter string.
+' CATEGORY: algorithms
+' TAGS: chess960, random arrangement, chess, gosub
+' MINVERSION: 1.5
 ' ============================================
 ' Bishops go on one even and one odd square (opposite colours),
 ' queen and knights on random free squares, and the three squares

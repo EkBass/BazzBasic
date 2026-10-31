@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/String_prepend
+' ROSETTA: https://rosettacode.org/wiki/String_prepend
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Prepends a string to another string variable and a number to a string with concatenation, and prints the results.
+' CATEGORY: strings
+' TAGS: string prepend, concatenation
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

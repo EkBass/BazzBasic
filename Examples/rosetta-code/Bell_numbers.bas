@@ -1,9 +1,14 @@
 ' ============================================
-' https://rosettacode.org/wiki/Bell_numbers
+' ROSETTA: https://rosettacode.org/wiki/Bell_numbers
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Generates the first 15 Bell numbers with the Bell triangle and prints the first ten rows of the triangle.
+' CATEGORY: math
+' TAGS: bell numbers, bell triangle, combinatorics, 2d array
+' MINVERSION: 1.5
+' ============================================
 ' Task: generate the Bell numbers with a Bell triangle, show the
 '       first 15 of them and the first ten rows of the triangle.
-' ============================================
 
 [inits]
     LET ROWS# = 15              ' triangle rows built = Bell numbers shown

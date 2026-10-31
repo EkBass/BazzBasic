@@ -1,7 +1,11 @@
 ' ============================================
-' Sort_three_variables
-' https://rosettacode.org/wiki/Sort_three_variables
+' ROSETTA: https://rosettacode.org/wiki/Sort_three_variables
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Sorts three random integers (0 to 99) into ascending order using only arithmetic with MIN and MAX and no temporary variable, printing the values before and after.
+' CATEGORY: algorithms
+' TAGS: sorting, min, max, no temporary variable
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]
@@ -37,10 +41,10 @@ END
 
 ' Output
 ' Start:
-' a$: 77
-' b$: 59
-' c$: 74
+' a$: 81
+' b$: 12
+' c$: 84
 ' Sorted Order:
-' a$: 59
-' b$: 74
-' c$: 77
+' a$: 12
+' b$: 81
+' c$: 84

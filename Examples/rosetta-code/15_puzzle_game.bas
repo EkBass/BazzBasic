@@ -1,7 +1,12 @@
 ' ============================================
-' https://rosettacode.org/wiki/15_puzzle_game
+' ROSETTA: https://rosettacode.org/wiki/15_puzzle_game
 ' BazzBasic: https://github.com/EkBass/BazzBasic
-' Fifteen Puzzle - click a tile next to the gap to slide it
+' --------------------------------------------
+' DESCRIPTION: Fifteen puzzle: a shuffled 4x4 sliding-tile board where clicking a tile next to the gap slides it in, with a move counter and a solved message.
+' CATEGORY: games
+' TAGS: sliding puzzle, mouse, loadsheet, shuffle
+' REQUIRES: assets/15.png
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

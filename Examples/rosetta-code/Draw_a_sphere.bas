@@ -1,7 +1,12 @@
-' =============================================
-' https://rosettacode.org/wiki/Draw_a_sphere
-' https://ekbass.github.io/BazzBasic/
-' =============================================
+' ============================================
+' ROSETTA: https://rosettacode.org/wiki/Draw_a_sphere
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Draws a shaded sphere of radius 100 pixel by pixel in a 640x480 window, using a precomputed table of teal shades, and waits for a key press.
+' CATEGORY: drawing
+' TAGS: sphere, shading, pset, 3d, lookup table
+' MINVERSION: 1.5
+' ============================================
 
 [inits]
     LET W# = 640

@@ -1,8 +1,13 @@
 ' ============================================
-' https://rosettacode.org/wiki/10001th_prime
+' ROSETTA: https://rosettacode.org/wiki/10001th_prime
 ' BazzBasic: https://github.com/EkBass/BazzBasic
-' Task: find and show the 10001st prime number.
+' --------------------------------------------
+' DESCRIPTION: Finds and prints the 10001st prime number using trial division by odd numbers.
+' CATEGORY: math
+' TAGS: prime numbers, trial division, nth prime
+' MINVERSION: 1.5
 ' ============================================
+' Task: find and show the 10001st prime number.
 
 ' Trial division by odd numbers up to the square root of n$
 DEF FN IsPrime$(n$)

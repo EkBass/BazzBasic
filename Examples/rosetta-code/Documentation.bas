@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Documentation
+' ROSETTA: https://rosettacode.org/wiki/Documentation
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Shows how to document BazzBasic code with apostrophe comments, REM comments and end-of-line comments (there are no documentation comments).
+' CATEGORY: basics
+' TAGS: comments, documentation, rem, syntax
+' MINVERSION: 1.5
 ' ============================================
 
 ' BazzBasic supports classic BASIC styles for comments.

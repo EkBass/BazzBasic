@@ -1,6 +1,11 @@
 ' ============================================
-' Mouse-steered plane with screen wrap
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Flies a plane sprite turned with the left and right mouse buttons, and wraps it to the opposite screen edge once it has fully left the screen.
+' CATEGORY: input
+' TAGS: mouse, mouse buttons, sprite rotation, screen wrap, delta time
+' REQUIRES: assets/plane.png
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

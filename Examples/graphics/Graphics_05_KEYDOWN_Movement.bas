@@ -1,8 +1,11 @@
 ' ============================================
-' GRAPHICS SNIPPET 5: KEYDOWN Movement
-' Smooth, multi-key-capable movement using KEYDOWN - only
-' available in graphics mode, not console mode.
-'
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Graphics snippet 5: smooth, multi-key movement of a circle with KEYDOWN (arrow keys or WASD), where every held key is checked independently each frame so diagonals work; graphics mode only.
+' CATEGORY: input
+' TAGS: graphics tutorial, keydown, keyboard movement, wasd, arrow keys
+' MINVERSION: 1.5
+' ============================================
 ' Contrast with Minefield.bas / RoadRace.bas: those are console-mode
 ' games, so they had no KEYDOWN available and had to poll INKEY in
 ' small time-sliced chunks to stay responsive, catching at most one
@@ -12,8 +15,6 @@
 ' console versions could not do at all.
 '
 ' Self-contained - no external files needed.
-' BazzBasic: https://github.com/EkBass/BazzBasic
-' ============================================
 
 [inits]
     SCREEN 0, 640, 480, "KEYDOWN Movement"

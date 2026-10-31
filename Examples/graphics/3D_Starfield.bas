@@ -1,12 +1,15 @@
-' BazzBasic version 1.3
-' https://ekbass.github.io/BazzBasic/
-' ============================================================
-' 3D Starfield
+' ============================================
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Animated 3D starfield in which 500 stars fly outward from the screen centre, brightening as they approach, like flying through space.
+' CATEGORY: drawing
+' TAGS: starfield, 3d effect, animation, particles
+' MINVERSION: 1.5
+' ============================================
 ' Original QBasic version by Antti Laaksonen (2002)
 ' https://www.ohjelmointiputka.net/koodivinkit/23485-qb-avaruuslento
 '
 ' Ported and extended for BazzBasic
-' ============================================================
 
 [inits]
     SCREEN 12

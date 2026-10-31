@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Character_codes
+' ROSETTA: https://rosettacode.org/wiki/Character_codes
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Prints the character that belongs to a given character code and the code of a given character.
+' CATEGORY: strings
+' TAGS: character codes, ascii, asc, chr
+' MINVERSION: 1.5
 ' ============================================
 
 ' Task

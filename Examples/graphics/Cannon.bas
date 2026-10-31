@@ -1,10 +1,12 @@
 ' ============================================
-' Cannon
-' Fire a cannonball toward the mouse cursor and pop the
-' targets drifting in from the right before one slips past.
-' Ported from Python (turtle + the "freegames" package's cannon.py)
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Fire a cannonball toward the mouse cursor and pop the targets drifting in from the right before one slips past.
+' CATEGORY: games
+' TAGS: mouse aiming, projectile, gravity, score
+' MINVERSION: 1.5
 ' ============================================
+' Ported from Python (turtle + the "freegames" package's cannon.py)
 '
 ' Differences from the original Python version (documented on purpose,
 ' per project convention - deviations from source behavior are always
@@ -70,7 +72,6 @@
 '      itself for the numbers.
 '
 ' Controls: move the mouse to aim, left-click to fire, ESC to quit.
-' ============================================
 
 [inits]
     ' --- Screen ---

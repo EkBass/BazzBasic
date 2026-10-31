@@ -1,11 +1,13 @@
-' BazzBasic version 1.3b
-' https://ekbass.github.io/BazzBasic/
 ' ============================================
-' Mandelbrot Fractal
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Renders the Mandelbrot set pixel by pixel in a left-to-right sweep, colouring each point by how many iterations of z = z^2 + c it takes to escape.
+' CATEGORY: drawing
+' TAGS: mandelbrot, fractals, complex numbers, pset
+' MINVERSION: 1.5
+' ============================================
 ' Based on: github.com/oonap0oo/QB64-projects
 ' z_new = z^2 + c  (complex iteration)
-' ============================================
 
 [inits]
     LET XMAX# = 640

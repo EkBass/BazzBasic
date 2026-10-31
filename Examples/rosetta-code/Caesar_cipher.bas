@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Caesar_cipher
+' ROSETTA: https://rosettacode.org/wiki/Caesar_cipher
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Encrypts a sentence with a Caesar cipher using a key of 10 and decrypts it back, shifting only letters.
+' CATEGORY: strings
+' TAGS: caesar cipher, encryption, asc, chr
+' MINVERSION: 1.5
 ' ============================================
 
 DEF FN Encrypt$(s$, key$)

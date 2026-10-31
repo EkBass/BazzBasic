@@ -1,9 +1,14 @@
 ' ============================================
-' https://rosettacode.org/wiki/Babbage_problem
+' ROSETTA: https://rosettacode.org/wiki/Babbage_problem
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Finds the smallest positive integer whose square ends in 269696 and checks Babbage's guess of 99736.
+' CATEGORY: math
+' TAGS: babbage problem, square numbers, modulo, brute force
+' MINVERSION: 1.5
+' ============================================
 ' Task: find the smallest positive integer whose square ends
 '       in the digits 269696, and check Babbage's guess of 99736.
-' ============================================
 
 [inits]
     LET ENDING# = 269696

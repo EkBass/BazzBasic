@@ -1,11 +1,13 @@
-' ==========================================
-' Russian Roulette
+' ============================================
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Text game of chance: spin the revolver chamber and pull the trigger, with a one-in-six chance of losing each time.
+' CATEGORY: games
+' TAGS: russian roulette, random chance
+' MINVERSION: 1.5
+' ============================================
 ' Originally from CREATIVE COMPUTING
 ' Morristown, New Jersey
-'
-' BazzBasic version
-' https://github.com/EkBass/BazzBasic
-' ==========================================
 [inits]
     LET BLACK#   = 0
     LET RED#     = 4

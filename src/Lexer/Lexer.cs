@@ -81,6 +81,7 @@ public class Lexer(string source)
         ["LOADSHEET"]   = TokenType.TOK_LOADSHEET,
         ["LOADFONT"]    = TokenType.TOK_LOADFONT,
         ["DRAWSTRING"]  = TokenType.TOK_DRAWSTRING,
+        ["SAVESCREEN"]  = TokenType.TOK_SAVESCREEN,
         ["HTTPGET"]     = TokenType.TOK_HTTPGET,
         ["HTTPPOST"]    = TokenType.TOK_HTTPPOST,
         ["ASJSON"]      = TokenType.TOK_ASJSON,

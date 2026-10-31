@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Factors_of_an_integer
+' ROSETTA: https://rosettacode.org/wiki/Factors_of_an_integer
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Reads a positive integer and prints all of its factors.
+' CATEGORY: math
+' TAGS: factors, divisors, modulo, integer
+' MINVERSION: 1.5
 ' ============================================
 [inits]
     LET n$ = 0

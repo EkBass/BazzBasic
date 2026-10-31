@@ -1,6 +1,10 @@
 ' ============================================
-' Custom 3-button dialog via PowerShell + WinForms
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Shows a custom WinForms dialog with three buttons (Apple, Banana, Cherry) through PowerShell and prints which one the user chose.
+' CATEGORY: api
+' TAGS: shell, powershell, winforms, dialog
+' MINVERSION: 1.5
 ' ============================================
 [inits]
     LET ret$    = ""

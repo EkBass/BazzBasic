@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Greatest_common_divisor
+' ROSETTA: https://rosettacode.org/wiki/Greatest_common_divisor
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Prints the greatest common divisor of four number pairs, calculated with Euclid's algorithm both iteratively and recursively.
+' CATEGORY: math
+' TAGS: gcd, euclid's algorithm, recursion, fstring
+' MINVERSION: 1.5
 ' ============================================
 ' Euclid's algorithm, iterative and recursive.
 

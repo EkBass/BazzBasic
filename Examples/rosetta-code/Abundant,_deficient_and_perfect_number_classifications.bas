@@ -1,9 +1,14 @@
 ' ============================================
-' https://rosettacode.org/wiki/Abundant,_deficient_and_perfect_number_classifications
+' ROSETTA: https://rosettacode.org/wiki/Abundant,_deficient_and_perfect_number_classifications
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Classifies the integers 1 to 20000 as deficient, perfect or abundant using a divisor-sum sieve and prints the size of each class.
+' CATEGORY: math
+' TAGS: perfect numbers, divisors, sieve, classification
+' MINVERSION: 1.5
+' ============================================
 ' Task: classify the integers 1 to 20000 as deficient, perfect
 '       or abundant, and show how many fall into each class.
-' ============================================
 
 [inits]
     LET LIMIT# = 20000

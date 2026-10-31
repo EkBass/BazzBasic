@@ -1,7 +1,11 @@
 ' ============================================
-' Morse code
-' https://rosettacode.org/wiki/Morse_code
+' ROSETTA: https://rosettacode.org/wiki/Morse_code
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Encodes a line of text typed by the user into Morse code, with dots as '.', dashes as '_' and words separated by '/'; unknown characters are skipped.
+' CATEGORY: strings
+' TAGS: morse code, encoding, lookup table, instr
+' MINVERSION: 1.5
 ' ============================================
 ' Encodes a text string into Morse code.
 ' Dots are "." and dashes are "_".

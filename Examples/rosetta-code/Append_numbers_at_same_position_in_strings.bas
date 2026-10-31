@@ -1,9 +1,14 @@
 ' ============================================
-' https://rosettacode.org/wiki/Append_numbers_at_same_position_in_strings
+' ROSETTA: https://rosettacode.org/wiki/Append_numbers_at_same_position_in_strings
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Joins the numbers at the same position in three lists into one number (for example 1, 10 and 19 give 11019) and prints the nine results.
+' CATEGORY: strings
+' TAGS: split, fstring, lists
+' MINVERSION: 1.5
+' ============================================
 ' Task: given three lists of numbers, join the numbers at the same
 '       position into one number, e.g. 1, 10, 19 -> 11019.
-' ============================================
 
 [inits]
     DIM list1$, list2$, list3$

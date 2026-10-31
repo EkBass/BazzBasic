@@ -1,11 +1,13 @@
-' BazzBasic version 1.3b
-' https://ekbass.github.io/BazzBasic/
 ' ============================================
-' Maze Generator
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Generates a random rectangular maze of a user-chosen odd size and prints it as text, with an entry on the left wall and an exit on the right.
+' CATEGORY: algorithms
+' TAGS: maze generation, procedural generation, ascii art
+' MINVERSION: 1.5
+' ============================================
 ' Original BASIC by Joe Wingbermuehle
 ' Translated to BazzBasic
-' BazzBasic: https://github.com/EkBass/BazzBasic
-' ============================================
 ' Builds a random rectangular maze using a
 ' randomized growing-tree-style algorithm.
 ' Width and height MUST be odd numbers (>= 5).
@@ -14,7 +16,6 @@
 '   0 = uncarved wall      (rendered as "[]")
 '   1 = carved corridor    (rendered as "  ")
 '   2 = outer ring border  (rendered as "  ")
-' ============================================
 
 [inits]
     LET w$ = 0          ' Maze width  (odd, >= 5)

@@ -1,6 +1,10 @@
 ' ============================================
-' Bouncing ball with teleport
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: A ball bounces off all four window edges at constant speed; pressing SPACE teleports it to a random spot with a random heading and increments a teleport counter.
+' CATEGORY: simulation
+' TAGS: bouncing ball, delta time, keyboard input
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

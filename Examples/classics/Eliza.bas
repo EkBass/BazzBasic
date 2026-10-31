@@ -1,10 +1,13 @@
 ' ============================================
-' ELIZA - BazzBasic Edition
-' Original: Joseph Weizenbaum, MIT 1966
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Simulates the ELIZA Rogerian psychotherapist chatbot: matches keywords in what the user types and answers with canned or pronoun-reflected replies.
+' CATEGORY: strings
+' TAGS: chatbot, eliza, keyword matching, pronoun reflection
+' MINVERSION: 1.5
 ' ============================================
+' Original: Joseph Weizenbaum, MIT 1966
 ' Classic DOCTOR script - Rogerian therapist
-' ============================================
 
 [inits]
     LET BLACK#   = 0

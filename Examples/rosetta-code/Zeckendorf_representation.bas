@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Zeckendorf_number_representation
+' ROSETTA: https://rosettacode.org/wiki/Zeckendorf_number_representation
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Prints the Zeckendorf representation of the integers 1 to 20, each written as a sum of non-consecutive Fibonacci numbers found with a greedy algorithm.
+' CATEGORY: math
+' TAGS: zeckendorf, fibonacci, greedy algorithm, number representation
+' MINVERSION: 1.5
 ' ============================================
 
 ' Every positive integer has a unique representation as a sum

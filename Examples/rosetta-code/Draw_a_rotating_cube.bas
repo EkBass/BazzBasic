@@ -1,7 +1,12 @@
-' =============================================
-' https://rosettacode.org/wiki/Draw_a_rotating_cube
-' https://ekbass.github.io/BazzBasic/
-' =============================================
+' ============================================
+' ROSETTA: https://rosettacode.org/wiki/Draw_a_rotating_cube
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Animates a rotating wireframe cube in a 640x480 window until ESC is pressed.
+' CATEGORY: drawing
+' TAGS: rotating cube, wireframe, 3d animation, line, trigonometry
+' MINVERSION: 1.5
+' ============================================
 
 ' Ported from GWBasic version
 

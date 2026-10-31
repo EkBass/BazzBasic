@@ -1,10 +1,15 @@
 ' ============================================
-' https://rosettacode.org/wiki/Binary_strings
+' ROSETTA: https://rosettacode.org/wiki/Binary_strings
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Demonstrates basic string operations: creation, assignment, comparison, copying, emptiness test, appending, substrings, replacing and joining.
+' CATEGORY: strings
+' TAGS: string comparison, substrings, replace, concatenation
+' MINVERSION: 1.5
+' ============================================
 ' Task: demonstrate basic byte-string operations: creation,
 '       assignment, comparison, copying, emptiness test, appending,
 '       substrings, replacing and joining.
-' ============================================
 
 ' Three-way string comparison
 DEF FN Compare$(x$, y$)

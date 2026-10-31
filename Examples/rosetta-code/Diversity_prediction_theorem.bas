@@ -1,7 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Diversity_prediction_theorem
+' ROSETTA: https://rosettacode.org/wiki/Diversity_prediction_theorem
 ' BazzBasic: https://github.com/EkBass/BazzBasic
-' Collective error = average individual error - prediction diversity
+' --------------------------------------------
+' DESCRIPTION: Computes the average error, crowd error and prediction diversity of two sets of estimates of the true value 49, showing that collective error equals average error minus diversity.
+' CATEGORY: math
+' TAGS: diversity prediction theorem, statistics, average error, number formatting
+' MINVERSION: 1.5
 ' ============================================
 
 ' Format a number with a fixed number of decimals, right-aligned to width

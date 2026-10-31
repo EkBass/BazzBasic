@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Terminal_control/Cursor_positioning
+' ROSETTA: https://rosettacode.org/wiki/Terminal_control/Cursor_positioning
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Moves the cursor to row 6, column 3 with LOCATE and prints Hello there, then reads the character at that position back with GETCONSOLE and prints it.
+' CATEGORY: screen
+' TAGS: locate, cursor positioning, getconsole, terminal control
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Variable_size/Get
+' ROSETTA: https://rosettacode.org/wiki/Variable_size/Get
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Shows that BazzBasic variables are typeless and have no byte size to query; LEN gives the length of a string and LEN(arr$()) the number of elements in an array.
+' CATEGORY: basics
+' TAGS: len, variable size, string length, arrays
+' MINVERSION: 1.5
 ' ============================================
 
 ' BazzBasic is a typeless language — every variable holds any value

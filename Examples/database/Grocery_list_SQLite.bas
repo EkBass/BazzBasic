@@ -1,6 +1,11 @@
-' Grocery List - SQLite Version
-' BazzBasic version 1.4
-' https://ekbass.github.io/BazzBasic/
+' ============================================
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Console grocery list manager that stores the items in an SQLite database through the sqlite3 command-line tool; supports /add, /list, /delete and /stop commands.
+' CATEGORY: data
+' TAGS: sqlite, sqlite3, sql, shell, persistent storage
+' MINVERSION: 1.5
+' ============================================
 
 [inits]
     LET DB_FILE# = "grocery.db"
@@ -79,7 +84,6 @@ RETURN
 RETURN
 
 [sub:delete_list]
-    ' SQL Delete[cite: 2]
     LET sql$ = "DELETE FROM grocery"
     res$ = SHELL("sqlite3 " + DB_FILE# + " \"" + sql$ + "\" 2>&1")
     PRINT "Database table wiped"

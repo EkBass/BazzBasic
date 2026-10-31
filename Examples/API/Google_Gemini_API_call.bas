@@ -1,11 +1,15 @@
 ' ============================================
-' Google Gemini API call — BazzBasic
-' https://github.com/EkBass/BazzBasic
-' Public domain
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Asks Google Gemini to explain BazzBasic in one sentence through the generateContent API and prints the reply.
+' CATEGORY: api
+' TAGS: google, gemini, llm, httppost, json
+' REQUIRES: .env
+' MINVERSION: 1.5
 ' ============================================
+' Public domain
 ' Requires .env file in same directory as script:
 '  GEMINI_API_KEY=your_api_key_here
-' ============================================
 
 ' DISCLAIMER:
 ' This code was written around 04.2026 with help from the provider's own AI,

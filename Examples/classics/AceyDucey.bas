@@ -1,8 +1,12 @@
 ' ============================================
-' ACEY DUCEY - BazzBasic Edition
-' Original: Creative Computing
-' https://github.com/EkBass/BazzBasic
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Card betting game: two cards are dealt and the player wagers on whether a third card falls between them, starting with $100.
+' CATEGORY: games
+' TAGS: card game, betting, deck shuffle
+' MINVERSION: 1.5
 ' ============================================
+' Original: Creative Computing
 
 DEF FN CardName$(v$)
     IF v$ = 11 THEN RETURN "J"

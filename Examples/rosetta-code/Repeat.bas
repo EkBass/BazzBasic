@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Repeat
+' ROSETTA: https://rosettacode.org/wiki/Repeat
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Calls a procedure a given number of times by storing a subroutine label in a variable and calling it with GOSUB, since functions cannot be passed as arguments.
+' CATEGORY: basics
+' TAGS: repeat, gosub, dynamic jump, subroutines
+' MINVERSION: 1.5
 ' ============================================
 ' BazzBasic functions (DEF FN) cannot take another function as an
 ' argument. A subroutine label can, however, be stored in a variable

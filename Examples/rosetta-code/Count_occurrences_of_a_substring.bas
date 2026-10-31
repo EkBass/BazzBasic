@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Count_occurrences_of_a_substring
+' ROSETTA: https://rosettacode.org/wiki/Count_occurrences_of_a_substring
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Counts the non-overlapping occurrences of a substring in a string, shown with four test cases.
+' CATEGORY: strings
+' TAGS: substring, instr, count occurrences, non-overlapping
+' MINVERSION: 1.5
 ' ============================================
 
 DEF FN CountOccurrences$(haystack$, needle$)

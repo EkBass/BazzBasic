@@ -1,8 +1,10 @@
 ' ============================================
-' BazzBasic version 1.4c
-' https://ekbass.github.io/BazzBasic/
-
-' Audio length in seconds
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Prints the length in seconds of a WAV or MP3 file given as a command-line argument.
+' CATEGORY: api
+' TAGS: audio duration, wav, mp3, powershell, command line arguments
+' MINVERSION: 1.5
 ' ============================================
 
 IF ARGCOUNT = 0 THEN

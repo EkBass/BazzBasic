@@ -1,7 +1,10 @@
 ' ============================================
-' Rosetta Code - Top BASIC dialects by number of solutions
-' MediaWiki API version
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Queries the Rosetta Code MediaWiki API for the BASIC dialect categories and prints the top 15 ranked by number of solutions.
+' CATEGORY: api
+' TAGS: mediawiki, rosetta code, httpget, json, ranking
+' MINVERSION: 1.5
 ' ============================================
 '
 ' Rosetta Code runs on MediaWiki, and every MediaWiki site has a

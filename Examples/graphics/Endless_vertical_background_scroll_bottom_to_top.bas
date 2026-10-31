@@ -1,8 +1,13 @@
 ' ============================================
-' Endless vertical background scroll (bottom to top)
 ' BazzBasic: https://github.com/EkBass/BazzBasic
-' Built by Claude with bazzbasic-ai.guide
+' --------------------------------------------
+' DESCRIPTION: Scrolls a background image endlessly upward at a constant speed, with no visible seam, using two copies of the image and delta-time movement.
+' CATEGORY: drawing
+' TAGS: scrolling background, loadimage, delta time
+' REQUIRES: assets/pori.png
+' MINVERSION: 1.5
 ' ============================================
+' Built by Claude with bazzbasic-ai.guide
 
 [inits]
     LET SCREEN_W#      = 640

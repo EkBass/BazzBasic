@@ -1,9 +1,14 @@
-' ==========================================
-' Gamepad graphics demo - BazzBasic v1.5
+' ============================================
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Moves a ball on screen with the gamepad's left stick or D-pad, changes its color on each A press, grows it with the right trigger and rumbles the pad with START.
+' CATEGORY: input
+' TAGS: gamepad, analog stick, d-pad, rumble, trigger
+' MINVERSION: 1.5
+' ============================================
 ' Left stick or D-pad moves the ball, A changes color,
 ' RT makes it bigger, START = rumble. BACK or ESC quits.
 ' Public Domain
-' ==========================================
 
 [inits]
     LET SPEED# = 6

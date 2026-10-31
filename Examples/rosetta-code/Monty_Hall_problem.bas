@@ -1,7 +1,11 @@
 ' ============================================
-' Monty Hall problem
-' https://rosettacode.org/wiki/Monty_Hall_problem
+' ROSETTA: https://rosettacode.org/wiki/Monty_Hall_problem
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Simulates 10000 rounds of the Monty Hall game with the same winning door and first pick for both players, and counts and prints how often the stay strategy and the switch strategy win.
+' CATEGORY: simulation
+' TAGS: monty hall, monte carlo, probability, rnd
+' MINVERSION: 1.5
 ' ============================================
 ' Both players compete on the same round each iteration:
 ' same winning door, same initial pick.
@@ -28,7 +32,7 @@ LET SIMULATIONS# = 10000
         IF pick$ = winning$ THEN
             stayWins$+= 1
         ELSE
-            switchWins$-= 1
+            switchWins$+= 1
         END IF
     NEXT
 

@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Department_numbers
+' ROSETTA: https://rosettacode.org/wiki/Department_numbers
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Lists all combinations of unique police, sanitation and fire department numbers from 1 to 7 that add up to 12, with an even police number.
+' CATEGORY: math
+' TAGS: department numbers, puzzle, brute force, combinations
+' MINVERSION: 1.5
 ' ============================================
 ' Police, sanitation and fire departments get unique numbers 1..7
 ' that add up to 12. Police number must be even.

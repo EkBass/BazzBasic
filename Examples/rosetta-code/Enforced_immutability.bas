@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Enforced_immutability
+' ROSETTA: https://rosettacode.org/wiki/Enforced_immutability
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Declares constants, which are immutable in BazzBasic, and uses them to initialise variables and to print values.
+' CATEGORY: basics
+' TAGS: constants, immutability, variables
+' MINVERSION: 1.5
 ' ============================================
 ' In BazzBasic, immutability is enforced by the # suffix.
 ' Constants are declared with LET, just like variables,

@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Find_if_a_point_is_within_a_triangle
+' ROSETTA: https://rosettacode.org/wiki/Find_if_a_point_is_within_a_triangle
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Tests whether given points lie strictly inside a triangle using barycentric coordinates and prints inside or outside for each point.
+' CATEGORY: math
+' TAGS: triangle, point in triangle, barycentric coordinates, geometry
+' MINVERSION: 1.5
 ' ============================================
 
 ' Barycentric test. Returns TRUE if P is strictly inside triangle ABC.

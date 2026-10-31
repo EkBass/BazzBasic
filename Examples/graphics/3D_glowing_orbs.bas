@@ -1,8 +1,11 @@
-' Glowing orb's
-' Stupid neat 3D closing balls effect
-
-' BazzBasic version 1.3
-' https://ekbass.github.io/BazzBasic/
+' ============================================
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Draws glowing 3D-looking orbs at random positions on the screen, each built from stacked circles that shrink and brighten toward the centre.
+' CATEGORY: drawing
+' TAGS: glow effect, filled circles, rgb color gradient
+' MINVERSION: 1.5
+' ============================================
 
 [inits]
     LET SCREEN_W# = 1280

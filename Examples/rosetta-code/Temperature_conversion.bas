@@ -1,10 +1,14 @@
 ' ============================================
-' https://rosettacode.org/wiki/Temperature_conversion
+' ROSETTA: https://rosettacode.org/wiki/Temperature_conversion
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Converts a temperature entered in kelvin to degrees Celsius, Fahrenheit and Rankine and prints the results.
+' CATEGORY: math
+' TAGS: temperature conversion, kelvin, celsius, fahrenheit, rankine
+' MINVERSION: 1.5
 ' ============================================
 ' Constants hold the fixed physical values.
 ' The input temperature is a variable.
-' ============================================
 
 [inits]
     LET ABS_ZERO#  = 273.15   ' Kelvin → Celsius offset (absolute zero in °C)

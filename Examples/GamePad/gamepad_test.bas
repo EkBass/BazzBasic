@@ -1,8 +1,13 @@
-REM ============================================
-REM Gamepad test (console) - BazzBasic v1.5
+' ============================================
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Console gamepad test that prints the name of pad 0 and lists the buttons held and the stick and trigger values, with START triggering rumble.
+' CATEGORY: input
+' TAGS: gamepad, padbutton, padaxis, rumble, padname
+' MINVERSION: 1.5
+' ============================================
 REM Press buttons / move sticks. START = rumble, BACK = quit.
 REM Runs max 30 seconds.
-REM ============================================
 
 PRINT "Gamepads connected: "; GAMEPADS()
 IF GAMEPADS() > 0 THEN PRINT "Pad 0: "; PADNAME(0)

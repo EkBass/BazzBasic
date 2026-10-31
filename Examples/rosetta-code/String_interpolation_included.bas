@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/String_interpolation
+' ROSETTA: https://rosettacode.org/wiki/String_interpolation
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Inserts the word little into the sentence Mary had a lamb with FSTRING, and for comparison with REPLACE and plain concatenation.
+' CATEGORY: strings
+' TAGS: string interpolation, fstring, replace
+' MINVERSION: 1.5
 ' ============================================
 ' BazzBasic has native string interpolation via FSTRING() since v1.3.
 ' Placeholders use the {{- name$ -}} syntax — chosen to avoid collisions

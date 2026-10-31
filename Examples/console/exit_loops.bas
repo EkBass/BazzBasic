@@ -1,7 +1,11 @@
-REM ============================================
-REM EXIT WHILE and EXIT FOR
-REM Leave a loop early - the clean way.
-REM ============================================
+' ============================================
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Demonstrates EXIT WHILE and EXIT FOR for leaving loops early, with nine cases covering nesting, block IF and DEF FN.
+' CATEGORY: basics
+' TAGS: exit while, exit for, loops, break
+' MINVERSION: 1.5
+' ============================================
 
 REM 1. EXIT WHILE from an endless loop
 LET n$ = 0

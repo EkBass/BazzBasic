@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Digit_fifth_powers
+' ROSETTA: https://rosettacode.org/wiki/Digit_fifth_powers
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Finds all numbers that equal the sum of the fifth powers of their digits and prints them with their total.
+' CATEGORY: math
+' TAGS: fifth powers, digit sum, number puzzle, brute force
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

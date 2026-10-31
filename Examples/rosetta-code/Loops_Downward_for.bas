@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Loops/Downward_for
+' ROSETTA: https://rosettacode.org/wiki/Loops/Downward_for
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Prints the numbers from 10 down to 0 with a FOR loop and a negative STEP.
+' CATEGORY: basics
+' TAGS: for loop, step, countdown
+' MINVERSION: 1.5
 ' ============================================
 
 [main]

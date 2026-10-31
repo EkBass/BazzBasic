@@ -86,6 +86,7 @@ public enum TokenType
     TOK_LOADSHEET           = 121,
     TOK_LOADFONT            = 122,
     TOK_DRAWSTRING          = 123,
+    TOK_SAVESCREEN          = 124,      // Save canvas as PNG (30.10.2026)
 
     // ========================================================================
     // Network Keywords 130 - 149

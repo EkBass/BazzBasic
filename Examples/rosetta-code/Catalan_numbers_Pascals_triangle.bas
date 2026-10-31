@@ -1,7 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Catalan_numbers/Pascal%27s_triangle
+' ROSETTA: https://rosettacode.org/wiki/Catalan_numbers/Pascal%27s_triangle
 ' BazzBasic: https://github.com/EkBass/BazzBasic
-' Print the first 15 Catalan numbers using Pascal's triangle
+' --------------------------------------------
+' DESCRIPTION: Prints the first 15 Catalan numbers, computed from the central binomial coefficients of Pascal's triangle.
+' CATEGORY: math
+' TAGS: catalan numbers, pascal's triangle, combinatorics, binomial coefficients
+' MINVERSION: 1.5
 ' ============================================
 
 ' Right-align a value into a field of given width (replaces PRINT USING)

@@ -1,8 +1,12 @@
-' ============================================================
-' Opposite face of a dice
-' EkBazz 2026, public domain
+' ============================================
 ' BazzBasic: https://github.com/EkBass/BazzBasic
-' ============================================================
+' --------------------------------------------
+' DESCRIPTION: Prints the number on the opposite face of a six-sided die for each face from 1 to 6.
+' CATEGORY: math
+' TAGS: dice, lookup table
+' MINVERSION: 1.5
+' ============================================
+' EkBazz 2026, public domain
 DEF FN DiceOppositeSide$(n$)
     LET opposites$ = "654321"
     IF BETWEEN(n$, 1, 6) THEN

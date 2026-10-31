@@ -1,11 +1,14 @@
 ' ============================================
-' BOXING - BazzBasic Edition
-' Original: Creative Computing, Morristown NJ
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Text-mode Olympic-style boxing match against a computer opponent: three rounds, four punch types, a chosen best punch and vulnerability, with knockouts possible.
+' CATEGORY: games
+' TAGS: boxing, fighting game, turn-based, random events
+' MINVERSION: 1.5
 ' ============================================
+' Original: Creative Computing, Morristown NJ
 ' Olympic Style Boxing: 3 rounds, best 2/3 wins
 ' Punches: (1) Full Swing, (2) Hook, (3) Uppercut, (4) Jab
-' ============================================
 
 [inits]
     LET BLACK#   = 0

@@ -1,7 +1,13 @@
-' https://rosettacode.org/wiki/Animate_a_pendulum
+' ============================================
+' ROSETTA: https://rosettacode.org/wiki/Animate_a_pendulum
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Animates a damped pendulum swinging from a fixed pivot in a graphics window until ESC is pressed.
+' CATEGORY: simulation
+' TAGS: pendulum, physics, damping, animation
+' MINVERSION: 1.5
+' ============================================
 ' BazzBasic conversion from Freebasic code
-' https://ekbass.github.io/BazzBasic/
-
 ' This is done for educational purposes -> commented everything
 ' Public Domain
 

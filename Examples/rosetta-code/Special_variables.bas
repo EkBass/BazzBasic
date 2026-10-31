@@ -1,7 +1,11 @@
 ' ============================================
-' Special variables
-' https://rosettacode.org/wiki/Special_variables
+' ROSETTA: https://rosettacode.org/wiki/Special_variables
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Prints BazzBasic's built-in special constants: EULER#, HPI#, PI#, QPI#, TAU#, the boolean values FALSE/OFF and TRUE/ON, BBVER#, PRG_ROOT# and two keyboard key constants.
+' CATEGORY: basics
+' TAGS: special variables, built-in constants, pi, bbver, prg_root
+' MINVERSION: 1.5
 ' ============================================
 
 

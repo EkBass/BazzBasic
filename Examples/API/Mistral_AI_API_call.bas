@@ -1,11 +1,15 @@
 ' ============================================
-' Mistral AI API call — BazzBasic
-' https://github.com/EkBass/BazzBasic
-' Public domain
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Sends a "Hello" message to the Mistral AI chat completions API and prints the text of the reply.
+' CATEGORY: api
+' TAGS: mistral, llm, httppost, json
+' REQUIRES: .env
+' MINVERSION: 1.5
 ' ============================================
+' Public domain
 ' Requires .env file in same directory as script:
 '   MISTRAL_API_KEY=yourKeyHere
-' ============================================
 
 ' DISCLAIMER:
 ' This code was written around 04.2026 with help from the provider's own AI,

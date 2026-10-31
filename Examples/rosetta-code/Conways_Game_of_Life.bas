@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Conway%27s_Game_of_Life
+' ROSETTA: https://rosettacode.org/wiki/Conway%27s_Game_of_Life
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Runs Conway's Game of Life on a bounded grid and prints the generations of a blinker and a glider.
+' CATEGORY: simulation
+' TAGS: cellular automaton, game of life, generations, double buffering
+' MINVERSION: 1.5
 ' ============================================
 ' Conway's Game of Life on a bounded grid. The world is padded with
 ' a one-cell border of permanently dead cells, so the neighbour count

@@ -1,12 +1,15 @@
 ' ============================================
-' 21 GAME - BazzBasic Edition
-' https://rosettacode.org/wiki/21_game
+' ROSETTA: https://rosettacode.org/wiki/21_game
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Console 21 game: the player and the computer take turns adding 1, 2 or 3 to a running total, and whoever reaches exactly 21 wins; the computer plays the winning strategy.
+' CATEGORY: games
+' TAGS: turn-based, strategy, console colors, waitkey
+' MINVERSION: 1.5
 ' ============================================
 ' Two players alternate saying 1, 2, or 3.
 ' That number is added to a running total.
 ' The player who reaches exactly 21 WINS!
-' ============================================
 
 [inits]
     LET BLACK#   = 0

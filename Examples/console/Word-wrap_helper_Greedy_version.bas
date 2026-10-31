@@ -1,6 +1,10 @@
 ' ============================================
-' Word-wrap helper — greedy, word-boundary aware
-' BazzBasic 1.4c — https://github.com/EkBass/BazzBasic
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Word-wrap helper function that breaks text into lines of a given width at word boundaries using a greedy algorithm.
+' CATEGORY: strings
+' TAGS: word wrap, greedy algorithm, text formatting, split
+' MINVERSION: 1.5
 ' ============================================
 
 DEF FN WrapText$(text$, width$, sep$)

@@ -1,8 +1,10 @@
 ' ============================================
-' BazzBasic version 1.4c
-' https://ekbass.github.io/BazzBasic/
-
-' Big ASCII clock from a 5x5 sprite sheet
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Displays a large ASCII-art digital clock in the console that refreshes every second, built from a 5x5 sprite sheet.
+' CATEGORY: drawing
+' TAGS: ascii art, clock, big digits, time
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

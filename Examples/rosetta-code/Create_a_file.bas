@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Create_a_file
+' ROSETTA: https://rosettacode.org/wiki/Create_a_file
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Creates an empty file and a directory (with a placeholder file in it) both in the current directory and in the root of the current drive.
+' CATEGORY: file-io
+' TAGS: filewrite, create file, create directory, drive root
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

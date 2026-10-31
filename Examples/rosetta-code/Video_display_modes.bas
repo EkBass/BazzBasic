@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Video_display_modes
+' ROSETTA: https://rosettacode.org/wiki/Video_display_modes
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Opens a custom 800x600 graphics window with SCREEN, shows text, then switches to borderless FULLSCREEN and back to windowed mode; the named SCREEN modes are listed in the comments.
+' CATEGORY: screen
+' TAGS: screen modes, screen, fullscreen, graphics window
+' MINVERSION: 1.5
 ' ============================================
 
 ' BazzBasic opens and switches graphics screens with the SCREEN command.

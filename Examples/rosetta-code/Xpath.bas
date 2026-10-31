@@ -1,6 +1,12 @@
 ' ============================================
-' https://rosettacode.org/wiki/XML/XPath
+' ROSETTA: https://rosettacode.org/wiki/XML/XPath
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Emulates three XPath queries on the task's inventory XML document read from xpath.xml, using plain string searching: the first item element, all price values and an array of all item names.
+' CATEGORY: data
+' TAGS: xml, xpath, instr, mid
+' REQUIRES: xpath.xml
+' MINVERSION: 1.5
 ' ============================================
 ' BazzBasic has no XML/XPath library, so the three queries
 ' are emulated with plain string searching (INSTR / MID).

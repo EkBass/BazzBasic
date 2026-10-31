@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Golden_ratio/Convergence
+' ROSETTA: https://rosettacode.org/wiki/Golden_ratio/Convergence
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Iterates phi(n+1) = 1 + 1/phi(n) until two successive values differ by at most 1e-5, then prints the result, the iteration count and the error against the exact golden ratio.
+' CATEGORY: math
+' TAGS: golden ratio, convergence, iteration, tolerance
+' MINVERSION: 1.5
 ' ============================================
 ' Iterate phi(n+1) = 1 + 1/phi(n), phi(0) = 1, until two
 ' successive values differ by at most 1e-5.

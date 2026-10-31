@@ -1,6 +1,10 @@
 ' ============================================
-' A* Pathfinding on a Random Grid
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Animated A* pathfinding on a random 30x30 grid of walls, showing the open and closed cells and the route from start to goal.
+' CATEGORY: algorithms
+' TAGS: a*, pathfinding, heuristic, grid
+' MINVERSION: 1.5
 ' ============================================
 ' Design notes
 ' ------------
@@ -18,7 +22,6 @@
 ' Heuristic: Manhattan distance, exact for 4-directional movement.
 ' Open-set selection: linear scan O(N). Fine for 30x30. A real engine
 ' would use a binary heap; BazzBasic doesn't ship one.
-' ============================================
 
 [inits]
     ' --- Grid ---

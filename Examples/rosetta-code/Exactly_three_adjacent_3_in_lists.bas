@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Exactly_three_adjacent_3_in_lists
+' ROSETTA: https://rosettacode.org/wiki/Exactly_three_adjacent_3_in_lists
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Checks five lists of numbers and prints true for each list that contains exactly three 3s forming one consecutive run and no other 3 anywhere.
+' CATEGORY: algorithms
+' TAGS: lists, consecutive runs, split, counting
+' MINVERSION: 1.5
 ' ============================================
 ' For each list, print true if it contains exactly three 3s
 ' forming one consecutive run, and no other 3 anywhere.

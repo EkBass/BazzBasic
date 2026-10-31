@@ -1,12 +1,15 @@
-REM ============================================
-REM PLATFORMER - Gravity & Jump Game
-REM BazzBasic version: https://ekbass.github.io/BazzBasic/
-REM ============================================
+' ============================================
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Platformer with gravity, jumping and air control on a scrolling tile map; falling more than 5 blocks kills the player.
+' CATEGORY: games
+' TAGS: platformer, gravity, tile map, scrolling camera, collision
+' MINVERSION: 1.5
+' ============================================
 REM Arrow keys = Move
 REM SPACE = Jump  
 REM ESC = Quit
 REM Don't fall more than 5 blocks or you die!
-REM ============================================
 
 [inits]
 	REM Screen constants

@@ -1,7 +1,11 @@
-' ==========================================
-' Keydown_demo.bas — BazzBasic
-' https://ekbass.github.io/BazzBasic/
-' ==========================================
+' ============================================
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Moves a circle around the window with the W, A, S and D keys using KEYDOWN, and enlarges and recolours it while LEFT SHIFT is held.
+' CATEGORY: input
+' TAGS: keydown, keyboard movement, wasd, modifier keys
+' MINVERSION: 1.5
+' ============================================
 [inits]
     LET x$    = 320
     LET y$    = 240

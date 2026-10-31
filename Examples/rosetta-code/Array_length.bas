@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Array_length
+' ROSETTA: https://rosettacode.org/wiki/Array_length
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Prints the number of elements in an array with LEN and ROWCOUNT, before and after adding a second dimension.
+' CATEGORY: basics
+' TAGS: arrays, len, rowcount
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

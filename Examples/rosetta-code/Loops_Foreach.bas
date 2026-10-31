@@ -1,6 +1,11 @@
-' BazzBasic version 1.4c
-' https://rosettacode.org/wiki/Loops/Foreach
+' ============================================
+' ROSETTA: https://rosettacode.org/wiki/Loops/Foreach
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Iterates over every element of an associative array in insertion order with FOR and ARRKEY, since BazzBasic has no FOREACH, and prints the fruits.
+' CATEGORY: basics
+' TAGS: foreach, arrkey, associative array, for loop
+' MINVERSION: 1.5
 ' ============================================
 ' BazzBasic has no FOREACH statement. ARRKEY() returns the keys of an
 ' array in insertion order, so FOR + ARRKEY iterates over any collection

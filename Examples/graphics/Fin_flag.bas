@@ -1,7 +1,11 @@
-' BazzBasic version 1.4c
-' https://ekbass.github.io/BazzBasic/
-
-' Our beautiful Finnish flag
+' ============================================
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Draws the Finnish flag (a blue cross on a white field) with the official proportions and waits for a key press.
+' CATEGORY: drawing
+' TAGS: flag, filled boxes, proportions
+' MINVERSION: 1.5
+' ============================================
 ' Follows the official proportions given for the flag
 ' https://www.qwant.com/?q=suomen+lipun+mitat&client=brz-brave&t=images&o=0%3AB7777298A812E81931E04B69F3DD38111AF26780
 

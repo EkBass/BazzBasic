@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Substring/Top_and_tail
+' ROSETTA: https://rosettacode.org/wiki/Substring/Top_and_tail
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Removes the first character, the last character, and both the first and last characters from the string BazzBasic and prints the results.
+' CATEGORY: strings
+' TAGS: substring, top and tail, left, right, mid
+' MINVERSION: 1.5
 ' ============================================
 [inits]
     LET s$ = "BazzBasic"

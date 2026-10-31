@@ -1,7 +1,11 @@
-' BazzBasic version 1.4c
-' https://ekbass.github.io/BazzBasic/
-
-' Basic initialization and use for variables
+' ============================================
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Shows basic initialization of variables with LET, including declarations without a value, several variables in one statement and a value calculated from another variable.
+' CATEGORY: basics
+' TAGS: variables, initialization, multiple declarations
+' MINVERSION: 1.5
+' ============================================
 
 [inits] ' not mandatory, but common
     LET a$

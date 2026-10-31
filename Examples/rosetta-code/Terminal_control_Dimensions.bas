@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Terminal_control/Dimensions
+' ROSETTA: https://rosettacode.org/wiki/Terminal_control/Dimensions
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Reads the number of rows and columns of the terminal window through PowerShell ([Console]::WindowHeight and WindowWidth) and prints them.
+' CATEGORY: screen
+' TAGS: terminal size, console dimensions, shell, terminal control
+' MINVERSION: 1.5
 ' ============================================
 ' Terminal dimensions are read once at startup via the .NET Console API.
 ' Resize the window after launch and the variables will not update.

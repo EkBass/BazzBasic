@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Substring
+' ROSETTA: https://rosettacode.org/wiki/Substring
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Extracts substrings from Hello, World!: from a start position with a given length, from a start position to the end, without the last character, and from a known character or substring.
+' CATEGORY: strings
+' TAGS: substring, mid, left, instr
+' MINVERSION: 1.5
 ' ============================================
 [inits]
     LET s$   = "Hello, World!"

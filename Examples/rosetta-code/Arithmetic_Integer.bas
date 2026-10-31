@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Arithmetic/Integer
+' ROSETTA: https://rosettacode.org/wiki/Arithmetic/Integer
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Reads two integers and prints their sum, difference, product, integer quotient, remainder and power.
+' CATEGORY: math
+' TAGS: integer arithmetic, operators, mod, pow
+' MINVERSION: 1.5
 ' ============================================
 
 [main]

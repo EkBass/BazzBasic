@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Sum_and_product_of_an_array
+' ROSETTA: https://rosettacode.org/wiki/Sum_and_product_of_an_array
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Fills an array with the integers 1 to 10 and prints the sum (55) and the product (3628800) of its elements.
+' CATEGORY: math
+' TAGS: sum, product, arrays, rowcount
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

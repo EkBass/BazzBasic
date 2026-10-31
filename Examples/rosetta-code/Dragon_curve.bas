@@ -1,7 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Dragon_curve
+' ROSETTA: https://rosettacode.org/wiki/Dragon_curve
 ' BazzBasic: https://github.com/EkBass/BazzBasic
-' Draw the Heighway dragon curve using the paper-folding turn sequence
+' --------------------------------------------
+' DESCRIPTION: Draws the Heighway dragon curve (12 levels) in a 640x480 window using the paper-folding turn sequence, scaled to fit the window, and waits for a key press.
+' CATEGORY: drawing
+' TAGS: dragon curve, fractal, paper folding, line
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

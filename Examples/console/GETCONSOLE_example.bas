@@ -1,7 +1,10 @@
 ' ============================================
-' GETCONSOLE example — BazzBasic
-' Read character and color data from console
-' https://github.com/EkBass/BazzBasic
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Prints colored text to the console and reads back a character plus its foreground and background colors with GETCONSOLE.
+' CATEGORY: screen
+' TAGS: getconsole, console colors, text mode
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

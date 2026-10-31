@@ -1,12 +1,17 @@
 ' ============================================
-' https://rosettacode.org/wiki/Argument_destructuring
+' ROSETTA: https://rosettacode.org/wiki/Argument_destructuring
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Shows how to call a function with arguments taken from data structures: positional arguments unpacked from an array and named arguments passed as a JSON map and looked up by key.
+' CATEGORY: basics
+' TAGS: def fn, named arguments, asjson, asarray
+' MINVERSION: 1.5
+' ============================================
 ' Task: apply a function to arguments stored in a data structure.
 ' BazzBasic has no first-class functions or spread operator, so it is
 ' exempt; this shows the alternative: positional arguments unpacked
 ' from an array, named arguments passed as a JSON map and looked up
 ' by key inside the function.
-' ============================================
 
 ' x$ and y$ are positional; named$ carries the named arguments as JSON
 DEF FN ShowArgs$(x$, y$, named$)

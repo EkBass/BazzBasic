@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Terminal_control/Inverse_video
+' ROSETTA: https://rosettacode.org/wiki/Terminal_control/Inverse_video
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Prints the word inverse in inverse video (black on white) followed by normal text, by swapping the foreground and background arguments of COLOR.
+' CATEGORY: screen
+' TAGS: inverse video, color, terminal control
+' MINVERSION: 1.5
 ' ============================================
 
 ' BazzBasic achieves inverse video by swapping the foreground and

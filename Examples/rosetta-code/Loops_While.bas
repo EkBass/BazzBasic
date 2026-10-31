@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Loops/While
+' ROSETTA: https://rosettacode.org/wiki/Loops/While
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Prints the value 1024 and halves it repeatedly with a WHILE loop until it reaches zero.
+' CATEGORY: basics
+' TAGS: while loop, integer division, int
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

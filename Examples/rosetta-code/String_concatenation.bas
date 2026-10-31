@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/String_concatenation
+' ROSETTA: https://rosettacode.org/wiki/String_concatenation
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Joins string variables and a constant, both by listing them in PRINT with semicolons and by concatenating them with +, and prints the results.
+' CATEGORY: strings
+' TAGS: string concatenation, print, constants
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

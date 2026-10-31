@@ -1,4 +1,11 @@
-REM Regression check: ROWCOUNT, ASJSON, JOIN still work after OrderedDictionary swap
+' ============================================
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Regression check that ROWCOUNT, ASJSON, JOIN and ARRKEY still work on arrays after the OrderedDictionary swap.
+' CATEGORY: basics
+' TAGS: regression test, arrkey, rowcount, asjson, join
+' MINVERSION: 1.5
+' ============================================
 
 DIM row$
 	row$("0,name") = "Widget"

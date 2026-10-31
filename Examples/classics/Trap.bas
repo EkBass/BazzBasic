@@ -1,7 +1,12 @@
-' TRAP - BazzBasic Edition
+' ============================================
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Number-guessing game where the player enters two numbers per guess to trap a secret number between 1 and 100 within six guesses.
+' CATEGORY: games
+' TAGS: number guessing, trap, range hints
+' MINVERSION: 1.5
+' ============================================
 ' Original by Steve Ullman (1972)
-' BazzBasic version
-' https://ekbass.github.io/BazzBasic/
 
 
 [inits]

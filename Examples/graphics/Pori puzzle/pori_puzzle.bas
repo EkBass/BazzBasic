@@ -1,6 +1,11 @@
 ' ============================================
-' Pori Swap Puzzle
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Swap puzzle: an 800x500 picture is cut into 40 pieces with LOADSHEET and shuffled; click two pieces to swap them, hold the right mouse button to peek at the solved image, and the game ends when every piece is in place, showing moves and time.
+' CATEGORY: games
+' TAGS: puzzle, loadsheet, mouse, shuffle, timer
+' REQUIRES: assets/pori.png, puzzle_functions.bas
+' MINVERSION: 1.5
 ' ============================================
 ' An 800x500 image is cut into 100x100 pieces (8 x 5 = 40) and shuffled.
 ' Left-click one piece, then another, and the two swap places.

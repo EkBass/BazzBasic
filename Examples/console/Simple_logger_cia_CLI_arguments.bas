@@ -1,7 +1,12 @@
-' Simple logger via CLI arguments
+' ============================================
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Appends a timestamped log entry given as a command-line argument to sl_log.txt, creating the file on first use.
+' CATEGORY: file-io
+' TAGS: logging, command line arguments, timestamp, fileappend
+' MINVERSION: 1.5
+' ============================================
 ' public domain
-' BazzBasic version 1.4c
-' https://ekbass.github.io/BazzBasic/
 
 
 ' If no args, we can close immediately

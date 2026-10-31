@@ -1,7 +1,12 @@
-' =============================================================
-' Arneodo Attractor — Simulated CRT Oscilloscope
+' ============================================
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Plots the Arneodo chaotic attractor, integrated with the Euler method, as a fading green trace on a simulated CRT oscilloscope screen with a grid, imitating phosphor persistence.
+' CATEGORY: simulation
+' TAGS: chaotic attractor, euler integration, ring buffer, oscilloscope, pset
+' MINVERSION: 1.5
+' ============================================
 ' QB64 original by K Moerman 2026, ported to BazzBasic
-' https://ekbass.github.io/BazzBasic/
 '
 ' The attractor is governed by three coupled ODEs:
 '   dx/dt = y
@@ -12,8 +17,6 @@
 ' pushed into a circular ring buffer. The buffer is then
 ' rendered oldest-to-newest in eight brightness tiers to
 ' simulate phosphor persistence without alpha blending.
-'
-' =============================================================
 
 [inits]
     ' ----- Attractor parameters -----

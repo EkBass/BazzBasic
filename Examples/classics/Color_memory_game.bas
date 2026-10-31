@@ -1,8 +1,12 @@
-' ==========================================
-' Color Memory Game — BazzBasic: Color_memory_game.bas
-' https://ekbass.github.io/BazzBasic/
+' ============================================
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Memory game that shows a colored circle for five seconds each round and asks the player to type the growing sequence of color names in order.
+' CATEGORY: games
+' TAGS: memory game, color sequence, filled circle, line input
+' MINVERSION: 1.5
+' ============================================
 ' Public Domain
-' ==========================================
 
 [inits]
     LET NUM_COLORS# = 8

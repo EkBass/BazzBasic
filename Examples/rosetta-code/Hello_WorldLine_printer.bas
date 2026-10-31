@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Hello_world/Line_printer
+' ROSETTA: https://rosettacode.org/wiki/Hello_world/Line_printer
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Prints the line Hello World! on the Windows default printer by calling PowerShell's Out-Printer through SHELL.
+' CATEGORY: api
+' TAGS: line printer, shell, powershell, out-printer
+' MINVERSION: 1.5
 ' ============================================
 ' Cause a line printer attached to the computer to print a line
 ' containing the message: Hello World!

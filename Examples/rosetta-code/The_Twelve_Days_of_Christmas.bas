@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/The_Twelve_Days_of_Christmas
+' ROSETTA: https://rosettacode.org/wiki/The_Twelve_Days_of_Christmas
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Prints the lyrics of the carol The Twelve Days of Christmas, verse by verse, listing the gifts from the newest down to the partridge in a pear tree.
+' CATEGORY: basics
+' TAGS: twelve days of christmas, nested loops, arrays, fstring
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

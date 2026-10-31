@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Factorial
+' ROSETTA: https://rosettacode.org/wiki/Factorial
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Reads a number and prints its factorial, calculated both recursively and iteratively.
+' CATEGORY: math
+' TAGS: factorial, recursion, iteration, def fn
+' MINVERSION: 1.5
 ' ============================================
 
 ' Provides recursive and iterative at same run

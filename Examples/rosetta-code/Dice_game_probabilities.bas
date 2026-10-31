@@ -1,6 +1,11 @@
 ' ============================================
-' Rosetta Code: https://rosettacode.org/wiki/Dice_game_probabilities
+' ROSETTA: https://rosettacode.org/wiki/Dice_game_probabilities
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Calculates the exact probabilities that Player 1 (nine 4-sided dice) or Player 2 (six 6-sided dice) rolls the higher total, and the probability of a tie.
+' CATEGORY: math
+' TAGS: probability, dice, convolution, frequency table
+' MINVERSION: 1.5
 ' ============================================
 ' Player 1: 9 dice, 4 faces (each die rolls 1-4)
 ' Player 2: 6 dice, 6 faces (each die rolls 1-6)

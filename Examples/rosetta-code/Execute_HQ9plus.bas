@@ -1,9 +1,14 @@
-' =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-' https://rosettacode.org/wiki/Execute_HQ9%2B
-' FILE: Execute_HQ9plus.bas
+' ============================================
+' ROSETTA: https://rosettacode.org/wiki/Execute_HQ9%2B
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Interprets an HQ9+ program typed in by the user: H prints Hello, World!, Q prints the program's own source, 9 sings 99 Bottles of Beer and + increments an accumulator.
+' CATEGORY: algorithms
+' TAGS: hq9+, interpreter, esoteric language, quine, 99 bottles of beer
+' REQUIRES: hq9.bas
+' MINVERSION: 1.5
+' ============================================
 ' Bit adjusted version of original by: https://github.com/Mkratzen
-' BazzBasic: https://ekbass.github.io/BazzBasic/
-' =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 [inits]
     LET text$

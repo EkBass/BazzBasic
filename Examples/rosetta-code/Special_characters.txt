@@ -1,5 +1,14 @@
-# Special characters
-# https://rosettacode.org/wiki/Special_characters#BazzBasic
+```text
+' ============================================
+' ROSETTA: https://rosettacode.org/wiki/Special_characters#BazzBasic
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Lists the special characters of BazzBasic: comments, name suffixes, labels, operators, separators, enclosures and escape sequences.
+' CATEGORY: basics
+' TAGS: syntax, operators, escape sequences, language reference
+' MINVERSION: 1.5
+' ============================================
+```
 
 =={{header|BazzBasic}}==
 

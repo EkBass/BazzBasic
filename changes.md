@@ -5,6 +5,45 @@ They take effect once a new binary release is published.
 
 Changes for older versions are in [changes-archive.md](changes-archive.md).
 
+## 30th October 2026
+
+### New: SAVESCREEN
+
+Saves the graphics screen as a PNG file. Relative paths resolve against the program's folder.
+
+```basic
+SCREEN 0, 320, 200
+CIRCLE (160, 100), 50, RGB(255, 0, 0), 1
+SAVESCREEN "circle.png"
+```
+
+- Only `.png` is supported; any other extension is an error.
+- Error without graphics mode: `SAVESCREEN: graphics mode not initialized. Use SCREEN first.`
+- Internals: new token `TOK_SAVESCREEN = 124`. Uses System.Drawing.Common (already used by LOADIMAGE), works in the trimmed build.
+- **Not yet added** to `extras` syntax files (Notepad++, Geany, reserved-words.xml, VS Code), manual or AI guide — only to the IDE highlighting. To be done together with the other upcoming features.
+
+### Graphics: persistent canvas — POINT works, PSET loops are fast
+
+All drawing now goes to an off-screen canvas texture that is copied to the window when shown. Before this, `POINT` read the window's back buffer, which SDL leaves undefined after every screen update — so POINT often returned garbage, and every PSET updated the screen at monitor refresh speed. A 293×341 POINT/PSET loop (Rosetta Code *Grayscale image*) took an estimated ~28 minutes and looked frozen; it now runs in ~0.6 seconds.
+
+- `POINT` reads from a memory copy of the canvas: one screen read when needed, then plain lookups. `PSET` updates the copy directly; other drawing commands mark it stale.
+- Automatic screen updates (PSET, LINE, CIRCLE, PRINT, CLS, DRAWSHAPE, DRAWSTRING...) are shown at most about 60 times a second. A skipped update is shown within ~16 ms, or right away by SLEEP, WAITKEY and INPUT. `SCREENLOCK OFF` always shows the frame immediately, so SCREENLOCK-based games keep their timing.
+- `PRINT` and `CLS` in graphics mode now respect `SCREENLOCK ON` (they used to update the screen even while locked, which could cause flicker).
+- In fullscreen, `POINT` now uses program coordinates (it used to read real window pixels).
+- `MOUSEX`/`MOUSEY` keep working in fullscreen (mapped through the window, not the canvas).
+- If `VSYNC` has to recreate the renderer (old SDL2/driver fallback), the screen content is kept. Shapes and fonts are still lost in that rare path, as before.
+
+### Graphics: window close button works
+
+- Closing the graphics window now ends the program cleanly (no error, exit code 0) — also during `SLEEP`, `WAITKEY` and `INPUT`. Before, the close button did nothing and the program had to be killed.
+- The interpreter handles window events every ~16 ms while a program runs, so the window no longer goes "Not responding" during long calculations.
+- `SLEEP` in graphics mode sleeps in short slices and keeps the window responsive.
+
+### Tests
+
+- `Examples\point_cache_test.bas` — POINT/PSET/LINE/CIRCLE/DRAWSHAPE cache checks + SAVESCREEN, writes `point_cache_test.log`
+- `Examples\savescreen_err_test.bas` — wrong extension must stop with a line-numbered error
+
 ## 25th October 2026
 
 ### Homepage several small changes

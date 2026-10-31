@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Animation
+' ROSETTA: https://rosettacode.org/wiki/Animation
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Rotates the text 'Hello World! ' one character at a time in a small window, and reverses the direction on each right mouse click.
+' CATEGORY: drawing
+' TAGS: animation, text rotation, mouse click
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

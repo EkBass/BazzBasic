@@ -1,7 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Chaos_game
+' ROSETTA: https://rosettacode.org/wiki/Chaos_game
 ' BazzBasic: https://github.com/EkBass/BazzBasic
-' Chaos game: random halfway jumps toward triangle corners draw a Sierpinski triangle
+' --------------------------------------------
+' DESCRIPTION: Plays the chaos game: starting from a random point, repeatedly jumps halfway toward a randomly chosen triangle corner and plots the point in that corner's color, building up a Sierpinski triangle.
+' CATEGORY: drawing
+' TAGS: chaos game, sierpinski triangle, fractals, pset
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

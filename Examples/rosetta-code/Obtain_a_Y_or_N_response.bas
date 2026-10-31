@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Keyboard_input/Obtain_a_Y_or_N_response
+' ROSETTA: https://rosettacode.org/wiki/Keyboard_input/Obtain_a_Y_or_N_response
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Waits for the user to press Y or N (either case) with WAITKEY and prints the key that was pressed.
+' CATEGORY: input
+' TAGS: waitkey, keyboard input, yes or no
+' MINVERSION: 1.5
 ' ============================================
 
 PRINT "Press Y or N to continue."

@@ -1,7 +1,11 @@
 ' ============================================
-' 99 bottles of beer - BazzBasic Edition
-' https://rosettacode.org/wiki/99_Bottles_of_Beer/Basic
+' ROSETTA: https://rosettacode.org/wiki/99_Bottles_of_Beer/Basic
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Prints the complete 99 Bottles of Beer song, counting down from 99 bottles with correct singular and plural wording.
+' CATEGORY: basics
+' TAGS: loops, def fn, text output
+' MINVERSION: 1.5
 ' ============================================
 DEF FN Bottles$(amount$)
     IF amount$ > 1 THEN

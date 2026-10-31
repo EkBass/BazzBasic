@@ -1,6 +1,13 @@
+' ============================================
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Plays Paper, Rock, Scissors against the computer with ASCII-art hands, round after round until a key other than 1-3 is pressed.
+' CATEGORY: games
+' TAGS: rock paper scissors, ascii art, waitkey
+' MINVERSION: 1.5
+' ============================================
 ' Paper, Rock, Scissors - Ported from Python
 ' BazzBasic version 1.4, EkBass
-' https://ekbass.github.io/BazzBasic/
 
 ' Original https://github.com/omonimus1/chicken_wings_and_PYTHON/blob/master/rock_scissor_paper/rock_scissor_paper.py
 

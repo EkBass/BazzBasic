@@ -1,6 +1,10 @@
 ' ============================================
-' Is Prime — BazzBasic
-' https://github.com/EkBass/BazzBasic
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Tests numbers for primality with a recursive and an iterative trial-division function and lists the primes up to 50.
+' CATEGORY: math
+' TAGS: prime numbers, trial division, recursion
+' MINVERSION: 1.5
 ' ============================================
 
 ' The recursive version needs the helper since BazzBasic functions can't hold state between calls — the helper carries the current divisor `d$` as a parameter down the call chain.

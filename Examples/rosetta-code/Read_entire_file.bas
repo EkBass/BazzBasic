@@ -1,6 +1,12 @@
 ' ============================================
-' https://rosettacode.org/wiki/Read_entire_file
+' ROSETTA: https://rosettacode.org/wiki/Read_entire_file
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Reads the whole text file test.txt into a string with FILEREAD if it exists and prints its content, otherwise prints a message that the file does not exist.
+' CATEGORY: file-io
+' TAGS: read file, fileread, fileexists
+' REQUIRES: test.txt
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

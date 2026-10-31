@@ -1,10 +1,12 @@
-' ======================================================
-' Works for both tasks:
-' https://rosettacode.org/wiki/HTTP
-' https://rosettacode.org/wiki/HTTPS
-'
-' BazzBasic version: https://ekbass.github.io/BazzBasic/
-' ======================================================
+' ============================================
+' ROSETTA: https://rosettacode.org/wiki/HTTP, https://rosettacode.org/wiki/HTTPS
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Sends an HTTP GET request and a JSON POST request to httpbin.org over HTTPS and prints both responses.
+' CATEGORY: network
+' TAGS: httpget, httppost, http, https
+' MINVERSION: 1.5
+' ============================================
 
 [init]
     LET getResponse$

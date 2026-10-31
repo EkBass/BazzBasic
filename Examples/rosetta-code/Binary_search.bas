@@ -1,9 +1,14 @@
 ' ============================================
-' https://rosettacode.org/wiki/Binary_search
+' ROSETTA: https://rosettacode.org/wiki/Binary_search
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Searches a sorted integer array for a value with iterative and recursive binary search and reports the index or that the value was not found.
+' CATEGORY: algorithms
+' TAGS: binary search, recursion, sorted array, asjson
+' MINVERSION: 1.5
+' ============================================
 ' Task: binary search a sorted integer array, iteratively and
 '       recursively, and report whether the value was found and where.
-' ============================================
 
 ' Iterative version. Returns the index of value$, or -1 if not found.
 DEF FN BSearchIter$(json$, value$)

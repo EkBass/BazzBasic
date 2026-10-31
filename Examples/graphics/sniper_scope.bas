@@ -1,8 +1,11 @@
 ' ============================================
-' Sniper scope zoom - camera transform demo
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Camera-transform zoom demo: a small landscape is drawn through a world-to-screen zoom around the crosshair, and holding the right mouse button shows a round 2x sniper-scope view in which the aimed spot stays fixed.
+' CATEGORY: drawing
+' TAGS: camera transform, zoom, mouse, scope mask, crosshair
+' MINVERSION: 1.5
 ' ============================================
-'
 ' Idea: nothing is "copied and enlarged". The world is described once,
 ' in world coordinates, and drawn through a camera transform:
 '

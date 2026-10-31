@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Reverse_words_in_a_string
+' ROSETTA: https://rosettacode.org/wiki/Reverse_words_in_a_string
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Reverses the order of the words on each line of a poem while keeping the lines in their original order and blank lines blank, using SPLIT and string concatenation.
+' CATEGORY: strings
+' TAGS: reverse words, split, words, text lines
+' MINVERSION: 1.5
 ' ============================================
 ' Reverse the order of the words on each line, keeping the
 ' lines themselves in their original order. Blank lines stay blank.

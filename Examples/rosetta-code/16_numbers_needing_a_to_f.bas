@@ -1,9 +1,14 @@
 ' ============================================
-' https://rosettacode.org/wiki/Base_16_numbers_needing_a_to_f
+' ROSETTA: https://rosettacode.org/wiki/Base_16_numbers_needing_a_to_f
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Lists the numbers from 1 to 500 whose hexadecimal form contains at least one of the digits a to f, ten per row, and counts them.
+' CATEGORY: math
+' TAGS: hexadecimal, number bases, digits
+' MINVERSION: 1.5
+' ============================================
 ' Task: find the numbers 1 to 500 whose hexadecimal form
 '       contains at least one of the digits a to f.
-' ============================================
 
 ' TRUE if any base-16 digit of n$ is 10 or more (a..f)
 DEF FN HasHexLetter$(n$)

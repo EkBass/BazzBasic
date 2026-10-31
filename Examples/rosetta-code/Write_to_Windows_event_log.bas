@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Write_to_Windows_event_log
+' ROSETTA: https://rosettacode.org/wiki/Write_to_Windows_event_log
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Writes an entry to the Windows Application event log by running the EventCreate tool through SHELL, with level, id, source and description taken from four command-line arguments (needs administrator rights).
+' CATEGORY: api
+' TAGS: event log, shell, command-line arguments, windows
+' MINVERSION: 1.5
 ' ============================================
 ' BazzBasic has no native Event Log API, so the Windows
 ' EventCreate tool is called through SHELL.

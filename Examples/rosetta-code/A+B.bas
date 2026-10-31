@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/A%2BB
+' ROSETTA: https://rosettacode.org/wiki/A%2BB
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Reads two integers between -1000 and 1000 and prints their sum, asking again if a value is out of range.
+' CATEGORY: math
+' TAGS: input, input validation, integer arithmetic
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

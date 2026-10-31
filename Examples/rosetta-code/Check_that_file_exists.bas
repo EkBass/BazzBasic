@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Check_that_file_exists
+' ROSETTA: https://rosettacode.org/wiki/Check_that_file_exists
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Checks whether a file and a directory exist in the current directory and in the program root, including a zero-length file and a file with an unusual name.
+' CATEGORY: file-io
+' TAGS: fileexists, directory check, shell, prg_root
+' MINVERSION: 1.5
 ' ============================================
 
 DEF FN DirExists$(path$)

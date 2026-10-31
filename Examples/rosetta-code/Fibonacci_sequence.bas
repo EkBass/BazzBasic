@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Fibonacci_sequence
+' ROSETTA: https://rosettacode.org/wiki/Fibonacci_sequence
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Reads n and prints the nth Fibonacci number, calculated recursively, iteratively and with Binet's closed formula.
+' CATEGORY: math
+' TAGS: fibonacci, recursion, iteration, binet's formula
+' MINVERSION: 1.5
 ' ============================================
 
 DEF FN FibRecursive$(n$)

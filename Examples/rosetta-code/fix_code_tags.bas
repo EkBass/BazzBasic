@@ -1,7 +1,12 @@
-' BazzBasic version 1.4c
-' https://ekbass.github.io/BazzBasic/
-' TASK: https://rosettacode.org/wiki/Rosetta_Code/Fix_code_tags
-'
+' ============================================
+' ROSETTA: https://rosettacode.org/wiki/Rosetta_Code/Fix_code_tags
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Rosetta Code wiki task: converts old lang tags (opening tags with or without a language name, and closing tags) in wiki text to the current syntax highlighting tags, leaving other tags untouched, and prints three sample texts before and after.
+' CATEGORY: strings
+' TAGS: tag conversion, text replacement, wiki markup, instr, def fn
+' MINVERSION: 1.5
+' ============================================
 ' (SH below stands for the word "syntax" + "highlight". The full tag can't be
 '  written literally here, or it would end the wiki's own code block.)
 '

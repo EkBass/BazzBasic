@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Balanced_brackets
+' ROSETTA: https://rosettacode.org/wiki/Balanced_brackets
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Generates five random strings of square brackets and reports for each whether its brackets are balanced.
+' CATEGORY: algorithms
+' TAGS: balanced brackets, bracket matching, random strings, validation
+' MINVERSION: 1.5
 ' ============================================
 DEF FN IsBalanced$(s$)
 

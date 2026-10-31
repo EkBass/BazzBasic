@@ -1,6 +1,10 @@
 ' ============================================
-' Windows MessageBox via PowerShell
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Shows a Windows MessageBox through PowerShell and prints the button result returned to the program.
+' CATEGORY: api
+' TAGS: shell, powershell, message box, fstring
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

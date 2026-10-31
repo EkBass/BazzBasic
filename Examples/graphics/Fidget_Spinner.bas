@@ -1,5 +1,12 @@
+' ============================================
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: A three-armed fidget spinner: SPACE flicks it, then it spins with momentum and gradually slows down through friction.
+' CATEGORY: drawing
+' TAGS: fidget spinner, momentum, friction, fasttrig, simulation
+' MINVERSION: 1.5
+' ============================================
 ' Fidget Spinner - Ported from Python
-' BazzBasic version 1.4
 
 [inits]
     LET WIDTH# = 420

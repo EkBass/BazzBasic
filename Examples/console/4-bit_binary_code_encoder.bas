@@ -1,8 +1,12 @@
-' ============================================================
-' Digit-by-digit LSB-first 4-bit binary encoder
-' EkBazz 2026, public domain
+' ============================================
 ' BazzBasic: https://github.com/EkBass/BazzBasic
-' ============================================================
+' --------------------------------------------
+' DESCRIPTION: Encodes each decimal digit of a number as a 4-bit binary group, least significant bit first (12 gives 1000, 0100).
+' CATEGORY: math
+' TAGS: binary, bit encoding, digits, number bases
+' MINVERSION: 1.5
+' ============================================
+' EkBazz 2026, public domain
 
 DEF FN ToBinary$(n$)
     LET digits$ = STR(n$)

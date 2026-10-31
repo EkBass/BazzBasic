@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Tau_function
+' ROSETTA: https://rosettacode.org/wiki/Tau_function
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Prints tau(n), the number of divisors of n, for n from 1 to 100 as a table of ten values per row.
+' CATEGORY: math
+' TAGS: tau function, divisors, number theory, modulo
+' MINVERSION: 1.5
 ' ============================================
 [inits]
 	LET t$ = 0

@@ -1,10 +1,11 @@
-' BazzBasic version 1.3
-' https://ekbass.github.io/BazzBasic/
 ' ============================================
-' FigBazz - Big Block-Font Text Renderer
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Renders text as a large three-row block-letter banner using Unicode block characters, taking the text from a command-line argument or a prompt.
+' CATEGORY: drawing
+' TAGS: ascii art, big text, block font, unicode
+' MINVERSION: 1.5
 ' ============================================
-'
 ' Usage:  bazzbasic.exe figbazz.bas "Your Text"
 '         (or run without args → interactive prompt)
 '

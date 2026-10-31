@@ -1,7 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Day_of_the_week_of_Christmas_and_New_Year
+' ROSETTA: https://rosettacode.org/wiki/Day_of_the_week_of_Christmas_and_New_Year
 ' BazzBasic: https://github.com/EkBass/BazzBasic
-' Weekday of Christmas Day 2021 and New Year's Day 2022 (Zeller's congruence)
+' --------------------------------------------
+' DESCRIPTION: Prints the weekday of Christmas Day 2021 and New Year's Day 2022, calculated with Zeller's congruence.
+' CATEGORY: system
+' TAGS: day of the week, zeller's congruence, dates, split
+' MINVERSION: 1.5
 ' ============================================
 
 ' Returns 0 = Saturday, 1 = Sunday ... 6 = Friday

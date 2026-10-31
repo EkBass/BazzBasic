@@ -1,13 +1,16 @@
-' ========================================================
-' ROBOTS — BazzBasic Edition
-' https://ekbass.github.io/BazzBasic/
+' ============================================
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Turn-based chase game where the player moves X around a fenced arena while robots pursue; lure them into fences or each other to destroy them all.
+' CATEGORY: games
+' TAGS: chase game, turn-based, grid, arrow keys
+' MINVERSION: 1.5
+' ============================================
 ' Based on the 1978 classic by Lance Micklus
-' ========================================================
 ' Navigate X through the arena using arrow keys.
 ' Robots (O) pursue you relentlessly each turn.
 ' Lure them into fences or each other to destroy them.
 ' Survive until every robot is gone — or be ZAPPED!
-' ========================================================
 
 ' ---- FUNCTIONS ----
 

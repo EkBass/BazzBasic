@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Real_constants_and_functions
+' ROSETTA: https://rosettacode.org/wiki/Real_constants_and_functions
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Prints the built-in constants EULER#, PI#, HPI#, QPI# and TAU# and demonstrates the real number functions SQR, LOG, EXP, ABS, INT, CINT, CEIL, FLOOR and POW.
+' CATEGORY: math
+' TAGS: constants, pi, math functions, sqr, log
+' MINVERSION: 1.5
 ' ============================================
 
 ' built-in constants

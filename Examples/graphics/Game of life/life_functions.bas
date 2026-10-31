@@ -1,7 +1,10 @@
 ' ============================================
-' life_functions.bas
-' Helper functions for Conway's Game of Life
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Helper functions for the Game of Life example (game_of_life.bas): wrap-around index, Conway's B3/S23 rule, random cell seeding and speed-level stepping. INCLUDEd by the main program, not run on its own.
+' CATEGORY: simulation
+' TAGS: game of life, cellular automaton, helper functions, include
+' MINVERSION: 1.5
 ' ============================================
 ' This file contains ONLY DEF FN definitions, no loose code.
 ' It is meant to be INCLUDEd at the top of the main program,

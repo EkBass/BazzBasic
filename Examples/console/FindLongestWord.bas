@@ -1,8 +1,12 @@
-' ============================================================
-' FindLongestWord
-' EkBazz 2026, public domain
+' ============================================
 ' BazzBasic: https://github.com/EkBass/BazzBasic
-' ============================================================
+' --------------------------------------------
+' DESCRIPTION: Finds and prints the longest word in a sentence.
+' CATEGORY: strings
+' TAGS: split, words, longest word
+' MINVERSION: 1.5
+' ============================================
+' EkBazz 2026, public domain
 
 DEF FN FindLongestWord$(sentence$)
     DIM words$

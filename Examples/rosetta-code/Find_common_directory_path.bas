@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Find_common_directory_path
+' ROSETTA: https://rosettacode.org/wiki/Find_common_directory_path
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Finds the longest common directory path of three file paths and prints it (here /home/user1/tmp).
+' CATEGORY: strings
+' TAGS: common path, directory path, longest common prefix, asjson, asarray
+' MINVERSION: 1.5
 ' ============================================
 ' BazzBasic has no built-in routine for this task.
 '

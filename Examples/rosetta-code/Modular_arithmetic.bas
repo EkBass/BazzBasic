@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Modular_arithmetic
+' ROSETTA: https://rosettacode.org/wiki/Modular_arithmetic
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Evaluates f(x) = x^100 + x + 1 in the modular ring Z/13Z at x = 10, reducing every operation with MOD instead of overloading operators, and prints the result.
+' CATEGORY: math
+' TAGS: modular arithmetic, mod, modular exponentiation, polynomial
+' MINVERSION: 1.5
 ' ============================================
 
 ' BazzBasic does not support operator overloading.

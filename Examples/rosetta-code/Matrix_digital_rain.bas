@@ -1,8 +1,13 @@
 ' ============================================
-' https://rosettacode.org/wiki/Matrix_digital_rain
+' ROSETTA: https://rosettacode.org/wiki/Matrix_digital_rain
 ' BazzBasic: https://github.com/EkBass/BazzBasic
-' Ported from QBasic example
+' --------------------------------------------
+' DESCRIPTION: Animates falling streams of green Matrix-style characters in the console with COLOR and LOCATE until ESC is pressed.
+' CATEGORY: drawing
+' TAGS: matrix rain, console animation, color, locate
+' MINVERSION: 1.5
 ' ============================================
+' Ported from QBasic example
 
 DEF FN d$(p$, s$, x$, y$)
     COLOR p$, s$

@@ -1,12 +1,15 @@
 ' ============================================
-' 100 DOORS - BazzBasic Edition
-' https://rosettacode.org/wiki/100_doors
+' ROSETTA: https://rosettacode.org/wiki/100_doors
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Simulates 100 closed doors and 100 passes, where pass N toggles every Nth door, and lists the doors that are open at the end.
+' CATEGORY: algorithms
+' TAGS: toggle, nested loops, perfect squares
+' MINVERSION: 1.5
 ' ============================================
 ' 100 doors, all closed. 100 passes:
 ' Pass N toggles every Nth door.
 ' Which doors are open after all passes?
-' ============================================
 
 [inits]
 	LET DOORS# = 100
@@ -38,7 +41,7 @@
 	FOR d$ = 1 TO DOORS#
 		IF door$(d$) = 1 THEN
 			PRINT "  Door "; d$
-			count$+= + 1
+			count$+=1
 		END IF
 	NEXT
 

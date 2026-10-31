@@ -1,7 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Damm_algorithm
+' ROSETTA: https://rosettacode.org/wiki/Damm_algorithm
 ' BazzBasic: https://github.com/EkBass/BazzBasic
-' Verify a number whose last digit is a Damm checksum
+' --------------------------------------------
+' DESCRIPTION: Verifies numbers with the Damm algorithm and reports for each test number whether its last digit is a valid checksum.
+' CATEGORY: math
+' TAGS: damm algorithm, checksum, check digit, quasigroup table
+' MINVERSION: 1.5
 ' ============================================
 
 ' Returns 0 when the checksum is valid

@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Copy_a_string
+' ROSETTA: https://rosettacode.org/wiki/Copy_a_string
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Copies a string to a second variable and a second constant and shows that changing the copy leaves the original unchanged.
+' CATEGORY: strings
+' TAGS: string copy, variables, constants, copy by value
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

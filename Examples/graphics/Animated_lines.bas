@@ -1,11 +1,14 @@
 ' ============================================
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Animated pattern of about 200 curved red-to-yellow polylines that continuously morph as their heading changes.
+' CATEGORY: drawing
+' TAGS: animated lines, math art, atan2, color gradient
+' MINVERSION: 1.5
+' ============================================
 ' Animated Lines - Ported from QB64 to BazzBasic
 ' Original by Eric Schraf:
 '   https://github.com/oonap0oo/QB64-projects/blob/main/linesani.bas
-' BazzBasic:
-'   https://github.com/EkBass/BazzBasic
-'
-' ============================================
 
 [inits]
     LET SW#          = 900

@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Exponentiation_order
+' ROSETTA: https://rosettacode.org/wiki/Exponentiation_order
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Prints the two possible readings of 5**3**2, (5**3)**2 and 5**(3**2), calculated with nested POW calls because BazzBasic has no exponentiation operator.
+' CATEGORY: math
+' TAGS: exponentiation, pow, evaluation order, operator precedence
+' MINVERSION: 1.5
 ' ============================================
 ' BazzBasic has no exponentiation operator. Powers are written
 ' with the function POW(base, exponent). Because every power is

@@ -1,7 +1,11 @@
 ' ============================================
-' GENERAL FIZZBUZZ - BazzBasic Edition
-' https://rosettacode.org/wiki/General_FizzBuzz
+' ROSETTA: https://rosettacode.org/wiki/General_FizzBuzz
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Reads a maximum number and three factor and word pairs, then counts from 1 to the maximum, replacing multiples of each factor with its word.
+' CATEGORY: basics
+' TAGS: general fizzbuzz, user input, modulo, arrays
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

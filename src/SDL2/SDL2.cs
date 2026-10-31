@@ -531,6 +531,19 @@ public static class SDL
         ref SDL_Rect dstrect
     );
 
+    // Overload with pointer dstrect: IntPtr.Zero = whole render target (canvas copy)
+    [DllImport(nativeLibName, EntryPoint = "SDL_RenderCopy", CallingConvention = CallingConvention.Cdecl)]
+    public static extern int SDL_RenderCopy(
+        IntPtr renderer,
+        IntPtr texture,
+        IntPtr srcrect,
+        IntPtr dstrect
+    );
+
+    // Render target (persistent canvas, 30.10.2026). texture = IntPtr.Zero → window
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int SDL_SetRenderTarget(IntPtr renderer, IntPtr texture);
+
     // ========================================================================
     // GameController (gamepad) - added 16.10.2026 for v1.5
     // ========================================================================

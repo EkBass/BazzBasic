@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Sierpinski_triangle
+' ROSETTA: https://rosettacode.org/wiki/Sierpinski_triangle
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Prints a Sierpinski triangle of order 4 as rows of asterisks, built row by row from Pascal's triangle modulo 2.
+' CATEGORY: drawing
+' TAGS: sierpinski triangle, fractals, ascii art, pascals triangle
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

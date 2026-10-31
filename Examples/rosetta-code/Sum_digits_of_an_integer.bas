@@ -1,6 +1,12 @@
-' Sum digits of an integer (BazzBasic solution)
-' Rosetta Code: https://rosettacode.org/wiki/Sum_digits_of_an_integer
-'
+' ============================================
+' ROSETTA: https://rosettacode.org/wiki/Sum_digits_of_an_integer
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Computes the sum of the digits of an integer given as a string in a chosen base (up to 36) and prints it for 1 and 1234 in base 10 and for FE and F0E in base 16.
+' CATEGORY: math
+' TAGS: digit sum, number bases, instr, def fn
+' MINVERSION: 1.5
+' ============================================
 ' For each digit character, find its position in the valid-digit alphabet
 ' for the given base. Position (1-based) minus 1 equals the digit value.
 

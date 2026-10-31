@@ -1,11 +1,15 @@
 ' ============================================
-' Anthropic Claude API call — BazzBasic
-' https://github.com/EkBass/BazzBasic
-' Public domain
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Sends a "Hello" message to the Anthropic Claude Messages API and prints the text of the reply.
+' CATEGORY: api
+' TAGS: anthropic, claude, llm, httppost, json
+' REQUIRES: .env
+' MINVERSION: 1.5
 ' ============================================
+' Public domain
 ' Requires .env file in same directory as script:
 '   ANTHROPIC_API_KEY=sk-ant-yourKeyHere
-' ============================================
 
 ' DISCLAIMER:
 ' This code was last verified on 04.04.2026 using claude-sonnet-4-20250514.

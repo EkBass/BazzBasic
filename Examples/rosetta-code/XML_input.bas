@@ -1,9 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/XML/Input
+' ROSETTA: https://rosettacode.org/wiki/XML/Input
 ' BazzBasic: https://github.com/EkBass/BazzBasic
-' Extract the list of student names from an XML fragment.
-' BazzBasic has no XML parser, so this scans the text directly
-' and decodes numeric character references such as &#x00C9;
+' --------------------------------------------
+' DESCRIPTION: Extracts the list of student names from an XML fragment held in a string, by scanning for Student tags and their Name attributes with INSTR and decoding numeric character references such as &#x00C9; (BazzBasic has no XML parser).
+' CATEGORY: data
+' TAGS: xml, xml parsing, character references, instr
+' MINVERSION: 1.5
 ' ============================================
 
 ' Hexadecimal string to number, e.g. "00C9" -> 201

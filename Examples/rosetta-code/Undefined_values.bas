@@ -1,5 +1,11 @@
-' https://rosettacode.org/wiki/Undefined_values
+' ============================================
+' ROSETTA: https://rosettacode.org/wiki/Undefined_values
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Shows how undefined values behave: ISSET returns 1 for declared variables and constants (even without a value) and 0 for undeclared ones, and reading an undefined variable stops the program with an error.
+' CATEGORY: basics
+' TAGS: isset, undefined values, declaration, variables
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

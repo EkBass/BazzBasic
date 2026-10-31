@@ -1,9 +1,14 @@
 ' ============================================
-' https://rosettacode.org/wiki/Associative_array/Merging
+' ROSETTA: https://rosettacode.org/wiki/Associative_array/Merging
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Merges a base and an update associative array into a new one, where update values win over base values, leaving both originals unchanged.
+' CATEGORY: basics
+' TAGS: associative arrays, join, arrkey, merging
+' MINVERSION: 1.5
+' ============================================
 ' Task: merge a base and an update associative array into a new
 '       one, preferring update values, without mutating either.
-' ============================================
 
 [inits]
     DIM base$

@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Gray_code
+' ROSETTA: https://rosettacode.org/wiki/Gray_code
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Converts the numbers 0 to 31 to binary reflected Gray code and back, printing the binary form of each step.
+' CATEGORY: math
+' TAGS: gray code, binary, xor, def fn
+' MINVERSION: 1.5
 ' ============================================
 ' Binary reflected Gray code. BazzBasic has no bitwise operators,
 ' so XOR is done arithmetically, one bit at a time.

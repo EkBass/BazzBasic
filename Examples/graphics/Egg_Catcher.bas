@@ -1,5 +1,11 @@
-' BazzBasic version 1.4
-' https://ekbass.github.io/BazzBasic/
+' ============================================
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Catch falling eggs in a bucket moved with the left and right arrow keys; each catch scores points and speeds the game up, and three dropped eggs end it.
+' CATEGORY: games
+' TAGS: arrow keys, falling objects, score, lives
+' MINVERSION: 1.5
+' ============================================
 ' Egg Catcher - Ported from Python to BazzBasic
 ' https://github.com/Buzzpy/Python-Projects/blob/main/egg_catcher.py
 

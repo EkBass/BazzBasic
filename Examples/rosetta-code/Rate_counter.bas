@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Rate_counter
+' ROSETTA: https://rosettacode.org/wiki/Rate_counter
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Measures how fast a small job runs in jobs per second, first by running it for a fixed time and then by running a fixed number of jobs and timing them, with three runs for each mode.
+' CATEGORY: system
+' TAGS: rate counter, ticks, timing, benchmark
+' MINVERSION: 1.5
 ' ============================================
 ' Measures how fast a job runs, two ways:
 '   1. Time-bounded:  run jobs for N milliseconds, count how many ran

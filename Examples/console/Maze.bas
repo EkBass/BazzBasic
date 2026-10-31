@@ -1,5 +1,11 @@
-' Maze.bas
-' Simple maze game for BazzBasic
+' ============================================
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Simple console maze game: guide the player with the arrow keys from the top-left to the exit at the bottom-right.
+' CATEGORY: games
+' TAGS: maze, arrow keys, console colors, getconsole
+' MINVERSION: 1.5
+' ============================================
 ' Kristian Virtanen, public domain
 
 GOSUB [initConst]

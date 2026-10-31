@@ -1,9 +1,14 @@
 ' ============================================
-' https://rosettacode.org/wiki/Box_the_compass
+' ROSETTA: https://rosettacode.org/wiki/Box_the_compass
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Converts compass headings in degrees into one of the 32 named compass points and prints a table of 33 sample headings with index, point name and degree.
+' CATEGORY: math
+' TAGS: compass, angle conversion, lookup table, number formatting
+' MINVERSION: 1.5
+' ============================================
 ' Task: write a function that turns a heading in degrees into one
 '       of the 32 compass points, and print a table for 33 headings.
-' ============================================
 
 ' The 32 points, clockwise from North. A constant, so the
 ' functions below can read it (they cannot see $ variables).

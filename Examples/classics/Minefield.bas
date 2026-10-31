@@ -1,10 +1,14 @@
 ' ============================================
-' MINEFIELD
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Console game where the player steers a man left and right across a field of mines; each crossing raises the speed and the score.
+' CATEGORY: games
+' TAGS: dodge game, getconsole, locate, difficulty levels
+' MINVERSION: 1.5
+' ============================================
 ' Original concept: "Minefield" from Tim Hartnell's
 ' Spectravideo Games book. Mechanics reproduced from the
 ' game description; no original book text is copied.
-' BazzBasic: https://github.com/EkBass/BazzBasic
-' ============================================
 
 [inits]
     ' --- Field layout (console rows/cols, 1-based via LOCATE) ---

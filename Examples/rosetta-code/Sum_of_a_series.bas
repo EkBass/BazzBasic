@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Sum_of_a_series
+' ROSETTA: https://rosettacode.org/wiki/Sum_of_a_series
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Sums the series 1/k^2 for k from 1 to 1000 and compares the result with the exact limit pi^2/6 (zeta(2)).
+' CATEGORY: math
+' TAGS: series, summation, zeta function, pow, pi
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

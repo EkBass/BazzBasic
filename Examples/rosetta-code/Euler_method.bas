@@ -1,8 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Euler_method
+' ROSETTA: https://rosettacode.org/wiki/Euler_method
 ' BazzBasic: https://github.com/EkBass/BazzBasic
-' Solve Newton's cooling law dT/dt = -k(T - TR) with Euler's method
-' and compare step sizes 2, 5 and 10 against the analytic solution.
+' --------------------------------------------
+' DESCRIPTION: Solves Newton's cooling law dT/dt = -k(T - TR) with Euler's method for step sizes 2, 5 and 10 and prints the estimates next to the analytic solution.
+' CATEGORY: simulation
+' TAGS: euler method, differential equation, newton's cooling, numerical integration
+' MINVERSION: 1.5
 ' ============================================
 
 ' The differential equation being solved: dy/dt = f(t, y)

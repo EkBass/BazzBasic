@@ -1,10 +1,10 @@
 ' ============================================
-' Gamepad Button Tester (console mode)
-' Lists every PAD_* button constant and lights up its row
-' while the button is held down. Also shows the six axes,
-' because L2/R2 are axes in BazzBasic, not buttons.
-' Requires BazzBasic 1.5 or newer.
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Console gamepad tester that lists every PAD_* button and lights up its row while it is held, and shows the six axes, since L2/R2 are axes in BazzBasic, not buttons.
+' CATEGORY: input
+' TAGS: gamepad, padbutton, padaxis, analog triggers, hot-plug
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Draw_a_cuboid
+' ROSETTA: https://rosettacode.org/wiki/Draw_a_cuboid
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Draws a cuboid with relative dimensions 2 x 3 x 4 in cabinet projection, with the three visible faces filled in different shades of blue, and waits for a key press.
+' CATEGORY: drawing
+' TAGS: cuboid, cabinet projection, 3d, line, paint
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

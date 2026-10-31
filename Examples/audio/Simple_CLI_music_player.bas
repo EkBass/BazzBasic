@@ -1,7 +1,11 @@
-' BazzBasic version 1.4c
-' https://ekbass.github.io/BazzBasic/
-
-' Simple CLI music player
+' ============================================
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Plays a WAV or MP3 file given as a command-line argument and waits until it has finished.
+' CATEGORY: audio
+' TAGS: music player, command line arguments, loadsound, soundoncewait
+' MINVERSION: 1.5
+' ============================================
 
 ' If no args, we can close immediately
 IF ARGCOUNT = 0 THEN

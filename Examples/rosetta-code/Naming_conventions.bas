@@ -1,12 +1,16 @@
 ' ============================================
-' https://rosettacode.org/wiki/Naming_conventions
+' ROSETTA: https://rosettacode.org/wiki/Naming_conventions
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Documents BazzBasic's naming conventions in comments, both the rules the interpreter enforces ($ and # suffixes, FN prefix, labels in brackets) and the community style, followed by a small runnable demo.
+' CATEGORY: basics
+' TAGS: naming conventions, identifiers, suffixes, labels, style
+' MINVERSION: 1.5
 ' ============================================
 ' BazzBasic is a young language with no historical evolution
 ' to document. It has a small, deliberate mix of MANDATORY
 ' rules (enforced by the interpreter) and DISCRETIONARY
 ' community style.
-' ============================================
 
 ' --- MANDATORY (enforced by the interpreter) ----------------
 '

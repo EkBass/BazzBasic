@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Idiomatically_determine_all_the_lowercase_and_uppercase_letters
+' ROSETTA: https://rosettacode.org/wiki/Idiomatically_determine_all_the_lowercase_and_uppercase_letters
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Finds the upper-case and lower-case letters among the character codes 0 to 128 by comparing UCASE, LCASE and ASC results, then prints both sets.
+' CATEGORY: strings
+' TAGS: upper case, lower case, ucase, lcase, character codes
+' MINVERSION: 1.5
 ' ============================================
 
 DEF FN LetterCase$(ch$)

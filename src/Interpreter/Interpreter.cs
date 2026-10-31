@@ -302,6 +302,25 @@ public partial class Interpreter
         }
     }
 
+    // Graphics housekeeping cadence (30.10.2026): see GraphicsTick()
+    private long _nextGraphicsTick = 0;
+    private const long GRAPHICS_TICK_MS = 16;
+
+    // Every ~16 ms while graphics mode is on: pump SDL events (window stays
+    // responsive, close button works) and show a frame the present throttle left
+    // pending. Closing the window ends the program cleanly (no error).
+    // Lives in ExecuteStatement so it also runs inside FN bodies.
+    private void GraphicsTick()
+    {
+        long now = Environment.TickCount64;
+        if (now < _nextGraphicsTick) return;
+        _nextGraphicsTick = now + GRAPHICS_TICK_MS;
+
+        Graphics.Graphics.Tick();
+        if (Graphics.Graphics.QuitRequested)
+            _running = false;
+    }
+
     private void ExecuteStatement()
     {
         SkipNewlines();
@@ -310,6 +329,12 @@ public partial class Interpreter
         {
             _running = false;
             return;
+        }
+
+        if (Graphics.Graphics.IsInitialized)
+        {
+            GraphicsTick();
+            if (!_running) return;
         }
 
         Token token = _tokens[_pos];
@@ -424,6 +449,9 @@ public partial class Interpreter
                 break;
             case TokenType.TOK_DRAWSTRING:
                 ExecuteDrawString();
+                break;
+            case TokenType.TOK_SAVESCREEN:
+                ExecuteSaveScreen();
                 break;
             case TokenType.TOK_PSET:
                 ExecutePset();

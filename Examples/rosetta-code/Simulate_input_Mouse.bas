@@ -1,11 +1,11 @@
 ' ============================================
-' Simulate input/Mouse — BazzBasic
-' Three colored circles are drawn on screen.
-' Click any mouse button over a circle to see
-' which circle and which button were pressed.
-' ============================================
-' https://rosettacode.org/wiki/Simulate_input/Mouse
+' ROSETTA: https://rosettacode.org/wiki/Simulate_input/Mouse
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Draws three coloured circles and reports in the window which mouse button (left, right or middle) was pressed and over which circle, or outside all of them, until ESC is pressed.
+' CATEGORY: input
+' TAGS: mouse, mouse buttons, hit testing, graphics screen
+' MINVERSION: 1.5
 ' ============================================
 
 ' --- Constants ---

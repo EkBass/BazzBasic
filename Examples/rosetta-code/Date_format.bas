@@ -1,11 +1,15 @@
 ' ============================================
-' https://rosettacode.org/wiki/Date_format
+' ROSETTA: https://rosettacode.org/wiki/Date_format
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Prints the current date in two formats: yyyy-MM-dd, and weekday name, month name, day and year.
+' CATEGORY: system
+' TAGS: time, date format, format strings
+' MINVERSION: 1.5
 ' ============================================
 ' Task: Display the current date in two formats:
 '   2007-11-23
 '   Friday, November 23, 2007
-' ============================================
 
 PRINT TIME("yyyy-MM-dd")          ' e.g. 2026-03-26
 PRINT TIME("dddd, MMMM dd, yyyy") ' e.g. Thursday, March 26, 2026

@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Harshad_or_Niven_series
+' ROSETTA: https://rosettacode.org/wiki/Harshad_or_Niven_series
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Prints the first 20 Harshad (Niven) numbers and the first Harshad number greater than 1000.
+' CATEGORY: math
+' TAGS: harshad numbers, niven numbers, digit sum, divisibility
+' MINVERSION: 1.5
 ' ============================================
 ' A Harshad (Niven) number is divisible by the sum of its digits.
 ' NextHarshad$(n) returns the first Harshad number greater than n,

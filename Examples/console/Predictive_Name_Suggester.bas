@@ -1,8 +1,12 @@
-' ============================================================
-' Predictive Name Suggester
-' EkBazz 2026, public domain
+' ============================================
 ' BazzBasic: https://github.com/EkBass/BazzBasic
-' ============================================================
+' --------------------------------------------
+' DESCRIPTION: Interactive console demo that suggests names starting with A while the user types, matching the typed prefix against a name list.
+' CATEGORY: strings
+' TAGS: autocomplete, prefix matching, keyboard input
+' MINVERSION: 1.5
+' ============================================
+' EkBazz 2026, public domain
 
 DEF FN IsLetter$(c$)
     IF INSTR("abcdefghijklmnopqrstuvwxyz", LCASE(c$)) > 0 THEN

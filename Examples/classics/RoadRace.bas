@@ -1,10 +1,14 @@
 ' ============================================
-' ROAD RACE
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Console driving game where the player steers a car down a winding mountain road between two rails; the road narrows and speeds up the further it goes.
+' CATEGORY: games
+' TAGS: driving game, scrolling road, random walk, locate
+' MINVERSION: 1.5
+' ============================================
 ' Original concept: "Road Race" from Tim Hartnell's
 ' Spectravideo Games book. Mechanics reproduced from the
 ' game description; no original book text is copied.
-' BazzBasic: https://github.com/EkBass/BazzBasic
-' ============================================
 
 [inits]
     ' --- Track layout (console rows/cols, 1-based via LOCATE) ---

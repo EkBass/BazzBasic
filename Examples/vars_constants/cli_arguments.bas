@@ -1,5 +1,11 @@
-' BazzBasic version 1.4c
-' https://ekbass.github.io/BazzBasic/
+' ============================================
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Demonstrates reading command-line arguments with ARGCOUNT and ARGS().
+' CATEGORY: system
+' TAGS: command line arguments, argcount, args
+' MINVERSION: 1.5
+' ============================================
 
 ' === ARGCOUNT
 ' Return the amount of arguments passed to program.

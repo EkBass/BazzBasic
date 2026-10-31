@@ -60,6 +60,33 @@ public static class Graphics
     
     // Screen lock (for double buffering)
     private static bool screenLocked = false;
+
+    // ------------------------------------------------------------------------
+    // Persistent canvas (30.10.2026)
+    // All drawing goes to this render-target texture, never straight to the
+    // window back buffer. PresentCanvas() copies it to the window. The back
+    // buffer is undefined after SDL_RenderPresent, the canvas is not — so
+    // POINT and SAVESCREEN always see what the program drew.
+    // ------------------------------------------------------------------------
+    private static IntPtr canvas = IntPtr.Zero;
+
+    // POINT pixel cache: one SDL_RenderReadPixels of the whole canvas, then
+    // POINT reads from memory. SetPixel writes through; every other draw
+    // calls InvalidateCache().
+    private static int[] pixelCache = Array.Empty<int>();
+    private static bool cacheValid = false;
+
+    // Present throttling: automatic presents (PSET, LINE, PRINT...) are shown at
+    // most once per PRESENT_INTERVAL_MS. A skipped one is left pending and shown
+    // by Tick(), Flush() or the next Present() that is due.
+    private const long PRESENT_INTERVAL_MS = 16;
+    private static bool presentPending = false;
+    private static long lastPresentTicks = 0;
+
+    // Set when the user closes the window (SDL_QUIT). The interpreter ends the
+    // program cleanly when it sees this.
+    private static bool quitRequested = false;
+    public static bool QuitRequested => quitRequested;
     
     // Screen dimensions in text mode (80x30 for 640x480 with 8x8 font, adjusted for 8x16)
     private const int textRows = 60;     // 480 / 8
@@ -77,6 +104,7 @@ public static class Graphics
         {
             // Reinitialize with new dimensions: destroy old renderer and window,
             // but keep SDL alive (no SDL_Quit / SDL_Init needed again).
+            DestroyCanvas();
             if (renderer != IntPtr.Zero)
             {
                 SDL.SDL_DestroyRenderer(renderer);
@@ -133,6 +161,11 @@ public static class Graphics
         // SDL scales to fit the real output (windowed OR fullscreen), preserving aspect
         // ratio with letterbox bars. Program coordinates stay identical in both modes.
         _ = SDL.SDL_RenderSetLogicalSize(renderer, width, height);
+
+        // Persistent canvas — all drawing targets it from here on
+        CreateCanvas();
+        quitRequested = false;
+        presentPending = false;
         
         initialized = true;
 
@@ -152,7 +185,7 @@ public static class Graphics
         for (int i = 0; i < 5; i++)
         {
             SDL.SDL_PumpEvents();
-            SDL.SDL_RenderPresent(renderer);
+            PresentCanvas();
             SDL.SDL_Delay(10);
         }
         SDL.SDL_RaiseWindow(window);
@@ -163,6 +196,8 @@ public static class Graphics
     {
         if (!initialized)
             return;
+
+        DestroyCanvas();
             
         if (renderer != IntPtr.Zero)
         {
@@ -200,7 +235,8 @@ public static class Graphics
 
         _ = SDL.SDL_SetRenderDrawColor(renderer, bgR, bgG, bgB, bgA);
         _ = SDL.SDL_RenderClear(renderer);
-        SDL.SDL_RenderPresent(renderer);
+        InvalidateCache();
+        Present();
     }
     
     // Set pixel to x, y with current color
@@ -210,6 +246,11 @@ public static class Graphics
         
         _ = SDL.SDL_SetRenderDrawColor(renderer, currentR, currentG, currentB, currentA);
         _ = SDL.SDL_RenderDrawPoint(renderer, x, y);
+
+        // Write-through: keep the POINT cache valid instead of invalidating it,
+        // so read-modify-write loops (POINT then PSET) never re-read the canvas.
+        if (cacheValid && x >= 0 && x < screenWidth && y >= 0 && y < screenHeight)
+            pixelCache[y * screenWidth + x] = (currentR << 16) | (currentG << 8) | currentB;
     }
     
     // Draw a line from x1, y1 to x2, y2
@@ -217,6 +258,7 @@ public static class Graphics
     {
         if (!initialized) return;
 
+        InvalidateCache();
         _ = SDL.SDL_SetRenderDrawColor(renderer, currentR, currentG, currentB, currentA);
         _ = SDL.SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
     }
@@ -226,6 +268,7 @@ public static class Graphics
     {
         if (!initialized) return;
         
+        InvalidateCache();
         SDL.SDL_Rect rect = new() { x = x, y = y, w = width, h = height };
         _ = SDL.SDL_SetRenderDrawColor(renderer, currentR, currentG, currentB, currentA);
         
@@ -240,6 +283,7 @@ public static class Graphics
     {
         if (!initialized) return;
 
+        InvalidateCache();
         _ = SDL.SDL_SetRenderDrawColor(renderer, currentR, currentG, currentB, currentA);
         
         if (filled)
@@ -369,11 +413,169 @@ public static class Graphics
         SetColor(r, g, b);
     }
     
-    // Present the rendered frame to screen
+    // Present the rendered frame to screen (automatic present after a draw command).
+    // Throttled: shown at most once per PRESENT_INTERVAL_MS, otherwise left pending.
     public static void Present()
     {
         if (!initialized || screenLocked) return;
+
+        if (Environment.TickCount64 - lastPresentTicks >= PRESENT_INTERVAL_MS)
+            PresentCanvas();
+        else
+            presentPending = true;
+    }
+
+    // Show a pending frame right now (before SLEEP, WAITKEY, INPUT...)
+    public static void Flush()
+    {
+        if (!initialized || screenLocked || !presentPending) return;
+        PresentCanvas();
+    }
+
+    // Periodic housekeeping, called by the interpreter every ~16 ms while a
+    // program runs: keeps the window responsive (events, close button) and
+    // shows a frame left pending by the throttle.
+    public static void Tick()
+    {
+        if (!initialized) return;
+        ProcessEvents();
+        if (presentPending && !screenLocked &&
+            Environment.TickCount64 - lastPresentTicks >= PRESENT_INTERVAL_MS)
+        {
+            PresentCanvas();
+        }
+    }
+
+    // Copy the canvas to the window and present it. Every SDL_RenderPresent in
+    // BazzBasic goes through here — never present the canvas target itself.
+    private static void PresentCanvas()
+    {
+        if (renderer == IntPtr.Zero || canvas == IntPtr.Zero) return;
+
+        _ = SDL.SDL_SetRenderTarget(renderer, IntPtr.Zero);
+        _ = SDL.SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);   // letterbox bars
+        _ = SDL.SDL_RenderClear(renderer);
+        _ = SDL.SDL_RenderCopy(renderer, canvas, IntPtr.Zero, IntPtr.Zero);
         SDL.SDL_RenderPresent(renderer);
+        _ = SDL.SDL_SetRenderTarget(renderer, canvas);
+        _ = SDL.SDL_SetRenderDrawColor(renderer, currentR, currentG, currentB, currentA);
+
+        presentPending = false;
+        lastPresentTicks = Environment.TickCount64;
+    }
+
+    // Create the canvas texture for the current renderer and make it the target.
+    private static void CreateCanvas()
+    {
+        canvas = SDL.SDL_CreateTexture(renderer, SDL.SDL_PIXELFORMAT_ARGB8888,
+            SDL.SDL_TEXTUREACCESS_TARGET, screenWidth, screenHeight);
+        if (canvas == IntPtr.Zero)
+            throw new Exception($"Canvas could not be created! SDL Error: {SDL.SDL_GetErrorString()}");
+
+        // Copy the canvas to the window as-is (no alpha blending)
+        _ = SDL.SDL_SetTextureBlendMode(canvas, SDL.SDL_BlendMode.SDL_BLENDMODE_NONE);
+        if (SDL.SDL_SetRenderTarget(renderer, canvas) != 0)
+            throw new Exception($"Canvas could not be set as render target! SDL Error: {SDL.SDL_GetErrorString()}");
+
+        pixelCache = new int[screenWidth * screenHeight];
+        cacheValid = false;
+    }
+
+    private static void DestroyCanvas()
+    {
+        if (canvas != IntPtr.Zero)
+        {
+            if (renderer != IntPtr.Zero)
+                _ = SDL.SDL_SetRenderTarget(renderer, IntPtr.Zero);
+            SDL.SDL_DestroyTexture(canvas);
+            canvas = IntPtr.Zero;
+        }
+        cacheValid = false;
+    }
+
+    // Run an action with the window (not the canvas) as render target.
+    // Needed for anything that depends on the window's logical scaling:
+    // SDL_RenderSetLogicalSize and SDL_RenderWindowToLogical.
+    private static void WithWindowTarget(Action action)
+    {
+        if (canvas != IntPtr.Zero)
+            _ = SDL.SDL_SetRenderTarget(renderer, IntPtr.Zero);
+        try { action(); }
+        finally
+        {
+            if (canvas != IntPtr.Zero)
+                _ = SDL.SDL_SetRenderTarget(renderer, canvas);
+        }
+    }
+
+    // Any draw other than SetPixel must call this (ShapeManager, FontManager too)
+    internal static void InvalidateCache() => cacheValid = false;
+
+    // Read the whole canvas into pixelCache (one GPU read instead of one per POINT)
+    private static void RefreshCache()
+    {
+        if (cacheValid) return;
+
+        int count = screenWidth * screenHeight;
+        if (pixelCache.Length != count)
+            pixelCache = new int[count];
+
+        GCHandle handle = GCHandle.Alloc(pixelCache, GCHandleType.Pinned);
+        try
+        {
+            // Canvas is the current target: reads canvas pixels 1:1 in program coordinates.
+            // ARGB8888 on little-endian = one int per pixel as 0xAARRGGBB.
+            int result = SDL.SDL_RenderReadPixels(renderer, IntPtr.Zero,
+                SDL.SDL_PIXELFORMAT_ARGB8888, handle.AddrOfPinnedObject(), screenWidth * 4);
+            if (result != 0)
+                throw new Exception($"Reading the screen failed! SDL Error: {SDL.SDL_GetErrorString()}");
+        }
+        finally
+        {
+            handle.Free();
+        }
+
+        // Strip alpha: cache holds plain 0xRRGGBB, exactly what POINT returns
+        for (int i = 0; i < count; i++)
+            pixelCache[i] &= 0x00FFFFFF;
+
+        cacheValid = true;
+    }
+
+    // ========================================================================
+    // SAVESCREEN — save the canvas as a PNG file (30.10.2026)
+    // ========================================================================
+    public static void SaveScreen(string path)
+    {
+        if (!initialized)
+            throw new InvalidOperationException("Graphics mode not initialized. Use SCREEN first.");
+
+        if (!string.Equals(Path.GetExtension(path), ".png", StringComparison.OrdinalIgnoreCase))
+            throw new ArgumentException($"only .png files are supported: '{path}'");
+
+        RefreshCache();
+
+        using var bmp = new System.Drawing.Bitmap(screenWidth, screenHeight,
+            System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+        var rect = new System.Drawing.Rectangle(0, 0, screenWidth, screenHeight);
+        var data = bmp.LockBits(rect, System.Drawing.Imaging.ImageLockMode.WriteOnly,
+            System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+        try
+        {
+            int[] row = new int[screenWidth];
+            for (int y = 0; y < screenHeight; y++)
+            {
+                for (int x = 0; x < screenWidth; x++)
+                    row[x] = pixelCache[y * screenWidth + x] | unchecked((int)0xFF000000); // opaque
+                Marshal.Copy(row, 0, data.Scan0 + y * data.Stride, screenWidth);
+            }
+        }
+        finally
+        {
+            bmp.UnlockBits(data);
+        }
+
+        bmp.Save(path, System.Drawing.Imaging.ImageFormat.Png);
     }
     
     // Set screen lock state (for manual double buffering) When locked, Present() calls are ignored until unlocked
@@ -381,10 +583,10 @@ public static class Graphics
     {
         screenLocked = locked;
         
-        // f unlocking, present immediately to show buffered content
+        // f unlocking, present immediately to show buffered content (never throttled)
         if (!locked && initialized)
         {
-            SDL.SDL_RenderPresent(renderer);
+            PresentCanvas();
         }
     }
     
@@ -397,6 +599,7 @@ public static class Graphics
         {
             if (e.type == SDL.SDL_EventType.SDL_QUIT)
             {
+                quitRequested = true;
                 return false;
             }
             else if (e.type == SDL.SDL_EventType.SDL_KEYDOWN)
@@ -457,7 +660,8 @@ public static class Graphics
             }
         }
         
-        SDL.SDL_RenderPresent(renderer);
+        InvalidateCache();
+        Present();
     }
     
     // Stupid simple scroll screen up by one line
@@ -511,7 +715,9 @@ public static class Graphics
         // Map window pixels -> logical coords so MOUSEX/MOUSEY stay in the same virtual
         // screenWidth x screenHeight space as drawing. In fullscreen the window is bigger
         // than the logical canvas; in windowed mode the two are identical (no-op there).
-        SDL.SDL_RenderWindowToLogical(renderer, x, y, out float lx, out float ly);
+        // Must use the window target: with the canvas as target SDL reports scale 1:1
+        float lx = 0, ly = 0;
+        WithWindowTarget(() => SDL.SDL_RenderWindowToLogical(renderer, x, y, out lx, out ly));
         mouseX = (int)lx;
         mouseY = (int)ly;
         mouseButtons = state;
@@ -740,7 +946,7 @@ public static class Graphics
     }
 
     // ========================================================================
-    // POINT command - Read pixel color at x, y (lazy approach)
+    // POINT command - Read pixel color at x, y (from the canvas pixel cache)
     // ========================================================================
 
     public static int GetPixelColor(int x, int y)
@@ -751,55 +957,10 @@ public static class Graphics
         if (x < 0 || x >= screenWidth || y < 0 || y >= screenHeight)
             return 0;
         
-        // Allocate buffer for single pixel (4 bytes for ARGB)
-        byte[] pixelData = new byte[4];
-        
-        // Create rect for single pixel
-        SDL.SDL_Rect rect = new() { x = x, y = y, w = 1, h = 1 };
-        
-        // Pin the byte array and get pointer
-        System.Runtime.InteropServices.GCHandle handle = 
-            System.Runtime.InteropServices.GCHandle.Alloc(pixelData, System.Runtime.InteropServices.GCHandleType.Pinned);
-        
-        try
-        {
-            IntPtr pixelPtr = handle.AddrOfPinnedObject();
-            IntPtr rectPtr = System.Runtime.InteropServices.Marshal.AllocHGlobal(
-                System.Runtime.InteropServices.Marshal.SizeOf<SDL.SDL_Rect>());
-            
-            try
-            {
-                System.Runtime.InteropServices.Marshal.StructureToPtr(rect, rectPtr, false);
-                
-                int result = SDL.SDL_RenderReadPixels(
-                    renderer,
-                    rectPtr,
-                    SDL.SDL_PIXELFORMAT_ARGB8888,
-                    pixelPtr,
-                    4  // pitch = 4 bytes per pixel
-                );
-                
-                if (result != 0)
-                    return 0;
-                
-                // pixelData is ARGB format: [A, R, G, B] or [B, G, R, A] depending on endianness
-                // SDL_PIXELFORMAT_ARGB8888: Alpha at highest byte, then R, G, B
-                // On little-endian (Windows): bytes are B, G, R, A
-                int r = pixelData[2];
-                int g = pixelData[1];
-                int b = pixelData[0];
-                
-                return (r << 16) | (g << 8) | b;
-            }
-            finally
-            {
-                System.Runtime.InteropServices.Marshal.FreeHGlobal(rectPtr);
-            }
-        }
-        finally
-        {
-            handle.Free();
-        }
+        // One full-canvas read when the cache is stale, then plain array lookups.
+        // Returns packed 0xRRGGBB (no RGB() flag bit), as before.
+        RefreshCache();
+        return pixelCache[y * screenWidth + x];
     }
 
     // ========================================================================
@@ -831,7 +992,8 @@ public static class Graphics
 
         // Draw initial cursor
         DrawInputCursor();
-        SDL.SDL_RenderPresent(renderer);
+        InvalidateCache();
+        PresentCanvas();
 
         while (inputActive)
         {
@@ -839,6 +1001,7 @@ public static class Graphics
             {
                 if (e.type == SDL.SDL_EventType.SDL_QUIT)
                 {
+                    quitRequested = true;
                     inputActive = false;
                     break;
                 }
@@ -881,7 +1044,7 @@ public static class Graphics
                             EraseCursor();
                             Print(c.ToString(), false);
                             DrawInputCursor();
-                            SDL.SDL_RenderPresent(renderer);
+                            PresentCanvas();
                         }
                     }
                 }
@@ -987,7 +1150,8 @@ public static class Graphics
         }
 
         DrawInputCursor();
-        SDL.SDL_RenderPresent(renderer);
+        InvalidateCache();
+        PresentCanvas();
     }
 
     private static void DrawInputCursor()
@@ -1019,7 +1183,22 @@ public static class Graphics
         if (vsyncResult == 0)
             return; // Success — done, no focus disruption
 
-        // Fallback: destroy and recreate renderer (older SDL2 or unsupported driver)
+        // Fallback: destroy and recreate renderer (older SDL2 or unsupported driver).
+        // The canvas dies with the renderer, so save its pixels first and restore them
+        // into the new canvas below. (Shape and font textures are still lost here —
+        // known limitation of this rarely used path.)
+        int[]? savedPixels = null;
+        if (canvas != IntPtr.Zero)
+        {
+            try
+            {
+                RefreshCache();
+                savedPixels = (int[])pixelCache.Clone();
+            }
+            catch { /* best effort — canvas starts empty if the read fails */ }
+        }
+        DestroyCanvas();
+
         if (renderer != IntPtr.Zero)
         {
             SDL.SDL_DestroyRenderer(renderer);
@@ -1044,7 +1223,13 @@ public static class Graphics
         _= SDL.SDL_SetRenderDrawColor(renderer, currentR, currentG, currentB, currentA);
 
         // Renderer was recreated — re-apply the logical render size or it reverts to 1:1.
+        // (Window is the target here: the canvas is created after this.)
         _ = SDL.SDL_RenderSetLogicalSize(renderer, screenWidth, screenHeight);
+
+        // New canvas, old content restored via a temporary static texture
+        CreateCanvas();
+        if (savedPixels != null)
+            RestoreCanvas(savedPixels);
 
         // Renderer recreation can cause the window to briefly lose focus, which
         // makes SDL zero out the keyboard state. Re-raise the window and flush
@@ -1064,7 +1249,34 @@ public static class Graphics
         byte r = (byte)((rgb >> 16) & 0xFF);
         byte g = (byte)((rgb >> 8) & 0xFF);
         byte b = (byte)(rgb & 0xFF);
+        InvalidateCache();
         FontManager.DrawString(renderer, text, x, y, r, g, b);
+    }
+
+    // Copy saved 0xRRGGBB pixels back onto the (current) canvas
+    private static void RestoreCanvas(int[] pixels)
+    {
+        IntPtr tmp = SDL.SDL_CreateTexture(renderer, SDL.SDL_PIXELFORMAT_ARGB8888,
+            SDL.SDL_TEXTUREACCESS_STATIC, screenWidth, screenHeight);
+        if (tmp == IntPtr.Zero) return;
+
+        int[] opaque = new int[pixels.Length];
+        for (int i = 0; i < pixels.Length; i++)
+            opaque[i] = pixels[i] | unchecked((int)0xFF000000);
+
+        GCHandle handle = GCHandle.Alloc(opaque, GCHandleType.Pinned);
+        try
+        {
+            _ = SDL.SDL_UpdateTexture(tmp, IntPtr.Zero, handle.AddrOfPinnedObject(), screenWidth * 4);
+            _ = SDL.SDL_SetTextureBlendMode(tmp, SDL.SDL_BlendMode.SDL_BLENDMODE_NONE);
+            _ = SDL.SDL_RenderCopy(renderer, tmp, IntPtr.Zero, IntPtr.Zero);
+        }
+        finally
+        {
+            handle.Free();
+            SDL.SDL_DestroyTexture(tmp);
+        }
+        InvalidateCache();
     }
 
     // Find arial.ttf on Windows (C:\Windows\Fonts) or next to the exe
@@ -1111,7 +1323,7 @@ public static class Graphics
             for (int i = 0; i < 5; i++)
             {
                 SDL.SDL_PumpEvents();
-                SDL.SDL_RenderPresent(renderer);
+                PresentCanvas();
                 SDL.SDL_Delay(10);
             }
             SDL.SDL_RaiseWindow(window);
@@ -1120,8 +1332,9 @@ public static class Graphics
         // Re-assert the logical render size so SDL recomputes the scale + letterbox
         // viewport for the new output size. Keeps draw coordinates in the same virtual
         // screenWidth x screenHeight space in both windowed and fullscreen mode.
+        // Logical size belongs to the window target, not the canvas.
         SDL.SDL_PumpEvents();
-        _ = SDL.SDL_RenderSetLogicalSize(renderer, screenWidth, screenHeight);
-        SDL.SDL_RenderPresent(renderer);
+        WithWindowTarget(() => SDL.SDL_RenderSetLogicalSize(renderer, screenWidth, screenHeight));
+        PresentCanvas();
     }
 }

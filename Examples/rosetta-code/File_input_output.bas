@@ -1,6 +1,12 @@
 ' ============================================
-' https://rosettacode.org/wiki/File_input/output
+' ROSETTA: https://rosettacode.org/wiki/File_input/output
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Reads the contents of input.txt, if the file exists, and writes them to output.txt.
+' CATEGORY: file-io
+' TAGS: file input, file output, fileread, filewrite, fileexists
+' REQUIRES: input.txt
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

@@ -1,8 +1,10 @@
-' BazzBasic version 1.4d
-' https://ekbass.github.io/BazzBasic/
 ' ============================================
-' Pori Swap Puzzle - helper functions
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Helper functions for the Pori Swap Puzzle (pori_puzzle.bas): slot to pixel position, slot under a pixel, in-place check and m:ss time formatting. INCLUDEd by the main program, not run on its own.
+' CATEGORY: games
+' TAGS: puzzle, helper functions, grid coordinates, include
+' MINVERSION: 1.5
 ' ============================================
 ' Every function here is "pure": it only uses its parameters.
 ' DEF FN scope is fully isolated (only # constants are visible), so

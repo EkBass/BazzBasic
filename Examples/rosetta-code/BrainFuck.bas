@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Execute_Brain****
+' ROSETTA: https://rosettacode.org/wiki/Execute_Brain****
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Interprets a Brainfuck program (the Hello World example) on a 1000-cell tape and prints its output.
+' CATEGORY: algorithms
+' TAGS: brainfuck, interpreter, esoteric language, virtual machine
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

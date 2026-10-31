@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Ascending_primes
+' ROSETTA: https://rosettacode.org/wiki/Ascending_primes
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Finds and prints all prime numbers whose decimal digits are in strictly ascending order.
+' CATEGORY: math
+' TAGS: prime numbers, ascending digits, bitmask, subsets
+' MINVERSION: 1.5
 ' ============================================
 
 ' Strategy: every number with strictly ascending digits corresponds

@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/JSON
+' ROSETTA: https://rosettacode.org/wiki/JSON
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Encodes a nested structure (name, age, address, hobbies) into a JSON string with ASJSON and decodes it back into an array with ASARRAY.
+' CATEGORY: data
+' TAGS: json, asjson, asarray, encode, decode
+' MINVERSION: 1.5
 ' ============================================
 
 [inits]

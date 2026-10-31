@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Metaprogramming
+' ROSETTA: https://rosettacode.org/wiki/Metaprogramming
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Shows BazzBasic's metaprogramming-style tools: dynamic GOSUB dispatch through label names held in constants and variables, with INCLUDE source composition explained in the comments.
+' CATEGORY: basics
+' TAGS: metaprogramming, dynamic gosub, dispatch, labels, include
+' MINVERSION: 1.5
 ' ============================================
 ' BazzBasic does not support macros or AST manipulation.
 ' Instead, it provides two practical metaprogramming-style tools:
@@ -15,7 +20,6 @@
 '    Labels are strings in the form "[label]".
 '    A variable can hold such a string, enabling indirect jumps.
 '    This acts like a simple dispatch table (similar to function pointers).
-' --------------------------------------------------
 
 [inits]
     LET GREETING# = "[sub:hello]"

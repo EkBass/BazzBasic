@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Cullen_and_Woodall_numbers
+' ROSETTA: https://rosettacode.org/wiki/Cullen_and_Woodall_numbers
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Prints the first 20 Cullen numbers (n * 2^n + 1) and the first 20 Woodall numbers (n * 2^n - 1).
+' CATEGORY: math
+' TAGS: cullen numbers, woodall numbers, powers of two, number sequences
+' MINVERSION: 1.5
 ' ============================================
 ' Cullen number:  C(n) = n * 2^n + 1
 ' Woodall number: W(n) = n * 2^n - 1

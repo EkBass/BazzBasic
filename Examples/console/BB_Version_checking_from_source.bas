@@ -1,13 +1,12 @@
-' =================================================================================================
-'
-' FILE: BB_Version_checking_from_source.bas
-'
-' A tiny BazzBasic snippet for version checking.
-' It reads file "Version.cs" from the GitHub source and parses it.
-' It reports depending of is user current BBVER# is little or more behind of current source version.
-'
+' ============================================
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Reads Version.cs from the BazzBasic GitHub source and compares the remote version with the running BBVER# to tell whether an update is available.
+' CATEGORY: network
+' TAGS: version check, httpget, bbver, github
+' MINVERSION: 1.5
+' ============================================
 ' It works, if author (thats me) just remembers to update the version to the file.
-' =================================================================================================
 
 [inits]
     LET VER_URL#      = "https://raw.githubusercontent.com/EkBass/BazzBasic/main/src/Version.cs"

@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Array_concatenation
+' ROSETTA: https://rosettacode.org/wiki/Array_concatenation
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Concatenates two numerically indexed arrays by offsetting the keys of the second, and merges two associative arrays with JOIN.
+' CATEGORY: basics
+' TAGS: arrays, join, associative arrays, concatenation
+' MINVERSION: 1.5
 ' ============================================
 ' BazzBasic arrays accept both numeric and string keys, so "concatenation"
 ' has two flavors:

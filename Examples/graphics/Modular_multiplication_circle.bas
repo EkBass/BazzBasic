@@ -1,12 +1,11 @@
 ' ============================================
-' Modular Multiplication Circle
 ' BazzBasic: https://github.com/EkBass/BazzBasic
-'
-' Draws a circle of m evenly-spaced points and
-' connects point n to point (n * p) mod m. The
-' resulting cardioid / nephroid patterns depend
-' on the pair (m, p).
-'
+' --------------------------------------------
+' DESCRIPTION: Draws a circle of m evenly spaced points and connects point n to point (n * p) mod m, producing cardioid and nephroid patterns for random (m, p) pairs that change every few seconds or on SPACE.
+' CATEGORY: drawing
+' TAGS: modular multiplication, cardioid, geometric patterns, fasttrig
+' MINVERSION: 1.5
+' ============================================
 ' Controls:
 '   SPACE - next pattern immediately
 '   ESC   - quit
@@ -15,7 +14,6 @@
 ' shared in the BASIC Programming Language
 ' Facebook Group:
 '   https://www.facebook.com/share/p/14Wg9zYMpCq/
-' ============================================
 
 [inits]
     ' --- Screen & geometry ---

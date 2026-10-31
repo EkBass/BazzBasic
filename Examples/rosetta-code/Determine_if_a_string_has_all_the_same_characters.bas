@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Determine_if_a_string_has_all_the_same_characters
+' ROSETTA: https://rosettacode.org/wiki/Determine_if_a_string_has_all_the_same_characters
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Reports for each test string whether all its characters are the same and, if not, the position and hex code of the first differing character.
+' CATEGORY: strings
+' TAGS: string comparison, characters, asc, hexadecimal
+' MINVERSION: 1.5
 ' ============================================
 
 ' Returns position (1-based) of the first character that differs

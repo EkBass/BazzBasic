@@ -1,9 +1,14 @@
 ' ============================================
-' https://rosettacode.org/wiki/Arithmetic-geometric_mean
+' ROSETTA: https://rosettacode.org/wiki/Arithmetic-geometric_mean
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Computes the arithmetic-geometric mean of 1 and 1/sqrt(2) by iterating until the result stops shrinking.
+' CATEGORY: math
+' TAGS: arithmetic-geometric mean, iteration, floating point
+' MINVERSION: 1.5
+' ============================================
 ' Task: write a function for the arithmetic-geometric mean
 '       and demonstrate it with agm(1, 1/sqrt(2)).
-' ============================================
 
 ' Iterate until the arithmetic mean stops shrinking. It decreases
 ' monotonically, so once it no longer does, we are at full precision.

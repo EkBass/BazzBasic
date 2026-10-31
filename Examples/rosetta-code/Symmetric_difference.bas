@@ -1,7 +1,12 @@
-' ==================================================================
-' Symmetric difference (BazzBasic solution)
-' Rosetta Code: https://rosettacode.org/wiki/Symmetric_difference
-' ==================================================================
+' ============================================
+' ROSETTA: https://rosettacode.org/wiki/Symmetric_difference
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Computes the symmetric difference of two sets of names (elements in either set but not in both), ignoring duplicates, and prints it (Serena and Jim).
+' CATEGORY: algorithms
+' TAGS: symmetric difference, set operations, sets, haskey
+' MINVERSION: 1.5
+' ============================================
 
 ' The symmetric difference of two sets is the collection of elements
 ' that belong to either set but not to both.

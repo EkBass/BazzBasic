@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Even_or_odd
+' ROSETTA: https://rosettacode.org/wiki/Even_or_odd
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Picks a random number from 0 to 99 and prints whether it is even or odd.
+' CATEGORY: math
+' TAGS: even or odd, parity, modulo, random
+' MINVERSION: 1.5
 ' ============================================
 
 DEF FN IsEven$(num$)

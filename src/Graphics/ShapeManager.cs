@@ -329,6 +329,9 @@ public static class ShapeManager
     // Render a shape with transformations
     private static void RenderShape(Shape shape, IntPtr renderer)
     {
+        // Canvas changes → POINT/SAVESCREEN pixel cache is stale
+        Graphics.InvalidateCache();
+
         int centerX = (int)shape.X;
         int centerY = (int)shape.Y;
         int w = (int)shape.ScaledWidth;

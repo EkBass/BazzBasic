@@ -994,7 +994,7 @@ public partial class MainForm : Form
         // Graphics, mouse & sound
         editor.SetKeywords(3,
             "screen screenlock fullscreen vsync line circle pset point paint b bf " +
-            "loadimage loadshape loadsheet loadfont drawstring " +
+            "loadimage loadshape loadsheet loadfont drawstring savescreen " +
             "moveshape drawshape rotateshape scaleshape showshape hideshape removeshape " +
             "mousex mousey mouseleft mouseright mousemiddle mousehide mouseshow " +
             "gamepads padbutton padaxis padname padrumble " +

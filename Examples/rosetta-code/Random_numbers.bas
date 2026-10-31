@@ -1,7 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Random_numbers
+' ROSETTA: https://rosettacode.org/wiki/Random_numbers
 ' BazzBasic: https://github.com/EkBass/BazzBasic
-' 1000 normally distributed random numbers, mean 1.0, std dev 0.5
+' --------------------------------------------
+' DESCRIPTION: Generates 1000 normally distributed random numbers (mean 1.0, standard deviation 0.5) from uniform RND(0) values with the Box-Muller transform, and prints the sample mean and standard deviation.
+' CATEGORY: math
+' TAGS: random numbers, normal distribution, box-muller, statistics
+' MINVERSION: 1.5
 ' ============================================
 '
 ' RND(0) is uniform, so the Box-Muller transform turns two uniform

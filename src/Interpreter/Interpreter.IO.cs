@@ -243,12 +243,32 @@ public partial class Interpreter
             ms = (int)EvaluateExpression().AsNumber();
         }
         
-        if (ms > 0)
+        if (ms > 0 && Graphics.Graphics.IsInitialized)
+        {
+            // Graphics mode: show the pending frame, then sleep in short slices and
+            // keep pumping events so the window stays responsive and can be closed.
+            Graphics.Graphics.Flush();
+            long end = Environment.TickCount64 + ms;
+            while (true)
+            {
+                Graphics.Graphics.ProcessEvents();
+                if (Graphics.Graphics.QuitRequested)
+                {
+                    _running = false;
+                    return;
+                }
+                long left = end - Environment.TickCount64;
+                if (left <= 0) break;
+                Thread.Sleep((int)Math.Min(left, 10));
+            }
+        }
+        else if (ms > 0)
         {
             Thread.Sleep(ms);
         }
         else
         {
+            Graphics.Graphics.Flush();
             Console.ReadKey(true);
         }
     }
@@ -336,6 +356,9 @@ public partial class Interpreter
             Require(TokenType.TOK_RPAREN, "Expected ')'");
         }
 
+        // Show whatever was drawn before waiting
+        Graphics.Graphics.Flush();
+
         // Loop until a matching key (or any key if no params)
         while (true)
         {
@@ -344,6 +367,11 @@ public partial class Interpreter
             if (Graphics.Graphics.IsInitialized)
             {
                 key = Graphics.Graphics.GetLastKey();
+                if (Graphics.Graphics.QuitRequested)
+                {
+                    _running = false;   // window closed → end program cleanly
+                    return Value.Zero;
+                }
             }
             else if (Console.KeyAvailable)
             {

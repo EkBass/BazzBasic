@@ -1,6 +1,11 @@
 ' ============================================
-' https://rosettacode.org/wiki/Strip_a_set_of_characters_from_a_string
+' ROSETTA: https://rosettacode.org/wiki/Strip_a_set_of_characters_from_a_string
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Removes every character of a given set (a, e and i) from a string with a function that replaces each of them with an empty string.
+' CATEGORY: strings
+' TAGS: strip characters, replace, def fn
+' MINVERSION: 1.5
 ' ============================================
 
 DEF FN Stripper$(orig$, outs$)

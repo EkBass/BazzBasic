@@ -1,15 +1,17 @@
 ' ============================================
-' https://rosettacode.org/wiki/String_length
+' ROSETTA: https://rosettacode.org/wiki/String_length
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Prints the length of several strings (ASCII, Latin, Greek, CJK and a musical symbol) both in characters with LEN and in UTF-8 bytes, computed by hand from the code points.
+' CATEGORY: strings
+' TAGS: string length, utf-8, unicode, len, asc
+' MINVERSION: 1.5
 ' ============================================
-' Find the character (LEN) and byte (UTF-8) length
-' of a string.
 '
 ' BazzBasic runs on .NET, so strings are UTF-16
 ' internally and ASC() returns the full Unicode
 ' code point. UTF-8 byte length is computed
 ' manually from those code points.
-' ============================================
 
 DEF FN Utf8ByteLen$(s$)
     LET bytes$ = 0

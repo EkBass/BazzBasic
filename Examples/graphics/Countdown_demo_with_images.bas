@@ -1,9 +1,13 @@
-' BazzBasic version 1.3
-' https://ekbass.github.io/BazzBasic/
 ' ============================================
-' LOADSHEET demo: countdown 9 -> 0
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Counts down from 9 to 0 by showing the digit sprites of a sprite sheet one at a time (LOADSHEET demo).
+' CATEGORY: drawing
+' TAGS: loadsheet, sprite sheet, animation
+' REQUIRES: assets/sheet_numbers.png
+' MINVERSION: 1.5
+' ============================================
 ' sheet_numbers.png: 640x256, 128x128 sprites
-' ============================================
 
 [inits]
 	' Center position for a 128x128 sprite on 640x480 screen
