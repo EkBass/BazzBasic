@@ -3,7 +3,7 @@
 ' --------------------------------------------
 ' DESCRIPTION: Text-adventure game engine working with JSON
 ' CATEGORY: games
-' TAGS: turn-based, adventure, game
+' TAGS: turn-based, adventure, game, json
 ' MINVERSION: 1.5
 ' License: MIT
 ' ============================================
