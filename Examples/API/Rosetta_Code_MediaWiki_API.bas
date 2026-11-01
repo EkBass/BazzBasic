@@ -1,3 +1,4 @@
+' C:\Users\ekvir\source\repos\BazzBasic\Examples\API\Rosetta_Code_MediaWiki_API.bas
 ' ============================================
 ' BazzBasic: https://github.com/EkBass/BazzBasic
 ' --------------------------------------------

@@ -1,0 +1,238 @@
+{
+  "title": "THE DRAGON'S CURSE",
+  "start": "cottage",
+
+  "intro": [
+    "You awaken in your cottage with a pounding headache.\nSunlight streams through the window, but something feels... wrong.\nThe air is thick with an unnatural silence.",
+    "You remember fragments of last night - a massive shadow passing\noverhead, screams from the village, and a deep, rumbling roar\nthat shook the very foundations of your home.",
+    "You must investigate what happened..."
+  ],
+
+  "player": {
+    "hp": 100,
+    "attack": 10
+  },
+
+  "rooms": {
+    "cottage": {
+      "name": "Your Cottage",
+      "desc": "A cozy cottage with a fireplace. The wooden floor creaks beneath your feet.",
+      "story": "Your home feels emptier than usual. Something terrible has happened.",
+      "exits": { "north": "forest" }
+    },
+    "forest": {
+      "name": "Ancient Forest",
+      "desc": "A winding path through tall pine trees. Sunlight filters through the canopy. To the west, a rusted iron gate guards the mouth of a cave.",
+      "story": "The forest is eerily quiet. No birds sing.",
+      "exits": { "south": "cottage", "east": "clearing", "west": "cave" },
+      "locks": {
+        "west": {
+          "item": "key",
+          "msg": "The iron gate is locked. Its old lock is caked with rust.",
+          "openMsg": "The rusty key turns with a groan, and the iron gate swings open."
+        }
+      }
+    },
+    "clearing": {
+      "name": "Moonlit Clearing",
+      "desc": "An open clearing with wildflowers. A small stream babbles nearby.",
+      "story": "The merchant's cart sits abandoned. He must have fled in terror.",
+      "exits": { "west": "forest" }
+    },
+    "cave": {
+      "name": "Shadow Cave",
+      "desc": "A damp cave with moss-covered walls. It's quite dark in here. To the north, a wall of living shadow seals a passage.",
+      "story": "You sense dark magic at work here. The dragon's minions lurk within.",
+      "exits": { "east": "forest", "north": "lair" },
+      "locks": {
+        "north": {
+          "item": "crown",
+          "msg": "The wall of shadow pushes you back. No mortal light could pierce it.",
+          "openMsg": "The Crown of Light blazes in your hands. The shadows shriek and part before you."
+        }
+      }
+    },
+    "lair": {
+      "name": "Dragon's Lair",
+      "desc": "A massive cavern filled with treasure and bones. The air reeks of sulfur.",
+      "story": "This is it - the dragon's lair. You feel its malevolent presence.",
+      "exits": { "south": "cave" }
+    }
+  },
+
+  "items": {
+    "key": {
+      "desc": "A rusty old key. It looks like it might open a gate.",
+      "loc": "cottage"
+    },
+    "fireplace": {
+      "desc": "A warm, crackling fireplace.",
+      "loc": "cottage",
+      "take": 0
+    },
+    "dagger": {
+      "desc": "A small but deadly dagger.",
+      "loc": "cottage",
+      "type": "weapon",
+      "dmg": 8
+    },
+    "potion": {
+      "desc": "A red healing potion.",
+      "loc": "cottage",
+      "type": "consumable",
+      "heal": 30
+    },
+    "stone": {
+      "desc": "A smooth river stone. Nothing special about it.",
+      "loc": "forest"
+    },
+    "book": {
+      "desc": "The Ancient Grimoire - a leather-bound tome crackling with arcane power. Protective runes shimmer across its pages.",
+      "loc": "clearing",
+      "artifact": 1,
+      "armor": 3,
+      "onTake": [
+        "*** The ancient book pulses with magical energy in your hands. ***",
+        "*** Perhaps the wizard would know more about this... ***"
+      ]
+    },
+    "elixir": {
+      "desc": "A powerful healing elixir.",
+      "loc": "clearing",
+      "type": "consumable",
+      "heal": 50
+    },
+    "sword": {
+      "desc": "The Blessed Sword - forged by holy knights to slay evil creatures.",
+      "loc": "cave",
+      "type": "weapon",
+      "dmg": 15,
+      "artifact": 1,
+      "onTake": [
+        "*** The sword gleams with holy light. This is no ordinary weapon! ***"
+      ]
+    },
+    "crown": {
+      "desc": "The Crown of Light - radiates divine energy that weakens dark magic.",
+      "loc": "none",
+      "artifact": 1,
+      "armor": 5,
+      "onTake": [
+        "*** The crown is warm to the touch. Its light pushes the shadows back. ***"
+      ]
+    },
+    "axe": {
+      "desc": "A heavy battle axe stained with ancient blood.",
+      "loc": "lair",
+      "type": "weapon",
+      "dmg": 20
+    }
+  },
+
+  "characters": {
+    "wizard": {
+      "desc": "An old wizard with a long grey beard.",
+      "loc": "forest",
+      "givesQuest": 1,
+      "newState": "questGiven",
+      "dialogue": {
+        "initial": [
+          "Greetings, traveler. Something terrible has happened to our land.",
+          "Please, speak with me. I have urgent news!"
+        ],
+        "questGiven": [
+          "The Ancient Grimoire lies in the clearing to the east.",
+          "The Blessed Sword is hidden in the cave to the west. The gate is locked - but you keep an old key at home, don't you?",
+          "A skeleton warrior in that cave stole the Crown of Light from the old shrine.",
+          "Only the Crown's light can break the shadow that seals the dragon's lair.",
+          "Gather them all, and you will have the power to defeat the beast!"
+        ]
+      },
+      "onFirstTalk": [
+        "The wizard's expression grows grave.",
+        "\"Last night, an ancient dragon awakened. It has cursed our land!\"",
+        "\"To defeat it, you must gather three legendary artifacts:\"",
+        "\"The Ancient Grimoire, the Blessed Sword, and the Crown of Light.\"",
+        "\"But beware - the dragon's minions guard the path to its lair!\""
+      ]
+    },
+    "merchant": {
+      "desc": "A cheerful merchant with a cart.",
+      "loc": "clearing",
+      "dialogue": {
+        "initial": [
+          "Oh thank goodness someone is here!",
+          "That dragon... it's terrorizing everyone!",
+          "Take whatever you need from my cart. We must stop that beast!"
+        ]
+      },
+      "onFirstTalk": [
+        "\"If you're going after the dragon, you'll need supplies!\"",
+        "\"I left a healing elixir here. Take it - you'll need it!\""
+      ]
+    },
+    "goblin": {
+      "desc": "A vicious goblin corrupted by dark magic.",
+      "loc": "cave",
+      "hostile": 1,
+      "hp": 30,
+      "attack": 8
+    },
+    "skeleton": {
+      "desc": "An animated skeleton warrior wreathed in shadow. Something glints inside its ribcage.",
+      "loc": "cave",
+      "hostile": 1,
+      "hp": 40,
+      "attack": 12,
+      "drops": "crown",
+      "onDefeat": [
+        "The skeleton crumbles into a heap of bones.",
+        "Something golden rolls out of its ribcage..."
+      ]
+    },
+    "dragon": {
+      "desc": "A massive ancient dragon with scales like obsidian!",
+      "loc": "lair",
+      "hostile": 1,
+      "hp": 100,
+      "attack": 25,
+      "endsGame": 1,
+      "onDefeat": [
+        "========================================",
+        "The dragon collapses with a thunderous crash!",
+        "Its dark magic dissipates into the air.",
+        "The curse on the land is lifted!",
+        "You have saved the village!",
+        "========================================"
+      ]
+    }
+  },
+
+  "quest": {
+    "name": "The Dragon's Curse",
+    "desc": "Gather the three legendary artifacts and defeat the ancient dragon.",
+    "objectives": [
+      { "text": "Talk to the wizard in the forest", "type": "talk", "targets": ["wizard"] },
+      { "text": "Find the Ancient Grimoire",        "type": "has",  "targets": ["book"] },
+      { "text": "Find the Blessed Sword",           "type": "has",  "targets": ["sword"] },
+      { "text": "Find the Crown of Light",          "type": "has",  "targets": ["crown"] },
+      { "text": "Defeat the dragon's minions",      "type": "kill", "targets": ["goblin", "skeleton"] },
+      { "text": "Defeat the ancient dragon",        "type": "kill", "targets": ["dragon"] }
+    ]
+  },
+
+  "messages": {
+    "allArtifacts": [
+      "*** You have gathered all three legendary artifacts! ***",
+      "*** You feel their power coursing through you. ***",
+      "*** You are ready to face the dragon! ***"
+    ],
+    "gameOver": [
+      "You have been defeated! Game Over.",
+      "The dragon's curse remains over the land..."
+    ],
+    "victory": [
+      "Thank you for playing!"
+    ]
+  }
+}
