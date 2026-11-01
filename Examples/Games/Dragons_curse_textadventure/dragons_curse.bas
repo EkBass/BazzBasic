@@ -9,11 +9,14 @@
 
 ' ============================================
 ' The Dragon's Curse - a text adventure by EkBass
-' Original C++ game: Michael Denathorn (Dabzy), 2024
 ' BazzBasic port: data-driven, the world is loaded from world.json
 ' BazzBasic: https://github.com/EkBass/BazzBasic
+' License: MIT
+
+' Original C++ game: Michael Denathorn (Dabzy)
+' https://www.syntaxboom.net/forum/c-c/code-archives/1964-text-adventure
 ' ============================================
-'
+
 ' HOW IT IS BUILT
 '   This file is only the engine. Rooms, items, characters, dialogue,
 '   the quest and all story text come from world.json, so the adventure
