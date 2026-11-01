@@ -1,3 +1,13 @@
+' ============================================
+' BazzBasic: https://github.com/EkBass/BazzBasic
+' --------------------------------------------
+' DESCRIPTION: Text-adventure game engine working with JSON
+' CATEGORY: games
+' TAGS: turn-based, adventure, game
+' MINVERSION: 1.5
+' License: MIT
+' ============================================
+
 ' Here is a lots of comments. But blame me for that.
 ' This is also excellent tutorial how to build a textgame engine
 ' and use it for JSON adventure.
@@ -6,16 +16,9 @@
 ' comment it as its a tutorial.
 ' It sometimes performs like 150%
 
-
-' ============================================
-' The Dragon's Curse - a text adventure by EkBass
-' BazzBasic port: data-driven, the world is loaded from world.json
-' BazzBasic: https://github.com/EkBass/BazzBasic
-' License: MIT
-
 ' Original C++ game: Michael Denathorn (Dabzy)
 ' https://www.syntaxboom.net/forum/c-c/code-archives/1964-text-adventure
-' ============================================
+
 
 ' HOW IT IS BUILT
 '   This file is only the engine. Rooms, items, characters, dialogue,
