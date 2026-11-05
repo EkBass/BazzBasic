@@ -101,6 +101,7 @@ public enum TokenType
     TOK_GETREQUEST          = 137,
     TOK_SENDRESPONSE        = 138,
     TOK_STOPLISTEN          = 139,
+    TOK_HTTPERROR           = 140,
 
     // ========================================================================
     // Sound Keywords 151 - 200

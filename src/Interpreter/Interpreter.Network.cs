@@ -21,6 +21,9 @@ namespace BazzBasic.Interpreter;
 
 public partial class Interpreter
 {
+    // Error retrieving the last HTTP error message (empty if last call succeeded)
+    private string _lastHttpError = "";
+
     // Shared HttpClient to reuse connections and avoid socket exhaustion.
     // Per-request timeouts are driven by a CancellationTokenSource, so the
     // client-level timeout is disabled here (otherwise it would fire first).
@@ -49,6 +52,15 @@ public partial class Interpreter
         }
     }
 
+    // HTTP get error message (empty if last call succeeded)
+    private Value EvaluateHttpError()
+    {
+        _pos++;                                  // consume HTTPERROR
+        if (Expect(TokenType.TOK_LPAREN))        // HTTPERROR tai HTTPERROR()
+            Require(TokenType.TOK_RPAREN);
+        return Value.FromString(_lastHttpError);
+    }
+
     // HTTPGET(url$) / HTTPGET(url$, headers$) -> returns response body as string
     private Value EvaluateHttpGet()
     {
@@ -74,15 +86,24 @@ public partial class Interpreter
 
         Require(TokenType.TOK_RPAREN, "Expected ')' after HTTPGET arguments");
 
+        // Check that the URL is valid and uses HTTP or HTTPS scheme
+        if (!Uri.TryCreate(url, UriKind.Absolute, out var uri) || (uri.Scheme != Uri.UriSchemeHttp && uri.Scheme != Uri.UriSchemeHttps))
+        {
+            Error($"HTTPGET: invalid URL '{url}'");
+            return Value.Empty;
+        }
+
         try
         {
             using var request = new HttpRequestMessage(HttpMethod.Get, url);
             ApplyHeaders(request, headersArrayName);
+            _lastHttpError = "";
             return Value.FromString(SendWithTimeout(request, timeoutSeconds));
         }
         catch (Exception ex)
         {
-            throw new Exception($"HTTPGET failed: {ex.Message}");
+            _lastHttpError = ex.Message;
+            return Value.FromString("");
         }
     }
 
@@ -113,16 +134,25 @@ public partial class Interpreter
 
         Require(TokenType.TOK_RPAREN, "Expected ')' after HTTPPOST arguments");
 
+        // Check that the URL is valid and uses HTTP or HTTPS scheme
+        if (!Uri.TryCreate(url, UriKind.Absolute, out var uri) || (uri.Scheme != Uri.UriSchemeHttp && uri.Scheme != Uri.UriSchemeHttps))
+        {
+            Error($"HTTPGET: invalid URL '{url}'");
+            return Value.Empty;
+        }
+
         try
         {
             using var request = new HttpRequestMessage(HttpMethod.Post, url);
             request.Content = new StringContent(body, System.Text.Encoding.UTF8, "application/json");
             ApplyHeaders(request, headersArrayName);
+            _lastHttpError = "";
             return Value.FromString(SendWithTimeout(request, timeoutSeconds));
         }
         catch (Exception ex)
         {
-            throw new Exception($"HTTPPOST failed: {ex.Message}");
+            _lastHttpError = ex.Message;
+            return Value.FromString("");
         }
     }
 

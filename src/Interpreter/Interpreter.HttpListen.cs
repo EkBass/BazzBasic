@@ -41,21 +41,36 @@ public partial class Interpreter
     private HttpListener? _httpListener;
     private int _httpListenerTimeoutMs;          // 0 = wait forever
     private HttpListenerContext? _pendingContext; // request awaiting SENDRESPONSE
+    private Task<HttpListenerContext>? _pendingAccept;
 
-    // STARTLISTEN port [, timeout_ms]
+
+    // STARTLISTEN port [, timeout_ms [, host$]]
+    // Defaults to 127.0.0.1
+    // "*" requires urlacl admin rights on Windows, but allows any host to connect.
+
     private void ExecuteStartListen()
     {
-        _pos++; // consume STARTLISTEN
-
         int port = (int)EvaluateExpression().AsNumber();
         int timeout = 0;
+        string host = "127.0.0.1";
+        _pendingAccept = null;
+        _pos++; // consume STARTLISTEN
 
         if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_COMMA)
         {
             _pos++;
             timeout = (int)EvaluateExpression().AsNumber();
             if (timeout < 0) timeout = 0;
+
+            if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_COMMA)
+            {
+                _pos++;
+                host = EvaluateExpression().AsString().Trim();
+                if (host == "") host = "127.0.0.1";
+                if (host == "*") host = "+";
+            }
         }
+        if (_hasError) return;
 
         if (port < 1 || port > 65535)
         {
@@ -69,19 +84,21 @@ public partial class Interpreter
             return;
         }
 
+        string prefix = $"http://{host}:{port}/";
+
         try
         {
             var listener = new HttpListener();
-            // 127.0.0.1 only -> no admin rights needed on Windows
-            listener.Prefixes.Add($"http://127.0.0.1:{port}/");
+            listener.Prefixes.Add(prefix);
             listener.Start();
             _httpListener = listener;
             _httpListenerTimeoutMs = timeout;
             _pendingContext = null;
         }
-        catch (HttpListenerException ex)
+        catch (HttpListenerException ex) when (ex.ErrorCode == 5)
         {
-            Error($"STARTLISTEN: failed to bind port {port}: {ex.Message}");
+            Error($"STARTLISTEN: Windows denied {prefix}. Run once as admin: " +
+                  $"netsh http add urlacl url={prefix} user=Everyone");
         }
         catch (Exception ex)
         {
@@ -119,7 +136,8 @@ public partial class Interpreter
             HttpListenerContext ctx;
             try
             {
-                var task = _httpListener.GetContextAsync();
+                _pendingAccept ??= _httpListener.GetContextAsync();
+                var task = _pendingAccept;
 
                 if (_httpListenerTimeoutMs <= 0)
                 {
@@ -135,6 +153,8 @@ public partial class Interpreter
                         return Value.Empty;
                     ctx = task.Result;
                 }
+
+                _pendingAccept = null;
             }
             catch (Exception ex)
             {

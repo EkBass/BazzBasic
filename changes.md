@@ -5,6 +5,24 @@ They take effect once a new binary release is published.
 
 Changes for older versions are in [changes-archive.md](changes-archive.md).
 
+## 5th November 2026
+
+### HTTPLISTEN changed
+Now as: STARTLISTEN port [, timeout_ms [, host$]]
+- Defaults to 127.0.0.1
+- '*' requires urlacl admin rights on Windows, but allows any host to connect.
+
+### Adjusted HTTPGET & HTTPPOST
+
+HTTPGET/HTTPPOST wont cause error in situation where it cant connect nor get response.
+Instead, it sets error message inside HTTPERROR and execution goes as directed.
+
+```basic
+LET res$ = HTTPGET(url$)
+IF HTTPERROR <> "" THEN PRINT "Lähde alhaalla: "; HTTPERROR$
+```
+" ../extras/*" updated for HTTPERROR
+-  
 ## 30th October 2026
 
 ### New: SAVESCREEN
@@ -21,6 +39,8 @@ SAVESCREEN "circle.png"
 - Error without graphics mode: `SAVESCREEN: graphics mode not initialized. Use SCREEN first.`
 - Internals: new token `TOK_SAVESCREEN = 124`. Uses System.Drawing.Common (already used by LOADIMAGE), works in the trimmed build.
 - **Not yet added** to `extras` syntax files (Notepad++, Geany, reserved-words.xml, VS Code), manual or AI guide — only to the IDE highlighting. To be done together with the other upcoming features.
+
+" ../extras/*" updated for SAVESCREEN
 
 ### Graphics: persistent canvas — POINT works, PSET loops are fast
 

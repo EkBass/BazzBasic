@@ -987,7 +987,7 @@ public partial class MainForm : Form
         editor.SetKeywords(2,
             "print input cls color locate curpos getconsole inkey keydown waitkey " +
             "fileread filewrite fileappend fileexists filedelete filelist shell " +
-            "httpget httppost startlisten getrequest sendresponse stoplisten " +
+            "httpget httppost httperror startlisten getrequest sendresponse stoplisten " +
             "asjson asarray loadjson savejson base64encode base64decode sha256 " +
             "isset haskey delkey delarray join rowcount arrkey args argcount");
 

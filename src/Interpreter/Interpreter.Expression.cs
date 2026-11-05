@@ -192,6 +192,9 @@ public partial class Interpreter
 
         switch (token.Type)
         {
+            case TokenType.TOK_HTTPERROR:
+                return EvaluateHttpError();
+
             case TokenType.TOK_NUMBER:
                 _pos++;
                 return Value.FromNumber(token.NumValue);

@@ -1,5 +1,5 @@
 ' ============================================
-' ROSETTA: https://rosettacode.org/wiki/Sierpinski_triangle
+' ROSETTA: https://rosettacode.org/wiki/Sierpinski_triangle_ASCII
 ' BazzBasic: https://github.com/EkBass/BazzBasic
 ' --------------------------------------------
 ' DESCRIPTION: Prints a Sierpinski triangle of order 4 as rows of asterisks, built row by row from Pascal's triangle modulo 2.
