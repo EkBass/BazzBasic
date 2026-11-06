@@ -345,6 +345,24 @@ Returns a RGP color value from certain point of the screen.
 LET c$ = POINT(100, 100)
 ```
 
+### SAVESCREEN - Save the screen as PNG
+Saves everything drawn on the graphics screen to a PNG file.
+
+```vb
+SCREEN 0, 320, 200
+CIRCLE (160, 100), 50, RGB(255, 0, 0), 1
+SAVESCREEN "circle.png"
+```
+
+- Relative paths resolve against the program's folder (same as `PRG_ROOT#`). The folder must already exist.
+- Only `.png` is supported; any other extension is an error.
+- An existing file with the same name is overwritten.
+- The image has the program's screen size (as set with `SCREEN`), also in fullscreen. It is always fully opaque.
+- It saves what has been drawn, including drawing done after `SCREENLOCK ON` that has not been shown yet.
+- Requires graphics mode: without `SCREEN`, it stops with `SAVESCREEN: graphics mode not initialized. Use SCREEN first.`
+
+Handy for screenshots, saving generated art, and checking the output of drawing programs (e.g. Rosetta Code tasks) without looking at the window.
+
 ### DRAWSTRING & LOADFONT
 
 Render text directly to the SDL2 graphics surface. Requires `SDL2_ttf.dll` in the same directory as the interpreter.

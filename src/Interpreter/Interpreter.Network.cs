@@ -137,7 +137,7 @@ public partial class Interpreter
         // Check that the URL is valid and uses HTTP or HTTPS scheme
         if (!Uri.TryCreate(url, UriKind.Absolute, out var uri) || (uri.Scheme != Uri.UriSchemeHttp && uri.Scheme != Uri.UriSchemeHttps))
         {
-            Error($"HTTPGET: invalid URL '{url}'");
+            Error($"HTTPPOST: invalid URL '{url}'");
             return Value.Empty;
         }
 

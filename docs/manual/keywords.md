@@ -73,6 +73,7 @@ Variables must end with `$`, constants with `#` — they cannot share names with
 | `REMOVESHAPE` | Delete shape and free memory |
 | `RGB` | Create color value from R, G, B components |
 | `ROTATESHAPE` | Rotate shape (absolute degrees) |
+| `SAVESCREEN` | Save the graphics screen as a PNG file |
 | `SCALESHAPE` | Scale shape |
 | `SCREEN` | Initialize graphics window |
 | `SCREENLOCK` | Buffer drawing (`ON`) / present frame (`OFF`) |
@@ -114,14 +115,15 @@ Variables must end with `$`, constants with `#` — they cannot share names with
 | `BASE64DECODE` | Decode Base64 string |
 | `BASE64ENCODE` | Encode string to Base64 |
 | `GETREQUEST` | Wait for an HTTP request (blocks); returns POST/PUT/PATCH body or GET query string without `?`; `""` on timeout |
-| `HTTPGET` | HTTP GET request |
-| `HTTPPOST` | HTTP POST request |
+| `HTTPERROR` | Error message of the latest HTTPGET/HTTPPOST; `""` if it succeeded |
+| `HTTPGET` | HTTP GET request; returns `""` and sets `HTTPERROR` on failure |
+| `HTTPPOST` | HTTP POST request; returns `""` and sets `HTTPERROR` on failure |
 | `LOADJSON` | Load JSON file into array |
 | `SAVEJSON` | Save array as JSON file |
 | `SENDRESPONSE` | Send text response to the pending request (200 OK, CORS enabled) |
 | `SHA256` | SHA256 hash (64-char hex) |
-| `STARTLISTEN` | Start local HTTP server bound to 127.0.0.1: `STARTLISTEN port [, timeout_ms]` |
-| `STOPLISTEN` | Stop the local HTTP server (silent no-op if none active) |
+| `STARTLISTEN` | Start HTTP server: `STARTLISTEN port [, timeout_ms [, host$]]` (default host 127.0.0.1, `"*"` = all interfaces) |
+| `STOPLISTEN` | Stop the HTTP server (silent no-op if none active) |
 
 ---
 

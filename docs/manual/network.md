@@ -85,21 +85,50 @@ LET count$ = ASARRAY(result$, raw$)
 PRINT result$("choices,0,message,content")
 ```
 
-If the timeout is exceeded the call fails with an error such as `HTTPPOST failed: timed out after 120 s`.
+If the timeout is exceeded, the call returns an empty string and `HTTPERROR` holds a message such as `timed out after 120 s`. See below.
+
+
+### HTTPERROR
+Returns the error message of the latest `HTTPGET` or `HTTPPOST` call, or an empty string if that call succeeded. Parentheses are optional: `HTTPERROR` and `HTTPERROR()` are the same.
+
+A server that is down or unreachable is not a bug in your program, so `HTTPGET` and `HTTPPOST` do **not** stop the program when the request fails. They return an empty string and store the reason in `HTTPERROR`. Your program decides what to do next.
+
+```vb
+LET res$ = HTTPGET("https://example.com/feed")
+IF HTTPERROR <> "" THEN
+    PRINT "Source is down: "; HTTPERROR
+ELSE
+    PRINT res$
+END IF
+```
+
+Every `HTTPGET` / `HTTPPOST` call resets `HTTPERROR`, so read it right after the call you want to check.
+
+**What counts as an error:**
+
+| Situation | Result |
+|-----------|--------|
+| Invalid URL (empty, or not `http://` / `https://`) | **Program stops** with an error and line number — this is a mistake in your code |
+| No connection, unknown host, connection dropped | Returns `""`, `HTTPERROR` holds the reason |
+| Timeout exceeded | Returns `""`, `HTTPERROR` = `timed out after N s` |
+| Server answers with an error status (404, 500…) | **Not an error.** Returns the server's response body (often an HTML error page), `HTTPERROR` is `""` |
+
+**Note:** An empty result alone does not tell you that something went wrong — a server can also answer successfully with an empty body. Check `HTTPERROR` when the difference matters.
 
 
 ## HTTP Server (LISTEN)
 
-BazzBasic can act as a small local HTTP server to receive POST requests from a browser-side HTML page or other tooling. The intended use is **local-only** glue: a static HTML page on the user's machine talks to BazzBasic via `fetch()`.
+BazzBasic can act as a small HTTP server to receive requests from a browser-side HTML page, another program, or another computer. The typical use is local glue: a static HTML page on the user's machine talks to BazzBasic via `fetch()`.
 
-The server is bound to `127.0.0.1` only — no admin rights are needed on Windows, and the listener is never exposed to the network.
+By default the server is bound to `127.0.0.1` — only programs on the same computer can reach it, and no admin rights are needed on Windows. It can also listen on the network; see [Listening on the network](#listening-on-the-network) below.
 
 ### Commands
 
 | Command | Description |
 |---------|-------------|
-| `STARTLISTEN port` | Open the given port. `GETREQUEST()` will block forever until a request arrives. |
-| `STARTLISTEN port, timeout_ms` | Same, but `GETREQUEST()` returns an empty string if no request arrives within the timeout. |
+| `STARTLISTEN port` | Open the given port on `127.0.0.1`. `GETREQUEST()` will block forever until a request arrives. |
+| `STARTLISTEN port, timeout_ms` | Same, but `GETREQUEST()` returns an empty string if no request arrives within the timeout. `0` = wait forever. |
+| `STARTLISTEN port, timeout_ms, host$` | Listen on the given host instead of `127.0.0.1`. `"*"` = all network interfaces. See below. |
 | `GETREQUEST()` | Block until a request arrives, then return the **POST/PUT/PATCH body** or the **GET query string** (without the leading `?`). Returns `""` on timeout. |
 | `SENDRESPONSE str$` | Send `200 OK` with the given body, `Content-Type: text/plain; charset=utf-8`, and CORS headers. Must be called after each `GETREQUEST()` so the browser does not hang. |
 | `STOPLISTEN` | Close the port. Silent no-op if no listener is active. |
@@ -122,7 +151,7 @@ PRINT "Received: " + json$
 
 ' Parse the JSON into an array
 DIM data$
-LET data$ = ASARRAY(json$)
+LET count$ = ASARRAY(data$, json$)
 PRINT "Name: " + data$("name")
 
 SENDRESPONSE "{""status"":""ok""}"
@@ -165,9 +194,37 @@ STOPLISTEN
 END
 ```
 
+### Listening on the network
+
+Give a host as the third argument to accept connections from other computers:
+
+```vb
+STARTLISTEN 8080, 0, "*"               ' all network interfaces, no timeout
+STARTLISTEN 8080, 5000, "*"            ' same, with a 5 s GETREQUEST timeout
+STARTLISTEN 8080, 0, "192.168.1.10"    ' one specific address
+```
+
+`""` (empty) means the default `127.0.0.1`. `"*"` means every network interface on this computer.
+
+**Windows needs a one-time permission.** Listening on anything other than `127.0.0.1` requires admin rights or a URL reservation. Without it, `STARTLISTEN` stops with an error that shows the exact command to run. Open a command prompt **as administrator** and run it once, for example:
+
+```
+netsh http add urlacl url=http://+:8080/ user=Everyone
+```
+
+The reservation must match the port and host exactly. After that, the program works without admin rights. To remove it later: `netsh http delete urlacl url=http://+:8080/`
+
+**Things to know:**
+
+- **Firewall.** Windows Firewall usually asks the first time. If that question was dismissed earlier, the port stays closed and other computers simply cannot connect — there is no error in your program.
+- **A specific host is also a filter.** With `"192.168.1.10"`, only requests addressed to exactly that name are accepted; a request to `localhost` on the same port is rejected. Use `"*"` if you want everything.
+- **HTTP only.** The server does not do HTTPS. For anything exposed to the internet, put a reverse proxy (e.g. Caddy, nginx) in front of it.
+- **Anyone who can reach the port can send requests.** There is no authentication and no size limit on the request body. Do not open a port to the internet unless you know why, and check what `GETREQUEST()` returns before acting on it.
+
 ### Notes & limitations
 
-- Only one request is handled at a time, sequentially. This is intentional — BazzBasic is single-threaded and aims for simple local glue, not high-traffic web serving.
+- Only one request is handled at a time, sequentially. This is intentional — BazzBasic is single-threaded and aims for simple glue, not high-traffic web serving.
+- `Access-Control-Allow-Origin: *` means that any web page open in a browser on a computer that can reach the server can also send requests to it. This applies to `127.0.0.1` too.
 - The response is always `200 OK` with `text/plain` content type. If you need to return JSON, just put JSON text in the body — browsers can still parse it with `response.json()`. Custom status codes are not supported in this version.
 - `GET` requests give you the query string (e.g. `name=Krisu&age=50`), not the URL path. Routing by path is not supported in this version.
 - For outgoing HTTP calls (calling other servers), see `HTTPGET` and `HTTPPOST` above.

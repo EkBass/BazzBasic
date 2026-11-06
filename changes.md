@@ -7,22 +7,29 @@ Changes for older versions are in [changes-archive.md](changes-archive.md).
 
 ## 5th November 2026
 
-### HTTPLISTEN changed
-Now as: STARTLISTEN port [, timeout_ms [, host$]]
-- Defaults to 127.0.0.1
-- '*' requires urlacl admin rights on Windows, but allows any host to connect.
+### STARTLISTEN can listen on the network
 
-### Adjusted HTTPGET & HTTPPOST
+Now: `STARTLISTEN port [, timeout_ms [, host$]]`
+- Default host is still `127.0.0.1` (no admin rights needed), so old programs work as before.
+- `"*"` = all network interfaces; a specific address (e.g. `"192.168.1.10"`) is also accepted.
+- Anything other than `127.0.0.1` needs a one-time URL reservation on Windows. Without it, STARTLISTEN stops with an error that prints the exact `netsh http add urlacl ...` command to run as administrator.
+- Fixed: with a timeout, `GETREQUEST()` started a new accept on every call and left the old one pending. A request could land on the orphaned accept and be lost (browser hangs, script never sees it). The pending accept is now kept and reused.
 
-HTTPGET/HTTPPOST wont cause error in situation where it cant connect nor get response.
-Instead, it sets error message inside HTTPERROR and execution goes as directed.
+### New: HTTPERROR — HTTPGET and HTTPPOST no longer stop the program
+
+A server that is down is not a bug in the program, so a failed request no longer ends execution. `HTTPGET` / `HTTPPOST` return `""` and `HTTPERROR` holds the reason (`""` after a successful call).
 
 ```basic
 LET res$ = HTTPGET(url$)
-IF HTTPERROR <> "" THEN PRINT "Lähde alhaalla: "; HTTPERROR$
+IF HTTPERROR <> "" THEN PRINT "Source is down: "; HTTPERROR
 ```
-" ../extras/*" updated for HTTPERROR
--  
+
+- Connection errors, unknown host and timeouts → `""` + `HTTPERROR`.
+- An invalid URL (not `http://` / `https://`) is still an error with a line number — that is a mistake in the code.
+- HTTP error statuses (404, 500…) are not errors: the response body is returned and `HTTPERROR` is `""`.
+- Internals: new token `TOK_HTTPERROR = 140`. Fixed the HTTPPOST invalid-URL message, which said `HTTPGET:`.
+
+`extras/*` syntax files updated for HTTPERROR and SAVESCREEN. Manual updated: network.md, graphics.md, keywords.md.
 ## 30th October 2026
 
 ### New: SAVESCREEN
@@ -38,9 +45,7 @@ SAVESCREEN "circle.png"
 - Only `.png` is supported; any other extension is an error.
 - Error without graphics mode: `SAVESCREEN: graphics mode not initialized. Use SCREEN first.`
 - Internals: new token `TOK_SAVESCREEN = 124`. Uses System.Drawing.Common (already used by LOADIMAGE), works in the trimmed build.
-- **Not yet added** to `extras` syntax files (Notepad++, Geany, reserved-words.xml, VS Code), manual or AI guide — only to the IDE highlighting. To be done together with the other upcoming features.
-
-" ../extras/*" updated for SAVESCREEN
+- Syntax files, manual and AI guide updated 5.11.2026.
 
 ### Graphics: persistent canvas — POINT works, PSET loops are fast
 

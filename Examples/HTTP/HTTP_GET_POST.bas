@@ -1,6 +1,5 @@
 ' ============================================
 ' ROSETTA: https://rosettacode.org/wiki/HTTP, https://rosettacode.org/wiki/HTTPS
-' BazzBasic: https://github.com/EkBass/BazzBasic
 ' --------------------------------------------
 ' DESCRIPTION: Sends an HTTP GET request and a JSON POST request to httpbin.org over HTTPS and prints both responses.
 ' CATEGORY: network
