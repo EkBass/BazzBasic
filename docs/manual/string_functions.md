@@ -1,11 +1,25 @@
 ## String Functions
 
-### ASC(s$)
-Returns ASCII code of first character.
+### ASC(s$) / ASC(s$, pos)
+Returns ASCII code of first character, or of the character at 1-based position `pos`.
 ```vb
-PRINT ASC("A")      ' Output: 65
-PRINT ASC("Hello")  ' Output: 72 (H)
+PRINT ASC("A")         ' Output: 65
+PRINT ASC("Hello")     ' Output: 72 (H)
+PRINT ASC("Hello", 2)  ' Output: 101 (e)
+PRINT ASC("Hello", 9)  ' Output: 0 (out of range)
 ```
+
+`ASC(s$, pos)` gives the same result as `ASC(MID(s$, pos, 1))` but is faster, because no temporary substring is created. Use it when looping through a string character by character:
+```vb
+LET text$ = "Hello"
+LET sum$ = 0
+FOR i$ = 1 TO LEN(text$)
+    sum$ += ASC(text$, i$)
+NEXT
+PRINT sum$             ' Output: 500
+```
+
+Out of range (`pos` less than 1 or greater than `LEN(s$)`) returns `0`, as does an empty string.
 
 ### BASE64DECODE(s$) & BASE64ENCODE(s$)
 Decodes and encodes Base64

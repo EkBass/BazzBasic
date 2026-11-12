@@ -105,6 +105,7 @@ END DEF
 - **No conflicts** — Multiple libraries can have functions with the same base name
 - **Binary format** — `.bb` files are not human-readable
 - **Constant access** — Library functions can read constants from the main program
+- Not embedded in -exe packages - .bb files always travel alongside the executable
 
 ## Error Handling
 
@@ -141,3 +142,4 @@ MyGame/
 ```
 
 Libraries must be in the same directory as the main program, or in a path relative to it.
+Packaging your program with -exe (or IDE Compile as Exe) does NOT embed .bb files into the exe - only .bas INCLUDEs are embedded - so every used .bb must accompany the exe, like SDL2.dll and assets.

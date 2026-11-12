@@ -43,8 +43,10 @@ public partial class Interpreter
         Require(TokenType.TOK_LPAREN, "Expected '(' after SOUNDONCE");
         string soundId = EvaluateExpression().AsString();
         Require(TokenType.TOK_RPAREN, "Expected ')' after sound ID");
+        if (_hasError) return;
         
-        GetSoundManager().PlayOnce(soundId);
+        try { GetSoundManager().PlayOnce(soundId); }
+        catch (Exception ex) { Error($"SOUNDONCE: {ex.Message}"); }
     }
 
     private void ExecuteSoundRepeat()
@@ -54,8 +56,10 @@ public partial class Interpreter
         Require(TokenType.TOK_LPAREN, "Expected '(' after SOUNDREPEAT");
         string soundId = EvaluateExpression().AsString();
         Require(TokenType.TOK_RPAREN, "Expected ')' after sound ID");
+        if (_hasError) return;
         
-        GetSoundManager().PlayRepeat(soundId);
+        try { GetSoundManager().PlayRepeat(soundId); }
+        catch (Exception ex) { Error($"SOUNDREPEAT: {ex.Message}"); }
     }
 
     private void ExecuteSoundStop()
@@ -90,8 +94,10 @@ public partial class Interpreter
         Require(TokenType.TOK_LPAREN, "Expected '(' after SOUNDONCEWAIT");
         string soundId = EvaluateExpression().AsString();
         Require(TokenType.TOK_RPAREN, "Expected ')' after sound ID");
+        if (_hasError) return;
         
-        GetSoundManager().PlayOnceWait(soundId);
+        try { GetSoundManager().PlayOnceWait(soundId); }
+        catch (Exception ex) { Error($"SOUNDONCEWAIT: {ex.Message}"); }
     }
 
     // ========================================================================
@@ -103,9 +109,20 @@ public partial class Interpreter
         
         Require(TokenType.TOK_LPAREN, "Expected '(' after LOADSOUND");
         string filePath = EvaluateExpression().AsString();
+        if (!Path.IsPathRooted(filePath))
+            filePath = Path.Combine(_fileManager.RootPath, filePath);
         Require(TokenType.TOK_RPAREN, "Expected ')' after file path");
+        if (_hasError) return Value.Empty;
         
-        string soundId = GetSoundManager().LoadSound(filePath);
-        return Value.FromString(soundId);
+        try
+        {
+            string soundId = GetSoundManager().LoadSound(filePath);
+            return Value.FromString(soundId);
+        }
+        catch (Exception ex)
+        {
+            Error($"LOADSOUND: {ex.Message}");
+            return Value.Empty;
+        }
     }
 }

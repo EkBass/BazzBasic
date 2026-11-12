@@ -50,11 +50,11 @@ public partial class Interpreter
 
     private void ExecuteStartListen()
     {
-        int port = (int)EvaluateExpression().AsNumber();
+        _pos++;
+         int port = (int)EvaluateExpression().AsNumber();
         int timeout = 0;
         string host = "127.0.0.1";
         _pendingAccept = null;
-        _pos++; // consume STARTLISTEN
 
         if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_COMMA)
         {
@@ -180,7 +180,8 @@ public partial class Interpreter
                 using var reader = new System.IO.StreamReader(
                     ctx.Request.InputStream,
                     ctx.Request.ContentEncoding ?? Encoding.UTF8);
-                return Value.FromString(reader.ReadToEnd());
+                try { return Value.FromString(reader.ReadToEnd()); }
+                catch (Exception ex) { Error($"GETREQUEST: {ex.Message}"); return Value.Empty; }
             }
             else
             {

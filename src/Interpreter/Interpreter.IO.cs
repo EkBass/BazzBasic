@@ -229,7 +229,8 @@ public partial class Interpreter
         }
         else
         {
-            Console.Clear();
+            try { Console.Clear(); }
+            catch (Exception ex) { Error($"CLS: console output not available ({ex.Message})"); }
         }
     }
 
@@ -269,7 +270,8 @@ public partial class Interpreter
         else
         {
             Graphics.Graphics.Flush();
-            Console.ReadKey(true);
+            try { Console.ReadKey(true); }
+            catch (Exception ex) { Error($"SLEEP: cannot read console input ({ex.Message})"); }
         }
     }
 
@@ -281,8 +283,16 @@ public partial class Interpreter
         if (Graphics.Graphics.IsInitialized)
             return Value.FromNumber(Graphics.Graphics.GetLastKey());
 
-        if (Console.KeyAvailable)
-            return Value.FromNumber(ReadConsoleKey());
+        try
+        {
+            if (Console.KeyAvailable)
+                return Value.FromNumber(ReadConsoleKey());
+        }
+        catch (Exception ex)
+        {
+            Error($"INKEY: cannot read console input ({ex.Message})");
+            return Value.Zero;
+        }
 
         return Value.FromNumber(0);
     }
@@ -373,11 +383,18 @@ public partial class Interpreter
                     return Value.Zero;
                 }
             }
-            else if (Console.KeyAvailable)
+            else
             {
-                // Same mapping as console INKEY (previously ConsoleKey enum values,
-                // which broke KEY_UP#, KEY_F1#, punctuation etc. in console WAITKEY)
-                key = ReadConsoleKey();
+                try
+                {
+                    if (Console.KeyAvailable)
+                        key = ReadConsoleKey();
+                }
+                catch (Exception ex)
+                {
+                    Error($"WAITKEY: cannot read console input ({ex.Message})");
+                    return Value.Zero;
+                }
             }
 
             if (key != 0)
@@ -599,7 +616,9 @@ public partial class Interpreter
             Require(TokenType.TOK_RPAREN);
         }
 
-        var (left, top) = Console.GetCursorPosition();
+        int left = 0, top = 0;
+        try { (left, top) = Console.GetCursorPosition(); }
+        catch (Exception ex) { Error($"CURPOS: console output not available ({ex.Message})"); return Value.Zero; }
         int row = top + 1;   // 1-based, matches LOCATE
         int col = left + 1;
 

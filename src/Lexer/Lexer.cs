@@ -95,6 +95,9 @@ public class Lexer(string source)
         ["SENDRESPONSE"]    = TokenType.TOK_SENDRESPONSE,
         ["STOPLISTEN"]      = TokenType.TOK_STOPLISTEN,
         ["HTTPERROR"]       = TokenType.TOK_HTTPERROR,
+        ["ASXML"]           = TokenType.TOK_ASXML,
+        ["LOADXML"]         = TokenType.TOK_LOADXML,
+        ["SAVEXML"]         = TokenType.TOK_SAVEXML,
 
         // Sound
         ["LOADSOUND"]       = TokenType.TOK_LOADSOUND,
@@ -451,10 +454,10 @@ public class Lexer(string source)
         }
         
         string labelName = _source[start.._pos].Trim();
-        
+
         if (_pos < _source.Length)
             _pos++; // Skip ']'
-        
+
         return new Token(TokenType.TOK_LABEL, labelName.ToUpperInvariant(), _line);
     }
 

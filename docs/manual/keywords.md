@@ -9,7 +9,7 @@ Variables must end with `$`, constants with `#` — they cannot share names with
 | Keyword | Description |
 |---------|-------------|
 | `DEF` | Begin function definition (`DEF FN name$(...)`) |
-| `DIM` | Declare array |
+| `DIM` | Declare array (re-DIM of an existing global array keeps its contents) |
 | `ELSE` | Alternative branch in IF block |
 | `ELSEIF` | Chained condition in IF block |
 | `END` | Terminate program; also `END IF`, `END DEF` |
@@ -110,8 +110,9 @@ Variables must end with `$`, constants with `#` — they cannot share names with
 ## Network & Data
 | Keyword | Description |
 |---------|-------------|
-| `ASARRAY` | Parse JSON string into array |
+| `ASARRAY` | Parse JSON or XML string into array (format detected from the first character) |
 | `ASJSON` | Convert array to JSON string |
+| `ASXML` | Convert array to XML string |
 | `BASE64DECODE` | Decode Base64 string |
 | `BASE64ENCODE` | Encode string to Base64 |
 | `GETREQUEST` | Wait for an HTTP request (blocks); returns POST/PUT/PATCH body or GET query string without `?`; `""` on timeout |
@@ -119,7 +120,9 @@ Variables must end with `$`, constants with `#` — they cannot share names with
 | `HTTPGET` | HTTP GET request; returns `""` and sets `HTTPERROR` on failure |
 | `HTTPPOST` | HTTP POST request; returns `""` and sets `HTTPERROR` on failure |
 | `LOADJSON` | Load JSON file into array |
+| `LOADXML` | Load XML file into array |
 | `SAVEJSON` | Save array as JSON file |
+| `SAVEXML` | Save array as XML file |
 | `SENDRESPONSE` | Send text response to the pending request (200 OK, CORS enabled) |
 | `SHA256` | SHA256 hash (64-char hex) |
 | `STARTLISTEN` | Start HTTP server: `STARTLISTEN port [, timeout_ms [, host$]]` (default host 127.0.0.1, `"*"` = all interfaces) |
@@ -265,6 +268,7 @@ These are auto-initialized at startup — no `LET` required.
 | Constant | Value |
 |----------|-------|
 | `BBVER#` | BazzBasic version string (e.g. `"1.1d"`) |
+| `BBBUILD#` | Interpreter build time, `"dd-mm-yyyy hh:mm:ss"` |
 | `PRG_ROOT#` | Program base directory path (ends with a directory separator) |
 | `TRUE` | 1 |
 | `FALSE` | 0 |
@@ -273,6 +277,7 @@ These are auto-initialized at startup — no `LET` required.
 | `QPI#` | 0.7853981633974483 (π/4) |
 | `TAU#` | 6.283185307179586 (2π) |
 | `EULER#` | 2.718281828459045 (e) |
+| `AU#` | 149597870700 (astronomical unit in metres, exact — IAU 2012) |
 
 ### Keyboard constants
 `KEY_UP#` `KEY_DOWN#` `KEY_LEFT#` `KEY_RIGHT#`  

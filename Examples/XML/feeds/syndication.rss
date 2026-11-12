@@ -1,0 +1,1307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+	<channel>
+		<title><![CDATA[NaaLaa - All Forums]]></title>
+		<link>https://www.naalaa.com/forum/</link>
+		<description><![CDATA[NaaLaa - https://www.naalaa.com/forum]]></description>
+		<pubDate>Fri, 06 Nov 2026 06:47:31 +0000</pubDate>
+		<generator>MyBB</generator>
+		<item>
+			<title><![CDATA[Sierpinski carpet in micro(A) 14F]]></title>
+			<link>https://www.naalaa.com/forum/thread-435.html</link>
+			<pubDate>Tue, 03 Nov 2026 22:09:10 +0000</pubDate>
+			<dc:creator><![CDATA[<a href="https://www.naalaa.com/forum/member.php?action=profile&uid=32">aurel</a>]]></dc:creator>
+			<guid isPermaLink="false">https://www.naalaa.com/forum/thread-435.html</guid>
+			<description><![CDATA[with RECT x,y,w,h<br />
+<br />
+<div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>' Micro(A) - Sierpinski Tepih pomocu RECT naredbe<br />
+mode 1 : wcolor 0,0,0: swap<br />
+<br />
+fcolor 100, 150, 255 ' Plava boja za kvadrate<br />
+<br />
+' Pokrecemo crtanje (X, Y, velicina, dubina)<br />
+drawCarpet(150, 50, 500, 4)<br />
+<br />
+swap<br />
+<br />
+func drawCarpet(var x, var y, var size, var depth)<br />
+    ' LOKALNE VARIJABLE: Sve na samom vrhu zbog stoga!<br />
+    var subSize<br />
+    var x1, x2, x3<br />
+    var y1, y2, y3<br />
+<br />
+    if depth = 0<br />
+        ' BAZNI SLUCAJ: Samo jedna brza naredba umjesto 4 linije!<br />
+        rect x, y, size, size<br />
+     &nbsp;&nbsp;' return<br />
+    else<br />
+        ' Izracunaj velicinu manjih kvadrata<br />
+        subSize = size / 3<br />
+<br />
+        ' Definišemo tri X i Y pozicije u mreži<br />
+        x1 = x<br />
+        x2 = x + subSize<br />
+        x3 = x + subSize * 2<br />
+<br />
+        y1 = y<br />
+        y2 = y + subSize<br />
+        y3 = y + subSize * 2<br />
+<br />
+        ' REKURZIVNI POZIVI: 8 okolnih kvadrata<br />
+        ' Gornji red<br />
+        drawCarpet(x1, y1, subSize, depth - 1)<br />
+        drawCarpet(x2, y1, subSize, depth - 1)<br />
+        drawCarpet(x3, y1, subSize, depth - 1)<br />
+<br />
+        ' Srednji red (bez sredine!)<br />
+        drawCarpet(x1, y2, subSize, depth - 1)<br />
+        drawCarpet(x3, y2, subSize, depth - 1)<br />
+<br />
+        ' Donji red<br />
+        drawCarpet(x1, y3, subSize, depth - 1)<br />
+        drawCarpet(x2, y3, subSize, depth - 1)<br />
+        drawCarpet(x3, y3, subSize, depth - 1)<br />
+    endif<br />
+endfn</code></div></div><br /><!-- start: postbit_attachments_attachment -->
+<br /><!-- start: attachment_icon -->
+<img src="https://www.naalaa.com/forum/images/attachtypes/image.png" title="PNG Image" border="0" alt=".png" />
+<!-- end: attachment_icon -->&nbsp;&nbsp;<a href="attachment.php?aid=705" target="_blank" title="">CARPET_MICROA.png</a> (Size: 60.93 KB / Downloads: 3)
+<!-- end: postbit_attachments_attachment -->]]></description>
+			<content:encoded><![CDATA[with RECT x,y,w,h<br />
+<br />
+<div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>' Micro(A) - Sierpinski Tepih pomocu RECT naredbe<br />
+mode 1 : wcolor 0,0,0: swap<br />
+<br />
+fcolor 100, 150, 255 ' Plava boja za kvadrate<br />
+<br />
+' Pokrecemo crtanje (X, Y, velicina, dubina)<br />
+drawCarpet(150, 50, 500, 4)<br />
+<br />
+swap<br />
+<br />
+func drawCarpet(var x, var y, var size, var depth)<br />
+    ' LOKALNE VARIJABLE: Sve na samom vrhu zbog stoga!<br />
+    var subSize<br />
+    var x1, x2, x3<br />
+    var y1, y2, y3<br />
+<br />
+    if depth = 0<br />
+        ' BAZNI SLUCAJ: Samo jedna brza naredba umjesto 4 linije!<br />
+        rect x, y, size, size<br />
+     &nbsp;&nbsp;' return<br />
+    else<br />
+        ' Izracunaj velicinu manjih kvadrata<br />
+        subSize = size / 3<br />
+<br />
+        ' Definišemo tri X i Y pozicije u mreži<br />
+        x1 = x<br />
+        x2 = x + subSize<br />
+        x3 = x + subSize * 2<br />
+<br />
+        y1 = y<br />
+        y2 = y + subSize<br />
+        y3 = y + subSize * 2<br />
+<br />
+        ' REKURZIVNI POZIVI: 8 okolnih kvadrata<br />
+        ' Gornji red<br />
+        drawCarpet(x1, y1, subSize, depth - 1)<br />
+        drawCarpet(x2, y1, subSize, depth - 1)<br />
+        drawCarpet(x3, y1, subSize, depth - 1)<br />
+<br />
+        ' Srednji red (bez sredine!)<br />
+        drawCarpet(x1, y2, subSize, depth - 1)<br />
+        drawCarpet(x3, y2, subSize, depth - 1)<br />
+<br />
+        ' Donji red<br />
+        drawCarpet(x1, y3, subSize, depth - 1)<br />
+        drawCarpet(x2, y3, subSize, depth - 1)<br />
+        drawCarpet(x3, y3, subSize, depth - 1)<br />
+    endif<br />
+endfn</code></div></div><br /><!-- start: postbit_attachments_attachment -->
+<br /><!-- start: attachment_icon -->
+<img src="https://www.naalaa.com/forum/images/attachtypes/image.png" title="PNG Image" border="0" alt=".png" />
+<!-- end: attachment_icon -->&nbsp;&nbsp;<a href="attachment.php?aid=705" target="_blank" title="">CARPET_MICROA.png</a> (Size: 60.93 KB / Downloads: 3)
+<!-- end: postbit_attachments_attachment -->]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[Mini Debugger]]></title>
+			<link>https://www.naalaa.com/forum/thread-434.html</link>
+			<pubDate>Fri, 30 Oct 2026 12:10:14 +0000</pubDate>
+			<dc:creator><![CDATA[<a href="https://www.naalaa.com/forum/member.php?action=profile&uid=16">Nelson</a>]]></dc:creator>
+			<guid isPermaLink="false">https://www.naalaa.com/forum/thread-434.html</guid>
+			<description><![CDATA[Built a small but maybe useful debugger for NaaLaa 7 if anyone is interested. <br />
+<br />
+<div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>visible dbgEnabled = true<br />
+visible dbgOverlay = true<br />
+visible dbgPaused = false<br />
+visible dbgStepOnce = false<br />
+visible dbgProject = "App"<br />
+<br />
+visible dbgBreaks = []        ' table: tag -&gt; true<br />
+visible dbgWatches = []     &nbsp;&nbsp;' array of [name, valueText]<br />
+visible dbgLogs = []          ' ring buffer<br />
+visible dbgLogMax = 200<br />
+visible dbgLastBreak = ""<br />
+visible dbgFrame = 0<br />
+<br />
+function dbgInit(projectName)<br />
+    dbgProject = projectName<br />
+    dbgEnabled = true<br />
+    dbgOverlay = true<br />
+    dbgPaused = false<br />
+    dbgStepOnce = false<br />
+    dbgBreaks = []<br />
+    dbgWatches = []<br />
+    dbgLogs = []<br />
+    dbgLastBreak = ""<br />
+    dbgFrame = 0<br />
+    dbgLog("Debugger initialized: " + projectName)<br />
+endfunc<br />
+<br />
+function dbgAddBreak(tag)<br />
+    dbgBreaks[tag] = true<br />
+    dbgLog("Breakpoint added: " + tag)<br />
+endfunc<br />
+<br />
+function dbgRemoveBreak(tag)<br />
+    if key(dbgBreaks, tag) &lt;&gt; 0<br />
+        free key dbgBreaks, tag<br />
+        dbgLog("Breakpoint removed: " + tag)<br />
+    endif<br />
+endfunc<br />
+<br />
+function dbgBreak(tag)<br />
+    if not dbgEnabled then return<br />
+    if key(dbgBreaks, tag) &lt;&gt; 0<br />
+        dbgPaused = true<br />
+        dbgLastBreak = tag<br />
+        dbgLog("BREAK: " + tag)<br />
+    endif<br />
+endfunc<br />
+<br />
+function dbgPause()<br />
+    if not dbgEnabled then return<br />
+    dbgPaused = true<br />
+    dbgLog("Paused")<br />
+endfunc<br />
+<br />
+function dbgContinue()<br />
+    if not dbgEnabled then return<br />
+    dbgPaused = false<br />
+    dbgStepOnce = false<br />
+    dbgLog("Continue")<br />
+endfunc<br />
+<br />
+function dbgStep()<br />
+    if not dbgEnabled then return<br />
+    dbgStepOnce = true<br />
+    dbgPaused = false<br />
+    dbgLog("Step")<br />
+endfunc<br />
+<br />
+function dbgLog(msg)<br />
+    if not dbgEnabled then return<br />
+<br />
+    lin = "[" + clock() + "] " + msg<br />
+    dbgLogs[sizeof(dbgLogs)] = lin<br />
+<br />
+    while sizeof(dbgLogs) &gt; dbgLogMax<br />
+        free key dbgLogs, 0<br />
+    wend<br />
+<br />
+    pln "[dbg] " + lin<br />
+endfunc<br />
+<br />
+function dbgWatch(name, valueText)<br />
+    if not dbgEnabled then return<br />
+<br />
+    i = 0<br />
+    while i &lt; sizeof(dbgWatches)<br />
+        if dbgWatches[i][0] = name<br />
+            dbgWatches[i][1] = valueText<br />
+            return<br />
+        endif<br />
+        i = i + 1<br />
+    wend<br />
+<br />
+    dbgWatches[sizeof(dbgWatches)] = [name, valueText]<br />
+endfunc<br />
+<br />
+function dbgHandleInput()<br />
+    if not dbgEnabled then return<br />
+<br />
+    if keydown(KEY_F1, true)<br />
+        dbgOverlay = not dbgOverlay<br />
+    endif<br />
+<br />
+    if keydown(KEY_F2, true)<br />
+        if dbgPaused<br />
+            dbgContinue()<br />
+        else<br />
+            dbgPause()<br />
+        endif<br />
+    endif<br />
+<br />
+    if keydown(KEY_F3, true)<br />
+        dbgStep()<br />
+    endif<br />
+endfunc<br />
+<br />
+function dbgCanRunFrame()<br />
+    if not dbgEnabled then return true<br />
+<br />
+    if dbgPaused<br />
+        return false<br />
+    endif<br />
+<br />
+    if dbgStepOnce<br />
+        dbgStepOnce = false<br />
+        dbgPaused = true<br />
+    endif<br />
+<br />
+    dbgFrame = dbgFrame + 1<br />
+    return true<br />
+endfunc<br />
+<br />
+function dbgDrawOverlay()<br />
+    if not dbgEnabled or not dbgOverlay then return<br />
+<br />
+    panelX = 8<br />
+    panelY = 8<br />
+    panelW = 560<br />
+    panelH = 220<br />
+<br />
+    set color 20, 24, 30, 220<br />
+    draw rect panelX, panelY, panelW, panelH, true<br />
+    set color 120, 160, 220<br />
+    draw rect panelX, panelY, panelW, 1, true<br />
+    draw rect panelX, panelY + panelH - 1, panelW, 1, true<br />
+<br />
+    set color 230, 230, 230<br />
+    set caret panelX + 8, panelY + 8<br />
+    write "MiniDbg | " + dbgProject + " | frame=" + dbgFrame<br />
+<br />
+    set color 255, 210, 120<br />
+    set caret panelX + 8, panelY + 26<br />
+    if dbgPaused<br />
+        write "State: PAUSED  (F2 continue, F3 step, F1 hide)"<br />
+    else<br />
+        write "State: RUNNING (F2 pause, F1 hide)"<br />
+    endif<br />
+<br />
+    set color 190, 210, 255<br />
+    set caret panelX + 8, panelY + 44<br />
+    write "Last break: " + dbgLastBreak<br />
+<br />
+    set color 200, 255, 200<br />
+    set caret panelX + 8, panelY + 64<br />
+    write "Watches:"<br />
+    wy = panelY + 82<br />
+    i = 0<br />
+    while i &lt; sizeof(dbgWatches) and i &lt; 6<br />
+        set caret panelX + 14, wy<br />
+        write dbgWatches[i][0] + " = " + dbgWatches[i][1]<br />
+        wy = wy + 16<br />
+        i = i + 1<br />
+    wend<br />
+<br />
+    set color 255, 190, 190<br />
+    set caret panelX + 300, panelY + 64<br />
+    write "Logs:"<br />
+    ly = panelY + 82<br />
+    start = sizeof(dbgLogs) - 6<br />
+    if start &lt; 0 then start = 0<br />
+<br />
+    i = start<br />
+    while i &lt; sizeof(dbgLogs)<br />
+        set caret panelX + 306, ly<br />
+        write dbgLogs[i]<br />
+        ly = ly + 16<br />
+        i = i + 1<br />
+    wend<br />
+endfunc</code></div></div>Sample:<br />
+<div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>' debugger_demo.n7<br />
+' ----------------<br />
+' Sample program for the MiniDbg overlay library (debugger.n7).<br />
+'<br />
+' A ball bounces around the window. The debugger overlay shows live<br />
+' watches (position, velocity, bounce count) and a log of events.<br />
+'<br />
+' Controls:<br />
+' &nbsp;&nbsp;F1  toggle the debug overlay<br />
+' &nbsp;&nbsp;F2  pause / continue<br />
+' &nbsp;&nbsp;F3  step one frame while paused<br />
+' &nbsp;&nbsp;F4  toggle the "bounce" breakpoint (on by default)<br />
+' &nbsp;&nbsp;F5  write a manual log entry<br />
+'<br />
+' With the "bounce" breakpoint enabled, the program pauses itself every<br />
+' time the ball hits a wall. Press F2 to continue or F3 to step.<br />
+<br />
+include "debugger.n7"<br />
+<br />
+constant WIN_W = 640<br />
+constant WIN_H = 360<br />
+<br />
+set window "MiniDbg demo", WIN_W, WIN_H<br />
+set redraw off<br />
+<br />
+dbgInit("MiniDbg demo")<br />
+dbgAddBreak("bounce")<br />
+<br />
+ballX = WIN_W/2<br />
+ballY = WIN_H/2<br />
+velX = 3<br />
+velY = 2<br />
+radius = 10<br />
+bounces = 0<br />
+bounceBreakOn = true<br />
+<br />
+do<br />
+    ' Let the debugger react to F1/F2/F3.<br />
+    dbgHandleInput()<br />
+<br />
+    ' F4 toggles the "bounce" breakpoint.<br />
+    if keydown(KEY_F4, true)<br />
+        bounceBreakOn = not bounceBreakOn<br />
+        if bounceBreakOn<br />
+            dbgAddBreak("bounce")<br />
+        else<br />
+            dbgRemoveBreak("bounce")<br />
+        endif<br />
+    endif<br />
+<br />
+    ' F5 writes a manual log entry.<br />
+    if keydown(KEY_F5, true)<br />
+        dbgLog("Manual log entry, bounces=" + bounces)<br />
+    endif<br />
+<br />
+    ' Only update the game when the debugger allows it (running or<br />
+    ' single-stepping). Rendering keeps going so the overlay stays live.<br />
+    if dbgCanRunFrame()<br />
+        ballX = ballX + velX<br />
+        ballY = ballY + velY<br />
+<br />
+        hitWall = false<br />
+        if ballX &lt; radius<br />
+            ballX = radius<br />
+            velX = -velX<br />
+            hitWall = true<br />
+        endif<br />
+        if ballX &gt; WIN_W - radius<br />
+            ballX = WIN_W - radius<br />
+            velX = -velX<br />
+            hitWall = true<br />
+        endif<br />
+        if ballY &lt; radius<br />
+            ballY = radius<br />
+            velY = -velY<br />
+            hitWall = true<br />
+        endif<br />
+        if ballY &gt; WIN_H - radius<br />
+            ballY = WIN_H - radius<br />
+            velY = -velY<br />
+            hitWall = true<br />
+        endif<br />
+<br />
+        if hitWall<br />
+            bounces = bounces + 1<br />
+            ' Pauses the program if the "bounce" breakpoint is set.<br />
+            dbgBreak("bounce")<br />
+        endif<br />
+<br />
+        ' Keep the watch panel up to date.<br />
+        dbgWatch("ballX", str(ballX))<br />
+        dbgWatch("ballY", str(ballY))<br />
+        dbgWatch("velX", str(velX))<br />
+        dbgWatch("velY", str(velY))<br />
+        dbgWatch("bounces", str(bounces))<br />
+    endif<br />
+<br />
+    ' --- render ---<br />
+    set color 0, 32, 48<br />
+    cls<br />
+<br />
+    set color 255, 160, 0<br />
+    draw ellipse ballX, ballY, radius, radius, true<br />
+<br />
+    set color 255, 255, 255<br />
+    set caret WIN_W/2, WIN_H - 40<br />
+    center "F1 overlay  F2 pause/continue  F3 step"<br />
+    center "F4 toggle bounce breakpoint  F5 log entry"<br />
+<br />
+    ' Draw the debugger overlay on top of everything.<br />
+    dbgDrawOverlay()<br />
+<br />
+    redraw<br />
+    fwait 60<br />
+until keydown(KEY_ESCAPE, true)</code></div></div>]]></description>
+			<content:encoded><![CDATA[Built a small but maybe useful debugger for NaaLaa 7 if anyone is interested. <br />
+<br />
+<div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>visible dbgEnabled = true<br />
+visible dbgOverlay = true<br />
+visible dbgPaused = false<br />
+visible dbgStepOnce = false<br />
+visible dbgProject = "App"<br />
+<br />
+visible dbgBreaks = []        ' table: tag -&gt; true<br />
+visible dbgWatches = []     &nbsp;&nbsp;' array of [name, valueText]<br />
+visible dbgLogs = []          ' ring buffer<br />
+visible dbgLogMax = 200<br />
+visible dbgLastBreak = ""<br />
+visible dbgFrame = 0<br />
+<br />
+function dbgInit(projectName)<br />
+    dbgProject = projectName<br />
+    dbgEnabled = true<br />
+    dbgOverlay = true<br />
+    dbgPaused = false<br />
+    dbgStepOnce = false<br />
+    dbgBreaks = []<br />
+    dbgWatches = []<br />
+    dbgLogs = []<br />
+    dbgLastBreak = ""<br />
+    dbgFrame = 0<br />
+    dbgLog("Debugger initialized: " + projectName)<br />
+endfunc<br />
+<br />
+function dbgAddBreak(tag)<br />
+    dbgBreaks[tag] = true<br />
+    dbgLog("Breakpoint added: " + tag)<br />
+endfunc<br />
+<br />
+function dbgRemoveBreak(tag)<br />
+    if key(dbgBreaks, tag) &lt;&gt; 0<br />
+        free key dbgBreaks, tag<br />
+        dbgLog("Breakpoint removed: " + tag)<br />
+    endif<br />
+endfunc<br />
+<br />
+function dbgBreak(tag)<br />
+    if not dbgEnabled then return<br />
+    if key(dbgBreaks, tag) &lt;&gt; 0<br />
+        dbgPaused = true<br />
+        dbgLastBreak = tag<br />
+        dbgLog("BREAK: " + tag)<br />
+    endif<br />
+endfunc<br />
+<br />
+function dbgPause()<br />
+    if not dbgEnabled then return<br />
+    dbgPaused = true<br />
+    dbgLog("Paused")<br />
+endfunc<br />
+<br />
+function dbgContinue()<br />
+    if not dbgEnabled then return<br />
+    dbgPaused = false<br />
+    dbgStepOnce = false<br />
+    dbgLog("Continue")<br />
+endfunc<br />
+<br />
+function dbgStep()<br />
+    if not dbgEnabled then return<br />
+    dbgStepOnce = true<br />
+    dbgPaused = false<br />
+    dbgLog("Step")<br />
+endfunc<br />
+<br />
+function dbgLog(msg)<br />
+    if not dbgEnabled then return<br />
+<br />
+    lin = "[" + clock() + "] " + msg<br />
+    dbgLogs[sizeof(dbgLogs)] = lin<br />
+<br />
+    while sizeof(dbgLogs) &gt; dbgLogMax<br />
+        free key dbgLogs, 0<br />
+    wend<br />
+<br />
+    pln "[dbg] " + lin<br />
+endfunc<br />
+<br />
+function dbgWatch(name, valueText)<br />
+    if not dbgEnabled then return<br />
+<br />
+    i = 0<br />
+    while i &lt; sizeof(dbgWatches)<br />
+        if dbgWatches[i][0] = name<br />
+            dbgWatches[i][1] = valueText<br />
+            return<br />
+        endif<br />
+        i = i + 1<br />
+    wend<br />
+<br />
+    dbgWatches[sizeof(dbgWatches)] = [name, valueText]<br />
+endfunc<br />
+<br />
+function dbgHandleInput()<br />
+    if not dbgEnabled then return<br />
+<br />
+    if keydown(KEY_F1, true)<br />
+        dbgOverlay = not dbgOverlay<br />
+    endif<br />
+<br />
+    if keydown(KEY_F2, true)<br />
+        if dbgPaused<br />
+            dbgContinue()<br />
+        else<br />
+            dbgPause()<br />
+        endif<br />
+    endif<br />
+<br />
+    if keydown(KEY_F3, true)<br />
+        dbgStep()<br />
+    endif<br />
+endfunc<br />
+<br />
+function dbgCanRunFrame()<br />
+    if not dbgEnabled then return true<br />
+<br />
+    if dbgPaused<br />
+        return false<br />
+    endif<br />
+<br />
+    if dbgStepOnce<br />
+        dbgStepOnce = false<br />
+        dbgPaused = true<br />
+    endif<br />
+<br />
+    dbgFrame = dbgFrame + 1<br />
+    return true<br />
+endfunc<br />
+<br />
+function dbgDrawOverlay()<br />
+    if not dbgEnabled or not dbgOverlay then return<br />
+<br />
+    panelX = 8<br />
+    panelY = 8<br />
+    panelW = 560<br />
+    panelH = 220<br />
+<br />
+    set color 20, 24, 30, 220<br />
+    draw rect panelX, panelY, panelW, panelH, true<br />
+    set color 120, 160, 220<br />
+    draw rect panelX, panelY, panelW, 1, true<br />
+    draw rect panelX, panelY + panelH - 1, panelW, 1, true<br />
+<br />
+    set color 230, 230, 230<br />
+    set caret panelX + 8, panelY + 8<br />
+    write "MiniDbg | " + dbgProject + " | frame=" + dbgFrame<br />
+<br />
+    set color 255, 210, 120<br />
+    set caret panelX + 8, panelY + 26<br />
+    if dbgPaused<br />
+        write "State: PAUSED  (F2 continue, F3 step, F1 hide)"<br />
+    else<br />
+        write "State: RUNNING (F2 pause, F1 hide)"<br />
+    endif<br />
+<br />
+    set color 190, 210, 255<br />
+    set caret panelX + 8, panelY + 44<br />
+    write "Last break: " + dbgLastBreak<br />
+<br />
+    set color 200, 255, 200<br />
+    set caret panelX + 8, panelY + 64<br />
+    write "Watches:"<br />
+    wy = panelY + 82<br />
+    i = 0<br />
+    while i &lt; sizeof(dbgWatches) and i &lt; 6<br />
+        set caret panelX + 14, wy<br />
+        write dbgWatches[i][0] + " = " + dbgWatches[i][1]<br />
+        wy = wy + 16<br />
+        i = i + 1<br />
+    wend<br />
+<br />
+    set color 255, 190, 190<br />
+    set caret panelX + 300, panelY + 64<br />
+    write "Logs:"<br />
+    ly = panelY + 82<br />
+    start = sizeof(dbgLogs) - 6<br />
+    if start &lt; 0 then start = 0<br />
+<br />
+    i = start<br />
+    while i &lt; sizeof(dbgLogs)<br />
+        set caret panelX + 306, ly<br />
+        write dbgLogs[i]<br />
+        ly = ly + 16<br />
+        i = i + 1<br />
+    wend<br />
+endfunc</code></div></div>Sample:<br />
+<div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>' debugger_demo.n7<br />
+' ----------------<br />
+' Sample program for the MiniDbg overlay library (debugger.n7).<br />
+'<br />
+' A ball bounces around the window. The debugger overlay shows live<br />
+' watches (position, velocity, bounce count) and a log of events.<br />
+'<br />
+' Controls:<br />
+' &nbsp;&nbsp;F1  toggle the debug overlay<br />
+' &nbsp;&nbsp;F2  pause / continue<br />
+' &nbsp;&nbsp;F3  step one frame while paused<br />
+' &nbsp;&nbsp;F4  toggle the "bounce" breakpoint (on by default)<br />
+' &nbsp;&nbsp;F5  write a manual log entry<br />
+'<br />
+' With the "bounce" breakpoint enabled, the program pauses itself every<br />
+' time the ball hits a wall. Press F2 to continue or F3 to step.<br />
+<br />
+include "debugger.n7"<br />
+<br />
+constant WIN_W = 640<br />
+constant WIN_H = 360<br />
+<br />
+set window "MiniDbg demo", WIN_W, WIN_H<br />
+set redraw off<br />
+<br />
+dbgInit("MiniDbg demo")<br />
+dbgAddBreak("bounce")<br />
+<br />
+ballX = WIN_W/2<br />
+ballY = WIN_H/2<br />
+velX = 3<br />
+velY = 2<br />
+radius = 10<br />
+bounces = 0<br />
+bounceBreakOn = true<br />
+<br />
+do<br />
+    ' Let the debugger react to F1/F2/F3.<br />
+    dbgHandleInput()<br />
+<br />
+    ' F4 toggles the "bounce" breakpoint.<br />
+    if keydown(KEY_F4, true)<br />
+        bounceBreakOn = not bounceBreakOn<br />
+        if bounceBreakOn<br />
+            dbgAddBreak("bounce")<br />
+        else<br />
+            dbgRemoveBreak("bounce")<br />
+        endif<br />
+    endif<br />
+<br />
+    ' F5 writes a manual log entry.<br />
+    if keydown(KEY_F5, true)<br />
+        dbgLog("Manual log entry, bounces=" + bounces)<br />
+    endif<br />
+<br />
+    ' Only update the game when the debugger allows it (running or<br />
+    ' single-stepping). Rendering keeps going so the overlay stays live.<br />
+    if dbgCanRunFrame()<br />
+        ballX = ballX + velX<br />
+        ballY = ballY + velY<br />
+<br />
+        hitWall = false<br />
+        if ballX &lt; radius<br />
+            ballX = radius<br />
+            velX = -velX<br />
+            hitWall = true<br />
+        endif<br />
+        if ballX &gt; WIN_W - radius<br />
+            ballX = WIN_W - radius<br />
+            velX = -velX<br />
+            hitWall = true<br />
+        endif<br />
+        if ballY &lt; radius<br />
+            ballY = radius<br />
+            velY = -velY<br />
+            hitWall = true<br />
+        endif<br />
+        if ballY &gt; WIN_H - radius<br />
+            ballY = WIN_H - radius<br />
+            velY = -velY<br />
+            hitWall = true<br />
+        endif<br />
+<br />
+        if hitWall<br />
+            bounces = bounces + 1<br />
+            ' Pauses the program if the "bounce" breakpoint is set.<br />
+            dbgBreak("bounce")<br />
+        endif<br />
+<br />
+        ' Keep the watch panel up to date.<br />
+        dbgWatch("ballX", str(ballX))<br />
+        dbgWatch("ballY", str(ballY))<br />
+        dbgWatch("velX", str(velX))<br />
+        dbgWatch("velY", str(velY))<br />
+        dbgWatch("bounces", str(bounces))<br />
+    endif<br />
+<br />
+    ' --- render ---<br />
+    set color 0, 32, 48<br />
+    cls<br />
+<br />
+    set color 255, 160, 0<br />
+    draw ellipse ballX, ballY, radius, radius, true<br />
+<br />
+    set color 255, 255, 255<br />
+    set caret WIN_W/2, WIN_H - 40<br />
+    center "F1 overlay  F2 pause/continue  F3 step"<br />
+    center "F4 toggle bounce breakpoint  F5 log entry"<br />
+<br />
+    ' Draw the debugger overlay on top of everything.<br />
+    dbgDrawOverlay()<br />
+<br />
+    redraw<br />
+    fwait 60<br />
+until keydown(KEY_ESCAPE, true)</code></div></div>]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[Alien Breed 3D HD]]></title>
+			<link>https://www.naalaa.com/forum/thread-433.html</link>
+			<pubDate>Thu, 29 Oct 2026 17:32:35 +0000</pubDate>
+			<dc:creator><![CDATA[<a href="https://www.naalaa.com/forum/member.php?action=profile&uid=1">Marcus</a>]]></dc:creator>
+			<guid isPermaLink="false">https://www.naalaa.com/forum/thread-433.html</guid>
+			<description><![CDATA[A long, long time ago, everyone fought to make a DOOM clone for the Amiga. When it came to gameplay I think that Alien Breed 3D was the best attempt, but it looked horrible with a stamp sized low resolution display. This port was recently released, and you can play it in your browser, awesome, I just played to level 4:<br />
+<br />
+<a href="https://retro-foundry.github.io/abhd/" target="_blank" rel="noopener" class="mycode_url">https://retro-foundry.github.io/abhd/</a>]]></description>
+			<content:encoded><![CDATA[A long, long time ago, everyone fought to make a DOOM clone for the Amiga. When it came to gameplay I think that Alien Breed 3D was the best attempt, but it looked horrible with a stamp sized low resolution display. This port was recently released, and you can play it in your browser, awesome, I just played to level 4:<br />
+<br />
+<a href="https://retro-foundry.github.io/abhd/" target="_blank" rel="noopener" class="mycode_url">https://retro-foundry.github.io/abhd/</a>]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[Which free online AI is best for programming]]></title>
+			<link>https://www.naalaa.com/forum/thread-432.html</link>
+			<pubDate>Wed, 28 Oct 2026 13:39:31 +0000</pubDate>
+			<dc:creator><![CDATA[<a href="https://www.naalaa.com/forum/member.php?action=profile&uid=32">aurel</a>]]></dc:creator>
+			<guid isPermaLink="false">https://www.naalaa.com/forum/thread-432.html</guid>
+			<description><![CDATA[do you try any  and how <br />
+in short ....]]></description>
+			<content:encoded><![CDATA[do you try any  and how <br />
+in short ....]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[Jam for All BASIC Dialects (#8) in December]]></title>
+			<link>https://www.naalaa.com/forum/thread-431.html</link>
+			<pubDate>Mon, 26 Oct 2026 07:59:24 +0000</pubDate>
+			<dc:creator><![CDATA[<a href="https://www.naalaa.com/forum/member.php?action=profile&uid=8">luwal</a>]]></dc:creator>
+			<guid isPermaLink="false">https://www.naalaa.com/forum/thread-431.html</guid>
+			<description><![CDATA[<a href="https://itch.io/jam/jam-for-all-basic-dialects-8" target="_blank" rel="noopener" class="mycode_url">https://itch.io/jam/jam-for-all-basic-dialects-8</a><br />
+<br />
+Wow. Looks nice!  <img src="https://www.naalaa.com/forum/images/smilies/rolleyes.png" alt="Rolleyes" title="Rolleyes" class="smilie smilie_6" />]]></description>
+			<content:encoded><![CDATA[<a href="https://itch.io/jam/jam-for-all-basic-dialects-8" target="_blank" rel="noopener" class="mycode_url">https://itch.io/jam/jam-for-all-basic-dialects-8</a><br />
+<br />
+Wow. Looks nice!  <img src="https://www.naalaa.com/forum/images/smilies/rolleyes.png" alt="Rolleyes" title="Rolleyes" class="smilie smilie_6" />]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[Bubble Terminator]]></title>
+			<link>https://www.naalaa.com/forum/thread-430.html</link>
+			<pubDate>Sat, 24 Oct 2026 08:49:23 +0000</pubDate>
+			<dc:creator><![CDATA[<a href="https://www.naalaa.com/forum/member.php?action=profile&uid=162">danner</a>]]></dc:creator>
+			<guid isPermaLink="false">https://www.naalaa.com/forum/thread-430.html</guid>
+			<description><![CDATA[Here is a little game I have been working on in n7<img src="https://www.naalaa.com/forum/images/smilies/smile.png" alt="Smile" title="Smile" class="smilie smilie_1" /> I have only written the basics and the game is far, far from finished. I added the bubble sprites right before uploading and they are generated using ai.<br /><!-- start: postbit_attachments_attachment -->
+<br /><!-- start: attachment_icon -->
+<img src="https://www.naalaa.com/forum/images/attachtypes/zip.png" title="ZIP File" border="0" alt=".zip" />
+<!-- end: attachment_icon -->&nbsp;&nbsp;<a href="attachment.php?aid=698" target="_blank" title="">bubble_terminator.zip</a> (Size: 25.94 KB / Downloads: 6)
+<!-- end: postbit_attachments_attachment -->]]></description>
+			<content:encoded><![CDATA[Here is a little game I have been working on in n7<img src="https://www.naalaa.com/forum/images/smilies/smile.png" alt="Smile" title="Smile" class="smilie smilie_1" /> I have only written the basics and the game is far, far from finished. I added the bubble sprites right before uploading and they are generated using ai.<br /><!-- start: postbit_attachments_attachment -->
+<br /><!-- start: attachment_icon -->
+<img src="https://www.naalaa.com/forum/images/attachtypes/zip.png" title="ZIP File" border="0" alt=".zip" />
+<!-- end: attachment_icon -->&nbsp;&nbsp;<a href="attachment.php?aid=698" target="_blank" title="">bubble_terminator.zip</a> (Size: 25.94 KB / Downloads: 6)
+<!-- end: postbit_attachments_attachment -->]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[Are you using AI?]]></title>
+			<link>https://www.naalaa.com/forum/thread-429.html</link>
+			<pubDate>Fri, 23 Oct 2026 18:21:03 +0000</pubDate>
+			<dc:creator><![CDATA[<a href="https://www.naalaa.com/forum/member.php?action=profile&uid=3">aliensoldier</a>]]></dc:creator>
+			<guid isPermaLink="false">https://www.naalaa.com/forum/thread-429.html</guid>
+			<description><![CDATA[I’d like to hear your thoughts on whether you’re using AI and what you think of it.<br />
+<br />
+I’ve used it myself, and it makes a lot of mistakes—it mixes up programming languages, and you have to keep a very close eye on it to get anything close to what you actually want. If you’ve been using it for an hour or so, it starts to get confused, and long responses often get cut off halfway through.<br />
+<br />
+In my view, it’s still far too immature for any serious use. Yet, lately, I’ve noticed a lot of games being released for retro systems that rely on AI—in the development of emulators and game engines, and even for translations—and the results are consistently quite mediocre.]]></description>
+			<content:encoded><![CDATA[I’d like to hear your thoughts on whether you’re using AI and what you think of it.<br />
+<br />
+I’ve used it myself, and it makes a lot of mistakes—it mixes up programming languages, and you have to keep a very close eye on it to get anything close to what you actually want. If you’ve been using it for an hour or so, it starts to get confused, and long responses often get cut off halfway through.<br />
+<br />
+In my view, it’s still far too immature for any serious use. Yet, lately, I’ve noticed a lot of games being released for retro systems that rely on AI—in the development of emulators and game engines, and even for translations—and the results are consistently quite mediocre.]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[set image colorkey]]></title>
+			<link>https://www.naalaa.com/forum/thread-428.html</link>
+			<pubDate>Fri, 23 Oct 2026 08:56:25 +0000</pubDate>
+			<dc:creator><![CDATA[<a href="https://www.naalaa.com/forum/member.php?action=profile&uid=10">1micha.elok</a>]]></dc:creator>
+			<guid isPermaLink="false">https://www.naalaa.com/forum/thread-428.html</guid>
+			<description><![CDATA[<span style="font-weight: bold;" class="mycode_b">Hi, Marcus</span><br />
+<br />
+<!-- start: postbit_attachments_attachment -->
+<br /><!-- start: attachment_icon -->
+<img src="https://www.naalaa.com/forum/images/attachtypes/image.png" title="JPG Image" border="0" alt=".jpg" />
+<!-- end: attachment_icon -->&nbsp;&nbsp;<a href="attachment.php?aid=693" target="_blank" title="">bug.jpg</a> (Size: 27.35 KB / Downloads: 0)
+<!-- end: postbit_attachments_attachment --><br />
+<br />
+I'm currently trying to remove a green background from an image using <span style="font-style: italic;" class="mycode_i">set image colorkey</span>, but I haven't been able to get it to work properly. Could you please advise me on how to fix or resolve this ?<br />
+<br />
+Threre's no rush at all - please feel free to respond whenever you have a moment. Thank you.<br />
+<br />
+<div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>set window "Halloween", 384, 224, false, 2<br />
+set redraw off<br />
+<br />
+img = loadimage("pumpkin.png")<br />
+set image colorkey img, 0, 255, 0<br />
+<br />
+'frame coordinates [x, y, w, h]<br />
+idle = [<br />
+    [0, 0, 128, 128],<br />
+    [128, 0, 128, 128],<br />
+    [256, 0, 128, 128],<br />
+    [384, 0, 128, 128]<br />
+]<br />
+<br />
+laughing = [<br />
+    [512, 0, 128, 128],<br />
+    [640, 0, 128, 128],<br />
+    [768, 0, 128, 128],<br />
+    [896, 0, 128, 128]<br />
+]<br />
+<br />
+scaring = [<br />
+    [0, 128, 128, 128],<br />
+    [128, 128, 128, 128],<br />
+    [256, 128, 128, 128],<br />
+    [384, 128, 128, 128],<br />
+    [0, 256, 128, 128],<br />
+    [128, 256, 128, 128],<br />
+    [256, 256, 128, 128],<br />
+    [384, 256, 128, 128]<br />
+]<br />
+<br />
+explode = [<br />
+    [0, 384, 128, 128],<br />
+    [128, 384, 128, 128],<br />
+    [256, 384, 128, 128],<br />
+    [384, 384, 128, 128],<br />
+    [512, 384, 128, 128],<br />
+    [640, 384, 128, 128],<br />
+    [768, 384, 128, 128],<br />
+    [896, 384, 128, 128]<br />
+]<br />
+<br />
+pumpkin = []<br />
+pumpkin.x = width() / 2 - 64 <br />
+pumpkin.y = height() / 2 - 64<br />
+pumpkin.state = "idle"<br />
+pumpkin.frame = 0<br />
+pumpkin.timer = 0<br />
+<br />
+<br />
+' ------------<br />
+' MAIN LOOP<br />
+' ------------<br />
+while not keydown(KEY_ESCAPE, true)<br />
+    ' Clear Screen<br />
+    set color 0, 0, 0<br />
+    cls<br />
+    set color 255, 255, 255<br />
+<br />
+    'state cycling<br />
+    if keydown(KEY_SPACE, true) then<br />
+        select pumpkin.state<br />
+            case "idle"<br />
+                pumpkin.state = "laughing"<br />
+            case "laughing"<br />
+                pumpkin.state = "scaring"<br />
+            case "scaring"<br />
+                pumpkin.state = "explode"<br />
+            case "explode"<br />
+                pumpkin.state = "idle"<br />
+        endsel<br />
+        <br />
+        ' Reset<br />
+        pumpkin.frame = 0<br />
+        pumpkin.timer = 0<br />
+    endif<br />
+<br />
+    'animation timer 10 FPS<br />
+    pumpkin.timer = pumpkin.timer + 1<br />
+    if pumpkin.timer &gt;= 6 then<br />
+        pumpkin.timer = 0<br />
+        pumpkin.frame = pumpkin.frame + 1<br />
+    endif<br />
+<br />
+    'animation selection<br />
+    select pumpkin.state<br />
+        case "idle" <br />
+            f = idle[pumpkin.frame % 4]<br />
+        case "laughing"<br />
+            f = laughing[pumpkin.frame % 4]<br />
+        case "scaring"<br />
+            f = scaring[pumpkin.frame % 8]<br />
+        case "explode"<br />
+            f = explode[pumpkin.frame % 8]<br />
+    endsel<br />
+    <br />
+    'This frame [0, 0, 128, 128] is an array with four elements f[0],f[1],f[2],f[3]<br />
+    draw image img, pumpkin.x, pumpkin.y, f[0], f[1], f[2], f[3]<br />
+    <br />
+    'infobox<br />
+    set color 255, 255, 255<br />
+    set caret width()/2, height()-30<br />
+    center "PRESS SPACE BAR TO CYCLE STATES"<br />
+    set caret width()/2, 30<br />
+    center upper(pumpkin.state)<br />
+    <br />
+    redraw<br />
+    fwait 60<br />
+wend</code></div></div><br /><!-- start: postbit_attachments_attachment -->
+<br /><!-- start: attachment_icon -->
+<img src="https://www.naalaa.com/forum/images/attachtypes/zip.png" title="ZIP File" border="0" alt=".zip" />
+<!-- end: attachment_icon -->&nbsp;&nbsp;<a href="attachment.php?aid=694" target="_blank" title="">Pumpkin.zip</a> (Size: 492.54 KB / Downloads: 3)
+<!-- end: postbit_attachments_attachment -->]]></description>
+			<content:encoded><![CDATA[<span style="font-weight: bold;" class="mycode_b">Hi, Marcus</span><br />
+<br />
+<!-- start: postbit_attachments_attachment -->
+<br /><!-- start: attachment_icon -->
+<img src="https://www.naalaa.com/forum/images/attachtypes/image.png" title="JPG Image" border="0" alt=".jpg" />
+<!-- end: attachment_icon -->&nbsp;&nbsp;<a href="attachment.php?aid=693" target="_blank" title="">bug.jpg</a> (Size: 27.35 KB / Downloads: 0)
+<!-- end: postbit_attachments_attachment --><br />
+<br />
+I'm currently trying to remove a green background from an image using <span style="font-style: italic;" class="mycode_i">set image colorkey</span>, but I haven't been able to get it to work properly. Could you please advise me on how to fix or resolve this ?<br />
+<br />
+Threre's no rush at all - please feel free to respond whenever you have a moment. Thank you.<br />
+<br />
+<div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>set window "Halloween", 384, 224, false, 2<br />
+set redraw off<br />
+<br />
+img = loadimage("pumpkin.png")<br />
+set image colorkey img, 0, 255, 0<br />
+<br />
+'frame coordinates [x, y, w, h]<br />
+idle = [<br />
+    [0, 0, 128, 128],<br />
+    [128, 0, 128, 128],<br />
+    [256, 0, 128, 128],<br />
+    [384, 0, 128, 128]<br />
+]<br />
+<br />
+laughing = [<br />
+    [512, 0, 128, 128],<br />
+    [640, 0, 128, 128],<br />
+    [768, 0, 128, 128],<br />
+    [896, 0, 128, 128]<br />
+]<br />
+<br />
+scaring = [<br />
+    [0, 128, 128, 128],<br />
+    [128, 128, 128, 128],<br />
+    [256, 128, 128, 128],<br />
+    [384, 128, 128, 128],<br />
+    [0, 256, 128, 128],<br />
+    [128, 256, 128, 128],<br />
+    [256, 256, 128, 128],<br />
+    [384, 256, 128, 128]<br />
+]<br />
+<br />
+explode = [<br />
+    [0, 384, 128, 128],<br />
+    [128, 384, 128, 128],<br />
+    [256, 384, 128, 128],<br />
+    [384, 384, 128, 128],<br />
+    [512, 384, 128, 128],<br />
+    [640, 384, 128, 128],<br />
+    [768, 384, 128, 128],<br />
+    [896, 384, 128, 128]<br />
+]<br />
+<br />
+pumpkin = []<br />
+pumpkin.x = width() / 2 - 64 <br />
+pumpkin.y = height() / 2 - 64<br />
+pumpkin.state = "idle"<br />
+pumpkin.frame = 0<br />
+pumpkin.timer = 0<br />
+<br />
+<br />
+' ------------<br />
+' MAIN LOOP<br />
+' ------------<br />
+while not keydown(KEY_ESCAPE, true)<br />
+    ' Clear Screen<br />
+    set color 0, 0, 0<br />
+    cls<br />
+    set color 255, 255, 255<br />
+<br />
+    'state cycling<br />
+    if keydown(KEY_SPACE, true) then<br />
+        select pumpkin.state<br />
+            case "idle"<br />
+                pumpkin.state = "laughing"<br />
+            case "laughing"<br />
+                pumpkin.state = "scaring"<br />
+            case "scaring"<br />
+                pumpkin.state = "explode"<br />
+            case "explode"<br />
+                pumpkin.state = "idle"<br />
+        endsel<br />
+        <br />
+        ' Reset<br />
+        pumpkin.frame = 0<br />
+        pumpkin.timer = 0<br />
+    endif<br />
+<br />
+    'animation timer 10 FPS<br />
+    pumpkin.timer = pumpkin.timer + 1<br />
+    if pumpkin.timer &gt;= 6 then<br />
+        pumpkin.timer = 0<br />
+        pumpkin.frame = pumpkin.frame + 1<br />
+    endif<br />
+<br />
+    'animation selection<br />
+    select pumpkin.state<br />
+        case "idle" <br />
+            f = idle[pumpkin.frame % 4]<br />
+        case "laughing"<br />
+            f = laughing[pumpkin.frame % 4]<br />
+        case "scaring"<br />
+            f = scaring[pumpkin.frame % 8]<br />
+        case "explode"<br />
+            f = explode[pumpkin.frame % 8]<br />
+    endsel<br />
+    <br />
+    'This frame [0, 0, 128, 128] is an array with four elements f[0],f[1],f[2],f[3]<br />
+    draw image img, pumpkin.x, pumpkin.y, f[0], f[1], f[2], f[3]<br />
+    <br />
+    'infobox<br />
+    set color 255, 255, 255<br />
+    set caret width()/2, height()-30<br />
+    center "PRESS SPACE BAR TO CYCLE STATES"<br />
+    set caret width()/2, 30<br />
+    center upper(pumpkin.state)<br />
+    <br />
+    redraw<br />
+    fwait 60<br />
+wend</code></div></div><br /><!-- start: postbit_attachments_attachment -->
+<br /><!-- start: attachment_icon -->
+<img src="https://www.naalaa.com/forum/images/attachtypes/zip.png" title="ZIP File" border="0" alt=".zip" />
+<!-- end: attachment_icon -->&nbsp;&nbsp;<a href="attachment.php?aid=694" target="_blank" title="">Pumpkin.zip</a> (Size: 492.54 KB / Downloads: 3)
+<!-- end: postbit_attachments_attachment -->]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[Halloween Frights]]></title>
+			<link>https://www.naalaa.com/forum/thread-427.html</link>
+			<pubDate>Thu, 15 Oct 2026 10:46:16 +0000</pubDate>
+			<dc:creator><![CDATA[<a href="https://www.naalaa.com/forum/member.php?action=profile&uid=10">1micha.elok</a>]]></dc:creator>
+			<guid isPermaLink="false">https://www.naalaa.com/forum/thread-427.html</guid>
+			<description><![CDATA[<img src="https://s15.gifyu.com/images/bQoCp.png" loading="lazy"  alt="[Image: bQoCp.png]" class="mycode_img" /><br />
+<br />
+Get ready for Halloween frights!<br />
+Stay Tuned for Our Halloween Game!]]></description>
+			<content:encoded><![CDATA[<img src="https://s15.gifyu.com/images/bQoCp.png" loading="lazy"  alt="[Image: bQoCp.png]" class="mycode_img" /><br />
+<br />
+Get ready for Halloween frights!<br />
+Stay Tuned for Our Halloween Game!]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[Back to racing]]></title>
+			<link>https://www.naalaa.com/forum/thread-426.html</link>
+			<pubDate>Fri, 09 Oct 2026 14:24:47 +0000</pubDate>
+			<dc:creator><![CDATA[<a href="https://www.naalaa.com/forum/member.php?action=profile&uid=1">Marcus</a>]]></dc:creator>
+			<guid isPermaLink="false">https://www.naalaa.com/forum/thread-426.html</guid>
+			<description><![CDATA[Some years ago, before I created the s3d library, we were doing some retro racing game experiments here. The other day I got some ideas for track generation and decided to return to this type of games.<br />
+<br />
+<video width="640" height="480" controls><source src="https://naalaa.com/clips/racing_1.mp4" type="video/mp4">Your browser does not support the video tag.</video><br />
+<br />
+Here I'm creating a smooth and looped track from a simple/rough polygon in a rather complicated way. The curves of the track are then converted into x offsets that can be used for the fake 3d effect.<br />
+<br />
+<span style="font-weight: bold;" class="mycode_b">Edit: </span>Yes, I let gemini generate the assets.<br /><!-- start: postbit_attachments_attachment -->
+<br /><!-- start: attachment_icon -->
+<img src="https://www.naalaa.com/forum/images/attachtypes/zip.png" title="ZIP File" border="0" alt=".zip" />
+<!-- end: attachment_icon -->&nbsp;&nbsp;<a href="attachment.php?aid=691" target="_blank" title="">racing.zip</a> (Size: 1.63 MB / Downloads: 7)
+<!-- end: postbit_attachments_attachment -->]]></description>
+			<content:encoded><![CDATA[Some years ago, before I created the s3d library, we were doing some retro racing game experiments here. The other day I got some ideas for track generation and decided to return to this type of games.<br />
+<br />
+<video width="640" height="480" controls><source src="https://naalaa.com/clips/racing_1.mp4" type="video/mp4">Your browser does not support the video tag.</video><br />
+<br />
+Here I'm creating a smooth and looped track from a simple/rough polygon in a rather complicated way. The curves of the track are then converted into x offsets that can be used for the fake 3d effect.<br />
+<br />
+<span style="font-weight: bold;" class="mycode_b">Edit: </span>Yes, I let gemini generate the assets.<br /><!-- start: postbit_attachments_attachment -->
+<br /><!-- start: attachment_icon -->
+<img src="https://www.naalaa.com/forum/images/attachtypes/zip.png" title="ZIP File" border="0" alt=".zip" />
+<!-- end: attachment_icon -->&nbsp;&nbsp;<a href="attachment.php?aid=691" target="_blank" title="">racing.zip</a> (Size: 1.63 MB / Downloads: 7)
+<!-- end: postbit_attachments_attachment -->]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[Dust Problem]]></title>
+			<link>https://www.naalaa.com/forum/thread-425.html</link>
+			<pubDate>Mon, 05 Oct 2026 22:15:16 +0000</pubDate>
+			<dc:creator><![CDATA[<a href="https://www.naalaa.com/forum/member.php?action=profile&uid=6">johnno56</a>]]></dc:creator>
+			<guid isPermaLink="false">https://www.naalaa.com/forum/thread-425.html</guid>
+			<description><![CDATA[I am working on a "dust" routine that can be used with platformers. ie: When the player decelerates is creates a small particle "cloud" of dust behind it.<br />
+<br />
+The reason it is in AI Slop is that, I originally used AI to create a routine and example for RCBasic 4. RCB is my "goto" Basic and have been using it for years... I figured it may be useful for the platformer that 1michael is creating. Although the program runs perfectly in RCB, I cannot get it to run with N7.<br />
+<br />
+"(renv) dust4.n7:230,155: runtime error: Index 0 not found (BC_MLOAD_R)"<br />
+<br />
+I will attach the RCB listing for reference....<br />
+<br />
+<!-- start: postbit_attachments_attachment -->
+<br /><!-- start: attachment_icon -->
+<img src="https://www.naalaa.com/forum/images/attachtypes/n7.png" title="N7" border="0" alt=".n7" />
+<!-- end: attachment_icon -->&nbsp;&nbsp;<a href="attachment.php?aid=683" target="_blank" title="">dust4.n7</a> (Size: 8.34 KB / Downloads: 4)
+<!-- end: postbit_attachments_attachment --><br />
+<br />
+<!-- start: postbit_attachments_attachment -->
+<br /><!-- start: attachment_icon -->
+<img src="https://www.naalaa.com/forum/images/attachtypes/zip.png" title="ZIP File" border="0" alt=".zip" />
+<!-- end: attachment_icon -->&nbsp;&nbsp;<a href="attachment.php?aid=684" target="_blank" title="">dust.zip</a> (Size: 2.78 KB / Downloads: 2)
+<!-- end: postbit_attachments_attachment --><br />
+<br />
+I seem to struggle with array errors... *sigh*]]></description>
+			<content:encoded><![CDATA[I am working on a "dust" routine that can be used with platformers. ie: When the player decelerates is creates a small particle "cloud" of dust behind it.<br />
+<br />
+The reason it is in AI Slop is that, I originally used AI to create a routine and example for RCBasic 4. RCB is my "goto" Basic and have been using it for years... I figured it may be useful for the platformer that 1michael is creating. Although the program runs perfectly in RCB, I cannot get it to run with N7.<br />
+<br />
+"(renv) dust4.n7:230,155: runtime error: Index 0 not found (BC_MLOAD_R)"<br />
+<br />
+I will attach the RCB listing for reference....<br />
+<br />
+<!-- start: postbit_attachments_attachment -->
+<br /><!-- start: attachment_icon -->
+<img src="https://www.naalaa.com/forum/images/attachtypes/n7.png" title="N7" border="0" alt=".n7" />
+<!-- end: attachment_icon -->&nbsp;&nbsp;<a href="attachment.php?aid=683" target="_blank" title="">dust4.n7</a> (Size: 8.34 KB / Downloads: 4)
+<!-- end: postbit_attachments_attachment --><br />
+<br />
+<!-- start: postbit_attachments_attachment -->
+<br /><!-- start: attachment_icon -->
+<img src="https://www.naalaa.com/forum/images/attachtypes/zip.png" title="ZIP File" border="0" alt=".zip" />
+<!-- end: attachment_icon -->&nbsp;&nbsp;<a href="attachment.php?aid=684" target="_blank" title="">dust.zip</a> (Size: 2.78 KB / Downloads: 2)
+<!-- end: postbit_attachments_attachment --><br />
+<br />
+I seem to struggle with array errors... *sigh*]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[Monday Morning Marine (w.i.p)]]></title>
+			<link>https://www.naalaa.com/forum/thread-424.html</link>
+			<pubDate>Sat, 03 Oct 2026 19:03:47 +0000</pubDate>
+			<dc:creator><![CDATA[<a href="https://www.naalaa.com/forum/member.php?action=profile&uid=1">Marcus</a>]]></dc:creator>
+			<guid isPermaLink="false">https://www.naalaa.com/forum/thread-424.html</guid>
+			<description><![CDATA[Attached is a playable version of that DOOM style game from the Sokoban thread.<br />
+<br />
+<iframe width="560" height="315" src="//www.youtube-nocookie.com/embed/PCoVRwzV0Tw" frameborder="0" allowfullscreen="true"></iframe><br />
+<br />
+"It's Monday morning, you're totally out of coffee and your (admittedly quite odd) workplace has been infested by demons, robots and slimey creatures <img src="https://www.naalaa.com/forum/images/smilies/sad.png" alt="Sad" title="Sad" class="smilie smilie_8" /><br />
+   ... Ye, it's just another first person shooter."<br />
+<br />
+Move with WASD, shoot with the left mouse button and open doors with spacebar. You can lose stamina but not yet die. Just find the exit to end the game.<br />
+<br />
+I'm not sure if my versions of n7 and enginea are the same as the public ones, so I've included an exe file for the game. But if the mouse sensitivity feels wrong you can try to change line 274:<br />
+<br />
+<div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>vPlayer.SetMouseSens(0.75)</code></div></div><br />
+, set a different value, and compile the program - hopefully it works.<br />
+<br />
+I plan to make some real levels. This is just a testing area.<br />
+<br />
+<span style="font-weight: bold;" class="mycode_b">Edit:</span> Do NOT look at the code, cover your eyes if you need to compile it! It's a complete mess without structure! I just took one of the enginea examples and started adding code all over the place. I'll fix it. Structure it. Make it good(lier).<br /><!-- start: postbit_attachments_attachment -->
+<br /><!-- start: attachment_icon -->
+<img src="https://www.naalaa.com/forum/images/attachtypes/zip.png" title="ZIP File" border="0" alt=".zip" />
+<!-- end: attachment_icon -->&nbsp;&nbsp;<a href="attachment.php?aid=679" target="_blank" title="">mmm.zip</a> (Size: 6.79 MB / Downloads: 4)
+<!-- end: postbit_attachments_attachment -->]]></description>
+			<content:encoded><![CDATA[Attached is a playable version of that DOOM style game from the Sokoban thread.<br />
+<br />
+<iframe width="560" height="315" src="//www.youtube-nocookie.com/embed/PCoVRwzV0Tw" frameborder="0" allowfullscreen="true"></iframe><br />
+<br />
+"It's Monday morning, you're totally out of coffee and your (admittedly quite odd) workplace has been infested by demons, robots and slimey creatures <img src="https://www.naalaa.com/forum/images/smilies/sad.png" alt="Sad" title="Sad" class="smilie smilie_8" /><br />
+   ... Ye, it's just another first person shooter."<br />
+<br />
+Move with WASD, shoot with the left mouse button and open doors with spacebar. You can lose stamina but not yet die. Just find the exit to end the game.<br />
+<br />
+I'm not sure if my versions of n7 and enginea are the same as the public ones, so I've included an exe file for the game. But if the mouse sensitivity feels wrong you can try to change line 274:<br />
+<br />
+<div class="codeblock"><div class="title">Code:</div><div class="body" dir="ltr"><code>vPlayer.SetMouseSens(0.75)</code></div></div><br />
+, set a different value, and compile the program - hopefully it works.<br />
+<br />
+I plan to make some real levels. This is just a testing area.<br />
+<br />
+<span style="font-weight: bold;" class="mycode_b">Edit:</span> Do NOT look at the code, cover your eyes if you need to compile it! It's a complete mess without structure! I just took one of the enginea examples and started adding code all over the place. I'll fix it. Structure it. Make it good(lier).<br /><!-- start: postbit_attachments_attachment -->
+<br /><!-- start: attachment_icon -->
+<img src="https://www.naalaa.com/forum/images/attachtypes/zip.png" title="ZIP File" border="0" alt=".zip" />
+<!-- end: attachment_icon -->&nbsp;&nbsp;<a href="attachment.php?aid=679" target="_blank" title="">mmm.zip</a> (Size: 6.79 MB / Downloads: 4)
+<!-- end: postbit_attachments_attachment -->]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[Strange text layout]]></title>
+			<link>https://www.naalaa.com/forum/thread-423.html</link>
+			<pubDate>Wed, 23 Sep 2026 05:24:23 +0000</pubDate>
+			<dc:creator><![CDATA[<a href="https://www.naalaa.com/forum/member.php?action=profile&uid=6">johnno56</a>]]></dc:creator>
+			<guid isPermaLink="false">https://www.naalaa.com/forum/thread-423.html</guid>
+			<description><![CDATA[Fresh install of Linux Mint 22.3 on the old laptop. Fresh install of N7. Noticed the text layout when testing the Theme Editor. I had come across this problem before and found that I needed to install the Microsoft Core Fonts. Installed the fonts and no change.<br />
+<br />
+Is there a way to set the default font for the theme editor?<br />
+<br />
+<!-- start: postbit_attachments_attachment -->
+<br /><!-- start: attachment_icon -->
+<img src="https://www.naalaa.com/forum/images/attachtypes/image.png" title="PNG Image" border="0" alt=".png" />
+<!-- end: attachment_icon -->&nbsp;&nbsp;<a href="attachment.php?aid=658" target="_blank" title="">Screenshot at 2026-09-23 06-49-58.png</a> (Size: 16.03 KB / Downloads: 7)
+<!-- end: postbit_attachments_attachment -->]]></description>
+			<content:encoded><![CDATA[Fresh install of Linux Mint 22.3 on the old laptop. Fresh install of N7. Noticed the text layout when testing the Theme Editor. I had come across this problem before and found that I needed to install the Microsoft Core Fonts. Installed the fonts and no change.<br />
+<br />
+Is there a way to set the default font for the theme editor?<br />
+<br />
+<!-- start: postbit_attachments_attachment -->
+<br /><!-- start: attachment_icon -->
+<img src="https://www.naalaa.com/forum/images/attachtypes/image.png" title="PNG Image" border="0" alt=".png" />
+<!-- end: attachment_icon -->&nbsp;&nbsp;<a href="attachment.php?aid=658" target="_blank" title="">Screenshot at 2026-09-23 06-49-58.png</a> (Size: 16.03 KB / Downloads: 7)
+<!-- end: postbit_attachments_attachment -->]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[Bit operations Lib]]></title>
+			<link>https://www.naalaa.com/forum/thread-422.html</link>
+			<pubDate>Mon, 14 Sep 2026 14:13:48 +0000</pubDate>
+			<dc:creator><![CDATA[<a href="https://www.naalaa.com/forum/member.php?action=profile&uid=16">Nelson</a>]]></dc:creator>
+			<guid isPermaLink="false">https://www.naalaa.com/forum/thread-422.html</guid>
+			<description><![CDATA[New Lib so we can use bit operations.<br /><!-- start: postbit_attachments_attachment -->
+<br /><!-- start: attachment_icon -->
+<img src="https://www.naalaa.com/forum/images/attachtypes/n7.png" title="N7" border="0" alt=".n7" />
+<!-- end: attachment_icon -->&nbsp;&nbsp;<a href="attachment.php?aid=648" target="_blank" title="">bit_ops.n7</a> (Size: 1.62 KB / Downloads: 5)
+<!-- end: postbit_attachments_attachment -->]]></description>
+			<content:encoded><![CDATA[New Lib so we can use bit operations.<br /><!-- start: postbit_attachments_attachment -->
+<br /><!-- start: attachment_icon -->
+<img src="https://www.naalaa.com/forum/images/attachtypes/n7.png" title="N7" border="0" alt=".n7" />
+<!-- end: attachment_icon -->&nbsp;&nbsp;<a href="attachment.php?aid=648" target="_blank" title="">bit_ops.n7</a> (Size: 1.62 KB / Downloads: 5)
+<!-- end: postbit_attachments_attachment -->]]></content:encoded>
+		</item>
+		<item>
+			<title><![CDATA[Not Battle City]]></title>
+			<link>https://www.naalaa.com/forum/thread-421.html</link>
+			<pubDate>Fri, 11 Sep 2026 19:45:39 +0000</pubDate>
+			<dc:creator><![CDATA[<a href="https://www.naalaa.com/forum/member.php?action=profile&uid=1">Marcus</a>]]></dc:creator>
+			<guid isPermaLink="false">https://www.naalaa.com/forum/thread-421.html</guid>
+			<description><![CDATA[Dear lord, been feeling sick almost the entire week, but this Friday evening I finished up an old NES style game, Not Battle City (naming it as Kevin would), that I wrote right after making Loopz.<br />
+<br />
+There are only six levels, and the difficulty ramping is fast. Can you beat it? I haven't managed to yet.<br />
+<br />
+<!-- start: postbit_attachments_attachment -->
+<br /><!-- start: attachment_icon -->
+<img src="https://www.naalaa.com/forum/images/attachtypes/image.png" title="JPG Image" border="0" alt=".jpg" />
+<!-- end: attachment_icon -->&nbsp;&nbsp;<a href="attachment.php?aid=643" target="_blank" title="">nbc_1.jpg</a> (Size: 48.59 KB / Downloads: 15)
+<!-- end: postbit_attachments_attachment --><br />
+<!-- start: postbit_attachments_attachment -->
+<br /><!-- start: attachment_icon -->
+<img src="https://www.naalaa.com/forum/images/attachtypes/image.png" title="JPG Image" border="0" alt=".jpg" />
+<!-- end: attachment_icon -->&nbsp;&nbsp;<a href="attachment.php?aid=644" target="_blank" title="">nbc_2.jpg</a> (Size: 93.76 KB / Downloads: 24)
+<!-- end: postbit_attachments_attachment --><br />
+<br />
+<span style="font-weight: bold;" class="mycode_b">Edit:</span> It's an assetless program, only source code. But when I pasted it into the post and copied it back into ned, the levels were all messed up. So I'm attaching the n7 file instead.<br /><!-- start: postbit_attachments_attachment -->
+<br /><!-- start: attachment_icon -->
+<img src="https://www.naalaa.com/forum/images/attachtypes/n7.png" title="N7" border="0" alt=".n7" />
+<!-- end: attachment_icon -->&nbsp;&nbsp;<a href="attachment.php?aid=645" target="_blank" title="">nbc.n7</a> (Size: 47.84 KB / Downloads: 11)
+<!-- end: postbit_attachments_attachment -->]]></description>
+			<content:encoded><![CDATA[Dear lord, been feeling sick almost the entire week, but this Friday evening I finished up an old NES style game, Not Battle City (naming it as Kevin would), that I wrote right after making Loopz.<br />
+<br />
+There are only six levels, and the difficulty ramping is fast. Can you beat it? I haven't managed to yet.<br />
+<br />
+<!-- start: postbit_attachments_attachment -->
+<br /><!-- start: attachment_icon -->
+<img src="https://www.naalaa.com/forum/images/attachtypes/image.png" title="JPG Image" border="0" alt=".jpg" />
+<!-- end: attachment_icon -->&nbsp;&nbsp;<a href="attachment.php?aid=643" target="_blank" title="">nbc_1.jpg</a> (Size: 48.59 KB / Downloads: 15)
+<!-- end: postbit_attachments_attachment --><br />
+<!-- start: postbit_attachments_attachment -->
+<br /><!-- start: attachment_icon -->
+<img src="https://www.naalaa.com/forum/images/attachtypes/image.png" title="JPG Image" border="0" alt=".jpg" />
+<!-- end: attachment_icon -->&nbsp;&nbsp;<a href="attachment.php?aid=644" target="_blank" title="">nbc_2.jpg</a> (Size: 93.76 KB / Downloads: 24)
+<!-- end: postbit_attachments_attachment --><br />
+<br />
+<span style="font-weight: bold;" class="mycode_b">Edit:</span> It's an assetless program, only source code. But when I pasted it into the post and copied it back into ned, the levels were all messed up. So I'm attaching the n7 file instead.<br /><!-- start: postbit_attachments_attachment -->
+<br /><!-- start: attachment_icon -->
+<img src="https://www.naalaa.com/forum/images/attachtypes/n7.png" title="N7" border="0" alt=".n7" />
+<!-- end: attachment_icon -->&nbsp;&nbsp;<a href="attachment.php?aid=645" target="_blank" title="">nbc.n7</a> (Size: 47.84 KB / Downloads: 11)
+<!-- end: postbit_attachments_attachment -->]]></content:encoded>
+		</item>
+	</channel>
+</rss>

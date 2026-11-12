@@ -8,6 +8,7 @@ Arrays store collections of values. BazzBasic arrays are fully dynamic and suppo
 - Arrays must be initialized with `DIM` before they can be used
 - Like variables or constants, arrays are not strongly typed
 - An array needs the suffix '$'.
+- Re-declaring an existing **global** array with `DIM` does not clear it; use `DELARRAY` to remove it. (Inside a function, `DIM` always creates a fresh, empty local array.)
 ```vb
 DIM scores$
 DIM names$
@@ -39,6 +40,24 @@ DIM player$
 	player$("level") 	= 3
 
 PRINT player$("name")    ' Output: Alice
+```
+
+String keys are **case-sensitive**: `"name"`, `"Name"` and `"NAME"` are three different keys. The array name itself is not case-sensitive, so `player$`, `PLAYER$` and `Player$` all refer to the same array.
+```vb
+DIM word$
+	word$("apple") = 1
+	word$("Apple") = 2
+
+PRINT LEN(word$())       ' Output: 2
+PRINT word$("apple")     ' Output: 1
+```
+
+If you want keys that ignore case, normalize them yourself with `UCASE()` or `LCASE()`:
+```vb
+DIM count$
+LET key$ = "Apple"
+	count$(LCASE(key$)) = 1
+PRINT count$("apple")    ' Output: 1
 ```
 
 ## Multi-dimensional Arrays
@@ -420,7 +439,7 @@ Nested JSON becomes comma-separated keys:
     PRINT data$("player,hp")     ' 100
     PRINT data$("skills,0")      ' fire
     PRINT data$("skills,1")      ' ice
-    PRINT count$                 ' alkioiden lukumäärä
+    PRINT count$                 ' number of elements
 END
 ```
 
@@ -461,10 +480,122 @@ The resulting `savegame.json`:
 ```vb
 DIM response$
 LET raw$ = HTTPGET("https://api.example.com/user/1")
-ASARRAY response$, raw$
+LET count$ = ASARRAY(response$, raw$)
 
 PRINT "Name: "; response$("name")
 PRINT "Email: "; response$("email")
+```
+
+### XML (light model)
+
+BazzBasic can also read and write XML, mainly so that an RSS or Atom feed reader is easy to make. **JSON is still the recommended format.** XML is heavier, does not map to arrays as cleanly, and its keys are longer. Use XML when the data only comes as XML.
+
+> XML is not HTML. A web page does not parse as XML and gives an error.
+
+`ASARRAY` recognizes the format by itself from the first character: `{` or `[` means JSON, `<` means XML. Nothing else needs to change.
+
+```vb
+LET xml$ = HTTPGET("https://www.example.com/rss.xml")
+IF HTTPERROR <> "" THEN
+    PRINT "Feed is down: "; HTTPERROR
+    END
+END IF
+
+DIM feed$
+LET count$ = ASARRAY(feed$, xml$)
+
+PRINT feed$("rss,channel,0,title,0")
+LET i$ = 0
+WHILE HASKEY(feed$("rss,channel,0,item," + i$ + ",title,0"))
+    PRINT "- "; feed$("rss,channel,0,item," + i$ + ",title,0")
+    i$ += 1
+WEND
+END
+```
+
+**How XML becomes keys**
+
+Every element below the root gets an index — even when there is only one. The keys are longer than in JSON, but the same loop works for a feed with one item and a feed with a hundred.
+
+```xml
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>My feed</title>
+    <item>
+      <title>First post</title>
+      <guid isPermaLink="false">id-1</guid>
+      <category>News</category>
+      <category>Weather</category>
+      <dc:creator>Krisu</dc:creator>
+    </item>
+  </channel>
+</rss>
+```
+
+| Key | Value |
+|-----|-------|
+| `rss,@version` | `2.0` |
+| `rss,@xmlns:dc` | `http://purl.org/dc/elements/1.1/` |
+| `rss,channel,0,title,0` | `My feed` |
+| `rss,channel,0,item,0,title,0` | `First post` |
+| `rss,channel,0,item,0,guid,0,@isPermaLink` | `false` |
+| `rss,channel,0,item,0,guid,0,#text` | `id-1` |
+| `rss,channel,0,item,0,category,0` | `News` |
+| `rss,channel,0,item,0,category,1` | `Weather` |
+| `rss,channel,0,item,0,dc:creator,0` | `Krisu` |
+
+- **Attributes** get `@` in front of their name.
+- **Text** of an element that also has attributes or child elements is in `#text`.
+- **Prefixes** such as `dc:` are kept as written in the file. Their `xmlns:` declarations are attributes too, so `ASXML` can write them back.
+- **CDATA** is read as plain text.
+- All values are **strings** — XML has no number type. Use `VAL()` when you need a number.
+- Comments and the `<!DOCTYPE ...>` line are ignored.
+
+**Not supported:** text and elements mixed together (`<p>Hello <b>world</b>!</p>`) keeps the text and the elements, but not their order. Feeds rarely need this.
+
+### ASXML
+Converts a BazzBasic array to an XML string. If the array has a single top-level key, it becomes the root element; otherwise the root is `<root>`:
+```vb
+DIM player$
+    player$("player,@id")   = 7
+    player$("player,name")  = "Alice"
+    player$("player,score") = 9999
+
+PRINT ASXML(player$)
+' Output: <player id="7"><name>Alice</name><score>9999</score></player>
+```
+
+Keys must be valid XML names: `player$("high score")` gives an error in `ASXML`, because an XML element name cannot contain a space.
+
+### LOADXML
+Loads an XML file directly into an array:
+```vb
+DIM cfg$
+LOADXML cfg$, "settings.xml"
+
+PRINT cfg$("config,player,0")
+```
+
+### SAVEXML
+Saves an array as a formatted XML file:
+```vb
+DIM cfg$
+    cfg$("config,player,0") = "Krisu"
+    cfg$("config,volume,0") = 80
+    cfg$("config,setting,0,@name") = "fullscreen"
+    cfg$("config,setting,0,#text") = "on"
+
+SAVEXML cfg$, "settings.xml"
+```
+
+The resulting `settings.xml`:
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+  <player>Krisu</player>
+  <volume>80</volume>
+  <setting name="fullscreen">on</setting>
+</config>
 ```
 
 ---

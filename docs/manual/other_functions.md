@@ -114,7 +114,7 @@ PRINT "Row 1, col 3 background color: " + GETCONSOLE(1, 3, 2)  ' Output: 1
 Return the amount of arguments passed to program.
 
 ```vb
-' BazzBasic.exe test.bas arg1 arg2
+' BazzBasic.exe test.bas arg1 arg2   (a packaged exe works the same: test.exe arg1 arg2)
 PRINT ARGCOUNT ' 2
 ```
 
@@ -134,6 +134,8 @@ PRINT ARGS(1)
 
 - Always check with ARGCOUNT first, is there arguments passed
 - ARGCOUNT gives the amount of arguments but ARGS() places first argument in ARGS(0), not in ARGS(1).
+- Packaged exes (made with `-exe`) behave identically: `test.exe arg1 arg2` gives ARGCOUNT = 2 and ARGS(0) = "arg1"
+- Inside a packaged exe, interpreter flags like `-v` are not special - they arrive as ordinary ARGS() strings (`prog.exe -v` -> ARGS(0) = "-v")
 
 ## Variable Functions
 

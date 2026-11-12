@@ -491,6 +491,10 @@ public partial class Interpreter
             }
         }
 
+        // Relative paths resolve against the program's folder (PRG_ROOT#)
+        if (!Path.IsPathRooted(filepath))
+            filepath = Path.Combine(_fileManager.RootPath, filepath);
+
         try
         {
             string id = Graphics.ShapeManager.LoadImageShape(filepath, Graphics.Graphics.Renderer);
@@ -661,6 +665,8 @@ public partial class Interpreter
         int spriteH = (int)EvaluateExpression().AsNumber();
         Require(TokenType.TOK_COMMA);
         string filepath = EvaluateExpression().AsString();
+        if (!Path.IsPathRooted(filepath))
+            filepath = Path.Combine(_fileManager.RootPath, filepath);
 
         if (!_variables.ArrayExists(arrayName))
             Error($"LOADSHEET: array '{arrayName}' not declared. Use DIM first.");

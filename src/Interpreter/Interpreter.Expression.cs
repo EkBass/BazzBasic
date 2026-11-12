@@ -402,6 +402,8 @@ public partial class Interpreter
                 return EvaluateAsJson();
             case TokenType.TOK_ASARRAY:
                 return EvaluateAsArray();
+            case TokenType.TOK_ASXML:
+                return EvaluateAsXml();
             case TokenType.TOK_GETREQUEST:
                 return EvaluateGetRequest();
             case TokenType.TOK_BASE64ENCODE:
@@ -452,14 +454,16 @@ public partial class Interpreter
     }
     private Value EvaluateVariableOrArray()
     {
+        Token tok = _tokens[_pos];
         string varName = _tokens[_pos].StringValue ?? "";
         _pos++;
-        
-        // Check for built-in constant
-        if (_builtinConstants.TryGetValue(varName, out double constVal))
-        {
-            return Value.FromNumber(constVal);
-        }
+
+        // new way to check for built-in constants.
+        // Before v. 1.7 this check was done in the variable lookup,
+        // each fucking time, which was not ideal.
+        if (tok.Type == TokenType.TOK_CONSTANT &&
+            _builtinConstants.TryGetValue(varName, out double constVal))
+                return Value.FromNumber(constVal);
         
         // Check for array access
         if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_LPAREN)

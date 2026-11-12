@@ -47,7 +47,7 @@ if (embeddedCode != null)
     {
         string exePath = Environment.ProcessPath ?? "";
         string basePath = Path.GetDirectoryName(exePath) ?? Directory.GetCurrentDirectory();
-        if (!RunProgram(embeddedCode, basePath, null))
+        if (!RunProgram(embeddedCode, basePath, null, args))
             return 1;
     }
     catch (Exception ex)

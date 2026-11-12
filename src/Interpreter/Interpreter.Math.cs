@@ -491,8 +491,9 @@ public partial class Interpreter
         
         if (!_fastTrigEnabled || _fastSinTable == null)
         {
-            int line = _pos < _tokens.Count ? _tokens[_pos].Line : 0;
-            throw new Exception($"Line {line}: FastTrig not enabled. Call FASTTRIG(TRUE) first.");
+            // Error() adds the line itself — never format it into the message
+            Error("FASTSIN: FastTrig not enabled. Call FASTTRIG(TRUE) first.");
+            return Value.Zero;
         }
         
         // Normalize angle to 0-359 range
@@ -510,8 +511,9 @@ public partial class Interpreter
         
         if (!_fastTrigEnabled || _fastCosTable == null)
         {
-            int line = _pos < _tokens.Count ? _tokens[_pos].Line : 0;
-            throw new Exception($"Line {line}: FastTrig not enabled. Call FASTTRIG(TRUE) first.");
+            // Error() adds the line itself — never format it into the message
+            Error("FASTCOS: FastTrig not enabled. Call FASTTRIG(TRUE) first.");
+            return Value.Zero;
         }
         
         int index = ((int)Math.Round(angle) % 360 + 360) % 360;

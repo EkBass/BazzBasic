@@ -41,7 +41,8 @@ PRINT "Sound loaded with ID: "; EXPLOSION#
 ```
 
 **Notes:**
-- The file must exist or an error will occur
+- Relative paths resolve against the program's folder (same as `PRG_ROOT#`), e.g. `"sounds/jump.wav"` works no matter where you launch from. Absolute paths are used as-is.
+- The file must exist, or the program halts with `Error at line N: LOADSOUND: Sound file not found: <path>` (exit code 1)
 - Each call to LOADSOUND creates a new independent sound instance
 - The same file can be loaded multiple times for overlapping playback
 

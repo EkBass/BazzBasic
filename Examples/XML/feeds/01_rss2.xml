@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Uutiset | Esimerkki</title>
+    <link>https://example.fi/</link>
+    <description>Tuoreimmat uutiset</description>
+    <atom:link href="https://example.fi/rss.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Ylöjärvellä satoi lunta</title>
+      <link>https://example.fi/a/1</link>
+      <description><![CDATA[<p>Lunta tuli <b>20 cm</b> &amp; tiet liukkaita.</p>]]></description>
+      <pubDate>Fri, 06 Nov 2026 06:12:00 +0200</pubDate>
+      <guid isPermaLink="false">id-1</guid>
+      <category>Kotimaa</category>
+      <category>Sää</category>
+      <dc:creator>Toimittaja A</dc:creator>
+      <enclosure url="https://example.fi/kuva1.jpg" length="12345" type="image/jpeg"/>
+    </item>
+    <item>
+      <title>BazzBasic 1.7 julkaistu</title>
+      <link>https://example.fi/a/2</link>
+      <description>Uusi versio tuo HTTPERROR-funktion.</description>
+      <pubDate>Fri, 06 Nov 2026 07:30:00 +0200</pubDate>
+      <guid isPermaLink="false">id-2</guid>
+      <category>Tekniikka</category>
+      <content:encoded><![CDATA[<p>Pidempi teksti</p>]]></content:encoded>
+    </item>
+    <item>
+      <title>Kolmas uutinen</title>
+      <link>https://example.fi/a/3</link>
+      <description></description>
+      <pubDate>Fri, 06 Nov 2026 08:00:00 +0200</pubDate>
+    </item>
+  </channel>
+</rss>

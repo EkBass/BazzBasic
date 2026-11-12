@@ -49,8 +49,18 @@ public partial class Interpreter
         _pos++;
         Require(TokenType.TOK_LPAREN);
         string s = EvaluateExpression().AsString();
+
+        // Optional 1-based position: ASC("xyz", 2) = ASC("y").
+        // Saves the ASC(MID(s$, i$, 1)) substring allocation in string loops.
+        // Out of range (pos < 1 or pos > LEN) returns 0, same as ASC("").
+        int idx = 0;
+        if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_COMMA)
+        {
+            _pos++;
+            idx = (int)EvaluateExpression().AsNumber() - 1;
+        }
         Require(TokenType.TOK_RPAREN);
-        return Value.FromNumber(s.Length > 0 ? s[0] : 0);
+        return Value.FromNumber(idx >= 0 && idx < s.Length ? s[idx] : 0);
     }
 
     private Value EvaluateChrFunc()
@@ -445,6 +455,9 @@ public partial class Interpreter
     // first, then user variables/constants. Same order as EvaluatePrimary().
     private bool TryGetFstringValue(string name, out Value value)
     {
+        // Placeholder names come from the string at runtime, not from the lexer,
+        // so they are not upper-cased yet. Variable tables use Ordinal comparison.
+        name = name.ToUpperInvariant();
         if (_builtinConstants.TryGetValue(name, out double constVal))
         {
             value = Value.FromNumber(constVal);
@@ -479,7 +492,9 @@ public partial class Interpreter
             return false;
         }
 
-        string arrayName = content.Substring(0, paren).Trim();
+        // Array name from the string at runtime: upper-case it like the lexer would.
+        // The key itself is NOT upper-cased - array keys are case-sensitive.
+        string arrayName = content.Substring(0, paren).Trim().ToUpperInvariant();
         if (arrayName.Length == 0)
         {
             Error($"FSTRING: missing array name in '{content}'.");

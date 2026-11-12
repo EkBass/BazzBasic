@@ -28,6 +28,7 @@ The packaged exe contains the .NET runtime it needs. The target machine does not
 | SDL2.dll | Yes | Graphics and input |
 | SDL2_mixer.dll | If sound is used | Audio |
 | SDL2_ttf.dll | If fonts are used | TrueType fonts |
+| *.bb | If libraries are used | Compiled libraries (never embedded in the exe) |
 
 `BazzBasic-IDE.exe` and the `runtimes` folder are **not** needed: they belong to the IDE only.
 
@@ -87,5 +88,6 @@ The standalone exe runs with a console window visible. This is intentional for s
 
 - The packaged exe contains the full BazzBasic interpreter, but not the IDE
 - File paths in your BASIC code are relative to the exe location
-- INCLUDE files are processed at packaging time (embedded in exe)
+- INCLUDE "file.bas" files are processed at packaging time and embedded in the exe; INCLUDE "lib.bb" libraries are NOT embedded - the .bb must be distributed next to the exe (see below)
 - After an error, the packaged exe exits with code 1
+- Command-line arguments work like with the interpreter: `prog.exe arg1 arg2` -> ARGCOUNT = 2, ARGS(0) = "arg1"

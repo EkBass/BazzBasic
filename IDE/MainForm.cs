@@ -980,6 +980,8 @@ public partial class MainForm : Form
         editor.SetKeywords(1,
             "abs atan atan2 between inbetween ceil cint clamp cos deg distance exp floor int lerp log max min mod pow rad rnd round sgn sin sqr tan " +
             "pi hpi qpi tau euler fasttrig fastsin fastcos fastrad " +
+            "au " +
+            "bbver bbbuild prg_root " +
             "asc chr instr invert lcase left len ltrim mid repeat replace right rtrim srand split str trim ucase val fstring " +
             "ticks time rgb");
 
@@ -988,7 +990,7 @@ public partial class MainForm : Form
             "print input cls color locate curpos getconsole inkey keydown waitkey " +
             "fileread filewrite fileappend fileexists filedelete filelist shell " +
             "httpget httppost httperror startlisten getrequest sendresponse stoplisten " +
-            "asjson asarray loadjson savejson base64encode base64decode sha256 " +
+            "asjson asarray loadjson savejson asxml loadxml savexml base64encode base64decode sha256 " +
             "isset haskey delkey delarray join rowcount arrkey args argcount");
 
         // Graphics, mouse & sound

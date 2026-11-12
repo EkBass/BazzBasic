@@ -157,14 +157,25 @@ A comparison between a numeric and string variable is only made if the data type
 ## Built-in Constants
 BazzBasic provides a full range of automatically initialized constants
 
+**Math:**
+| Constant | Description |
+|----------|-------------|
+| `PI#`, `HPI#`, `QPI#`, `TAU#` | π, π/2, π/4 and 2π — see [Math Functions](math_functions.md) |
+| `EULER#` | e ≈ 2.718281828459045 |
+| `AU#` | 149597870700 — astronomical unit in metres (exact, IAU 2012) |
+
+> **Note:** if your code declares its own `AU#` with `LET`, remove that line — the built-in constant takes precedence, so reads always see 149597870700.
+
 **System:**
 | Constant | Description |
 |----------|-------------|
 | `PRG_ROOT#` | Full path to the program's base directory (always ends with a directory separator, so you can concatenate a relative path directly) |
 | `BBVER#` | BazzBasic version string (e.g. `"1.1d"`) |
+| `BBBUILD#` | Build time of the interpreter, `"dd-mm-yyyy hh:mm:ss"` (e.g. `"06-11-2026 20:45:57"`). A program compiled with `-exe` reports the build time of the interpreter it was made with, not the time it was compiled |
 
 ```vb
 PRINT "Version: "; BBVER#     ' Output: 1.1d
+PRINT "Build:   "; BBBUILD#   ' Output: 06-11-2026 20:45:57
 PRINT "Root:    "; PRG_ROOT#  ' Output: C:\path\to\program\
 ```
 
@@ -297,6 +308,7 @@ PRINT x$                 ' Output: 10 (x$ is still accessible)
 
 - Variables initialized and modified in user-defined functions do not belong to the same scope.
 - However, global constants are available.
+- Arrays follow the same scoping as variables - they are not global. To pass an array into a DEF FN function, pass it as a JSON string with `ASJSON()` and rebuild it inside with `ASARRAY()` (see [User-defined Functions](user-defined-functions.md)).
 
 ```vb
 LET a$ = 1					' Global variable

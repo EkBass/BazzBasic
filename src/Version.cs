@@ -15,10 +15,19 @@
 
 namespace BazzBasic;
 
-public static class AppInfo
+public static partial class AppInfo
 {
 	// Currently under development
     public const string Version = "1.7"; // IDE & "BBVER#" reads this too
     public const string Url = "https://ekbass.github.io/BazzBasic/";
     public const string Name = "BazzBasic";
+
+    /*
+	 * See: ..\BazzBasic.csproj
+	 * It places automatically the following information into the assembly:
+	 * 
+	 * <WriteLinesToFile
+	 *		File="$(GeneratedVersionFile)"
+	 *		Lines="namespace BazzBasic; public static partial class AppInfo { public static readonly string Build = &quot;$(BuildTimestamp)&quot;; }"
+	 */      
 }

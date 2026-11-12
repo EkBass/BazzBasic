@@ -538,7 +538,7 @@ END
 - Use `\n` for newlines, `\t` for tabs in string literals
 
 ### Path Resolution
-- **Relative paths**: Resolved from program's base directory (PRG_ROOT#)
+- **Relative paths**: Resolved from program's base directory (PRG_ROOT#). This also applies to `LOADIMAGE`, `LOADSHEET`, `LOADSOUND`, `LOADFONT` and `SAVESCREEN`
 - **Absolute paths**: Used as-is if rooted (e.g., `C:/...`)
 - Forward slashes `/` work on all platforms
 - Backslashes must be escaped: `\\`
@@ -661,7 +661,7 @@ FILEWRITE filename$, data$
 **Problem:** Can't find files after writing
 - Print PRG_ROOT# to see base directory
 - Use absolute paths for debugging
-- Check program's working directory
+- Asset and file paths follow `PRG_ROOT#` (the program's folder), not the folder you launched the program from
 
 ---
 

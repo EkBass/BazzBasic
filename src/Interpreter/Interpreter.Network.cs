@@ -193,8 +193,16 @@ public partial class Interpreter
             return Value.FromString("{}");
         }
 
-        var root = BuildJsonTree(elements);
-        return Value.FromString(root.ToJsonString());
+        try
+        {
+            var root = BuildJsonTree(elements);
+            return Value.FromString(root.ToJsonString());
+        }
+        catch (Exception ex)
+        {
+            Error($"ASJSON failed: {ex.Message}");
+            return Value.FromString("{}");
+        }
     }
 
     // Build nested object/array tree from flat comma-key dictionary
@@ -261,7 +269,8 @@ public partial class Interpreter
         return BuildJsonTree(sub);
     }
 
-    // ASARRAY(arr$, json$) — fills arr$ from JSON string, returns element count
+    // ASARRAY(arr$, data$) — fills arr$ from a JSON or XML string, returns element count.
+    // The format is picked from the first character (6.11.2026): '{' / '[' = JSON, '<' = XML.
     private Value EvaluateAsArray()
     {
         _pos++;
@@ -269,17 +278,44 @@ public partial class Interpreter
 
         string arrayName = _tokens[_pos].StringValue ?? "";
         _pos++;
-        Require(TokenType.TOK_COMMA, "Expected ',' in ASARRAY(arr$, json$)");
+        Require(TokenType.TOK_COMMA, "Expected ',' in ASARRAY(arr$, data$)");
 
-        string json = EvaluateExpression().AsString();
+        string data = EvaluateExpression().AsString();
         Require(TokenType.TOK_RPAREN, "Expected ')' after ASARRAY arguments");
+
+        // HTTPGET / HTTPPOST return "" on failure, so an empty string is the common case
+        if (data.Trim('﻿', ' ', '\t', '\r', '\n').Length == 0)
+        {
+            Error("ASARRAY: data is empty (if it came from HTTPGET or HTTPPOST, check HTTPERROR)");
+            return Value.Zero;
+        }
+
+        var format = SniffDataFormat(data);
+        if (format == DataFormat.Unknown)
+        {
+            Error("ASARRAY: data is not JSON or XML (must start with {, [ or <)");
+            return Value.Zero;
+        }
 
         if (!_variables.ArrayExists(arrayName))
             _variables.DeclareArray(arrayName);
 
+        if (format == DataFormat.Xml)
+        {
+            try
+            {
+                return Value.FromNumber(FlattenXml(data, arrayName));
+            }
+            catch (Exception ex)
+            {
+                Error($"ASARRAY failed to parse XML: {ex.Message}");
+                return Value.Zero;
+            }
+        }
+
         try
         {
-            var doc = System.Text.Json.JsonDocument.Parse(json);
+            var doc = System.Text.Json.JsonDocument.Parse(data.TrimStart('﻿'));
             int count = FlattenJsonElement(doc.RootElement, arrayName, "");
             return Value.FromNumber(count);
         }

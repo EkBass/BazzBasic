@@ -22,6 +22,15 @@ Returns the angle, in radians, between the positive x-axis and a vector to the p
 PRINT ATAN2(5, 10) ' 0.4636476090008061
 ```
 
+### AU#
+Astronomical unit in metres: exactly 149597870700 (IAU 2012 definition). Like every `#` constant it is read-only — assigning without `LET` is an error.
+
+**Note:** if your code declares its own `AU#` with `LET`, remove that line — the built-in constant takes precedence, so reads always see 149597870700.
+```vb
+PRINT AU#            ' Output: 149597870700
+PRINT AU# / 1000     ' Output: 149597870.7  (kilometres)
+```
+
 ### BETWEEN(n, min, max)
 Returns true if *n* is equal or between *min* and *max*
 ```vb

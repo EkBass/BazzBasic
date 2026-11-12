@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Esimerkki Atom</title>
+  <link href="https://example.org/"/>
+  <updated>2026-11-06T06:00:00Z</updated>
+  <entry>
+    <title type="html">Eka &lt;i&gt;merkintä&lt;/i&gt;</title>
+    <link rel="alternate" href="https://example.org/1"/>
+    <id>urn:uuid:1</id>
+    <updated>2026-11-05T10:00:00Z</updated>
+    <summary>Tiivistelmä</summary>
+  </entry>
+  <entry>
+    <title>Toka</title>
+    <link rel="alternate" href="https://example.org/2"/>
+    <id>urn:uuid:2</id>
+    <updated>2026-11-06T05:00:00Z</updated>
+  </entry>
+</feed>

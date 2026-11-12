@@ -20,6 +20,21 @@
     <ApplicationIcon>icon.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
+  <!-- Automatically generate build timestamp on every compile/publish -->
+  <Target Name="GenerateBuildTimestamp" BeforeTargets="CoreCompile">
+    <PropertyGroup>
+      <BuildTimestamp>$([System.DateTime]::Now.ToString("dd-MM-yyyy HH\:mm\:ss"))</BuildTimestamp>
+      <GeneratedVersionFile>$(IntermediateOutputPath)BuildInfo.g.cs</GeneratedVersionFile>
+    </PropertyGroup>
+    <WriteLinesToFile
+      File="$(GeneratedVersionFile)"
+      Lines="namespace BazzBasic%3B public static partial class AppInfo { public static readonly string Build = &quot;$(BuildTimestamp)&quot;%3B }"
+      Overwrite="true" />
+    <ItemGroup>
+      <Compile Include="$(GeneratedVersionFile)" />
+      <FileWrites Include="$(GeneratedVersionFile)" />
+    </ItemGroup>
+  </Target>
 
   <!-- Trimming: ~72 MB -> ~15 MB. Compiled user programs are copies of this exe,
        so they shrink too. Keep the build free of IL2xxx trim warnings

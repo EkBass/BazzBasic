@@ -349,22 +349,21 @@ public partial class Interpreter
             Error("NEXT without FOR");
             return;
         }
-        
-        ForState state = _forStack.Pop();
+
+        ForState state = _forStack.Peek();
         double currentVal = _variables.GetVariable(state.VarName).AsNumber();
         currentVal += state.StepValue;
-        
+
         bool done = (state.StepValue > 0 && currentVal > state.EndValue) ||
                     (state.StepValue < 0 && currentVal < state.EndValue);
-        
+
         if (done)
         {
-            // Loop complete
+            _forStack.Pop();          // loop complete
         }
         else
         {
             _variables.SetVariable(state.VarName, Value.FromNumber(currentVal));
-            _forStack.Push(state);
             _pos = state.LoopPosition;
         }
     }

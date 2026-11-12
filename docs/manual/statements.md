@@ -44,6 +44,8 @@ PRINT name$
 ' Output: Kristian Virtanen
 ```
 
+`INPUT` and `LINE INPUT` read from standard input, so they keep working when input is piped or redirected from a file (no real console needed).
+
 ### Comparison
 | Feature | INPUT | LINE INPUT |
 |---------|-------|------------|

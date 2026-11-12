@@ -28,10 +28,10 @@ public class UndefinedVariableException(string variableName) : Exception($"Undef
 public class Variables
 {
     // Regular variables (name ends with $)
-    private readonly Dictionary<string, Value> _variables = new(StringComparer.OrdinalIgnoreCase);
-    
+    private readonly Dictionary<string, Value> _variables = new(StringComparer.Ordinal); // IgnoreCase);
+
     // Constants (name ends with #) - immutable after first assignment
-    private readonly Dictionary<string, Value> _constants = new(StringComparer.OrdinalIgnoreCase);
+    private readonly Dictionary<string, Value> _constants = new(StringComparer.Ordinal); // IgnoreCase);
     
     // Arrays - stored as OrderedDictionary<string, Value> per array.
     // OrderedDictionary (System.Collections.Generic, .NET 9+) guarantees insertion order
@@ -39,7 +39,7 @@ public class Variables
     // insertion order as an implementation detail, not a documented guarantee, which
     // matters once arrays are enumerated by index (see ARRKEY).
     // Key format: "arrayname$" -> OrderedDictionary of (key -> value)
-    private readonly Dictionary<string, OrderedDictionary<string, Value>> _arrays = new(StringComparer.OrdinalIgnoreCase);
+    private readonly Dictionary<string, OrderedDictionary<string, Value>> _arrays = new(StringComparer.Ordinal); // IgnoreCase);
 
     // Scope management (for user functions)
     private readonly Stack<Dictionary<string, Value>> _localScopes = new();
@@ -55,30 +55,30 @@ public class Variables
     
     public void SetVariable(string name, Value value)
     {
-        string key = name.ToUpperInvariant();
+        // string key = name.ToUpperInvariant();
         
         // If in local scope, ONLY write to local scope
         if (_localScopes.Count > 0)
         {
-            _localScopes.Peek()[key] = value;
+            _localScopes.Peek()[name] = value;
             return;
         }
         
-        _variables[key] = value;
+        _variables[name] = value;
     }
 
     public Value GetVariable(string name)
     {
-        string key = name.ToUpperInvariant();
+        //string key = name.ToUpperInvariant();
         
         // If in local scope, ONLY check local scope (and constants)
         if (_localScopes.Count > 0)
         {
-            if (_localScopes.Peek().TryGetValue(key, out Value localValue))
+            if (_localScopes.Peek().TryGetValue(name, out Value localValue))
                 return localValue;
             
             // Constants are accessible everywhere (they're immutable)
-            if (_constants.TryGetValue(key, out Value constValue))
+            if (_constants.TryGetValue(name, out Value constValue))
                 return constValue;
             
             // Not found in local scope
@@ -86,11 +86,11 @@ public class Variables
         }
         
         // Global scope
-        if (_variables.TryGetValue(key, out Value value))
+        if (_variables.TryGetValue(name, out Value value))
             return value;
         
         // Check if it's a constant
-        if (_constants.TryGetValue(key, out value))
+        if (_constants.TryGetValue(name, out value))
             return value;
         
         // Undefined variable - throw exception
@@ -99,17 +99,17 @@ public class Variables
 
     public bool TryGetVariable(string name, out Value value)
     {
-        string key = name.ToUpperInvariant();
+        // string key = name.ToUpperInvariant();
         
         // Check local scope first
-        if (_localScopes.Count > 0 && _localScopes.Peek().TryGetValue(key, out value))
+        if (_localScopes.Count > 0 && _localScopes.Peek().TryGetValue(name, out value))
             return true;
         
-        if (_variables.TryGetValue(key, out value))
+        if (_variables.TryGetValue(name, out value))
             return true;
         
         // Check if it's a constant
-        if (_constants.TryGetValue(key, out value))
+        if (_constants.TryGetValue(name, out value))
             return true;
         
         value = Value.Zero;
@@ -118,15 +118,16 @@ public class Variables
 
     public bool VariableExists(string name)
     {
-        string key = name.ToUpperInvariant();
-        
+        // lexer.cs uppercases all variable names, so we do not need to worry about case sensitivity here.
+        // We use param "name" directly, no need for key = name 
+        // string key = name.ToUpperInvariant();
         // If in local scope, ONLY check local scope (and constants)
         if (_localScopes.Count > 0)
         {
-            return _localScopes.Peek().ContainsKey(key) || _constants.ContainsKey(key);
+            return _localScopes.Peek().ContainsKey(name) || _constants.ContainsKey(name);
         }
         
-        return _variables.ContainsKey(key) || _constants.ContainsKey(key);
+        return _variables.ContainsKey(name) || _constants.ContainsKey(name);
     }
 
     // ========================================================================
@@ -135,19 +136,19 @@ public class Variables
     
     public bool SetConstant(string name, Value value)
     {
-        string key = name.ToUpperInvariant();
+        // string key = name.ToUpperInvariant();
         
         // Constants can only be set once
-        if (_constants.ContainsKey(key))
+        if (_constants.ContainsKey(name))
             return false;
         
-        _constants[key] = value;
+        _constants[name] = value;
         return true;
     }
 
     public bool IsConstant(string name)
     {
-        return _constants.ContainsKey(name.ToUpperInvariant());
+        return _constants.ContainsKey(name); //.ToUpperInvariant());
     }
 
     // ========================================================================
@@ -168,27 +169,27 @@ public class Variables
     // array of that name exists, say why it isn't visible instead of "use DIM".
     private string ArrayNotDeclaredMessage(string arrayName)
     {
-        if (_localArrayScopes.Count > 0 && _arrays.ContainsKey(arrayName.ToUpperInvariant()))
+        if (_localArrayScopes.Count > 0 && _arrays.ContainsKey(arrayName)) //.ToUpperInvariant()))
             return $"Global array {arrayName} is not visible inside DEF FN - pass it as a parameter with ASJSON() and rebuild it with ASARRAY()";
         return $"Array not declared, use DIM first: {arrayName}";
     }
 
     private static OrderedDictionary<string, Value> NewArray() =>
-        new(StringComparer.OrdinalIgnoreCase);
+        new(StringComparer.Ordinal); // IgnoreCase);
 
     // Implicit declaration (SPLIT, JOIN, network helpers...): no-op if the
     // name already resolves to an array. Otherwise create it in the current
     // scope - inside a function that means a local array.
     public void DeclareArray(string name)
     {
-        string key = name.ToUpperInvariant();
-        if (TryResolveArray(key, out _))
+        // string key = name.ToUpperInvariant();
+        if (TryResolveArray(name, out _))
             return;
 
         if (_localArrayScopes.Count > 0)
-            _localArrayScopes.Peek()[key] = NewArray();
+            _localArrayScopes.Peek()[name] = NewArray();
         else
-            _arrays[key] = NewArray();
+            _arrays[name] = NewArray();
     }
 
     // Explicit DIM. Inside a function it ALWAYS creates a fresh, empty local
@@ -197,28 +198,28 @@ public class Variables
     // behavior: re-DIM of an existing array is a no-op.
     public void DimArray(string name)
     {
-        string key = name.ToUpperInvariant();
+        // string key = name.ToUpperInvariant();
         if (_localArrayScopes.Count > 0)
         {
-            _localArrayScopes.Peek()[key] = NewArray();
+            _localArrayScopes.Peek()[name] = NewArray();
             return;
         }
 
-        if (!_arrays.ContainsKey(key))
-            _arrays[key] = NewArray();
+        if (!_arrays.ContainsKey(name))
+            _arrays[name] = NewArray();
     }
 
     public bool ArrayExists(string name)
     {
-        return TryResolveArray(name.ToUpperInvariant(), out _);
+        return TryResolveArray(name, out _); //.ToUpperInvariant(), out _);
     }
 
     public void SetArrayElement(string arrayName, string index, Value value)
     {
-        string key = arrayName.ToUpperInvariant();
+        // string key = arrayName.ToUpperInvariant();
         
         // Check if array is declared - do NOT auto-declare
-        if (!TryResolveArray(key, out var value1))
+        if (!TryResolveArray(arrayName, out var value1))
         {
             throw new InvalidOperationException(ArrayNotDeclaredMessage(arrayName));
         }
@@ -228,9 +229,9 @@ public class Variables
 
     public Value GetArrayElement(string arrayName, string index)
     {
-        string key = arrayName.ToUpperInvariant();
+        // string key = arrayName.ToUpperInvariant();
         
-        if (!TryResolveArray(key, out var array))
+        if (!TryResolveArray(arrayName, out var array))
         {
             throw new InvalidOperationException(ArrayNotDeclaredMessage(arrayName));
         }
@@ -243,9 +244,9 @@ public class Variables
 
     public bool HasKey(string arrayName, string index)
     {
-        string key = arrayName.ToUpperInvariant();
+        // string key = arrayName.ToUpperInvariant();
         
-        if (!TryResolveArray(key, out var array))
+        if (!TryResolveArray(arrayName, out var array))
             return false;
         
         return array.ContainsKey(index);
@@ -253,9 +254,9 @@ public class Variables
 
     public bool DeleteKey(string arrayName, string index)
     {
-        string key = arrayName.ToUpperInvariant();
+        // string key = arrayName.ToUpperInvariant();
         
-        if (!TryResolveArray(key, out var array))
+        if (!TryResolveArray(arrayName, out var array))
             return false;
         
         return array.Remove(index);
@@ -263,17 +264,17 @@ public class Variables
 
     public bool DeleteArray(string arrayName)
     {
-        string key = arrayName.ToUpperInvariant();
+        // string key = arrayName.ToUpperInvariant();
         if (_localArrayScopes.Count > 0)
-            return _localArrayScopes.Peek().Remove(key);
-        return _arrays.Remove(key);
+            return _localArrayScopes.Peek().Remove(arrayName);
+        return _arrays.Remove(arrayName);
     }
 
     public int GetArrayLength(string arrayName)
     {
-        string key = arrayName.ToUpperInvariant();
+        // string key = arrayName.ToUpperInvariant();
         
-        if (!TryResolveArray(key, out var array))
+        if (!TryResolveArray(arrayName, out var array))
             return 0;
         
         return array.Count;
@@ -281,8 +282,8 @@ public class Variables
 
     public OrderedDictionary<string, Value>? GetAllArrayElements(string arrayName)
     {
-        string key = arrayName.ToUpperInvariant();
-        return TryResolveArray(key, out var array) ? array : null;
+        // string key = arrayName.ToUpperInvariant();
+        return TryResolveArray(arrayName, out var array) ? array : null;
     }
 
     // Count unique first-dimension values (for ROWCOUNT)
@@ -306,9 +307,9 @@ public class Variables
     // Returns null if the array doesn't exist or the index is out of range.
     public string? GetArrayKeyAt(string arrayName, int index)
     {
-        string key = arrayName.ToUpperInvariant();
+        // string key = arrayName.ToUpperInvariant();
 
-        if (!TryResolveArray(key, out var array))
+        if (!TryResolveArray(arrayName, out var array))
             return null;
 
         if (index < 0 || index >= array.Count)
@@ -323,8 +324,8 @@ public class Variables
     
     public void PushScope()
     {
-        _localScopes.Push(new Dictionary<string, Value>(StringComparer.OrdinalIgnoreCase));
-        _localArrayScopes.Push(new Dictionary<string, OrderedDictionary<string, Value>>(StringComparer.OrdinalIgnoreCase));
+        _localScopes.Push(new Dictionary<string, Value>(StringComparer.Ordinal));
+        _localArrayScopes.Push(new Dictionary<string, OrderedDictionary<string, Value>>(StringComparer.Ordinal));
     }
 
     public void PopScope()
@@ -339,7 +340,7 @@ public class Variables
     {
         if (_localScopes.Count > 0)
         {
-            _localScopes.Peek()[name.ToUpperInvariant()] = value;
+            _localScopes.Peek()[name] = value;
         }
         else
         {
@@ -349,10 +350,10 @@ public class Variables
 
     public Value GetLocal(string name)
     {
-        string key = name.ToUpperInvariant();
+        //string key = name.ToUpperInvariant();
         
         // Check local scope first
-        if (_localScopes.Count > 0 && _localScopes.Peek().TryGetValue(key, out Value value))
+        if (_localScopes.Count > 0 && _localScopes.Peek().TryGetValue(name, out Value value))
             return value;
         
         // Fall back to global

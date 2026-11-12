@@ -121,6 +121,8 @@ IF k$ = KEY_S# OR k$ = KEY_NUMPAD_MINUS# THEN speed$ = speed$ - 1
 
 **Console mode differs:** without a graphics screen, INKEY and WAITKEY return the character that was actually typed (Shift and AltGr included), except for letters (always uppercase codes) and the special keys listed above. Numpad keys return the typed digit or operator, not the `KEY_NUMPAD*#` values. KEYDOWN is not available in console mode.
 
+**No real console (redirected stdin/stdout):** console keyboard and screen commands (`INKEY`, `WAITKEY`, `SLEEP` key-wait, `CLS`, `CURPOS`) need a real console; with redirected input/output they stop with a line-numbered `Error at line N: ...` and exit code 1. `INPUT` / `LINE INPUT` also reads piped stdin and keeps working.
+
 ### CURPOS
 Returns the current cursor position. Useful for reading where the cursor is after PRINT or LOCATE.
 

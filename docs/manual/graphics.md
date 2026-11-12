@@ -443,6 +443,9 @@ LET ARROW#  = LOADSHAPE("TRIANGLE", 30, 40, RGB(0, 0, 255))
 
 ### LOADSHEET - Load Sprite Sheet
 Reads an image file and splits it into sprites according to the specification. The original image size must be divisible by the given size parameters
+
+- Relative paths resolve against the program's folder (same as `PRG_ROOT#`), e.g. `"assets/sheet.png"` works no matter where you launch from. Absolute paths are used as-is.
+- A missing or unloadable file halts the program with an `Error at line N: ...` message (`File not found: <path>`), exit code 1.
 ```vb
 ' BazzBasic version 1.3
 ' https://ekbass.github.io/BazzBasic/
@@ -590,6 +593,9 @@ REMOVESHAPE SQUARE#             ' Delete and free memory
 
 ### LOADIMAGE
 **Note:** Images can be handled just as shapes
+
+- Relative paths resolve against the program's folder (same as `PRG_ROOT#`), e.g. `"assets/plane.png"` works no matter where you launch from. Absolute paths are used as-is. `http(s)://` URLs are also accepted (downloaded into the program's folder first — see below).
+- A missing or unloadable file halts the program with `Error at line N: Failed to load image: File not found: <path>` (exit code 1).
 ```vb
 [inits]
 	SCREEN 12

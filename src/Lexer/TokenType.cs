@@ -102,6 +102,9 @@ public enum TokenType
     TOK_SENDRESPONSE        = 138,
     TOK_STOPLISTEN          = 139,
     TOK_HTTPERROR           = 140,
+    TOK_ASXML               = 141,      // XML light model (6.11.2026)
+    TOK_LOADXML             = 142,
+    TOK_SAVEXML             = 143,
 
     // ========================================================================
     // Sound Keywords 151 - 200
