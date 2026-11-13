@@ -5,6 +5,44 @@ They take effect once a new binary release is published.
 
 Changes for older versions are in [changes-archive.md](changes-archive.md).
 
+## 13th November 2026
+
+Released as version 1.7
+
+### New
+- `SAME(a$, b$)` — exact, case-sensitive text comparison, e.g. `IF SAME(pass$, input$) THEN PRINT "Welcome"`. (`=` still ignores case between texts.)
+- New built-in constants: `AU#` = 149597870700 (the astronomical unit in metres) and `BBBUILD#` (the build time of the interpreter).
+- XML support: `ASARRAY` reads XML automatically, plus the new `ASXML`, `LOADXML` and `SAVEXML` — handy for RSS/Atom feeds.
+- `ASC(s$, pos)` returns the code of the character at 1-based position `pos`.
+- The HTTP listener `STARTLISTEN` can now listen on a given host address, so a BazzBasic server can be reached from the open internet, not only from the same machine.
+- Programs packaged as `.exe` now receive their command-line arguments (`ARGCOUNT` / `ARGS`), just like scripts do.
+
+### Significant fixes
+- `LOADIMAGE`, `LOADSHEET` and `LOADSOUND` now load relative paths from the program's own folder, no matter which folder you launch from.
+- Every runtime error now prints its line number: `Error at line N: ...`.
+- Division by zero now gives `0` for all of `/`, `/=`, `%` and `MOD` (before, only `/` did).
+- Robustness: extreme arguments no longer crash or freeze the program. `MID`, `REPEAT` and `SRAND` with a negative or huge value stop with a clear, line-numbered error, and `ASJSON`/`SAVEJSON` with a huge numeric key (e.g. `2147483647`) return instantly instead of freezing.
+- `ASJSON`/`SAVEJSON` write JSON keys exactly as they are, case included — `key` and `KEY` stay two separate keys. Note: JSON saved by older versions with keys differing only in case may already have lost data — check old saved JSON files.
+
+### Breaking changes — what you will notice
+- Calling a function with the wrong number of arguments now gives a clear error instead of silently continuing.
+- `DIM` now requires array names ending in `$`.
+- `#` names are no longer accepted as function parameters — pass constants as arguments instead.
+- Unknown characters in the source (like `\` or `^`) now stop the program with a clear error instead of being ignored.
+- Array string keys are now case-sensitive: `arr$("name")` and `arr$("NAME")` are two different elements.
+
+### Bug fixes
+- `PI`, `HPI`, `QPI` and `TAU` now return full precision, the same values as the `#` constants.
+- A duplicate label is now an error instead of passing silently.
+- Console commands (`INKEY`, `WAITKEY`, `SLEEP`, `CLS`, `CURPOS`) give a clear line-numbered error when the program runs without a real console; piped `INPUT` still works.
+- `bb.bat` no longer prints a stray error line on every launch.
+
+### Other
+- A plain `FOR` loop with one assignment runs about 21 % faster.
+- - This was achieved by fine tuning the methods, stack handling etc.
+
+Full details: changes.md
+
 ## 7th November 2026
 
 ### Breaking changes
@@ -27,6 +65,16 @@ Found in the D88 audit of all string functions. `MID(s$, start, len)` with a neg
 - `REPEAT(s$, n)` with a result longer than 2147483647 characters used to hang and then crash without a line number. Now: `Error at line N: REPEAT: result too large (4000000000 characters)` (exit code 1). The result is also built with a StringBuilder now, so large but legal repeats are much faster. `n <= 0` or an empty string still gives `""`.
 - Unchanged behavior, now documented in the manual and SKILL: `LEFT` / `RIGHT` with `n <= 0` give `""` and with `n` past the end give the whole string; `INSTR` with a start position less than 1 or greater than `LEN(s$)` gives `0`; `ASC` with an out-of-range position gives `0`.
 - Not a breaking change (not listed under "Breaking changes" above): the old crashes still stop with exit code 1, now with a line number; a `MID` length in the old overflow window crashed before and now clamps, so no previously working program stops.
+
+## ASJSON/SAVEJSON no longer freeze on huge numeric keys; odd keys become object properties (T16)
+`ASJSON(arr$)` — and `SAVEJSON`, which shares the code — used to loop from index 0 up to the largest numeric key, so `arr$("2147483647") = 1` froze the program and then ran out of memory, with no error and no line number. Keys like `"-5"` or `"007"` were silently dropped from the output.
+- Now, at every nesting level, a level becomes a JSON **array** only when every key at that level is a plain non-negative number (`"0"`, `"1"`, ... — no sign, no leading zeros, no spaces) and the largest index is at most 1,000,000 or the level is dense (largest index below `4 * count + 64`). Otherwise it becomes a JSON **object** with the original key strings: `ASJSON` of `arr$("2147483647") = 1` instantly gives `{"2147483647":1}`, and `"-5"` / `"007"` keys are kept as properties instead of dropped.
+- Dense arrays (e.g. `SPLIT` results or a `FOR i$ = 0 TO n` loop) and small sparse arrays (`arr$(0)` and `arr$(5)` give `["x",null,null,null,null,"y"]`) produce byte-identical output to before; mixed string/numeric keys were already objects.
+- `ASARRAY` / `LOADJSON` read both shapes back to the same array keys (arrays become `"0"`..`"n-1"`, objects keep their property names; JSON `null` holes are skipped), so round-trips are unchanged.
+- Not a breaking change (not listed under "Breaking changes" above): the freeze cases never returned before, and every previously working program produces the same output.
+
+## ASJSON/SAVEJSON keep JSON key case verbatim — JSON keys are case-sensitive in both directions (T17)
+Before 1.7, `ASJSON(arr$)` and `SAVEJSON` collapsed array keys that differ only by case into one JSON key and silently lost a value: `a$("key") = "lower"` and `a$("KEY") = "upper"` produced `{"key":{"":"upper"}}` instead of `{"key":"lower","KEY":"upper"}`, at every nesting level (comma-separated keys). Now JSON object keys are written verbatim — case-sensitive, exactly like array string keys (D12) and like the `ASARRAY`/`LOADJSON` read path, which already read property names verbatim — so a JSON round-trip preserves case in both directions. Not under "Breaking changes" above: the impact scan found no shipped program serializing case-colliding keys, but if your pre-1.7 data had such keys, the old JSON output had already lost data — check it.
 
 ## DEF FN: parameters must end in $, calls must pass the right number of arguments (T12)
 Found while fixing BazzBasic Studio's report B5 (T8).

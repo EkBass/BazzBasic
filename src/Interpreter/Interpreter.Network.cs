@@ -216,7 +216,7 @@ public partial class Interpreter
             return new System.Text.Json.Nodes.JsonObject();
 
         // Collect all top-level keys
-        var top = new Dictionary<string, List<(string rest, Value val)>>(StringComparer.OrdinalIgnoreCase);
+        var top = new Dictionary<string, List<(string rest, Value val)>>(StringComparer.Ordinal);   // D100/D12: array keys are case-sensitive
 
         foreach (var kv in elements)
         {
@@ -227,13 +227,28 @@ public partial class Interpreter
             top[first].Add((rest, kv.Value));
         }
 
-        // If all keys are numeric indices → array
-        bool isArray = top.Keys.All(k => int.TryParse(k, out _));
+        // D95: JSON array only when every top-level key is the CANONICAL string of a
+        // non-negative int AND the index range is bounded (max <= 1e6, or dense:
+        // max < 4*count+64, so the loop stays O(element count)). Anything else becomes a
+        // JSON object with the original key strings. Before, any numeric key made the
+        // loop run max+1 times - arr$("2147483647") froze then OOMed with no error and no
+        // line number - and "-5" / "007" / " 5" keys were silently dropped.
+        const int MaxSparseArrayIndex = 1_000_000;
+        bool isArray = true;
+        int max = -1;
+        foreach (var k in top.Keys)
+        {
+            if (!int.TryParse(k, out int n) || n < 0 || n.ToString() != k)
+            {
+                isArray = false;
+                break;
+            }
+            if (n > max) max = n;
+        }
 
-        if (isArray)
+        if (isArray && (max <= MaxSparseArrayIndex || max < 4 * top.Count + 64))
         {
             var list = new System.Text.Json.Nodes.JsonArray();
-            int max = top.Keys.Select(k => int.Parse(k)).Max();
             for (int i = 0; i <= max; i++)
             {
                 string idx = i.ToString();
@@ -263,7 +278,7 @@ public partial class Interpreter
         }
 
         // Recurse: rebuild sub-dictionary
-        var sub = new Dictionary<string, Value>(StringComparer.OrdinalIgnoreCase);
+        var sub = new Dictionary<string, Value>(StringComparer.Ordinal);   // D100/D12: array keys are case-sensitive
         foreach (var (rest, val) in entries)
             sub[rest] = val;
         return BuildJsonTree(sub);

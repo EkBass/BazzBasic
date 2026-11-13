@@ -434,6 +434,33 @@ PRINT json$
 ' Output: {"name":"Alice","score":9999,"address":{"city":"New York"},"skills":["JavaScript","Python"]}
 ```
 
+Numeric keys decide the shape, at every nesting level: a level becomes a JSON **array** only when every key at that level is a plain non-negative number (`"0"`, `"1"`, `"2"`, ... — no sign, no leading zeros, no spaces) **and** the largest index is at most 1,000,000 or the level is dense (largest index below `4 * key count + 64`). Otherwise the level becomes a JSON **object** with the original keys as property names.
+```vb
+DIM a$
+a$(0) = "x"
+a$(5) = "y"
+PRINT ASJSON(a$)     ' Output: ["x",null,null,null,null,"y"]
+
+DIM b$
+b$("2147483647") = 1
+PRINT ASJSON(b$)     ' Output: {"2147483647":1}
+
+DIM c$
+c$("-5") = 1
+c$("007") = 2
+PRINT ASJSON(c$)     ' Output: {"-5":1,"007":2}
+```
+Dense arrays (for example `SPLIT` results or a `FOR i$ = 0 TO n` loop filling `arr$(i$)`) and small sparse arrays like `a$` above stay JSON arrays, so their output is unchanged from older versions. Keys like `"-5"`, `"007"` or `" 5"` are kept as object properties instead of being dropped, and a huge key such as `"2147483647"` returns instantly instead of freezing the program (before version 1.7).
+
+JSON object keys keep the array key's case verbatim — case-sensitive, same as array string keys (see String Indexing above). `ASARRAY`/`LOADJSON` read property names verbatim too, so a JSON round-trip preserves case in both directions.
+```vb
+DIM a$
+a$("key") = "lower"
+a$("KEY") = "upper"
+PRINT ASJSON(a$)     ' Output: {"key":"lower","KEY":"upper"}
+```
+Before version 1.7, keys differing only by case collapsed in `ASJSON`/`SAVEJSON` output and one value was silently lost (`{"key":{"":"upper"}}`).
+
 ### ASARRAY
 Converts a JSON string into a BazzBasic array. Returns number of elements loaded:
 ```vb
@@ -461,6 +488,26 @@ Nested JSON becomes comma-separated keys:
 END
 ```
 
+Both output shapes read back to the same keys: a JSON array becomes keys `"0"` to `"n-1"`, a JSON object keeps its property names as they are. JSON `null` holes are skipped — they stay uninitialized and are not counted.
+```vb
+DIM a$
+a$(0) = "x"
+a$(5) = "y"
+DIM b$
+LET count$ = ASARRAY(b$, ASJSON(a$))
+PRINT count$          ' Output: 2 (the null holes are skipped)
+PRINT b$(0) + b$(5)   ' Output: xy
+
+DIM h$
+h$("2147483647") = 1
+DIM g$
+LET n$ = ASARRAY(g$, ASJSON(h$))
+PRINT n$              ' Output: 1
+PRINT g$("2147483647") ' Output: 1
+```
+
+`ASARRAY` reads JSON property names verbatim — case preserved — so a round-trip `ASARRAY(b$, ASJSON(a$))` keeps keys like `"key"` and `"KEY"` distinct.
+
 ### LOADJSON
 Loads a JSON file directly into an array:
 ```vb
@@ -469,6 +516,8 @@ LOADJSON scores$, "highscores.json"
 
 PRINT scores$("first,name")   ' Output: depends on file contents
 ```
+
+`LOADJSON` reads both shapes like `ASARRAY` does (arrays become keys `"0"` to `"n-1"`, objects keep their property names with their case, `null` values are skipped).
 
 ### SAVEJSON
 Saves an array as a formatted JSON file:
@@ -493,6 +542,8 @@ The resulting `savegame.json`:
   }
 }
 ```
+
+`SAVEJSON` writes the same shape `ASJSON` produces (both share the same code), formatted as shown above; JSON object keys keep their case.
 
 ### Practical example: HTTP API + JSON
 ```vb
