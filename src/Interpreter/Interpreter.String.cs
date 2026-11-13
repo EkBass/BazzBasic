@@ -222,18 +222,26 @@ public partial class Interpreter
         string s = EvaluateExpression().AsString();
         Require(TokenType.TOK_COMMA);
         int start = (int)EvaluateExpression().AsNumber() - 1; // 1-based
-        int len = s.Length - start;
+        long len = s.Length - start;   // long: s.Length - start overflows int when start = int.MinValue
 
         if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_COMMA)
         {
             _pos++;
-            len = (int)EvaluateExpression().AsNumber();
+            len = (long)EvaluateExpression().AsNumber();   // truncated toward zero, saturating cast
         }
         Require(TokenType.TOK_RPAREN);
+        if (_hasError) return Value.Empty;
 
         if (start < 0 || start >= s.Length) return Value.FromString("");
-        if (start + len > s.Length) len = s.Length - start;
-        return Value.FromString(s.Substring(start, len));
+        // D88: negative len made Substring throw past the interpreter (no line number);
+        // huge len made start + len overflow int, skipping the clamp -> same crash
+        if (len < 0)
+        {
+            Error($"MID: length must be 0 or more, got {len}");
+            return Value.Empty;
+        }
+        if (len > s.Length - start) len = s.Length - start;   // long arithmetic: huge len clamps to the tail
+        return Value.FromString(s.Substring(start, (int)len));
     }
 
     private Value EvaluateRepeatFunc()
@@ -244,13 +252,31 @@ public partial class Interpreter
         Require(TokenType.TOK_COMMA);
         int timesTo = (int)EvaluateExpression().AsNumber();
         Require(TokenType.TOK_RPAREN);
+        if (_hasError) return Value.Empty;
 
-        string repTemp = "";
-        for (int i = 0; i < timesTo; i++)
+        if (timesTo <= 0 || toRepeat.Length == 0) return Value.FromString("");   // unchanged: negative/0 -> ""
+
+        // D88: the += loop was O(timesTo^2) and OOM-escaped without a line number for huge counts
+        long total = (long)toRepeat.Length * timesTo;
+        if (total > int.MaxValue)
         {
-            repTemp += toRepeat;
+            Error($"REPEAT: result too large ({total} characters)");
+            return Value.Empty;
         }
-        return Value.FromString(repTemp);
+        try
+        {
+            var sb = new System.Text.StringBuilder((int)total);
+            for (int i = 0; i < timesTo; i++)
+            {
+                sb.Append(toRepeat);
+            }
+            return Value.FromString(sb.ToString());
+        }
+        catch (OutOfMemoryException)
+        {
+            Error($"REPEAT: result too large ({total} characters)");
+            return Value.Empty;
+        }
     }
 
     private Value EvaluateReplaceFunc()

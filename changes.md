@@ -7,6 +7,13 @@ Changes for older versions are in [changes-archive.md](changes-archive.md).
 
 ## 7th November 2026
 
+### Breaking changes
+
+- **DEF FN now checks the argument count** (T12): calling a user function with the wrong number of arguments stops the program — `Error at line N: FN ADD$: expected 2 arguments, got 1`.
+- **DIM requires array names ending in `$`** (T11): `Error at line N: DIM: expected an array name ending in $, got 'PI#'`; DIM stops at the end of the statement, so the rest of the line runs.
+- **`#` names are rejected as DEF FN parameters** (T12): `... # names are constants and cannot be parameters` — constants can still be passed as arguments.
+- **Unknown characters in source (e.g. backslash `\` and `^`) now stop the program** (T8): `Error: Line N: Unexpected character ...` instead of being silently dropped.
+
 ## Division by zero gives 0 for /=, % and MOD too (T14)
 Krisu's rule (D84): dividing by zero gives `0` everywhere, not only with `/`. Before, `a$ /= 0` gave `Infinity` (on a variable and on an array element), and `10 % 0` and `MOD(10, 0)` gave `NaN`, which then spread through every later calculation. Now all four give `0`. A divisor that is already `NaN` still gives `NaN`.
 - Visible in two `Examples\rosetta-code` programs, only when the user types 0: `Arithmetic_Integer.bas` prints `Remainder:  0` instead of `Remainder:  NaN`, and in `General_FizzBuzz.bas` a factor of 0 now prints its word on every line (before: never, because `NaN = 0` is false).
@@ -14,6 +21,12 @@ Krisu's rule (D84): dividing by zero gives `0` everywhere, not only with `/`. Be
 ## SRAND with a negative or huge length gives a line-numbered error (T13)
 Found during the H1 documentation check. `SRAND(-1)` stopped with `Error: Arithmetic operation resulted in an overflow.` and `SRAND(10000000000)` with `Error: Insufficient memory to continue the execution of the program.`, both without a line number. Now: `Error at line N: SRAND: length must be 0 or more, got -1` and `Error at line N: SRAND: length 2147483647 is too large` (exit code 1 as before). The decimal part is still dropped: `SRAND(3.7)` gives 3 characters, `SRAND(-0.5)` gives `""`.
 - Comments only: the old `PI#`, `QPI#` and `TAU#` digits in `Examples\rosetta-code\Real_constants_and_functions.bas` and `Special_variables.bas` now match what the interpreter prints. Program output is unchanged.
+
+## MID and REPEAT with extreme arguments: line-numbered errors and clamping (T15)
+Found in the D88 audit of all string functions. `MID(s$, start, len)` with a negative `len` crashed with a line-number-less `Error: ...`, and a huge `len` in the int-overflow window (e.g. `2147483647`) crashed the same way. Now a negative length stops with `Error at line N: MID: length must be 0 or more, got -1` (exit code 1), and a length past the end of the string clamps to the tail: `MID("abc", 2, 999999999999)` gives `"bc"`. `start` less than 1 or greater than `LEN(s$)` still gives `""`.
+- `REPEAT(s$, n)` with a result longer than 2147483647 characters used to hang and then crash without a line number. Now: `Error at line N: REPEAT: result too large (4000000000 characters)` (exit code 1). The result is also built with a StringBuilder now, so large but legal repeats are much faster. `n <= 0` or an empty string still gives `""`.
+- Unchanged behavior, now documented in the manual and SKILL: `LEFT` / `RIGHT` with `n <= 0` give `""` and with `n` past the end give the whole string; `INSTR` with a start position less than 1 or greater than `LEN(s$)` gives `0`; `ASC` with an out-of-range position gives `0`.
+- Not a breaking change (not listed under "Breaking changes" above): the old crashes still stop with exit code 1, now with a line number; a `MID` length in the old overflow window crashed before and now clamps, so no previously working program stops.
 
 ## DEF FN: parameters must end in $, calls must pass the right number of arguments (T12)
 Found while fixing BazzBasic Studio's report B5 (T8).

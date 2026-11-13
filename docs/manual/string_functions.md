@@ -88,6 +88,8 @@ PRINT INSTR("Hello World", "world", 0) ' returns 7
 ' Case-sensitive mode, same as default mode
 PRINT INSTR("Hello World", "world", 1) ' returns 0
 ```
+With a start position — `INSTR(start, s$, search$)` — a `start` less than 1 or greater than `LEN(s$)` returns `0`.
+
 Note: `=` ignores case between strings. To compare two strings exactly, use `SAME(a$, b$)` (below), see also [Comparing text](operators.md?id=comparing-text).
 
 ### INVERT(s$)
@@ -106,7 +108,10 @@ PRINT LCASE("Hello")  ' Output: hello
 Returns first n characters.
 ```vb
 PRINT LEFT("Hello World", 5)  ' Output: Hello
+PRINT LEFT("abc", 99)          ' Output: abc (n past the end gives the whole string)
+PRINT "[" + LEFT("abc", 0) + "]"  ' Output: [] (n <= 0 gives an empty string)
 ```
+`n` less than or equal to 0 returns `""`; `n` greater than `LEN(s$)` returns the whole string.
 
 ### LEN(s$)
 Returns string length.
@@ -127,14 +132,20 @@ Returns substring starting at position (1-based).
 PRINT MID("Hello World", 7)     ' Output: World
 PRINT MID("Hello World", 7, 3)  ' Output: Wor
 PRINT MID("Hello World", 1, 5)  ' Output: Hello
+PRINT MID("abc", 2, 999)        ' Output: bc (length past the end clamps to the tail)
+PRINT "[" + MID("abc", 0, 2) + "]"  ' Output: [] (start < 1 or > LEN gives an empty string)
+PRINT MID("abc", 2, -1)         ' Error at line N: MID: length must be 0 or more, got -1
 ```
+A `start` less than 1 or greater than `LEN(s$)` returns `""`. A `length` less than 0 stops the program with `Error at line N: MID: length must be 0 or more, got -1` (exit code 1); a `length` past the end of the string clamps to the tail, so `MID("abc", 2, 999999999999)` gives `"bc"`.
 
 ### REPEAT(s$, n)
 Repeats the text requested times
 ```vb
 LET a$ = REPEAT("Foo", 10)
 PRINT a$ ' Output: FooFooFooFooFooFooFooFooFooFoo
+PRINT "[" + REPEAT("ab", 0) + "]"  ' Output: [] (n <= 0 gives an empty string)
 ```
+`n` less than or equal to 0, or an empty string, returns `""`. If the result would be longer than 2147483647 characters, the program stops with `Error at line N: REPEAT: result too large (4000000000 characters)` (exit code 1).
 
 ### REPLACE(s$, a$, b$)
 Replaces a$ with b$ from s$
@@ -148,7 +159,10 @@ PRINT result$  ' "Hello BazzBasic"
 Returns last n characters.
 ```vb
 PRINT RIGHT("Hello World", 5) ' Output: World
+PRINT RIGHT("abc", 99)          ' Output: abc (n past the end gives the whole string)
+PRINT "[" + RIGHT("abc", 0) + "]"  ' Output: [] (n <= 0 gives an empty string)
 ```
+`n` less than or equal to 0 returns `""`; `n` greater than `LEN(s$)` returns the whole string.
 
 ### RTRIM(s$)
 Removes blank characters from the right of the text
