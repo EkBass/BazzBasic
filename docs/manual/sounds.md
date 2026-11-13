@@ -360,7 +360,7 @@ END
   
 ## Why Constants, Not Variables?
 
-Sound IDs returned by `LOADSOUND` are handles assigned by SDL2. BazzBasic uses them only to point to the correct audio resource — they never change during program execution.
+Sound IDs returned by `LOADSOUND` are text handles (GUID-style, such as `57212810-1166-4bcf-8ccd-bdfc6607046f`). BazzBasic uses them only to point to the correct audio resource — they never change during program execution.
 
 Storing them in constants (`#` suffix) communicates this intent clearly:
 

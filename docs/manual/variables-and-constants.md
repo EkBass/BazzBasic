@@ -23,12 +23,14 @@ PRINT c$ 		' Output: 3
 
 ## Constants
 ```vb
-' Basic init for constants'
+' Basic init for constants
 
-LET PI# 				= 3.14159
+LET GRAVITY# 		= 9.81
 LET MAX_PLAYERS# 	= 4
 LET GAME_TITLE# 		= "Space Invaders"
 ```
+
+Built-in constants such as `PI#` already exist (see [Built-in Constants](#built-in-constants)) and cannot be redefined: `LET PI# = 3.14` stops the program with `Cannot redefine constant 'PI#'`. Give your own constants other names.
 
 ## LET only when init
 ```vb
@@ -123,31 +125,39 @@ A comparison is true if:
 ```vb
 LET a$, b$, c$
 
-a$ = "12"              	' a$ has now value "12"
-b$ = 12                	' b$ has now value 12
-c$ = b$ + a$				' c$ has now value "24"
+a$ = "12"               ' a$ holds the text "12"
+b$ = 12                 ' b$ holds the number 12
+c$ = b$ + a$            ' c$ is now "1212" - + joins when one side is text
 
 ' Output of this IF...THEN: Same
-IF a$ = b$ then
-	print "Same"
+IF a$ = b$ THEN
+	PRINT "Same"
 ELSE
-	print "Different"
+	PRINT "Different"
 ENDIF
 
 ' Output of this IF...THEN: Different
-IF a$ = c$ then
-	print "Same"
+IF a$ = c$ THEN
+	PRINT "Same"
 ELSE
-	print "Different"
+	PRINT "Different"
 ENDIF
 
-c$ = c$ - b$
+c$ = b$ + VAL(a$)       ' c$ is now 24 - VAL() turns the text into a number
 ' Output of this IF...THEN: Same
-IF c$ = b$ then
-	print "Same"
+IF c$ = 24 THEN
+	PRINT "Same"
 ELSE
-	print "Different"
+	PRINT "Different"
 ENDIF
+```
+
+**`+` with text:** if either side of `+` is a string, `+` joins the values as text instead of adding them. It works from left to right, and `*` and `/` are calculated first.
+```vb
+PRINT "12" + 3                ' Output: 123
+PRINT 1 + "23"                ' Output: 123
+PRINT 1 + 2                   ' Output: 3
+PRINT 1 + 2 + "Foo" + 4 * 5   ' Output: 3Foo20
 ```
 
 **Note:** Although 123 and "123" produce TRUE in an IF...THEN comparison, it is best to keep numeric variables as numeric and string variables as string.
@@ -164,7 +174,7 @@ BazzBasic provides a full range of automatically initialized constants
 | `EULER#` | e ≈ 2.718281828459045 |
 | `AU#` | 149597870700 — astronomical unit in metres (exact, IAU 2012) |
 
-> **Note:** if your code declares its own `AU#` with `LET`, remove that line — the built-in constant takes precedence, so reads always see 149597870700.
+> **Note:** if older code declares its own `AU#` with `LET`, remove that line — built-in constants cannot be redefined, so it is now an error.
 
 **System:**
 | Constant | Description |

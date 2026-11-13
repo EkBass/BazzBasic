@@ -295,18 +295,35 @@ public partial class Interpreter
     {
         _pos++;
         Require(TokenType.TOK_LPAREN);
-        int length = (int)EvaluateExpression().AsNumber();
+        int length = (int)EvaluateExpression().AsNumber();   // truncated toward zero
         Require(TokenType.TOK_RPAREN);
+        if (_hasError) return Value.Empty;
+
+        // new char[negative] threw an OverflowException past the interpreter
+        // ("Error: Arithmetic operation resulted in an overflow." without a line number)
+        if (length < 0)
+        {
+            Error($"SRAND: length must be 0 or more, got {length}");
+            return Value.Empty;
+        }
 
         // adjusted as raw string generation
         const string chars = """ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&/{([)]=}?+-_""";
         var random = new Random();
-        var result = new char[length];
-        for (int i = 0; i < length; i++)
+        try
         {
-            result[i] = chars[random.Next(chars.Length)];
+            var result = new char[length];
+            for (int i = 0; i < length; i++)
+            {
+                result[i] = chars[random.Next(chars.Length)];
+            }
+            return Value.FromString(new string(result));
         }
-        return Value.FromString(new string(result));
+        catch (OutOfMemoryException)
+        {
+            Error($"SRAND: length {length} is too large");
+            return Value.Empty;
+        }
     }
 
     private Value EvaluateSplitFunc()
@@ -390,6 +407,35 @@ public partial class Interpreter
             System.Globalization.CultureInfo.InvariantCulture, out double result))
             return Value.FromNumber(result);
         return Value.Zero;
+    }
+
+    // SAME(a$, b$) - exact comparison (D78): 1 if both values are identical
+    // character for character (ordinal, case-sensitive), else 0.
+    // The = operator stays case-insensitive (D76). Numbers are compared in
+    // their AsString() form: SAME(1, "1") = 1, SAME("1.0", 1) = 0.
+    private Value EvaluateSameFunc()
+    {
+        _pos++;                                   // consume SAME
+        Require(TokenType.TOK_LPAREN, "Expected '(' after SAME");
+
+        var args = new List<Value>();
+        if (!_hasError && _pos < _tokens.Count && _tokens[_pos].Type != TokenType.TOK_RPAREN)
+        {
+            args.Add(EvaluateExpression());
+            while (!_hasError && Expect(TokenType.TOK_COMMA))
+                args.Add(EvaluateExpression());
+        }
+        Require(TokenType.TOK_RPAREN);
+        if (_hasError) return Value.Zero;
+
+        if (args.Count != 2)
+        {
+            Error("SAME: expected 2 arguments");
+            return Value.Zero;
+        }
+
+        bool same = string.Equals(args[0].AsString(), args[1].AsString(), StringComparison.Ordinal);
+        return Value.FromNumber(same ? 1 : 0);
     }
 
     // ========================================================================

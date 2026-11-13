@@ -176,6 +176,7 @@ public class Lexer(string source)
         ["UCASE"]       = TokenType.TOK_UCASE,
         ["VAL"]         = TokenType.TOK_VAL,
         ["FSTRING"]     = TokenType.TOK_FSTRING,
+        ["SAME"]        = TokenType.TOK_SAME,
 
         // Input/Mouse
         ["INKEY"]       = TokenType.TOK_INKEY,
@@ -417,8 +418,35 @@ public class Lexer(string source)
         }
 
         // Unknown character - fuck it
-        _pos++;
-        return NextToken();
+        // Whitespace that SkipWhitespace() does not handle (form feed, NBSP, ...)
+        // and a stray byte-order mark (U+FEFF) are still skipped silently.
+        if (char.IsWhiteSpace(c) || c == '\uFEFF')
+        {
+            _pos++;
+            return NextToken();
+        }
+
+        // Anything else used to vanish silently, so "PRINT 10 \ 3" printed 103.
+        throw new Exception($"Line {_line}: {DescribeUnexpectedChar(c)}");
+    }
+
+    // Text for the lexer error above. Printable ASCII is shown as is; anything
+    // else also gets its code point, because it may be invisible on screen.
+    private string DescribeUnexpectedChar(char c)
+    {
+        bool pair = char.IsSurrogatePair(_source, _pos);   // e.g. an emoji outside quotes
+        int code = pair ? char.ConvertToUtf32(_source[_pos], _source[_pos + 1]) : c;
+        string text = char.IsControl(c)
+            ? $"Unexpected character U+{code:X4}"
+            : $"Unexpected character '{(pair ? _source.Substring(_pos, 2) : c.ToString())}'"
+              + (c > '~' ? $" (U+{code:X4})" : "");
+
+        return c switch
+        {
+            '\\' => text + " - BazzBasic has no integer division operator, use INT(a / b)",
+            '^'  => text + " - for powers use POW(a, b)",
+            _    => text
+        };
     }
 
     private void SkipWhitespace()

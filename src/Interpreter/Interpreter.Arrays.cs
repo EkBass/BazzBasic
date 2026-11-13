@@ -27,48 +27,76 @@ public partial class Interpreter
     // Array Operations
     // ========================================================================
 
-    // Create a new array variable
+    // Create new array variables: DIM name$ [(size)] [= value] {, name$ ...}
+    // The statement ends at end of line, ':' or ELSE (one-line IF), like PRINT.
+    // The size in parentheses is accepted and ignored (arrays grow as needed);
+    // nothing inside it is declared or evaluated: DIM b$(n$) declares only B$.
     private void ExecuteDim()
     {
         _pos++;
-        
-        while (_pos < _tokens.Count && !_hasError)
+
+        while (!_hasError)
         {
-            if (_tokens[_pos].Type == TokenType.TOK_NEWLINE || _tokens[_pos].Type == TokenType.TOK_EOF)
-                break;
-            
-            if (_tokens[_pos].Type == TokenType.TOK_COMMA)
+            if (_pos >= _tokens.Count || _tokens[_pos].Type != TokenType.TOK_VARIABLE)
             {
-                _pos++;
-                continue;
+                string found = _pos < _tokens.Count ? DescribeToken(_tokens[_pos]) : "end of file";
+                Error($"DIM: expected an array name ending in $, got {found}");
+                return;
             }
-            
-            if (_tokens[_pos].Type == TokenType.TOK_VARIABLE)
+
+            string arrName = _tokens[_pos].StringValue ?? "";
+            _variables.DimArray(arrName);
+            _pos++;
+
+            if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_LPAREN)
             {
-                string arrName = _tokens[_pos].StringValue ?? "";
-                _variables.DimArray(arrName);
-                _pos++;
+                // Optional size: DIM a$(10), DIM m$(10, 10), DIM b$(n$ + 1)
+                SkipDimSize();
+                if (_hasError) return;
+            }
+            else if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_EQUALS)
+            {
+                // Optional value: DIM arr$ = expression
+                _pos++; // skip '='
+                Value val = EvaluateExpression();
+                if (_hasError) return;
 
-                // Handle optional: DIM arr$ = expression
-                if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_EQUALS)
-                {
-                    _pos++; // skip '='
-                    Value val = EvaluateExpression();
-                    string str = val.AsString();
-
-                    // If value looks like key=value lines, populate as array
-                    if (TryPopulateArrayFromKeyValue(arrName, str))
-                        continue;
-
-                    // Otherwise store as single element with key "0"
+                // key=value lines fill named keys, anything else goes to key "0"
+                if (!TryPopulateArrayFromKeyValue(arrName, val.AsString()))
                     _variables.SetArrayElement(arrName, "0", val);
-                }
             }
-            else
+
+            if (IsEndOfStatement() || _tokens[_pos].Type == TokenType.TOK_ELSE)
+                return;
+
+            if (_tokens[_pos].Type != TokenType.TOK_COMMA)
             {
-                _pos++;
+                Error($"DIM: expected ',' or end of statement after {arrName}, got {DescribeToken(_tokens[_pos])}");
+                return;
             }
+            _pos++; // skip ','
         }
+    }
+
+    // Skip a balanced "( ... )" after a DIM name without evaluating it.
+    // A missing ')' is reported on the line of the '('.
+    private void SkipDimSize()
+    {
+        int open = _pos;
+        int depth = 0;
+        while (_pos < _tokens.Count)
+        {
+            TokenType t = _tokens[_pos].Type;
+            if (t == TokenType.TOK_NEWLINE || t == TokenType.TOK_EOF || t == TokenType.TOK_COLON)
+                break;
+            _pos++;
+            if (t == TokenType.TOK_LPAREN)
+                depth++;
+            else if (t == TokenType.TOK_RPAREN && --depth == 0)
+                return;
+        }
+        _pos = open;
+        Error("DIM: missing ')' after the array size");
     }
 
     // Parse "key=value\nkey=value\n..." string into array elements.

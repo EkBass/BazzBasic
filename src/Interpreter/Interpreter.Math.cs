@@ -231,35 +231,35 @@ public partial class Interpreter
         Require(TokenType.TOK_COMMA);
         double b = EvaluateExpression().AsNumber();
         Require(TokenType.TOK_RPAREN);
-        return Value.FromNumber(a % b);
+        return b == 0 ? Value.Zero : Value.FromNumber(a % b);   // D84: MOD(a, 0) -> 0, like /
     }
 
     // PI function
     private Value EvaluatePiFunc()
     {
         _pos++;
-        return Value.FromNumber(3.14159265358979);
+        return Value.FromNumber(Math.PI);
     }
     
     // HPI function - Half PI (PI/2)
     private Value EvaluateHpiFunc()
     {
         _pos++;
-        return Value.FromNumber(1.5707963267948966);
+        return Value.FromNumber(Math.PI / 2.0);
     }
 
     // QPI function - (PI/4)
     private Value EvaluateQpiFunc()
     {
         _pos++;
-        return Value.FromNumber(0.7853981633974475);
+        return Value.FromNumber(Math.PI / 4.0);
     }
 
     // TAU function - (PI*2)
     private Value EvaluateTauFunc()
     {
         _pos++;
-        return Value.FromNumber(6.28318530717958);
+        return Value.FromNumber(Math.PI * 2.0);
     }
 
     // RAD function - Convert degrees to radians

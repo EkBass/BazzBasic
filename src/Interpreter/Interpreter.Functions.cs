@@ -43,27 +43,36 @@ public partial class Interpreter
         string funcName = _tokens[_pos].StringValue ?? "";
         _pos++;
         
+        // Parameters: $ names separated by commas. DEF FN F$ and DEF FN F$() take none.
+        // Anything else (a # constant, a number, a missing comma) is an error - it used
+        // to be skipped silently, so DEF FN P$(a$, b#) became a 1-parameter function.
         var parameters = new List<string>();
-        if (Expect(TokenType.TOK_LPAREN))
+        if (Expect(TokenType.TOK_LPAREN) && !Expect(TokenType.TOK_RPAREN))
         {
-            while (_pos < _tokens.Count && _tokens[_pos].Type != TokenType.TOK_RPAREN)
+            while (true)
             {
-                if (_tokens[_pos].Type == TokenType.TOK_COMMA)
+                if (_pos >= _tokens.Count || _tokens[_pos].Type != TokenType.TOK_VARIABLE)
                 {
-                    _pos++;
+                    string found = _pos < _tokens.Count ? DescribeToken(_tokens[_pos]) : "end of file";
+                    string hint = _pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_CONSTANT
+                        ? " - # names are constants and cannot be parameters"
+                        : "";
+                    Error($"DEF FN {funcName}: expected a parameter name ending in $, got {found}{hint}");
+                    return;
+                }
+                string paramName = _tokens[_pos].StringValue ?? "";
+                parameters.Add(paramName);
+                _pos++;
+
+                if (Expect(TokenType.TOK_COMMA))
                     continue;
-                }
-                if (_tokens[_pos].Type == TokenType.TOK_VARIABLE)
-                {
-                    parameters.Add(_tokens[_pos].StringValue ?? "");
-                    _pos++;
-                }
-                else
-                {
-                    _pos++;
-                }
+                if (Expect(TokenType.TOK_RPAREN))
+                    break;
+
+                string next = _pos < _tokens.Count ? DescribeToken(_tokens[_pos]) : "end of file";
+                Error($"DEF FN {funcName}: expected ',' or ')' after {paramName}, got {next}");
+                return;
             }
-            Require(TokenType.TOK_RPAREN);
         }
         
         int startPos = _pos;
@@ -152,6 +161,14 @@ public partial class Interpreter
         if (!_functions.TryGetValue(funcName, out UserFunction func))
         {
             Error($"Function not found: {funcName}");
+            return Value.Zero;
+        }
+
+        // Missing arguments used to become 0 and extra ones were ignored silently.
+        if (args.Count != func.Parameters.Length)
+        {
+            int expected = func.Parameters.Length;
+            Error($"FN {funcName}: expected {expected} argument{(expected == 1 ? "" : "s")}, got {args.Count}");
             return Value.Zero;
         }
 

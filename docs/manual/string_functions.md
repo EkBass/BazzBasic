@@ -88,6 +88,7 @@ PRINT INSTR("Hello World", "world", 0) ' returns 7
 ' Case-sensitive mode, same as default mode
 PRINT INSTR("Hello World", "world", 1) ' returns 0
 ```
+Note: `=` ignores case between strings. To compare two strings exactly, use `SAME(a$, b$)` (below), see also [Comparing text](operators.md?id=comparing-text).
 
 ### INVERT(s$)
 Inverts a string
@@ -158,6 +159,23 @@ a$ = RTRIM(a$)
 PRINT a$ + b$ ' Output: FooBar
 ```
 
+### SAME(a$, b$)
+Returns `1` if the two texts are identical, character for character and case included, otherwise `0`. Added in version 1.7.
+```vb
+PRINT SAME("Secret1", "Secret1")  ' Output: 1
+PRINT SAME("Secret1", "secret1")  ' Output: 0
+PRINT SAME("", "")                ' Output: 1
+```
+`=` ignores case, `SAME` does not, so use `SAME` for passwords, keys and IDs. `INPUT` and `LINE INPUT` always store text, so `SAME` compares exactly what was typed:
+```vb
+LET pass$ = "Secret1"
+LINE INPUT "Password: ", input$
+IF SAME(pass$, input$) THEN PRINT "Welcome" ELSE PRINT "Wrong password"
+' User types: secret1
+' Output: Wrong password
+```
+Numbers are compared in their text form: `SAME(1, "1")` is `1`, but `SAME("1.0", 1)` and `SAME(-0, 0)` are `0`. For numbers use `=`.
+
 ### SHA256(s$)
 Creates SHA256 hash from a string
 ```vb
@@ -181,11 +199,12 @@ Returns the number of parts and stores them at keys `0` to `count - 1`. The arra
 Returns random string length of *n* from allowed chars.  
 **Allowed chars:** *ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&/{([)]=}?+-_* (81 characters, each equally likely)
 ```vb
-PRINT SRAND(10)  ' Output example: noAR1S-Qw1
-PRINT SRAND(0)   ' Output: (empty string, nothing printed)
-PRINT SRAND(-1)  ' Error: Arithmetic operation resulted in an overflow.
+PRINT SRAND(10)        ' Output example: noAR1S-Qw1
+PRINT SRAND(0)         ' Output: (empty string, nothing printed)
+PRINT LEN(SRAND(3.7))  ' Output: 3
+PRINT SRAND(-1)        ' Error at line 4: SRAND: length must be 0 or more, got -1
 ```
-`n` must be zero or a positive integer. `SRAND(0)` returns an empty string. A negative `n` throws a runtime error rather than returning a value.
+`n` must be zero or more. The decimal part is dropped: `SRAND(3.7)` gives 3 characters. `SRAND(0)` returns an empty string. A negative `n` stops the program with an error, and so does a length too large for memory (`SRAND: length 2147483647 is too large`).
 
 ### STR(n)
 Converts number to string.

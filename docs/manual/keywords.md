@@ -189,6 +189,7 @@ Variables must end with `$`, constants with `#` — they cannot share names with
 | `REPLACE` | Replace all occurrences |
 | `RIGHT` | Last n characters |
 | `RTRIM` | Strip trailing whitespace |
+| `SAME` | Exact text compare, case-sensitive (1 or 0) |
 | `SPLIT` | Split string into array |
 | `SRAND` | Random alphanumeric string |
 | `STR` | Number to string |
@@ -272,8 +273,8 @@ These are auto-initialized at startup — no `LET` required.
 | `PRG_ROOT#` | Program base directory path (ends with a directory separator) |
 | `TRUE` | 1 |
 | `FALSE` | 0 |
-| `PI#` | 3.14159265358979 |
-| `HPI#` | 1.5707963267929895 (π/2) |
+| `PI#` | 3.141592653589793 |
+| `HPI#` | 1.5707963267948966 (π/2) |
 | `QPI#` | 0.7853981633974483 (π/4) |
 | `TAU#` | 6.283185307179586 (2π) |
 | `EULER#` | 2.718281828459045 (e) |

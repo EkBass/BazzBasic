@@ -777,7 +777,7 @@ REMOVESHAPE IMG#               ' Delete and free memory
 
 ## Why Constants, Not Variables?
 
-IDs returned by `LOADIMAGE` and are handles assigned by SDL2. BazzBasic uses them only to point to the correct image resource — they never change during program execution.
+IDs returned by `LOADIMAGE` are text handles (such as `SHAPE1`). BazzBasic uses them only to point to the correct image resource — they never change during program execution.
 
 Storing them in constants (`#` suffix) communicates this intent clearly:
 

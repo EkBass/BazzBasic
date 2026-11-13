@@ -153,7 +153,8 @@ public partial class Interpreter
             else if (op.Type == TokenType.TOK_MODULO)
             {
                 _pos++;
-                left = Value.FromNumber(left.AsNumber() % EvaluateUnary().AsNumber());
+                double divisor = EvaluateUnary().AsNumber();
+                left = divisor == 0 ? Value.Zero : Value.FromNumber(left.AsNumber() % divisor);   // D84: % 0 -> 0, like /
             }
             else
             {
@@ -337,6 +338,8 @@ public partial class Interpreter
                 return EvaluateValFunc();
             case TokenType.TOK_FSTRING:
                 return EvaluateFstringFunc();
+            case TokenType.TOK_SAME:
+                return EvaluateSameFunc();
             case TokenType.TOK_BETWEEN:
                 return EvaluateBetweenFunc();
             case TokenType.TOK_ISSET:
@@ -511,7 +514,12 @@ public partial class Interpreter
         }
         catch (UndefinedVariableException)
         {
-            Error($"Undefined variable: {varName}");
+            // A DIM'd array read without an index (PRINT nums$) is not an
+            // undefined variable - say what is actually wrong.
+            if (_variables.ArrayExists(varName))
+                Error($"{varName} is an array - use an element like {varName}(0), or the whole array as a JSON string with ASJSON({varName})");
+            else
+                Error($"Undefined variable: {varName}");
             return Value.Zero;
         }
     }

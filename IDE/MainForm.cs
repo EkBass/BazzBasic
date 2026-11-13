@@ -982,7 +982,7 @@ public partial class MainForm : Form
             "pi hpi qpi tau euler fasttrig fastsin fastcos fastrad " +
             "au " +
             "bbver bbbuild prg_root " +
-            "asc chr instr invert lcase left len ltrim mid repeat replace right rtrim srand split str trim ucase val fstring " +
+            "asc chr instr invert lcase left len ltrim mid repeat replace right rtrim srand split str trim ucase val fstring same " +
             "ticks time rgb");
 
         // I/O, files, network, arrays, program arguments

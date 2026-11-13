@@ -7,8 +7,10 @@ Arrays store collections of values. BazzBasic arrays are fully dynamic and suppo
 ## Initialization
 - Arrays must be initialized with `DIM` before they can be used
 - Like variables or constants, arrays are not strongly typed
-- An array needs the suffix '$'.
-- Re-declaring an existing **global** array with `DIM` does not clear it; use `DELARRAY` to remove it. (Inside a function, `DIM` always creates a fresh, empty local array.)
+- An array needs the suffix '$'. `DIM MAX#` stops the program: `Error at line 1: DIM: expected an array name ending in $, got 'MAX#'`.
+- Re-declaring an existing array in the main program with `DIM` does not clear it; use `DELARRAY` to remove it. (Inside a function, `DIM` always creates a fresh, empty local array.)
+- Arrays have no fixed size. `DIM scores$(10)` is accepted, but the `(10)` is ignored: you get the same empty array as with `DIM scores$`. Nothing inside the parentheses is read, so `DIM scores$(n$)` declares only `scores$`.
+- `DIM x$ = 5` declares the array `x$` and stores 5 in `x$(0)`. For a plain variable, use `LET x$ = 5`. (A text of `key=value` lines fills named keys instead, see *Loading key=value Files into Arrays* below.) A name takes a size or a value, not both: `DIM a$(10) = 5` is an error.
 ```vb
 DIM scores$
 DIM names$
@@ -18,6 +20,12 @@ DIM matrix$
 Multiple declarations:
 ```vb
 DIM a$, b$, c$
+```
+
+`DIM` ends at the end of the line or at `:`, so other statements can follow on the same line:
+```vb
+DIM a$, b$ : a$(0) = 1 : b$(0) = 2
+PRINT a$(0) + b$(0)    ' Output: 3
 ```
 
 ## Numeric Indexing
@@ -210,7 +218,7 @@ WEND
 Numeric-keyed arrays work the same way — `ARRKEY` returns the key as a string regardless of whether the array uses numbers or names as keys. An out-of-range index produces an error rather than an empty string, so a typo in the loop bound won't fail silently:
 ```vb
 PRINT ARRKEY(car$(), 99)
-' ERROR: ARRKEY: index 99 out of range for array CAR$
+' Error at line N: ARRKEY: index 99 out of range for array CAR$
 ```
 
 ---
@@ -383,15 +391,25 @@ X . .
 ### Array Not Declared
 ```vb
 scores$(0) = 95
-' ERROR: Array not declared, use DIM first: scores$
+' Error at line 1: Array not declared, use DIM first: SCORES$
 ```
 
 ### Element Not Initialized
 ```vb
 DIM data$
 PRINT data$(0)
-' ERROR: Array element data$(0) not initialized
+' Error at line 2: Array element DATA$(0) not initialized
 ```
+
+### Array Used Without an Index
+```vb
+DIM nums$
+nums$(0) = 7
+PRINT nums$
+' Error at line 3: NUMS$ is an array - use an element like NUMS$(0), or the whole array as a JSON string with ASJSON(NUMS$)
+```
+
+Error messages show array names in uppercase.
 
 Always check with `HASKEY` or initialize elements before reading.
 

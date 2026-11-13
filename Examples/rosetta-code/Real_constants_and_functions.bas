@@ -10,10 +10,10 @@
 
 ' built-in constants
 PRINT EULER#         ' 2.718281828459045
-PRINT PI#            ' 3.14159265358979
+PRINT PI#            ' 3.141592653589793
 PRINT HPI#           ' 1.5707963267948966 (PI# / 2)
-PRINT QPI#           ' 0.7853981633974475 (PI# / 4)
-PRINT TAU#           ' 6.28318530717958  (PI# * 2)
+PRINT QPI#           ' 0.7853981633974483 (PI# / 4)
+PRINT TAU#           ' 6.283185307179586  (PI# * 2)
 
 ' functions
 PRINT SQR(5)         ' 2.23606797749979

@@ -37,7 +37,7 @@
 		abs, atan, atan2, cint, cos, ceil, exp, floor, int, log, max, min, mod, pow, rnd, round, sgn, sin, sqr, tan, pi, rad, deg, hpi, fasttrig, fastsin, fastcos, fastrad, qpi, tau, between, inbetween, euler, au, distance, clamp, lerp
 	</built-in-math>
 	<built-in-string>
-		asc, chr, fstring, instr, invert, lcase, left, len, ltrim, mid, repeat, replace, right, rtrim, srand, split, str, trim, ucase, val
+		asc, chr, fstring, instr, invert, lcase, left, len, ltrim, mid, repeat, replace, right, rtrim, same, srand, split, str, trim, ucase, val
 	</built-in-string>
 	<input-mouse>
 		mousex, mousey, mouseleft, mouseright, mousemiddle, mousehide, mouseshow

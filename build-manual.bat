@@ -3,18 +3,25 @@ REM ============================================================
 REM  BazzBasic Manual Builder
 REM  Generates offline HTML (and optionally CHM) from markdown
 REM  Requires: Pandoc  https://pandoc.org/installing.html
+REM  Usage: build-manual.bat           (pauses at the end)
+REM         build-manual.bat nopause   (for AI agents / scripts: never waits for a key)
+REM  Output: dist\BazzBasic-Manual.html + dist\BazzBasic-Manual-HTML.zip,
+REM          both also copied to docs\ (download link on the website, read by agents)
 REM ============================================================
 
 set MANUAL_DIR=docs\manual
 set DIST_DIR=dist
 set OUTPUT_HTML=%DIST_DIR%\BazzBasic-Manual.html
 set OUTPUT_CHM_DIR=%DIST_DIR%\chm
+set OUTPUT_ZIP=%DIST_DIR%\BazzBasic-Manual-HTML.zip
+set PAUSE_CMD=pause
+if /i "%~1"=="nopause" set PAUSE_CMD=rem
 
 REM -- Tarkista että Pandoc löytyy --
 where pandoc >nul 2>&1
 if errorlevel 1 (
     echo [VIRHE] Pandoc ei löydy. Asenna: https://pandoc.org/installing.html
-    pause
+    %PAUSE_CMD%
     exit /b 1
 )
 
@@ -68,11 +75,30 @@ pandoc ^
 
 if errorlevel 1 (
     echo [VIRHE] HTML-generointi epäonnistui.
-    pause
+    %PAUSE_CMD%
     exit /b 1
 )
 
 echo  [OK] HTML luotu: %OUTPUT_HTML%
+
+REM -- Zip for the offline download --
+powershell -NoProfile -Command "Compress-Archive -Force -Path '%OUTPUT_HTML%' -DestinationPath '%OUTPUT_ZIP%'"
+if errorlevel 1 (
+    echo [VIRHE] Zip-pakkaus epaonnistui.
+    %PAUSE_CMD%
+    exit /b 1
+)
+echo  [OK] Zip luotu: %OUTPUT_ZIP%
+
+REM -- Copy both to docs\ --
+copy /y "%OUTPUT_HTML%" docs\ >nul
+copy /y "%OUTPUT_ZIP%" docs\ >nul
+if errorlevel 1 (
+    echo [VIRHE] Kopiointi docs-kansioon epaonnistui.
+    %PAUSE_CMD%
+    exit /b 1
+)
+echo  [OK] Kopioitu: docs\BazzBasic-Manual.html, docs\BazzBasic-Manual-HTML.zip
 
 REM ============================================================
 REM  CHM-generointi (valinnainen)
@@ -127,4 +153,4 @@ echo  Valmis.
 echo  Tiedostot dist\-hakemistossa:
 dir /b "%DIST_DIR%"
 echo.
-pause
+%PAUSE_CMD%

@@ -7,6 +7,61 @@ Changes for older versions are in [changes-archive.md](changes-archive.md).
 
 ## 7th November 2026
 
+## Division by zero gives 0 for /=, % and MOD too (T14)
+Krisu's rule (D84): dividing by zero gives `0` everywhere, not only with `/`. Before, `a$ /= 0` gave `Infinity` (on a variable and on an array element), and `10 % 0` and `MOD(10, 0)` gave `NaN`, which then spread through every later calculation. Now all four give `0`. A divisor that is already `NaN` still gives `NaN`.
+- Visible in two `Examples\rosetta-code` programs, only when the user types 0: `Arithmetic_Integer.bas` prints `Remainder:  0` instead of `Remainder:  NaN`, and in `General_FizzBuzz.bas` a factor of 0 now prints its word on every line (before: never, because `NaN = 0` is false).
+
+## SRAND with a negative or huge length gives a line-numbered error (T13)
+Found during the H1 documentation check. `SRAND(-1)` stopped with `Error: Arithmetic operation resulted in an overflow.` and `SRAND(10000000000)` with `Error: Insufficient memory to continue the execution of the program.`, both without a line number. Now: `Error at line N: SRAND: length must be 0 or more, got -1` and `Error at line N: SRAND: length 2147483647 is too large` (exit code 1 as before). The decimal part is still dropped: `SRAND(3.7)` gives 3 characters, `SRAND(-0.5)` gives `""`.
+- Comments only: the old `PI#`, `QPI#` and `TAU#` digits in `Examples\rosetta-code\Real_constants_and_functions.bas` and `Special_variables.bas` now match what the interpreter prints. Program output is unchanged.
+
+## DEF FN: parameters must end in $, calls must pass the right number of arguments (T12)
+Found while fixing BazzBasic Studio's report B5 (T8).
+- A parameter that does not end in `$` is now an error when the program reaches the `DEF FN` line: `Error at line N: DEF FN P$: expected a parameter name ending in $, got 'B#' - # names are constants and cannot be parameters`. Before, it was skipped silently, so `DEF FN P$(a$, b#)` became a one-parameter function. A number, a missing comma or a trailing comma in the list is an error too (`DEF FN Q$: expected ',' or ')' after A$, got 'B$'`), and a missing `)` is reported on its own line instead of `line 0`.
+- Every `FN` call must pass exactly as many arguments as the definition has: `Error at line N: FN ADD$: expected 2 arguments, got 1`. Before, missing arguments became `0` and extra ones were ignored. `FN F$` and `FN F$()` pass none.
+- Applies to functions in `.bb` libraries too, also to libraries built with an older version. A program already packaged with `-exe` keeps the interpreter it was built with.
+
+## DIM stops at ':' and ELSE, accepts only $ names (T11)
+Found while fixing BazzBasic Studio's report B5 (T8).
+- `DIM` now ends at the end of the line, at `:` or at `ELSE`, so the rest of the line runs: `DIM n$ : n$(0) = 1 : PRINT "ok"`. Before, everything after `DIM` on that line was skipped silently (`DIM a$ : LET b$ = 5` even turned `b$` into an array).
+- Grammar: `DIM name$ [(size)] [= value] {, name$}`. A name that does not end in `$` is an error: `Error at line N: DIM: expected an array name ending in $, got 'PI#'` (also for a number, an empty `DIM` and a trailing comma; a `,` at the end of a line continues onto the next line, so the error names that line's first word). A missing comma, or a size and a value together (`DIM a$(10) = 5`), gives `DIM: expected ',' or end of statement after A$, got '='`. A missing `)` gives `DIM: missing ')' after the array size`.
+- The size is still ignored, and nothing inside it is read any more: `DIM b$(n$)` declares only `b$`. Before, `n$` became an array too.
+- Unchanged: `DIM a$, b$`, `DIM x$ = 5` (stores 5 in `x$(0)`), `key=value` text, re-DIM keeps contents, `DIM` inside `DEF FN` gives a fresh local array.
+
+## New function SAME: exact text comparison (T10)
+New in version 1.7. Requested by Krisu following BazzBasic Studio's report #15. `SAME(a$, b$)` returns `1` if both values are identical character for character (case included, ordinal compare), otherwise `0`. `=` still ignores case between strings (H2).
+```basic
+IF SAME(pass$, input$) THEN PRINT "Welcome"
+PRINT SAME("Secret1", "secret1")  ' 0
+PRINT SAME("", "")                ' 1
+```
+- Exactly two arguments, otherwise `Error at line N: SAME: expected 2 arguments`. A bare `SAME` gives `Expected '(' after SAME`.
+- Numbers are compared by their text form: `SAME(1, "1")` → `1`, `SAME("1.0", 1)` → `0`, `SAME(-0, 0)` → `0`. Use `=` for numbers. `INPUT` / `LINE INPUT` always store text, so `SAME` compares exactly what was typed.
+- The `LEN` / `INSTR` + `"~"` idiom from the H2 entry still works and stays documented for versions before 1.7.
+- New token `TOK_SAME = 320` (nothing renumbered). Old `.bb` libraries load as before; a `.bb` that uses `SAME` needs 1.7 or newer (an older interpreter stops with `Unexpected '320' in expression`). Names such as `same$`, `SAME#` and `[same]` are unaffected.
+
+## Documentation: string comparison ignores case; how to compare exactly (H2)
+Manual and `SKILL.md` now say clearly that `=`, `<>`, `<`, `>`, `<=` and `>=` ignore case between strings (`"abc" = "ABC"` → `1`), while array string keys and `INSTR` (by default) are case-sensitive. For an exact compare (passwords, keys, IDs): `LEN(a$) = LEN(b$) AND INSTR(a$ + "~", b$ + "~") = 1`. No interpreter change.
+
+## PI, HPI, QPI and TAU functions return full precision (T9)
+The functions `PI`, `HPI`, `QPI` and `TAU` now return exactly the same values as the constants `PI#`, `HPI#`, `QPI#` and `TAU#` (`PI` = 3.141592653589793). Before, they returned hardcoded literals: `PI` and `TAU` had only 15 digits and `QPI` was wrong in the 16th digit (0.7853981633974475 instead of 0.7853981633974483). They now use `Math.PI` like the constants.
+
+## Unknown characters are an error, built-in constants cannot be redefined, clearer array message (T8)
+Reported by BazzBasic Studio (B5).
+- A character outside strings, comments and labels that is not part of the language now stops the program before it runs: `Error: Line N: Unexpected character '@'` (exit code 1). Before, the lexer silently dropped it, so `PRINT 10 \ 3` printed `103` and `PRINT 7 ^ 2` printed `72`. `\` and `^` get a hint (`use INT(a / b)`, `use POW(a, b)`); non-ASCII characters also show their code point, e.g. `'€' (U+20AC)`. Whitespace (also form feed and non-breaking space) and a stray byte-order mark are still skipped. `-lib` reports the same error and writes no `.bb`.
+- `LET` on a built-in constant (`PI#`, `KEY_ESC#`, `AU#`, ...) now stops with `Error at line N: Cannot redefine constant 'PI#'`. Before, it was silently ignored (built-ins live in their own table, which `LET` did not check). Without `LET`, `PI# = 3` now says `Cannot change constant PI#` instead of the misleading "Constants must be declared with LET". This replaces the note in the AU# entry below: a `LET AU# = ...` line is now an error, remove it.
+- Reading an array name as a plain value (`PRINT nums$`) now says `Error at line N: NUMS$ is an array - use an element like NUMS$(0), or the whole array as a JSON string with ASJSON(NUMS$)` instead of `Undefined variable: NUMS$`. A main-program array read inside `DEF FN` still says `Undefined variable` (arrays are not visible there, like `$` variables).
+
+## Documentation corrections (H1)
+Manual and AI guide (`SKILL.md`) fixes from BazzBasic Studio's Q&A run. No interpreter change.
+- `+` joins text when either side is a string, left to right, `*` and `/` first: `"12" + 3` → `123`, `1 + 2 + "Foo" + 4 * 5` → `3Foo20`. The "Comparing variables" example wrongly said `12 + "12"` gives `24` (it gives `1212`) and was rewritten.
+- `LOADIMAGE` / `LOADSHAPE` / `LOADSHEET` / `LOADSOUND` return string handles (`SHAPE1`..., GUID-style for sounds), not integers assigned by SDL2.
+- `PI#`, `HPI#`, `QPI#` and `TAU#` now show the digits the interpreter prints (`PI#` = 3.141592653589793).
+- `SKILL.md` keyboard list now includes the punctuation keys (`KEY_COMMA#` ...).
+- Sample error messages use the real `Error at line N: ...` text (array errors, `ARRKEY`, calling a function before its `DEF FN`).
+- New notes: `/` by zero gives `0`; `DIM a$(10)` ignores the size; `DIM x$ = 5` stores 5 in `x$(0)`.
+- Constant examples no longer use the built-in name `PI#` (`LET PI# = 3.14159` → `LET GRAVITY# = 9.81` / `LET MAX_LIVES# = 3`).
+
 ## Runtime errors are now always line-numbered (T6)
 All runtime errors now print `Error at line N: <message>` and stop the program with exit code 1. Before, several handler errors escaped as a line-number-less `Error: <message>`: `LOADSOUND` and `SOUNDONCE` / `SOUNDREPEAT` / `SOUNDONCEWAIT` on a missing file or unknown sound ID, compound array assignment (`arr$(k) += ...`) on an undeclared array or uninitialized element, `FASTSIN` / `FASTCOS` used before `FASTTRIG(TRUE)` (which also printed the wrong format `Error: Line N:`), `ASJSON` on non-finite numbers (infinity), and the `GETREQUEST` body read.
 

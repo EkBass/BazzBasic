@@ -23,9 +23,9 @@ PRINT ATAN2(5, 10) ' 0.4636476090008061
 ```
 
 ### AU#
-Astronomical unit in metres: exactly 149597870700 (IAU 2012 definition). Like every `#` constant it is read-only — assigning without `LET` is an error.
+Astronomical unit in metres: exactly 149597870700 (IAU 2012 definition). Like every built-in constant it cannot be changed: `AU# = 1` and `LET AU# = 1` are both errors.
 
-**Note:** if your code declares its own `AU#` with `LET`, remove that line — the built-in constant takes precedence, so reads always see 149597870700.
+**Note:** if older code declares its own `AU#` with `LET`, remove that line.
 ```vb
 PRINT AU#            ' Output: 149597870700
 PRINT AU# / 1000     ' Output: 149597870.7  (kilometres)
@@ -236,12 +236,13 @@ Return modulus (remainder) of the two numbers
 ```vb
 PRINT MOD(10, 3)    ' Output: 1
 PRINT MOD(100, 20)	' Output: 0
+PRINT MOD(10, 0)    ' Output: 0 (division by zero gives 0)
 ```
 
 ### PI#
-Returns the mathematical constant π (pi) ≈ 3.14159265358979.
+Returns the mathematical constant π (pi) ≈ 3.141592653589793.
 ```vb
-PRINT PI#                    ' Output: 3.14159265358979
+PRINT PI#                    ' Output: 3.141592653589793
 LET circumference$ = 2 * PI# * radius$
 LET area$ = PI# * radius$ * radius$
 ```
@@ -254,9 +255,9 @@ PRINT POW(2, 2)		' Output: 4
 ```
 
 ### QPI#
-Returns a quarter of π (pi/4) ≈ 0.7853981633974475. Equivalent to 45 degrees in radians.
+Returns a quarter of π (pi/4) ≈ 0.7853981633974483. Equivalent to 45 degrees in radians.
 ```vb
-PRINT QPI#                   ' Output: 0.7853981633974475
+PRINT QPI#                   ' Output: 0.7853981633974483
 PRINT DEG(QPI#)              ' Output: 45
 
 LET dx$ = COS(QPI#)          ' ~0.707
@@ -328,9 +329,9 @@ PRINT TAN(9)      ' Output: -0.45231565944180985
 ```
 
 ### TAU#
-Returns τ (tau) = 2π ≈ 6.28318530717958. Equivalent to 360 degrees in radians (a full circle).
+Returns τ (tau) = 2π ≈ 6.283185307179586. Equivalent to 360 degrees in radians (a full circle).
 ```vb
-PRINT TAU#                   ' Output: 6.28318530717958
+PRINT TAU#                   ' Output: 6.283185307179586
 
 ' Full circle loop
 FOR angle$ = 0 TO 359

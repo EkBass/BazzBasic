@@ -8,6 +8,12 @@ DEF FN functionName$(param1$, param2$, ...)
     RETURN value
 END DEF
 ```
+Parameters must end with `$` too. A `#` name is a constant and cannot be a parameter:
+```vb
+DEF FN area$(w$, H#)   ' Error at line 1: DEF FN AREA$: expected a parameter name ending in $, got 'H#' - # names are constants and cannot be parameters
+    RETURN w$ * H#
+END DEF
+```
 
 ## Important to remember
 
@@ -46,6 +52,7 @@ END DEF
 PRINT FN add$(3, 4)         ' Output: 7
 PRINT FN multiply$(3, 4)    ' Output: 12
 ```
+A call must pass exactly as many arguments as the function has parameters. `FN add$(3)` stops with `Error at line N: FN ADD$: expected 2 arguments, got 1`. This applies to functions from `.bb` libraries too.
 
 ## Array data as parameter
 Arrays cannot be passed directly to functions. Instead, pass individual elements as values or whole array as JSON string.
@@ -264,12 +271,12 @@ NEXT
 Before code can call a user-created function, it must be loaded from the source code.
 
 ### Wrong
-Code below causes error: _Error: Line 1: 'ADD' is not a valid variable name (must end with $ or #) or keyword_
+Code below causes error: _Error at line 2: Function not found: ADD$_
 ```vb
 ' incorrect way
 PRINT FN ADD$(1, 2)
 
-DEF FN ADD$($a$, b$)
+DEF FN ADD$(a$, b$)
 	RETURN a$ + b$
 END DEF
 ```

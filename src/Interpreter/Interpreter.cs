@@ -625,7 +625,7 @@ public partial class Interpreter
             // Constants are created only with LET and never changed afterwards
             if (!isNewDeclaration && varToken.Type == TokenType.TOK_CONSTANT)
             {
-                Error(_variables.IsConstant(varName)
+                Error(IsAnyConstant(varName)
                     ? $"Cannot change constant {varName}"
                     : $"Constants must be declared with LET: LET {varName} = ...");
                 return;
@@ -676,7 +676,8 @@ public partial class Interpreter
                                 : Value.FromNumber(left.AsNumber() + right.AsNumber()),
                         TokenType.TOK_MINUS_ASSIGN    => Value.FromNumber(left.AsNumber() - right.AsNumber()),
                         TokenType.TOK_MULTIPLY_ASSIGN => Value.FromNumber(left.AsNumber() * right.AsNumber()),
-                        TokenType.TOK_DIVIDE_ASSIGN   => Value.FromNumber(left.AsNumber() / right.AsNumber()),
+                        TokenType.TOK_DIVIDE_ASSIGN   => right.AsNumber() == 0 ? Value.Zero    // D84: /= 0 -> 0, like /
+                                                         : Value.FromNumber(left.AsNumber() / right.AsNumber()),
                         _ => right
                     };
                     _variables.SetVariable(varName, result);
@@ -778,11 +779,17 @@ public partial class Interpreter
         }
     }
     
+    // True for user/system constants (LET X# = ..., BBVER#) AND built-in ones
+    // (PI#, KEY_ESC#...). Built-ins live in their own table and are read first,
+    // so a LET on one used to be stored but never seen.
+    private bool IsAnyConstant(string name) =>
+        _variables.IsConstant(name) || _builtinConstants.ContainsKey(name);
+
     private void AssignValueToVariable(string varName, Value value, bool isNewDeclaration)
     {
         if (!isNewDeclaration && varName.EndsWith('#'))
         {
-            Error(_variables.IsConstant(varName)
+            Error(IsAnyConstant(varName)
                 ? $"Cannot change constant {varName}"
                 : $"Constants must be declared with LET: LET {varName} = ...");
             return;
@@ -796,7 +803,7 @@ public partial class Interpreter
         
         if (varName.EndsWith('#'))
         {
-            if (!_variables.SetConstant(varName, value))
+            if (_builtinConstants.ContainsKey(varName) || !_variables.SetConstant(varName, value))
             {
                 Error($"Cannot redefine constant '{varName}'");
             }
@@ -872,7 +879,8 @@ public partial class Interpreter
                             : Value.FromNumber(left.AsNumber() + right.AsNumber()),
                     TokenType.TOK_MINUS_ASSIGN => Value.FromNumber(left.AsNumber() - right.AsNumber()),
                     TokenType.TOK_MULTIPLY_ASSIGN => Value.FromNumber(left.AsNumber() * right.AsNumber()),
-                    TokenType.TOK_DIVIDE_ASSIGN => Value.FromNumber(left.AsNumber() / right.AsNumber()),
+                    TokenType.TOK_DIVIDE_ASSIGN => right.AsNumber() == 0 ? Value.Zero    // D84: /= 0 -> 0, like /
+                                                   : Value.FromNumber(left.AsNumber() / right.AsNumber()),
                     _ => right
                 };
                 try

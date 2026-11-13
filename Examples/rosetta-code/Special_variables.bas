@@ -15,13 +15,13 @@ PRINT EULER#
 ' Returns half of π (pi/2) ≈ 1.5707963267948966. Equivalent to 90 degrees in radians.
 PRINT HPI#
 
-' Returns the mathematical constant π (pi) ≈ 3.14159265358979.
+' Returns the mathematical constant π (pi) ≈ 3.141592653589793.
 PRINT PI#
 
-' Returns a quarter of π (pi/4) ≈ 0.7853981633974475. Equivalent to 45 degrees in radians.
+' Returns a quarter of π (pi/4) ≈ 0.7853981633974483. Equivalent to 45 degrees in radians.
 PRINT QPI#
 
-' Returns τ (tau) = 2π ≈ 6.28318530717958. Equivalent to 360 degrees in radians (a full circle).
+' Returns τ (tau) = 2π ≈ 6.283185307179586. Equivalent to 360 degrees in radians (a full circle).
 PRINT TAU#
 
 ' FALSE and OFF are 0

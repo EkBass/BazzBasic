@@ -193,6 +193,7 @@ public enum TokenType
     TOK_UCASE               = 317,
     TOK_VAL                 = 318,
     TOK_FSTRING             = 319,
+    TOK_SAME                = 320,
 
     // Input/Mouse
     TOK_INKEY               = 350,

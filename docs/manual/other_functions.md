@@ -140,7 +140,7 @@ PRINT ARGS(1)
 ## Variable Functions
 
 ### ISSET(name)
-Returns `1` if the named **variable** (`$`) or **constant** (`#`) is declared, `0` otherwise. Useful for guarding optional parameters, checking whether `LET` has run on a code path, or branching on configuration values.
+Returns `1` if the named **variable** (`$`) or **constant** (`#`) is declared, `0` otherwise. Useful for checking whether `LET` has run on a code path, or for branching on configuration values.
 
 `ISSET` only sees scalar variables and constants. Arrays and array elements are stored in a separate namespace and always return `0` — use the array-specific functions if you need to check those.
 
