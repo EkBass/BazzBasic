@@ -69,7 +69,10 @@ public partial class Interpreter
     {
         // Stop after an error like Run() and the FN body loop do: under _hasError most
         // handlers return without consuming their tokens, and this loop used to spin forever.
-        while (_pos < _tokens.Count && !_hasError)
+        // Also stop when _running goes false mid-line (F5/O12: window closed during SLEEP/
+        // WAITKEY/GraphicsTick - ExecuteStatement returns at Interpreter.cs:348 without
+        // consuming the token, so without this check the loop spins forever).
+        while (_pos < _tokens.Count && !_hasError && _running)
         {
             Token token = _tokens[_pos];
             
@@ -90,9 +93,10 @@ public partial class Interpreter
             else if (token.Type == TokenType.TOK_RETURN)
             {
                 ExecuteReturn();
-                // Inside DEF FN ExecuteReturn sets _running = false, which this loop does not check
-                // (unlike Run() Interpreter.cs:310 and the FN body loop Functions.cs:209) - stop the
-                // rest of the line. At top level RETURN already moved _pos via the GOSUB stack.
+                // Inside DEF FN ExecuteReturn sets _running = false - stop the rest of the line.
+                // The loop condition checks _running too since T26 (like Run() Interpreter.cs:310
+                // and the FN body loop Functions.cs:209). At top level RETURN already moved _pos
+                // via the GOSUB stack.
                 if (_inFunction) return;
             }
             else if (token.Type == TokenType.TOK_EXIT)

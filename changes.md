@@ -15,6 +15,7 @@ Changes for older versions are in [changes-archive.md](changes-archive.md).
 - An error inside a one-line `IF ... THEN ...` no longer leaves the program hanging after the error message; it stops (exit code 1).
 - (T24) In a one-line `IF ... THEN ...`, statements after `RETURN` on the same line no longer run inside `DEF FN` (they used to run after the function had already returned).
 - (T25) A bare array-element statement without `=` (`arr$(1)`, `arr$()`) is now an error: `Error at line N: Array element alone is not a statement - did you forget '= value'?` - it used to silently do nothing.
+- (T26) Closing the graphics window while a one-line `IF ... THEN ...` branch is running now ends the program cleanly (exit code 0) - it used to keep running at 100% CPU with the window gone.
 
 ### Other
 - Offline manual (`BazzBasic-Manual.html`): links between manual pages work again. About 36 links pointed to `.md` files that do not exist in the single-file manual.
