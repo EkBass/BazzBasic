@@ -157,24 +157,24 @@ public partial class Interpreter
             return;
         }
         
-        var indices = new List<string>();
-        while (_pos < _tokens.Count && !_hasError && _tokens[_pos].Type != TokenType.TOK_RPAREN)
+        List<string> indices = ReadArrayIndices();      // consumes the ')'
+        if (_hasError) return;                          // never delete on a half-parsed statement
+
+        if (indices.Count == 0)                         // DELKEY arr$() must not silently delete key ""
         {
-            if (_tokens[_pos].Type == TokenType.TOK_COMMA)
-            {
-                _pos++;
-                continue;
-            }
-            Value idx = EvaluateExpression();
-            indices.Add(idx.AsString());
-            
-            if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_COMMA)
-                _pos++;
+            Error("DELKEY needs a key, e.g. DELKEY arr$(key)");
+            return;
         }
-        Require(TokenType.TOK_RPAREN);
-        
+
         string key = string.Join(",", indices);
-        _variables.DeleteKey(arrName, key);
+        try
+        {
+            _variables.DeleteKey(arrName, key);         // missing key: no-op; unknown array: throws
+        }
+        catch (InvalidOperationException ex)
+        {
+            Error(ex.Message);
+        }
     }
 
     // Delete an entire array variable
@@ -261,23 +261,61 @@ public partial class Interpreter
             _variables.SetArrayElement(destName, kvp.Key, kvp.Value);
     }
 
+    // Read the index list of an element reference arr$(i, j, ...).
+    // The caller has consumed the '(' after the array name; this reads up to and
+    // including the closing ')'. Same rules as element read (Interpreter.Expression.cs)
+    // and write (ExecuteArrayAssignment): every index is EvaluateExpression().AsString(),
+    // stray commas are skipped. The caller joins the list with "," to get the key.
+    private List<string> ReadArrayIndices()
+    {
+        var indices = new List<string>();
+        while (_pos < _tokens.Count && !_hasError && _tokens[_pos].Type != TokenType.TOK_RPAREN)
+        {
+            if (_tokens[_pos].Type == TokenType.TOK_COMMA)
+            {
+                _pos++;
+                continue;
+            }
+            Value idx = EvaluateExpression();
+            indices.Add(idx.AsString());
+
+            if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_COMMA)
+                _pos++;
+        }
+        Require(TokenType.TOK_RPAREN);
+        return indices;
+    }
+
     // Check if a specific key exists in an array
+    // HASKEY(arr$(key)) or HASKEY(arr$(i, j, ...)) - several indexes are joined
+    // with "," exactly like element read/write, so HASKEY(m$(0, "name")) tests m$("0,name").
     private Value EvaluateHaskeyFunc()
     {
         _pos++;
         Require(TokenType.TOK_LPAREN);
         
         if (_pos >= _tokens.Count || _tokens[_pos].Type != TokenType.TOK_VARIABLE)
+        {
+            Error("HASKEY expects an array element, e.g. HASKEY(arr$(key))");
             return Value.Zero;
+        }
         
         string arrName = _tokens[_pos].StringValue ?? "";
         _pos++;
         
         Require(TokenType.TOK_LPAREN);
-        string key = EvaluateExpression().AsString();
-        Require(TokenType.TOK_RPAREN);
-        Require(TokenType.TOK_RPAREN);
-        
+        if (_hasError) return Value.Zero;
+        List<string> indices = ReadArrayIndices();      // consumes the inner ')'
+        Require(TokenType.TOK_RPAREN);                  // outer ')'
+        if (_hasError) return Value.Zero;
+
+        if (indices.Count == 0)                         // HASKEY(arr$()) must stay an error, not a silent 0
+        {
+            Error("HASKEY needs a key, e.g. HASKEY(arr$(key))");
+            return Value.Zero;
+        }
+
+        string key = string.Join(",", indices);
         return Value.FromNumber(_variables.HasKey(arrName, key) ? 1 : 0);
     }
 

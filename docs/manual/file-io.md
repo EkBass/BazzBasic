@@ -530,6 +530,7 @@ END
 - **FILEREAD**: Returns empty string on error (no exception)
 - **FILEEXISTS**: Returns 0 on error or non-existent file
 - **FILEWRITE/FILEAPPEND/FILEDELETE**: Silent failures (no exceptions)
+- **LOADJSON/LOADXML**: A missing file stops the program — check with FILEEXISTS first (see [Arrays & JSON](arrays_and_json.md))
 - Check results with FILEEXISTS before/after operations if needed
 
 ### Character Encoding
@@ -670,7 +671,6 @@ FILEWRITE filename$, data$
 - Text files only (no binary data support)
 - No file size limits enforced (use caution with large files)
 - No file locking or concurrent access control
-- No directory enumeration (can't list files in folder)
 - No file metadata (size, dates, permissions)
 - No copy or move operations
 
@@ -679,11 +679,11 @@ FILEWRITE filename$, data$
 ## Future Enhancements
 
 Potential additions to the file system:
+
 - Binary file support (read/write bytes)
-- Directory listing and enumeration
 - File copy and move operations
 - File metadata queries (size, modified date)
 - File locking for concurrent access
 - Stream-based reading for large files
-- CSV and JSON parsing helpers
+- CSV parsing helpers (JSON is already supported, see [Arrays & JSON](arrays_and_json.md))
 - Compression support

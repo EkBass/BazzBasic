@@ -123,6 +123,33 @@ DELKEY cache$("temp")
 PRINT HASKEY(cache$("temp"))  ' Output: 0
 ```
 
+`DELKEY` takes several indexes, just like reading an element. If the key does not exist, `DELKEY` does nothing:
+```vb
+DIM users$
+	users$(1, "name")  = "Bob"
+	users$(1, "email") = "bob@example.com"
+
+DELKEY users$(1, "email")
+PRINT HASKEY(users$(1, "email"))   ' Output: 0
+PRINT HASKEY(users$(1, "name"))    ' Output: 1
+
+DELKEY users$(5, "email")          ' No such key - nothing happens
+PRINT LEN(users$())                ' Output: 1
+```
+
+Since 1.8, `DELKEY` without a key, e.g. `DELKEY users$()`, stops the program with `Error at line N: DELKEY needs a key, e.g. DELKEY arr$(key)`. The empty text key is still fine: `DELKEY users$("")` removes the element stored under `""`.
+
+Since 1.8, `DELKEY` on an array that does not exist (never declared, a typo in the name, or removed with `DELARRAY`) stops the program, just like reading an element of it:
+```vb
+DIM users$
+	users$("ann") = "Ann"
+
+DELKEY usres$("ann")               ' Typo in the array name
+' Error at line 4: Array not declared, use DIM first: USRES$
+```
+
+Inside `DEF FN`, an array of the main program is not visible, so `DELKEY` on it stops with the "Global array ... is not visible inside DEF FN" message.
+
 ---
 
 ### HASKEY
@@ -139,6 +166,20 @@ IF HASKEY(config$("verbose")) = 0 THEN
     PRINT "Verbose not set"
 END IF
 ```
+
+Since 1.8, `HASKEY` also takes several indexes, just like reading an element. `HASKEY(users$(1, "email"))` tests the same element as `users$(1, "email")` and `users$("1,email")`:
+```vb
+DIM users$
+	users$(0, "name") = "Ann"
+	users$(1, "name") = "Bob"
+	users$(1, "email") = "bob@example.com"
+
+PRINT HASKEY(users$(1, "email"))   ' Output: 1
+PRINT HASKEY(users$(0, "email"))   ' Output: 0
+PRINT HASKEY(users$("1,email"))    ' Output: 1 - same element
+```
+
+Before 1.8, `HASKEY` takes only one index - use the joined key instead: `HASKEY(users$(i$ + ",email"))`.
 
 ---
 
@@ -394,6 +435,8 @@ scores$(0) = 95
 ' Error at line 1: Array not declared, use DIM first: SCORES$
 ```
 
+Reading an element or `DELKEY` on an undeclared array gives the same error.
+
 ### Element Not Initialized
 ```vb
 DIM data$
@@ -408,6 +451,25 @@ nums$(0) = 7
 PRINT nums$
 ' Error at line 3: NUMS$ is an array - use an element like NUMS$(0), or the whole array as a JSON string with ASJSON(NUMS$)
 ```
+
+### Assignment Without a Key
+```vb
+DIM data$
+data$() = 5
+' Error at line 2: Array assignment needs a key, e.g. arr$(key) = value
+```
+
+Since 1.8 (before, the value was silently stored under the key `""`). Give the element a key, e.g. `data$(0) = 5`. The empty text key `data$("") = 5` is fine, and `LEN(data$())` still gives the element count.
+
+### Element Alone Is Not a Statement
+```vb
+DIM data$
+data$(0) = 5
+data$(1)
+' Error at line 3: Array element alone is not a statement - did you forget '= value'?
+```
+
+Since 1.8 (before, it silently did nothing). Only a line with just the element and no `=` is an error - reading is not affected: `arr$()` in an expression still gives the element count, e.g. `PRINT LEN(data$())`. If the name is a `DEF FN` function, `Foo$(1)` without the `FN` keyword still gets its own, more specific message first.
 
 Error messages show array names in uppercase.
 
@@ -461,8 +523,22 @@ PRINT ASJSON(a$)     ' Output: {"key":"lower","KEY":"upper"}
 ```
 Before version 1.7, keys differing only by case collapsed in `ASJSON`/`SAVEJSON` output and one value was silently lost (`{"key":{"":"upper"}}`).
 
+`ASJSON` writes the characters `"` `<` `>` `&` `'` as `\u0022` `\u003C` `\u003E` `\u0026` `\u0027`. This is valid JSON and reads back as the same text. An empty array gives `{}`.
+```vb
+DIM t$
+t$("text") = "Tom & Jerry"
+PRINT ASJSON(t$)     ' Output: {"text":"Tom \u0026 Jerry"}
+
+DIM back$
+LET count$ = ASARRAY(back$, ASJSON(t$))
+PRINT back$("text")  ' Output: Tom & Jerry
+
+DIM e$
+PRINT ASJSON(e$)     ' Output: {}
+```
+
 ### ASARRAY
-Converts a JSON string into a BazzBasic array. Returns number of elements loaded:
+Converts a JSON string into a BazzBasic array. Returns the number of values stored by this call (not the size of the array):
 ```vb
 DIM data$
 LET count$ = ASARRAY(data$, "{\"name\":\"Bob\",\"score\":42}")
@@ -508,6 +584,37 @@ PRINT g$("2147483647") ' Output: 1
 
 `ASARRAY` reads JSON property names verbatim — case preserved — so a round-trip `ASARRAY(b$, ASJSON(a$))` keeps keys like `"key"` and `"KEY"` distinct.
 
+JSON `true` and `false` become `1` and `0`, and `ASJSON` writes them back as numbers. A number like `1e3` becomes `1000`. A `null` object member is skipped (the key does not exist); a `null` in a list leaves a gap, as shown above.
+```vb
+DIM d$
+LET count$ = ASARRAY(d$, "{\"on\":true,\"off\":false,\"big\":1e3,\"gone\":null}")
+PRINT d$("on")           ' Output: 1
+PRINT d$("off")          ' Output: 0
+PRINT d$("big")          ' Output: 1000
+PRINT HASKEY(d$("gone")) ' Output: 0
+PRINT ASJSON(d$)         ' Output: {"on":1,"off":0,"big":1000}
+```
+
+**ASARRAY adds to the array, it does not clear it.** Values from the JSON replace old values with the same key; all other old keys stay. A shorter list does not remove old items either: `["x"]` over `["a","b","c"]` gives `x`, `b`, `c`. This differs from `SPLIT`, which clears the array first. To start clean, remove the array with `DELARRAY` and declare it again (`DIM` alone does not clear it):
+```vb
+DIM d$
+d$("name") = "Old"
+d$("extra") = "kept"
+
+LET count$ = ASARRAY(d$, "{\"name\":\"Bob\",\"score\":42}")
+PRINT count$                  ' Output: 2 (values stored by this call)
+PRINT LEN(d$())               ' Output: 3
+PRINT d$("name")              ' Output: Bob
+PRINT d$("extra")             ' Output: kept
+
+' Start clean
+DELARRAY d$
+DIM d$
+LET count$ = ASARRAY(d$, "{\"level\":3}")
+PRINT LEN(d$())               ' Output: 1
+```
+`LOADJSON`, `LOADXML` and `ASARRAY` with XML add to the array the same way.
+
 ### LOADJSON
 Loads a JSON file directly into an array:
 ```vb
@@ -518,6 +625,20 @@ PRINT scores$("first,name")   ' Output: depends on file contents
 ```
 
 `LOADJSON` reads both shapes like `ASARRAY` does (arrays become keys `"0"` to `"n-1"`, objects keep their property names with their case, `null` values are skipped).
+
+A missing file stops the program:
+```
+Error at line 2: LOADJSON failed: Could not find file '...\highscores.json'.
+```
+Check with `FILEEXISTS` first:
+```vb
+DIM scores$
+IF FILEEXISTS("highscores.json") THEN
+    LOADJSON scores$, "highscores.json"
+ELSE
+    PRINT "No saved scores yet"
+END IF
+```
 
 ### SAVEJSON
 Saves an array as a formatted JSON file:
@@ -543,7 +664,7 @@ The resulting `savegame.json`:
 }
 ```
 
-`SAVEJSON` writes the same shape `ASJSON` produces (both share the same code), formatted as shown above; JSON object keys keep their case.
+`SAVEJSON` writes the same shape `ASJSON` produces (both share the same code), formatted as shown above; JSON object keys keep their case. The file has Windows line ends (CRLF) and no line end after the last `}`.
 
 ### Practical example: HTTP API + JSON
 ```vb
@@ -620,7 +741,7 @@ Every element below the root gets an index — even when there is only one. The 
 - All values are **strings** — XML has no number type. Use `VAL()` when you need a number.
 - Comments and the `<!DOCTYPE ...>` line are ignored.
 
-**Not supported:** text and elements mixed together (`<p>Hello <b>world</b>!</p>`) keeps the text and the elements, but not their order. Feeds rarely need this.
+**Not supported:** text and elements mixed together (`<p>Hello <b>world</b>!</p>`) keeps the text and the elements, but not their order. Feeds rarely need this. Text is also trimmed at both ends, so `<p>Hello <b>world</b></p>` gives `p,#text` = `Hello` (the space is gone).
 
 ### ASXML
 Converts a BazzBasic array to an XML string. If the array has a single top-level key, it becomes the root element; otherwise the root is `<root>`:
@@ -636,6 +757,15 @@ PRINT ASXML(player$)
 
 Keys must be valid XML names: `player$("high score")` gives an error in `ASXML`, because an XML element name cannot contain a space.
 
+Numeric keys have no element names, so each value becomes an `<item>` inside `<root>`:
+```vb
+DIM a$
+a$(0) = "a"
+a$(1) = "b"
+PRINT ASXML(a$)
+' Output: <root><item>a</item><item>b</item></root>
+```
+
 ### LOADXML
 Loads an XML file directly into an array:
 ```vb
@@ -644,6 +774,8 @@ LOADXML cfg$, "settings.xml"
 
 PRINT cfg$("config,player,0")
 ```
+
+Like `LOADJSON`, a missing file stops the program (`LOADXML failed: Could not find file ...`), so check with `FILEEXISTS` first.
 
 ### SAVEXML
 Saves an array as a formatted XML file:
@@ -666,6 +798,8 @@ The resulting `settings.xml`:
   <setting name="fullscreen">on</setting>
 </config>
 ```
+
+The file has LF line ends and a line end after the last tag.
 
 ---
 

@@ -253,6 +253,7 @@ Return a number raised to the power of another number
 PRINT POW(3, 3)    	' Output: 27
 PRINT POW(2, 2)		' Output: 4
 ```
+BazzBasic has no `^` power operator: `2 ^ 8` stops the program before it starts with `Error: Line N: Unexpected character '^' - for powers use POW(a, b)`. See [Operators](operators.md).
 
 ### QPI#
 Returns a quarter of π (pi/4) ≈ 0.7853981633974483. Equivalent to 45 degrees in radians.

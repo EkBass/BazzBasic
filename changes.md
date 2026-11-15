@@ -5,6 +5,59 @@ They take effect once a new binary release is published.
 
 Changes for older versions are in [changes-archive.md](changes-archive.md).
 
+## 14th November 2026
+
+### Bug fixes
+- `HASKEY` now accepts several indexes, just like reading an element: `HASKEY(m$(0, "name"))` works and tests the same element as `m$(0, "name")`.
+- `DELKEY arr$()` without a key now stops with a clear error instead of silently deleting the element with the empty key `""`.
+- `arr$() = value` (an element write without a key, also `+=`, `-=`, `*=`, `/=`) now stops with a clear error instead of silently storing the value under the empty key `""`.
+- `DELKEY` on an array that does not exist (never declared, a typo in the name, removed with `DELARRAY`) now stops with `Array not declared, use DIM first` instead of silently doing nothing.
+- An error inside a one-line `IF ... THEN ...` no longer leaves the program hanging after the error message; it stops (exit code 1).
+- (T24) In a one-line `IF ... THEN ...`, statements after `RETURN` on the same line no longer run inside `DEF FN` (they used to run after the function had already returned).
+- (T25) A bare array-element statement without `=` (`arr$(1)`, `arr$()`) is now an error: `Error at line N: Array element alone is not a statement - did you forget '= value'?` - it used to silently do nothing.
+
+### Other
+- Offline manual (`BazzBasic-Manual.html`): links between manual pages work again. About 36 links pointed to `.md` files that do not exist in the single-file manual.
+
+## HASKEY with several indexes (T19)
+Before, `HASKEY` read exactly one index, so `HASKEY(m$(0, "name"))` stopped with `Error at line N: Expected ')' but found ','`; the workaround was the joined key `HASKEY(m$("0,name"))`. Now `HASKEY` builds the key with the same rule as element read and write: indexes joined with `,` (no spaces), numbers in their shortest form (`1.0` gives `1`), strings as written (case-sensitive). The one-index form is unchanged, so this is not a breaking change.
+
+Why: report from BazzBasic Studio - reading and writing `m$(0, "name")` worked, but checking it with `HASKEY` stopped the program.
+
+Two calls that already stopped the program before now get a clear message instead of a misleading one: `HASKEY(m$())` gives `Error at line N: HASKEY needs a key, e.g. HASKEY(arr$(key))`, and an argument that is not an array element, e.g. `HASKEY("0,name")`, gives `Error at line N: HASKEY expects an array element, e.g. HASKEY(arr$(key))`.
+
+## DELKEY without a key is an error (T20)
+Before, `DELKEY arr$()` (also `arr$(,)`) built an empty key and silently deleted the element stored under `""` - no message, the program went on. Now it stops with `Error at line N: DELKEY needs a key, e.g. DELKEY arr$(key)` and nothing is deleted. `DELKEY arr$("")`, the explicit empty text key, still deletes the `""` element. Unchanged: several indexes (`DELKEY users$(1, "email")`), and a missing key does nothing (an undeclared array is an error since T22, below). The form was never documented and no known program uses it, so this is a bug fix, not a breaking change.
+
+Why: a follow-up to the `HASKEY` fix (T19) - `HASKEY(m$())` gives an error, while `DELKEY m$()` quietly deleted data. DELKEY now reads its indexes with the same code as `HASKEY`.
+
+## Element write without a key is an error (T21)
+Before, `arr$() = value` (also `arr$(,)`, `+=`, `-=`, `*=`, `/=` and the `LET` forms) silently stored the value under the empty key `""`. Now it stops with `Error at line N: Array assignment needs a key, e.g. arr$(key) = value` and nothing is written. `arr$("") = value`, the explicit empty text key, still works, and reading `arr$()` (e.g. `LEN(arr$())`) is unchanged. Also fixed: when an index fails, e.g. `a$(nope$(1)) = SHELL(...)`, the right-hand side no longer runs after the error message. The form was never documented and no known program uses it, so this is a bug fix, not a breaking change.
+
+Why: the write side of the T20 bug - the value went to a key nobody asked for. Element write now reads its indexes with the same code as `HASKEY` and `DELKEY`.
+
+## DELKEY on an undeclared array is an error (T22)
+Before, `DELKEY` on an array that does not exist - never declared, a typo in the name, removed with `DELARRAY`, a plain variable, or an array of the main program used inside `DEF FN` - did nothing, so a typo went unnoticed. Now it stops with the same message as reading an element there: `Error at line N: Array not declared, use DIM first: NAME$` (inside `DEF FN`: `Global array NAME$ is not visible inside DEF FN - ...`). A missing key in an existing array still does nothing. No known program relies on the silent no-op, so this is a bug fix, not a breaking change.
+
+Why: a follow-up to T20 - `DELKEY usres$("ann")` (a typo for `users$`) quietly deleted nothing.
+
+## One-line IF no longer hangs after an error (T23)
+Before, an error inside a one-line `IF ... THEN ... [ELSE ...]`, e.g. `IF 1 THEN PRINT nope$`, printed its message and then the program hung at 100% CPU until it was killed (1.7 has the same bug). Now the program stops with exit code 1, like after any other error. Programs without an error are not affected.
+
+Why: found while testing T21/T22 - their new errors inside a one-line IF hit the same hang. The one-line IF loop did not check for an error, so it ran the failed statement again and again.
+
+## One-line IF stops after RETURN (T24)
+
+Before, inside `DEF FN`, a one-line `IF ... THEN ... RETURN [value] : <more>` also ran the statements after `RETURN` on the same line - they executed after the function had already returned. Now the line stops after `RETURN`, exactly like a plain `RETURN` line already did. At the top level (outside `DEF FN`) nothing changes: there `RETURN` already skipped the rest of the line. Error-free programs are not affected, so this is a bug fix, not a breaking change.
+
+Why: the one-line IF loop did not stop after `RETURN` (same root shape as the T23 hang above); only the `DEF FN` path was affected.
+
+## Array element alone is not a statement (T25)
+
+Before, a bare element reference at statement position - `arr$(1)`, `arr$()`, `arr$(1, "x")`, also after `:` or `THEN`/`ELSE` - silently did nothing. Now it stops with `Error at line N: Array element alone is not a statement - did you forget '= value'?` (exit code 1). Reading is unchanged: `arr$()` in an expression still gives the element count, e.g. `LEN(arr$())`, and `arr$("")` remains a legal key. If the name is a `DEF FN` function, e.g. `Foo$(1)` without the `FN` keyword, that message still fires first. The form was never documented and no known program uses it, so this is a bug fix, not a breaking change.
+
+Why: silent no-ops on invalid input become clear errors (D142).
+
 ## 13th November 2026
 
 Released as version 1.7
@@ -35,7 +88,6 @@ Released as version 1.7
 - `PI`, `HPI`, `QPI` and `TAU` now return full precision, the same values as the `#` constants.
 - A duplicate label is now an error instead of passing silently.
 - Console commands (`INKEY`, `WAITKEY`, `SLEEP`, `CLS`, `CURPOS`) give a clear line-numbered error when the program runs without a real console; piped `INPUT` still works.
-- `bb.bat` no longer prints a stray error line on every launch.
 
 ### Other
 - A plain `FOR` loop with one assignment runs about 21 % faster.
@@ -136,13 +188,11 @@ A program packaged with `-exe` now sees its command-line arguments through `ARGC
 Why: the embedded-program branch in `Program.cs` passed no user arguments to the interpreter. Flag-like arguments are not special inside a packaged exe — `prog.exe -v` simply gives ARGS(0) = "-v" (the interpreter's own `-exe` / `-lib` / `-v` flags apply only to `bazzbasic.exe` itself, not to a packaged program).
 
 ## LOADIMAGE / LOADSHEET / LOADSOUND resolve relative paths from the program folder (T4)
-`LOADIMAGE`, `LOADSHEET` and `LOADSOUND` now resolve relative paths against the program's base directory (`PRG_ROOT#`) — the same rule as all file commands, `LOADFONT` and `SAVESCREEN`. Before, these three used the folder the program was launched from (process CWD), so running `bb.bat ..\bas\prog.bas` from another folder loaded the wrong file or failed. Now `LOADIMAGE("assets/plane.png")` works no matter where you launch from. Absolute paths are used as-is, and `LOADIMAGE` still accepts `http(s)://` URLs (downloaded into the program folder first, as before).
+`LOADIMAGE`, `LOADSHEET` and `LOADSOUND` now resolve relative paths against the program's base directory (`PRG_ROOT#`) — the same rule as all file commands, `LOADFONT` and `SAVESCREEN`. Before, these three used the folder the program was launched from (process CWD), so running `bazzbasic.exe ..\bas\prog.bas` from another folder loaded the wrong file or failed. Now `LOADIMAGE("assets/plane.png")` works no matter where you launch from. Absolute paths are used as-is, and `LOADIMAGE` still accepts `http(s)://` URLs (downloaded into the program folder first, as before).
 
 Why: bug report B2 from BazzBasic Studio — the manual's Path Resolution section already promised `PRG_ROOT#`, the code just did not apply it to these three loaders.
 
 Missing-file errors halt the program (exit code 1) and now show the resolved path: `LOADIMAGE` stops with `Error at line N: Failed to load image: File not found: <path>`, `LOADSHEET` with `Error at line N: File not found: <path>`, and `LOADSOUND` with `Error: Sound file not found: <path>` (its missing line number is a pre-existing quirk, unchanged).
-
-Also fixed: `bb.bat` no longer prints a stray `'#' is not recognized...` to stderr on every launch (the `#` comment line is now a `REM`).
 
 ## Regression fix: first DIM of a top-level array (T1)
 Fixed: the first DIM of an array in the main scope not creating the array (inverted condition in `DimArray`). Array element keys remain case-sensitive by design — `arr$("name")` and `arr$("Name")` are different elements (see below). Re-DIM of an existing top-level array keeps its contents. (Arrays are not global - inside DEF FN they are not visible; pass one in as an `ASJSON()` string and rebuild it with `ASARRAY()`.)

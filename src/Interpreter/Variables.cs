@@ -256,8 +256,9 @@ public class Variables
     {
         // string key = arrayName.ToUpperInvariant();
         
+        // Unknown array = error, like element read/write (T22). A missing key is not: false.
         if (!TryResolveArray(arrayName, out var array))
-            return false;
+            throw new InvalidOperationException(ArrayNotDeclaredMessage(arrayName));
         
         return array.Remove(index);
     }

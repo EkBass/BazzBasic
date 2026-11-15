@@ -61,7 +61,7 @@ PRINT FN MATHLIB_Square$(5)    ' Output: 25
 - Libraries can only contain `DEF FN` functions
 - Functions are auto-prefixed with the filename: `MATHLIB_functionname$`
 - Library functions can read global constants (`#`) from the main program
-- `.bb` files are version-locked — may not work across BazzBasic versions
+- `.bb` files are not tied to one release, but a library compiled with a newer BazzBasic may use commands an older interpreter does not have
 
 ## Recommended Program Structure
 

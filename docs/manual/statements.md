@@ -74,12 +74,15 @@ PRINT "X="; 10;        ' No newline at end
 | Escape | Result |
 |--------|--------|
 | `\"` | Quote |
+| `""` | Quote (two quotes inside a string make one) |
 | `\n` | New line |
 | `\t` | Tab |
+| `\r` | Carriage return (back to the start of the line) |
 | `\\` | Backslash |
 
 ```vb
 PRINT "He said, \"Hello\""  ' Output: He said, "Hello"
+PRINT "He said, ""Hello"""  ' Output: He said, "Hello"
 PRINT "Line1\nLine2"
 ```
 

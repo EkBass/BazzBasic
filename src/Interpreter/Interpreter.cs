@@ -839,25 +839,22 @@ public partial class Interpreter
     {
         _pos++;
 
-        var indices = new List<string>();
-        while (_pos < _tokens.Count && !_hasError && _tokens[_pos].Type != TokenType.TOK_RPAREN)
-        {
-            if (_tokens[_pos].Type == TokenType.TOK_COMMA)
-            {
-                _pos++;
-                continue;
-            }
-            Value idx = EvaluateExpression();
-            indices.Add(idx.AsString());
-
-            if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_COMMA)
-            {
-                _pos++;
-            }
-        }
-        Require(TokenType.TOK_RPAREN);
+        List<string> indices = ReadArrayIndices();      // consumes the ')'
+        if (_hasError) return;                          // never write on a half-parsed statement
 
         string key = string.Join(",", indices);
+
+        // arr$() = v / arr$() += v ...: an empty index list must not silently write key ""
+        if (indices.Count == 0 && _pos < _tokens.Count)
+        {
+            TokenType op = _tokens[_pos].Type;
+            if (op == TokenType.TOK_EQUALS || op == TokenType.TOK_PLUS_ASSIGN || op == TokenType.TOK_MINUS_ASSIGN ||
+                op == TokenType.TOK_MULTIPLY_ASSIGN || op == TokenType.TOK_DIVIDE_ASSIGN)
+            {
+                Error("Array assignment needs a key, e.g. arr$(key) = value");
+                return;
+            }
+        }
 
         // Compound assignment: arr$(i) += expr  â†’  arr$(i) = arr$(i) + expr
         if (_pos < _tokens.Count)
@@ -904,7 +901,10 @@ public partial class Interpreter
             if (_functions.ContainsKey(arrayName))
             {
                 Error($"'{arrayName}' is a DEF FN function, not an array — did you forget the FN keyword? Use: FN {arrayName}(...)");
+                return;
             }
+            // A bare element reference (arr$(1), arr$()) is not a statement - it used to be a silent no-op (T25)
+            Error("Array element alone is not a statement - did you forget '= value'?");
             return;
         }
 

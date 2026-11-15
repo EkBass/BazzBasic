@@ -71,7 +71,8 @@ pandoc ^
   --embed-resources --standalone ^
   --metadata title="BazzBasic Manual" ^
   --metadata lang="en" ^
-  --highlight-style=tango
+  --lua-filter tools\md-links.lua ^
+  --syntax-highlighting=tango
 
 if errorlevel 1 (
     echo [VIRHE] HTML-generointi epäonnistui.
@@ -127,7 +128,7 @@ for %%P in (%PAGES%) do (
       -o %OUTPUT_CHM_DIR%\%%P.html ^
       --embed-resources --standalone ^
       --metadata title="BazzBasic Manual" ^
-      --highlight-style=tango
+      --syntax-highlighting=tango
 )
 
 REM -- Generoi .hhp projekti- ja .hhc sisältötiedostot --

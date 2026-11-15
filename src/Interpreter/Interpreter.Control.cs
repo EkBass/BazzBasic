@@ -67,7 +67,9 @@ public partial class Interpreter
 
     private void ExecuteOneLineIfThen()
     {
-        while (_pos < _tokens.Count)
+        // Stop after an error like Run() and the FN body loop do: under _hasError most
+        // handlers return without consuming their tokens, and this loop used to spin forever.
+        while (_pos < _tokens.Count && !_hasError)
         {
             Token token = _tokens[_pos];
             
@@ -84,6 +86,14 @@ public partial class Interpreter
             {
                 ExecuteGosub();
                 return;
+            }
+            else if (token.Type == TokenType.TOK_RETURN)
+            {
+                ExecuteReturn();
+                // Inside DEF FN ExecuteReturn sets _running = false, which this loop does not check
+                // (unlike Run() Interpreter.cs:310 and the FN body loop Functions.cs:209) - stop the
+                // rest of the line. At top level RETURN already moved _pos via the GOSUB stack.
+                if (_inFunction) return;
             }
             else if (token.Type == TokenType.TOK_EXIT)
             {
