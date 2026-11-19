@@ -1478,7 +1478,7 @@ a build made from the source code)</li>
 it in their training data. Left alone, an AI will happily guess and
 write BASIC that looks right but uses syntax from QBasic, FreeBASIC or
 some other dialect.</p>
-<p>To fix that, BazzBasic has an official AI guide: a skill folder named
+<p>To fix that, BazzBasic has an official AI SKILL: a skill folder named
 <code>bazzbasic-code</code> built around <code>SKILL.md</code> (the core
 language) plus topic files in <code>references/</code> — graphics &amp;
 sound, mouse &amp; gamepad, file I/O, JSON &amp; XML, network (including
@@ -1486,9 +1486,9 @@ calling AI/LLM APIs), date &amp; time and the IDE. Together they teach
 an AI the language — syntax, variable rules, commands, functions, common
 pitfalls and idioms.</p>
 <p><a href="https://huggingface.co/datasets/EkBass/BazzBasic-SKILL">BazzBasic
-AI guide (the <code>bazzbasic-code</code> skill folder) on Hugging
+AI SKILL (the <code>bazzbasic-code</code> skill folder) on Hugging
 Face</a></p>
-<p>The guide was originally written by uploading the BazzBasic
+<p>The SKILL was originally written by uploading the BazzBasic
 documentation to Claude, ChatGPT and Mistral Le Chat and asking them to
 build a reference that works specifically as an aid for AI. It has been
 refined against the interpreter source ever since.</p>
@@ -1518,10 +1518,10 @@ skill.</li>
 <p>The clever part is how the AI uses it. At first the AI only reads the
 name and the description, which costs almost nothing. When you ask
 something that matches the description — for example “write me a
-BazzBasic program that draws a starfield” — the AI loads the full guide
-and follows it. When you talk about something else, the guide stays out
+BazzBasic program that draws a starfield” — the AI loads the full SKILL
+and follows it. When you talk about something else, the SKILL stays out
 of the way.</p>
-<p>A skill folder may also contain extra files, and the BazzBasic guide
+<p>A skill folder may also contain extra files, and the BazzBasic SKILL
 uses them: the large topics live in <code>references/*.md</code>, which
 <code>SKILL.md</code> points to, and <code>README.md</code> carries a
 copy-paste setup prompt that lists every file.</p>
@@ -1535,7 +1535,7 @@ Claude Code and many other coding agents):</p>
 <li>Add the folder to your tool’s skills directory, or upload it as a
 skill in the tool’s settings.</li>
 </ol>
-<p>After that the AI uses the guide automatically whenever BazzBasic
+<p>After that the AI uses the SKILL automatically whenever BazzBasic
 comes up.</p>
 <h3 id="native-skill.md-support">Native SKILL.md support</h3>
 <p>These popular AI services can all load <code>SKILL.md</code> as a
@@ -1564,7 +1564,7 @@ plain Markdown — attach them to the chat or paste them into your project
 instructions. <code>README.md</code> contains a ready-made setup prompt
 that lists every file: copy-paste it.</p>
 <h2 id="license-and-updates">License and updates</h2>
-<p>The guide is published under the MIT license. It evolves together
+<p>The SKILL is published under the MIT license. It evolves together
 with BazzBasic itself, and the version number at the top of the file
 tells which BazzBasic version it describes. Check for a newer copy from
 time to time — especially after a new BazzBasic release.</p>
