@@ -3,9 +3,9 @@
 
 BazzBasic is a young language, so AI models have seen very little of it in their training data. Left alone, an AI will happily guess and write BASIC that looks right but uses syntax from QBasic, FreeBASIC or some other dialect.
 
-To fix that, BazzBasic has an official AI guide: a single file, `SKILL.md`, that teaches an AI the language — syntax, variable rules, commands, functions, common pitfalls and idioms.
+To fix that, BazzBasic has an official AI guide: a skill folder named `bazzbasic-code` built around `SKILL.md` (the core language) plus topic files in `references/` — graphics & sound, mouse & gamepad, file I/O, JSON & XML, network (including calling AI/LLM APIs), date & time and the IDE. Together they teach an AI the language — syntax, variable rules, commands, functions, common pitfalls and idioms.
 
-[BazzBasic SKILL.md on Hugging Face](https://huggingface.co/datasets/EkBass/BazzBasic_AI_Guide)
+[BazzBasic AI guide (the `bazzbasic-code` skill folder) on Hugging Face](https://huggingface.co/datasets/EkBass/BazzBasic-SKILL)
 
 The guide was originally written by uploading the BazzBasic documentation to Claude, ChatGPT and Mistral Le Chat and asking them to build a reference that works specifically as an aid for AI. It has been refined against the interpreter source ever since.
 
@@ -32,15 +32,14 @@ description: "BazzBasic BASIC interpreter language reference. Use when writing,
 
 The clever part is how the AI uses it. At first the AI only reads the name and the description, which costs almost nothing. When you ask something that matches the description — for example "write me a BazzBasic program that draws a starfield" — the AI loads the full guide and follows it. When you talk about something else, the guide stays out of the way.
 
-A skill folder may also contain extra files such as examples or scripts, but the BazzBasic guide is deliberately kept as one self-contained file.
+A skill folder may also contain extra files, and the BazzBasic guide uses them: the large topics live in `references/*.md`, which `SKILL.md` points to, and `README.md` carries a copy-paste setup prompt that lists every file.
 
 ## How to use it
 
 **Tools that support skills** (for example Claude, Claude Code and many other coding agents):
 
-1. Create a folder named `bazzbasic-code`.
-2. Put `SKILL.md` inside it.
-3. Add the folder to your tool's skills directory, or upload it as a skill in the tool's settings.
+1. Download the whole `bazzbasic-code` folder — `SKILL.md`, `README.md` and all of `references/`.
+2. Add the folder to your tool's skills directory, or upload it as a skill in the tool's settings.
 
 After that the AI uses the guide automatically whenever BazzBasic comes up.
 
@@ -66,7 +65,7 @@ These popular AI services can all load `SKILL.md` as a skill automatically (as o
 The list grows all the time.  
 See [agentskills.io/clients](https://agentskills.io/clients) for them all.
 
-**Every other AI** understands it too. `SKILL.md` is plain Markdown, so just attach it to the chat or paste it into your project instructions.
+**Every other AI** understands it too. The files are plain Markdown — attach them to the chat or paste them into your project instructions. `README.md` contains a ready-made setup prompt that lists every file: copy-paste it.
 
 ## License and updates
 

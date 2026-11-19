@@ -35,7 +35,7 @@ Key facts for writing BazzBasic code correctly:
 
 ## AI resources
 
-- [BazzBasic AI Guide](https://huggingface.co/datasets/EkBass/BazzBasic_AI_Guide): SKILL file written to help AI assistants write correct BazzBasic code
+- [BazzBasic SKILL.md](https://huggingface.co/datasets/EkBass/BazzBasic-SKILL): SKILL file written to help AI assistants write correct BazzBasic code
 - [BazzBasic dataset](https://huggingface.co/datasets/EkBass/BazzBasic): dataset with thousands of Q&A pairs about BazzBasic ready to be used for finetuning.
 
 ## Source and downloads

@@ -68,7 +68,7 @@ PRINT "Header"
 
 
 ### COLOR
-Set foreground (text) and background colors. Accepts palette indices 0–15 only — for full RGB on graphics primitives, use `RGB()` with `LINE`, `CIRCLE`, etc. instead.
+Set foreground (text) and background colors. Accepts palette indices 0–15 only — for full RGB on graphics primitives, use `RGB()` or a built-in color constant like `RED#` with `LINE`, `CIRCLE`, etc. instead.
 ```vb
 COLOR foreground, background
 
@@ -271,12 +271,14 @@ Every drawing command in this section (`PSET`, `LINE`, `CIRCLE`, `PAINT`, `DRAWS
 
 - **A palette index 0–15** — the classic 16-color EGA/VGA palette (`0` = black, `15` = white, etc.)
 - **An `RGB(r, g, b)` value** — any of the 16 million colors, each channel `0–255`
+- **A built-in color constant** — `BLACK#` … `TRANSPARENT#` are 32-bit ARGB values (since 1.8), e.g. `RED#` = 0xFFFF0000 = RGB(255, 0, 0)
 
 You can mix and match freely:
 
 ```vb
 PSET (100, 100), 12              ' Palette index 12 = light red
 PSET (100, 100), RGB(255, 64, 0) ' Custom orange-red
+PSET (100, 100), RED#           ' Built-in constant (since 1.8)
 ```
 
 The `COLOR` text-mode command is the exception — it only accepts palette indices 0–15.

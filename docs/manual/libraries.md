@@ -120,6 +120,15 @@ Library validation failed: Line 5: Libraries can only contain DEF FN functions. 
 Error: Line 1: Library not found: missing.bb
 ```
 
+If the `INCLUDE "missing.bb"` line is inside an included `.bas` file, the message names that file: `Error: helpers.bas line 3: Library not found: missing.bb`.
+
+**Runtime error inside a library function:**
+```
+Error in MathLib.bb line 4: Undefined variable: YY$
+```
+
+Since 1.8, the message names the library, and the line number is the line in the library's source file - here a typo `yy$` on line 4 of `MathLib.bas`.
+
 ## Benefits of Libraries
 
 - **Faster loading** — Pre-tokenized code loads instantly

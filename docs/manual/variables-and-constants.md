@@ -176,6 +176,41 @@ BazzBasic provides a full range of automatically initialized constants
 
 > **Note:** if older code declares its own `AU#` with `LET`, remove that line — built-in constants cannot be redefined, so it is now an error.
 
+**Physics:**
+| Constant | Description |
+|----------|-------------|
+| `PHI#` | 1.618033988749895 — golden ratio φ (since 1.8) |
+| `GRAV#` | 6.6743E-11 — gravitational constant, m^3 kg^-1 s^-2 (since 1.8) |
+| `GRAV_E#` | 9.80665 — standard gravity on Earth, m/s^2 (since 1.8) |
+
+```vb
+PRINT PHI#      ' Output: 1.618033988749895
+PRINT GRAV_E#   ' Output: 9.80665
+```
+
+**Colors:**
+| Constant | Value (ARGB) | RGB |
+|----------|--------------|-----|
+| `BLACK#` | 0xFF000000 | (0, 0, 0) |
+| `WHITE#` | 0xFFFFFFFF | (255, 255, 255) |
+| `RED#` | 0xFFFF0000 | (255, 0, 0) |
+| `GREEN#` | 0xFF00FF00 | (0, 255, 0) |
+| `BLUE#` | 0xFF0000FF | (0, 0, 255) |
+| `YELLOW#` | 0xFFFFFF00 | (255, 255, 0) |
+| `CYAN#` | 0xFF00FFFF | (0, 255, 255) |
+| `MAGENTA#` | 0xFFFF00FF | (255, 0, 255) |
+| `GRAY#` | 0xFF808080 | (128, 128, 128) |
+| `ORANGE#` | 0xFFFFA500 | (255, 165, 0) |
+| `TRANSPARENT#` | 0x00000000 | (0, 0, 0, alpha 0) |
+
+Use them as the `color` parameter of drawing commands (`PSET`, `LINE`, `CIRCLE`, `PAINT`, `DRAWSTRING`, `LOADSHAPE`) — like `RGB(r, g, b)` values they are 32-bit ARGB. `COLOR` (console text colors) still takes a palette index 0–15 only. Since 1.8.
+
+```vb
+SCREEN 320, 200
+LINE (10, 10)-(100, 100), RED#
+CIRCLE (160, 100), 40, YELLOW#
+```
+
 **System:**
 | Constant | Description |
 |----------|-------------|

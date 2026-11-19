@@ -279,6 +279,20 @@ These are auto-initialized at startup — no `LET` required.
 | `TAU#` | 6.283185307179586 (2π) |
 | `EULER#` | 2.718281828459045 (e) |
 | `AU#` | 149597870700 (astronomical unit in metres, exact — IAU 2012) |
+| `PHI#` | 1.618033988749895 (golden ratio) |
+| `GRAV#` | 6.6743E-11 (gravitational constant, m^3 kg^-1 s^-2) |
+| `GRAV_E#` | 9.80665 (standard gravity on Earth, m/s^2) |
+| `BLACK#` | 0xFF000000 (0, 0, 0) |
+| `WHITE#` | 0xFFFFFFFF (255, 255, 255) |
+| `RED#` | 0xFFFF0000 (255, 0, 0) |
+| `GREEN#` | 0xFF00FF00 (0, 255, 0) |
+| `BLUE#` | 0xFF0000FF (0, 0, 255) |
+| `YELLOW#` | 0xFFFFFF00 (255, 255, 0) |
+| `CYAN#` | 0xFF00FFFF (0, 255, 255) |
+| `MAGENTA#` | 0xFFFF00FF (255, 0, 255) |
+| `GRAY#` | 0xFF808080 (128, 128, 128) |
+| `ORANGE#` | 0xFFFFA500 (255, 165, 0) |
+| `TRANSPARENT#` | 0x00000000 (0, 0, 0, alpha 0) |
 
 ### Keyboard constants
 `KEY_UP#` `KEY_DOWN#` `KEY_LEFT#` `KEY_RIGHT#`  

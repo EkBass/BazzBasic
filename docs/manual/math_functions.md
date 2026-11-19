@@ -134,6 +134,20 @@ PRINT FLOOR(1.95)       ' Output: 1
 PRINT FLOOR(300)       ' Output: 300
 ```
 
+### GRAV#
+Gravitational constant: 6.6743E-11 m^3 kg^-1 s^-2. Like every built-in constant it cannot be changed: `GRAV# = 1` and `LET GRAV# = 1` are both errors.
+```vb
+PRINT GRAV#                                ' Output: 6.6743E-11
+LET force$ = m1$ * m2$ * GRAV# / (r$ * r$) ' Newton's law of gravitation
+```
+
+### GRAV_E#
+Standard gravity on Earth (standard acceleration of free fall): 9.80665 m/s^2. Like every built-in constant it cannot be changed.
+```vb
+PRINT GRAV_E#                     ' Output: 9.80665
+LET fallen$ = GRAV_E# / 2 * t$ * t$ ' distance fallen in t$ seconds
+```
+
 ### HPI#
 Returns half of π (pi/2) ≈ 1.5707963267948966. Equivalent to 90 degrees in radians.
 
@@ -237,6 +251,12 @@ Return modulus (remainder) of the two numbers
 PRINT MOD(10, 3)    ' Output: 1
 PRINT MOD(100, 20)	' Output: 0
 PRINT MOD(10, 0)    ' Output: 0 (division by zero gives 0)
+```
+
+### PHI#
+Returns the golden ratio φ ≈ 1.618033988749895.
+```vb
+PRINT PHI#     ' Output: 1.618033988749895
 ```
 
 ### PI#

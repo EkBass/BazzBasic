@@ -16,7 +16,7 @@ These options are for the interpreter, `bazzbasic.exe`.
 
 Packaged executables (made with `-exe`, see [Creating EXE](packaging.md)) receive arguments the same way: `myprog.exe arg1 arg2` gives ARGCOUNT = 2 and ARGS(0) = "arg1" (0-based, just like `bazzbasic.exe myprog.bas arg1 arg2`).
 
-After an error, `bazzbasic.exe` exits with code 1, so scripts and `.bat` files can detect it. A program that ends normally exits with code 0. Runtime errors are printed as `Error at line N: <message>`, where N is the line that caused the error.
+After an error, `bazzbasic.exe` exits with code 1, so scripts and `.bat` files can detect it. A program that ends normally exits with code 0. Runtime errors are printed as `Error at line N: <message>`, where N is the line that caused the error. An error inside an INCLUDEd file or a `.bb` library names that file and the line in it: `Error in helpers.bas line 2: <message>` (see [Preprocessor](preprocessor.md)).
 
 ## Get a link to the BazzBasic Beginner's Guide
 

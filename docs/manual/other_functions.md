@@ -38,6 +38,8 @@ PRINT TIME("dd MMMM yyyy")  ' "09 January 2026"
 PRINT TIME("HH:mm")         ' "16:30"
 ```
 
+> **Note:** `:` in the format follows the Windows regional settings — on a Finnish system `TIME()` and `TIME("HH:mm:ss")` print `18.19.08` (dot as the time separator). For a fixed colon on every system, quote it: `TIME("HH':'mm':'ss")` prints `18:19:08`.
+
 **Common format codes:**
 | Code | Description | Example |
 |------|-------------|---------|
