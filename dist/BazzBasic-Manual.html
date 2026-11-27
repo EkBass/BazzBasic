@@ -781,6 +781,8 @@ BazzBasic from anywhere</a>).</li>
 <li><strong>Syntax highlighting</strong> for BazzBasic keywords</li>
 <li><strong>Line numbers</strong> for easy navigation</li>
 <li><strong>Multiple tabs</strong> for working with several files</li>
+<li><strong>Predictive Mode</strong>: a list of matching reserved words
+opens while typing (View → Predictive Mode, Ctrl+Space)</li>
 </ul>
 <h2 id="keyboard-shortcuts-menu-map">Keyboard Shortcuts &amp; Menu
 Map</h2>
@@ -918,6 +920,12 @@ Map</h2>
 <td>View</td>
 <td>none</td>
 <td>Tree View[15]</td>
+<td>none</td>
+</tr>
+<tr>
+<td>View</td>
+<td>Ctrl+Space</td>
+<td>Predictive Mode[19]</td>
 <td>none</td>
 </tr>
 <tr>
@@ -1110,7 +1118,25 @@ The on/off choice and the time of the last check are saved to
 <strong>[18]</strong> Checks GitHub for a newer release now and always
 shows the result, even when you are already running the latest version.
 A manual check also counts as the day’s check for Autocheck Updates on
-Startup.</p>
+Startup. <strong>[19]</strong> When checked (on by default), a list of
+matching reserved words opens while you type in code, after 3 letters —
+not inside a comment (<code>&#39;</code> / <code>REM</code>) or a string.
+<strong>Tab</strong> inserts the chosen word in capitals;
+<strong>Enter</strong> closes the list and makes a new line without
+inserting the word; <strong>Esc</strong> closes the list.
+<strong>Ctrl+Space</strong> opens the list by hand, even when the mode
+is off or nothing is typed yet — short words like <code>PI#</code>,
+<code>IF</code>, <code>TO</code> appear only this way. The list offers
+the built-in constants with <code>#</code> (<code>PI#</code>,
+<code>HPI#</code>, <code>QPI#</code>, <code>TAU#</code>,
+<code>EULER#</code>, <code>PHI#</code>, <code>GRAV#</code>,
+<code>GRAV_E#</code>, <code>AU#</code>, <code>BBVER#</code>,
+<code>BBBUILD#</code>, <code>PRG_ROOT#</code>,
+<code>BLACK#</code>…<code>TRANSPARENT#</code>), not <code>KEY_*</code> /
+<code>PAD_*#</code> constants or your own functions, labels or
+variables. In Dark Mode the list uses the editor colours. The on/off
+choice is saved to <code>%AppData%\BazzBasic\ide.json</code>
+(<code>PredictiveMode</code>).</p>
 <h2 id="closing-the-ide">Closing the IDE</h2>
 <p>If any tab has unsaved changes when you close the IDE, you are asked
 whether to save each one. Choose <strong>Cancel</strong> to keep the IDE
@@ -3866,7 +3892,7 @@ LET</li>
 <p>BazzBasic’s built-in functions are organized into separate pages:</p>
 <ul>
 <li><a href="#math-functions">Math Functions</a> — ABS, SIN, COS, LERP,
-DISTANCE, PI, TAU…</li>
+DISTANCE, PI#, TAU#…</li>
 <li><a href="#fast-trigonometry-lookup-tables">Fast Trigonometry</a> —
 FastSin, FastCos, FastRad, lookup tables</li>
 <li><a href="#string-functions">String Functions</a> — LEFT, MID, INSTR,
@@ -7733,7 +7759,7 @@ enabled)</td>
 <td>2D or 3D Euclidean distance</td>
 </tr>
 <tr>
-<td><code>EULER</code></td>
+<td><code>EULER#</code></td>
 <td>Euler’s number (e = 2.71828…)</td>
 </tr>
 <tr>
@@ -7761,7 +7787,7 @@ enabled)</td>
 <td>Round down</td>
 </tr>
 <tr>
-<td><code>HPI</code></td>
+<td><code>HPI#</code></td>
 <td>π/2 (90°)</td>
 </tr>
 <tr>
@@ -7794,7 +7820,7 @@ equal to a bound is FALSE</td>
 <td>Remainder</td>
 </tr>
 <tr>
-<td><code>PI</code></td>
+<td><code>PI#</code></td>
 <td>π (3.14159…)</td>
 </tr>
 <tr>
@@ -7802,7 +7828,7 @@ equal to a bound is FALSE</td>
 <td>Power</td>
 </tr>
 <tr>
-<td><code>QPI</code></td>
+<td><code>QPI#</code></td>
 <td>π/4 (45°)</td>
 </tr>
 <tr>
@@ -7834,11 +7860,17 @@ equal to a bound is FALSE</td>
 <td>Tangent (radians)</td>
 </tr>
 <tr>
-<td><code>TAU</code></td>
+<td><code>TAU#</code></td>
 <td>2π (360°)</td>
 </tr>
 </tbody>
 </table>
+<p>The plain names without <code>#</code> (<code>PI</code>,
+<code>HPI</code>, <code>QPI</code>, <code>TAU</code>,
+<code>EULER</code>, <code>PHI</code>, <code>GRAV</code>,
+<code>GRAV_E</code>) still work and give the same values, but are
+deprecated since 1.9 — use the <code>#</code> forms (see the Built-in
+Constants table below).</p>
 <hr />
 <h2 id="string-functions-2">String Functions</h2>
 <table>

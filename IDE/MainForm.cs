@@ -55,6 +55,17 @@ public partial class MainForm : Form
             SetTreeViewVisible(treeViewMenuItem.Checked);
         };
 
+        // Predictive Mode (reserved-word autocomplete) on/off, remembered between sessions
+        predictiveModeMenuItem.Checked = _settings.PredictiveMode;
+        predictiveModeMenuItem.CheckedChanged += (s, e) =>
+        {
+            _settings.PredictiveMode = predictiveModeMenuItem.Checked;
+            _settings.Save();
+
+            if (!predictiveModeMenuItem.Checked)
+                ActiveEditor?.AutoCCancel();
+        };
+
         // Syntax coloring on/off, remembered between sessions.
         // Read before any editor is created: ApplyEditorColors checks the menu item,
         // so editors opened later (New/Open) pick up the same state.
@@ -992,9 +1003,81 @@ public partial class MainForm : Form
                 UpdatePositionLabel();
             }
         };
-        
+
+        // Predictive Mode: reserved-word autocomplete list.
+        // The list inserts the chosen word as written in AutoCompleteList (upper case),
+        // replacing what was typed, so "pri" + Tab becomes "PRINT".
+        editor.AutoCIgnoreCase = true;
+        editor.AutoCAutoHide = true;              // close when nothing matches any more (e.g. "len$")
+        editor.AutoCOrder = Order.PerformSort;
+        editor.AutoCMaxHeight = 10;
+        editor.CharAdded += Editor_CharAdded;
+
+        // Only Tab accepts. Enter closes the list and is then handled normally (new line):
+        // not marking the key handled lets Scintilla insert the line break.
+        editor.KeyDown += (s, e) =>
+        {
+            if (e.KeyCode == Keys.Enter && editor.AutoCActive)
+                editor.AutoCCancel();
+        };
+
         return editor;
     }
+
+    #region Predictive Mode
+
+    // Minimum typed letters before the list opens by itself (Ctrl+Space ignores this)
+    private const int AutoCompleteMinChars = 3;
+
+    // Opens the list after typing, when Predictive Mode is on and the caret is in code
+    private void Editor_CharAdded(object? sender, CharAddedEventArgs e)
+    {
+        if (!predictiveModeMenuItem.Checked) return;
+        if (sender is not Scintilla editor || editor.AutoCActive) return;
+
+        char c = (char)e.Char;
+        if (!(char.IsLetterOrDigit(c) || c == '_')) return;
+
+        ShowAutoComplete(editor, AutoCompleteMinChars);
+    }
+
+    // Ctrl+Space: open the list by hand, even with Predictive Mode off or nothing typed
+    private void ShowAutoCompleteNow()
+    {
+        var editor = ActiveEditor;
+        if (editor == null) return;
+        ShowAutoComplete(editor, 0);
+    }
+
+    private static void ShowAutoComplete(Scintilla editor, int minChars)
+    {
+        int pos = editor.CurrentPosition;
+        int start = editor.WordStartPosition(pos, true);
+        int length = pos - start;
+        if (length < minChars) return;
+
+        if (IsInCommentOrString(editor, pos)) return;
+
+        editor.AutoCShow(length, AutoCompleteList);
+    }
+
+    // Uses the VB lexer's styles, so the rule is the same as the colouring
+    // (the lexer runs also when View → Syntax Coloring is off).
+    private static bool IsInCommentOrString(Scintilla editor, int pos)
+    {
+        if (pos == 0) return false;
+
+        // The character just typed may not be styled yet: style the current line up to the caret
+        int lineStart = editor.Lines[editor.LineFromPosition(pos)].Position;
+        editor.Colorize(lineStart, pos);
+
+        int style = editor.GetStyleAt(pos - 1);
+        return style == Style.Vb.Comment            // ' and REM
+            || style == Style.Vb.String             // "closed string"
+            || style == Style.Vb.StringEol;         // "string still being typed
+    }
+
+    #endregion
 
     private void UpdatePositionLabel()
     {
@@ -1007,46 +1090,80 @@ public partial class MainForm : Form
         }
     }
 
+    // Keyword lists must match the keyword dictionary in src/Lexer/Lexer.cs.
+    // When adding a keyword there, add it here too (and to the syntax files in extras/).
+    // Used both for syntax colouring and for the Predictive Mode list (AutoCompleteList).
+
+    // Control flow, declarations, logic
+    private const string KeywordsControl =
+        "if then else elseif endif end while wend for to step next exit " +
+        "dim let goto gosub return def fn include rem sleep " +
+        "and or not true false on off";
+
+    // Math & string functions, constants
+    private const string KeywordsFunctions =
+        "abs atan atan2 between inbetween ceil cint clamp cos deg distance exp floor int lerp log max min mod pow rad rnd round sgn sin sqr tan " +
+        "grav grav_e phi pi hpi qpi tau euler fasttrig fastsin fastcos fastrad " +
+        "au " +
+        "bbver bbbuild prg_root " +
+        "asc chr instr invert lcase left len ltrim mid repeat replace right rtrim srand split str trim ucase val fstring same " +
+        "ticks time rgb";
+
+    // I/O, files, network, arrays, program arguments
+    private const string KeywordsIO =
+        "print input cls color locate curpos getconsole inkey keydown waitkey " +
+        "fileread filewrite fileappend fileexists filedelete filelist shell " +
+        "httpget httppost httperror startlisten getrequest sendresponse stoplisten " +
+        "asjson asarray loadjson savejson asxml loadxml savexml base64encode base64decode sha256 " +
+        "isset haskey delkey delarray join rowcount arrkey args argcount";
+
+    // Graphics, mouse & sound
+    private const string KeywordsGraphics =
+        "screen screenlock fullscreen vsync line circle pset point paint b bf " +
+        "loadimage loadshape loadsheet loadfont drawstring savescreen " +
+        "moveshape drawshape rotateshape scaleshape showshape hideshape removeshape " +
+        "mousex mousey mouseleft mouseright mousemiddle mousewheel mousehide mouseshow " +
+        "gamepads padbutton padaxis padname padrumble " +
+        "black white red green blue yellow cyan magenta gray orange transparent " +
+        "loadsound soundonce soundoncewait soundrepeat soundstop soundstopall";
+
+    // Words in the lists above that are NOT keywords but built-in constants, valid only
+    // with the # suffix (BLACK#, PRG_ROOT#...; see InitBuiltinConstants and the system
+    // constants in src/Interpreter/Interpreter.cs). The Predictive Mode list offers them
+    // WITH the # (BLACK#), because without it they would be a syntax error.
+    // Math constants are offered as PI#, TAU#... too: the # form is the documented one
+    // (the plain PI, TAU... keywords in src/Lexer/Lexer.cs are leftovers).
+    private const string ConstantOnlyWords =
+        "pi hpi qpi tau euler phi grav grav_e " +
+        "au bbver bbbuild prg_root " +
+        "black white red green blue yellow cyan magenta gray orange transparent";
+
+    // All keywords for Predictive Mode: upper case, no duplicates, sorted, space-separated
+    private static readonly string AutoCompleteList = BuildAutoCompleteList();
+
+    private static string BuildAutoCompleteList()
+    {
+        static string[] Words(string s) => s.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+        var constantOnly = new HashSet<string>(Words(ConstantOnlyWords));
+
+        return string.Join(" ",
+            Words($"{KeywordsControl} {KeywordsFunctions} {KeywordsIO} {KeywordsGraphics}")
+                .Select(w => constantOnly.Contains(w) ? w + "#" : w)
+                .Select(w => w.ToUpperInvariant())
+                .Distinct()
+                .OrderBy(w => w, StringComparer.Ordinal));
+    }
+
     private void ConfigureBazzBasicSyntax(Scintilla editor)
     {
         // Use VB lexer (closest to BASIC) - Scintilla 5 uses LexerName
         editor.LexerName = "vb";
 
-        // Keyword lists must match the keyword dictionary in src/Lexer/Lexer.cs.
-        // When adding a keyword there, add it here too (and to the syntax files in extras/).
-
-        // Control flow, declarations, logic
-        editor.SetKeywords(0,
-            "if then else elseif endif end while wend for to step next exit " +
-            "dim let goto gosub return def fn include rem sleep " +
-            "and or not true false on off");
-
-        // Math & string functions, constants
-        editor.SetKeywords(1,
-            "abs atan atan2 between inbetween ceil cint clamp cos deg distance exp floor int lerp log max min mod pow rad rnd round sgn sin sqr tan " +
-            "grav grav_e phi pi hpi qpi tau euler fasttrig fastsin fastcos fastrad " +
-            "au " +
-            "bbver bbbuild prg_root " +
-            "asc chr instr invert lcase left len ltrim mid repeat replace right rtrim srand split str trim ucase val fstring same " +
-            "ticks time rgb");
-
-        // I/O, files, network, arrays, program arguments
-        editor.SetKeywords(2,
-            "print input cls color locate curpos getconsole inkey keydown waitkey " +
-            "fileread filewrite fileappend fileexists filedelete filelist shell " +
-            "httpget httppost httperror startlisten getrequest sendresponse stoplisten " +
-            "asjson asarray loadjson savejson asxml loadxml savexml base64encode base64decode sha256 " +
-            "isset haskey delkey delarray join rowcount arrkey args argcount");
-
-        // Graphics, mouse & sound
-        editor.SetKeywords(3,
-            "screen screenlock fullscreen vsync line circle pset point paint b bf " +
-            "loadimage loadshape loadsheet loadfont drawstring savescreen " +
-            "moveshape drawshape rotateshape scaleshape showshape hideshape removeshape " +
-            "mousex mousey mouseleft mouseright mousemiddle mousewheel mousehide mouseshow " +
-            "gamepads padbutton padaxis padname padrumble " +
-			"black white red green blue yellow cyan magenta gray orange transparent " +
-            "loadsound soundonce soundoncewait soundrepeat soundstop soundstopall");
+        editor.SetKeywords(0, KeywordsControl);
+        editor.SetKeywords(1, KeywordsFunctions);
+        editor.SetKeywords(2, KeywordsIO);
+        editor.SetKeywords(3, KeywordsGraphics);
 
         ApplyEditorColors(editor);
     }
@@ -1064,17 +1181,19 @@ public partial class MainForm : Form
         editor.Styles[Style.Default].ForeColor = t.Fore;
         editor.StyleClearAll();
 
-        // VB lexer style constants (from Scintilla documentation)
-        const int SCE_B_DEFAULT = 0;
-        const int SCE_B_COMMENT = 1;
-        const int SCE_B_NUMBER = 2;
-        const int SCE_B_KEYWORD = 3;
-        const int SCE_B_STRING = 4;
-        const int SCE_B_OPERATOR = 6;
-        const int SCE_B_IDENTIFIER = 7;
-        const int SCE_B_KEYWORD2 = 8;
-        const int SCE_B_KEYWORD3 = 9;
-        const int SCE_B_KEYWORD4 = 10;
+        // VB lexer style numbers, from the wrapper's Style.Vb (= Lexilla SCE_B_*).
+        // Note: 8 = Date and 9 = StringEol; the keyword lists 2-4 are 10-12.
+        const int SCE_B_DEFAULT = Style.Vb.Default;        // 0
+        const int SCE_B_COMMENT = Style.Vb.Comment;        // 1
+        const int SCE_B_NUMBER = Style.Vb.Number;          // 2
+        const int SCE_B_KEYWORD = Style.Vb.Keyword;        // 3  SetKeywords(0)
+        const int SCE_B_STRING = Style.Vb.String;          // 4
+        const int SCE_B_OPERATOR = Style.Vb.Operator;      // 6
+        const int SCE_B_IDENTIFIER = Style.Vb.Identifier;  // 7
+        const int SCE_B_STRINGEOL = Style.Vb.StringEol;    // 9  string not closed yet (while typing)
+        const int SCE_B_KEYWORD2 = Style.Vb.Keyword2;      // 10 SetKeywords(1)
+        const int SCE_B_KEYWORD3 = Style.Vb.Keyword3;      // 11 SetKeywords(2)
+        const int SCE_B_KEYWORD4 = Style.Vb.Keyword4;      // 12 SetKeywords(3)
 
         if (syntaxColoringMenuItem.Checked)
         {
@@ -1084,6 +1203,7 @@ public partial class MainForm : Form
             editor.Styles[SCE_B_KEYWORD].ForeColor = t.Keyword;
             editor.Styles[SCE_B_KEYWORD].Bold = true;
             editor.Styles[SCE_B_STRING].ForeColor = t.String;
+            editor.Styles[SCE_B_STRINGEOL].ForeColor = t.String;
             editor.Styles[SCE_B_OPERATOR].ForeColor = t.Operator;
             editor.Styles[SCE_B_IDENTIFIER].ForeColor = t.Fore;
             editor.Styles[SCE_B_KEYWORD2].ForeColor = t.Keyword2; // Functions
@@ -1096,7 +1216,7 @@ public partial class MainForm : Form
             // renders as plain text in the theme's foreground colour.
             // Gutter, caret and selection keep their colours (they are editor chrome).
             foreach (int style in new[] { SCE_B_DEFAULT, SCE_B_COMMENT, SCE_B_NUMBER,
-                                          SCE_B_KEYWORD, SCE_B_STRING, SCE_B_OPERATOR,
+                                          SCE_B_KEYWORD, SCE_B_STRING, SCE_B_STRINGEOL, SCE_B_OPERATOR,
                                           SCE_B_IDENTIFIER, SCE_B_KEYWORD2, SCE_B_KEYWORD3, SCE_B_KEYWORD4 })
             {
                 editor.Styles[style].ForeColor = t.Fore;
@@ -1112,6 +1232,38 @@ public partial class MainForm : Form
 
         editor.CaretForeColor = t.Caret;
         editor.SelectionBackColor = t.Selection;
+
+        ApplyAutoCompleteColors(editor, t);
+    }
+
+    // Predictive Mode list colours. The ScintillaNET wrapper has no property for these,
+    // so raw SCI_SETELEMENTCOLOUR / SCI_RESETELEMENTCOLOUR (values checked from the
+    // wrapper's NativeMethods). Dark theme recolours the list, light uses Scintilla's defaults.
+    private static void ApplyAutoCompleteColors(Scintilla editor, EditorTheme t)
+    {
+        const int SCI_SETELEMENTCOLOUR = 2753;
+        const int SCI_RESETELEMENTCOLOUR = 2755;
+        const int SC_ELEMENT_LIST = 0;
+        const int SC_ELEMENT_LIST_BACK = 1;
+        const int SC_ELEMENT_LIST_SELECTED = 2;
+        const int SC_ELEMENT_LIST_SELECTED_BACK = 3;
+
+        // Scintilla ColourAlpha: 0xAABBGGRR, fully opaque
+        static IntPtr Rgba(Color c) => (IntPtr)(c.R | (c.G << 8) | (c.B << 16) | (0xFFL << 24));
+
+        if (t.IsDark)
+        {
+            SendMessage(editor.Handle, SCI_SETELEMENTCOLOUR, (IntPtr)SC_ELEMENT_LIST, Rgba(t.Fore));
+            SendMessage(editor.Handle, SCI_SETELEMENTCOLOUR, (IntPtr)SC_ELEMENT_LIST_BACK, Rgba(t.Back));
+            SendMessage(editor.Handle, SCI_SETELEMENTCOLOUR, (IntPtr)SC_ELEMENT_LIST_SELECTED, Rgba(t.Fore));
+            SendMessage(editor.Handle, SCI_SETELEMENTCOLOUR, (IntPtr)SC_ELEMENT_LIST_SELECTED_BACK, Rgba(t.Selection));
+        }
+        else
+        {
+            foreach (int element in new[] { SC_ELEMENT_LIST, SC_ELEMENT_LIST_BACK,
+                                            SC_ELEMENT_LIST_SELECTED, SC_ELEMENT_LIST_SELECTED_BACK })
+                SendMessage(editor.Handle, SCI_RESETELEMENTCOLOUR, (IntPtr)element, IntPtr.Zero);
+        }
     }
 
     // Switch theme for the whole IDE and remember the choice
@@ -1180,11 +1332,17 @@ public partial class MainForm : Form
     protected override void OnKeyDown(KeyEventArgs e)
     {
         base.OnKeyDown(e);
-        
+
         if (e.Control)
         {
             switch (e.KeyCode)
             {
+                case Keys.Space:
+                    // Predictive Mode list by hand. SuppressKeyPress: no space typed into the editor.
+                    ShowAutoCompleteNow();
+                    e.Handled = true;
+                    e.SuppressKeyPress = true;
+                    break;
                 case Keys.N:
                     NewFile();
                     e.Handled = true;

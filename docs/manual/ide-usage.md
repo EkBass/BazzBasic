@@ -29,6 +29,7 @@ With the release package nothing needs to be set: `BazzBasic.exe` is in the same
 - **Syntax highlighting** for BazzBasic keywords
 - **Line numbers** for easy navigation
 - **Multiple tabs** for working with several files
+- **Predictive Mode**: a list of matching reserved words opens while typing (View → Predictive Mode, Ctrl+Space)
 
 ## Keyboard Shortcuts & Menu Map
 
@@ -55,6 +56,7 @@ With the release package nothing needs to be set: `BazzBasic.exe` is in the same
 | Search | Ctrl+F | Find | none |
 | Search | Ctrl+H | Replace | none |
 | View | none | Tree View[15] | none |
+| View | Ctrl+Space | Predictive Mode[19] | none |
 | View | none | Open Console[7] | none |
 | View | none | Open File Browser[7] | none |
 | View | none | Light Mode[4] | none |
@@ -93,6 +95,7 @@ With the release package nothing needs to be set: `BazzBasic.exe` is in the same
 **[16]** Chooses which `BazzBasic.exe` is used by Run Program and the Compile commands. Leave the field empty (**Clear**) to let the IDE find it automatically: first in the IDE's own folder, then in the folders listed in the `PATH` environment variable. A path you set always comes first. The dialog shows which file is currently used and where it was found. If the interpreter cannot be found, Run and Compile tell you and offer to open this dialog. The setting is saved to `%AppData%\BazzBasic\ide.json`.
 **[17]** When checked, the IDE checks GitHub for a newer BazzBasic release when it starts, at most once a day. It stays quiet unless a new version is available; then a message shows the new version and the download link. The on/off choice and the time of the last check are saved to `%AppData%\BazzBasic\ide.json`.  
 **[18]** Checks GitHub for a newer release now and always shows the result, even when you are already running the latest version. A manual check also counts as the day's check for Autocheck Updates on Startup.
+**[19]** When checked (on by default), a list of matching reserved words opens while you type in code, after 3 letters — not inside a comment (`'` / `REM`) or a string. **Tab** inserts the chosen word in capitals; **Enter** closes the list and makes a new line without inserting the word; **Esc** closes the list. **Ctrl+Space** opens the list by hand, even when the mode is off or nothing is typed yet — short words like `PI#`, `IF`, `TO` appear only this way. The list offers the built-in constants with `#` (`PI#`, `HPI#`, `QPI#`, `TAU#`, `EULER#`, `PHI#`, `GRAV#`, `GRAV_E#`, `AU#`, `BBVER#`, `BBBUILD#`, `PRG_ROOT#`, `BLACK#`…`TRANSPARENT#`), not `KEY_*` / `PAD_*#` constants or your own functions, labels or variables. In Dark Mode the list uses the editor colours. The on/off choice is saved to `%AppData%\BazzBasic\ide.json` (`PredictiveMode`).  
 
 ## Closing the IDE
 

@@ -62,6 +62,7 @@ partial class MainForm
     private ToolStripMenuItem   lightModeMenuItem = null!;
     private ToolStripMenuItem   darkModeMenuItem = null!;
     private ToolStripMenuItem   syntaxColoringMenuItem = null!;
+    private ToolStripMenuItem   predictiveModeMenuItem = null!;
     private ToolStripMenuItem   takeScreenshotItem = null!;
     private ToolStripMenuItem   openCmdItem = null!;
     private ToolStripMenuItem   openFileBrowser = null!;
@@ -187,6 +188,10 @@ partial class MainForm
         // View Menu
         viewMenu = new ToolStripMenuItem("&View");
         treeViewMenuItem = new ToolStripMenuItem("T&ree View") { CheckOnClick = true };
+        // Reserved-word autocomplete on/off, remembered in ide.json (handler wired in the MainForm constructor).
+        // Ctrl+Space opens the list by hand (works even when Predictive Mode is off). It is NOT the
+        // item's ShortcutKeys: that would toggle the mode. Handled in MainForm.OnKeyDown instead.
+        predictiveModeMenuItem = new ToolStripMenuItem("&Predictive Mode") { CheckOnClick = true, ShortcutKeyDisplayString = "Ctrl+Space" };
         openCmdItem = new ToolStripMenuItem("Open &Console", null, (s, e) => OpenCommandPrompt());
         openFileBrowser = new ToolStripMenuItem("Open File &Browser", null, (s, e) => OpenFileBrowser());
         lightModeMenuItem = new ToolStripMenuItem("&Light Mode", null, (s, e) => SetTheme(EditorTheme.Light));
@@ -204,7 +209,7 @@ partial class MainForm
         
 
         viewMenu.DropDownItems.AddRange(new ToolStripItem[] {
-            treeViewMenuItem,
+            treeViewMenuItem, predictiveModeMenuItem,
             new ToolStripSeparator(),
             openCmdItem, openFileBrowser,
             new ToolStripSeparator(),

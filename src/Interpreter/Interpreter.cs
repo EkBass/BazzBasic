@@ -269,7 +269,9 @@ public partial class Interpreter
             ["PAD_LT#"] = 4,
             ["PAD_RT#"] = 5,
 
-            // Math constants with # suffix (PI# etc.) â€” backward-compatible aliases
+            // Math constants with # suffix (PI# etc.) - the documented form. The plain keywords
+            // PI, HPI, QPI, TAU, EULER, GRAV, GRAV_E, PHI (src/Lexer/Lexer.cs) are deprecated,
+            // kept only so old programs still run.
             ["PI#"]		= Math.PI,
             ["HPI#"]	= Math.PI / 2.0,
             ["QPI#"]	= Math.PI / 4.0,

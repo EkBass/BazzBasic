@@ -143,14 +143,14 @@ Variables must end with `$`, constants with `#` — they cannot share names with
 | `COS` | Cosine (radians) |
 | `DEG` | Radians to degrees |
 | `DISTANCE` | 2D or 3D Euclidean distance |
-| `EULER` | Euler's number (e = 2.71828...) |
+| `EULER#` | Euler's number (e = 2.71828...) |
 | `EXP` | e raised to power |
 | `FASTCOS` | Fast cosine (degrees, lookup table) |
 | `FASTRAD` | Fast degrees-to-radians |
 | `FASTSIN` | Fast sine (degrees, lookup table) |
 | `FASTTRIG` | Enable/disable fast trig lookup tables |
 | `FLOOR` | Round down |
-| `HPI` | π/2 (90°) |
+| `HPI#` | π/2 (90°) |
 | `INBETWEEN` | TRUE only if strictly between bounds; unlike `BETWEEN`, equal to a bound is FALSE |
 | `INT` | Truncate toward zero |
 | `LERP` | Linear interpolation |
@@ -158,9 +158,9 @@ Variables must end with `$`, constants with `#` — they cannot share names with
 | `MAX` | Higher of two values |
 | `MIN` | Lower of two values |
 | `MOD` | Remainder |
-| `PI` | π (3.14159...) |
+| `PI#` | π (3.14159...) |
 | `POW` | Power |
-| `QPI` | π/4 (45°) |
+| `QPI#` | π/4 (45°) |
 | `RAD` | Degrees to radians |
 | `RND` | Random integer 0 to n-1 |
 | `ROUND` | Standard rounding |
@@ -168,7 +168,9 @@ Variables must end with `$`, constants with `#` — they cannot share names with
 | `SIN` | Sine (radians) |
 | `SQR` | Square root |
 | `TAN` | Tangent (radians) |
-| `TAU` | 2π (360°) |
+| `TAU#` | 2π (360°) |
+
+The plain names without `#` (`PI`, `HPI`, `QPI`, `TAU`, `EULER`, `PHI`, `GRAV`, `GRAV_E`) still work and give the same values, but are deprecated since 1.9 — use the `#` forms (see the Built-in Constants table below).
 
 ---
 

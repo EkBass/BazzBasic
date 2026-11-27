@@ -175,6 +175,9 @@ internal sealed class IdeSettings
     // View → Syntax Coloring. Off = editor text in one plain colour.
     public bool SyntaxColoring { get; set; } = true;
 
+    // View → Predictive Mode: reserved-word autocomplete list while typing.
+    public bool PredictiveMode { get; set; } = true;
+
     // Help → Autocheck Updates on Startup: check GitHub for a newer release when the
     // IDE starts, at most once a day. LastUpdateCheck = when the last check ran
     // (null = never checked); a manual Help → Check for Updates... counts too.

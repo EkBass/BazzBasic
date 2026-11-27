@@ -117,7 +117,10 @@ public class Lexer(string source, SourceMap? sourceMap = null)
         ["SHELL"]           = TokenType.TOK_SHELL,
 
         // Math functions
-        ["ABS"]             = TokenType.TOK_ABS,
+        // PI, HPI, QPI, TAU, EULER, GRAV, GRAV_E, PHI below are DEPRECATED plain forms of the
+        // built-in constants PI#, HPI#... (Interpreter.cs InitBuiltinConstants). Kept so old
+        // programs still run; document and suggest only the # form (the IDE offers PI# etc.).
+        ["ABS"]           = TokenType.TOK_ABS,
         ["ATAN"]            = TokenType.TOK_ATAN,
         ["ATAN2"]           = TokenType.TOK_ATAN2,
         ["ISSET"]           = TokenType.TOK_ISSET,
