@@ -1,4 +1,6 @@
-' solar.bas - Solar System (BazzBasic Studio, B8)
+' solar.bas - Solar System
+' BazzBasic 1.8
+' MIT License
 ' Zoomable top-down model: Sun, planets, dwarfs, asteroids, TNOs, moons, stations, JWST,
 ' Halley, Parker and the Voyagers; body list panel (L).
 ' Run:      BazzBasic.exe solar.bas
