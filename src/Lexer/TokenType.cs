@@ -171,6 +171,9 @@ public enum TokenType
     TOK_INBETWEEN           = 285,
     TOK_ATAN2               = 286,
     TOK_ISSET               = 287,
+	TOK_GRAV				= 288,
+	TOK_GRAV_E				= 289,
+	TOK_PHI					= 290,
 
     // String
     TOK_ASC                 = 300,
@@ -208,6 +211,7 @@ public enum TokenType
     TOK_MOUSERIGHT          = 359,
     TOK_MOUSEHIDE           = 360,
     TOK_MOUSESHOW           = 361,
+    TOK_MOUSEWHEEL          = 362,
 
     // Array functions
     TOK_DELARRAY            = 370,

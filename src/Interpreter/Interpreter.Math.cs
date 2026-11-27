@@ -49,6 +49,9 @@ public partial class Interpreter
     // EULER
     // CLAMP
     // BETWEEN2
+	// GRAV
+	// GRAV_E
+	// PHI
     // ========================================================================
 
     private double HelperGetDouble() {
@@ -427,6 +430,27 @@ public partial class Interpreter
         _pos++;
         return Value.FromNumber(2.718281828459045);
     }
+	
+	// Gravity constant
+	private Value EvaluateGravFunc()
+	{
+		_pos++;
+		return Value.FromNumber(6.67430e-11);
+	}
+	
+	// Earth gravity
+	private Value EvaluateGrav_EFunc()
+	{
+		_pos++;
+		return Value.FromNumber(9.80665);
+	}
+	
+	// PHI, aka. golden ratio
+	private Value EvaluatePhiFunc()
+	{
+		_pos++;
+		return Value.FromNumber((1.0 + Math.Sqrt(5.0)) / 2.0);
+	}
 
     // INBETWEEN function - Check if a value is between two others.
     // Same as BETWEEN, but returns FALSE if value is EQUAL to either bound, TRUE only if strictly between.

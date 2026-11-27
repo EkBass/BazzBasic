@@ -13,11 +13,11 @@
 
 [inits]
     ' Console colors (palette 0-15)
-    LET BLACK#   = 0
-    LET RED#     = 4
-    LET GREEN#   = 10
-    LET CYAN#    = 11
-    LET WHITE#   = 15
+    LET C_BLACK#   = 0
+    LET C_RED#     = 4
+    LET C_GREEN#   = 10
+    LET C_CYAN#    = 11
+    LET C_WHITE#   = 15
 
     ' Revolver
     LET CHAMBERS#  = 6                  ' slots in the cylinder
@@ -44,7 +44,7 @@
 END
 
 [sub:title]
-    COLOR CYAN#, BLACK#
+    COLOR C_CYAN#, C_BLACK#
     CLS
     PRINT " "; REPEAT("*", 21)
     PRINT " *"; REPEAT(" ", 19); "*"
@@ -52,7 +52,7 @@ END
     PRINT " *"; REPEAT(" ", 19); "*"
     PRINT " "; REPEAT("*", 21)
     PRINT "\n CREATIVE COMPUTING\n MORRISTOWN, NEW JERSEY\n"
-    COLOR WHITE#, BLACK#
+    COLOR C_WHITE#, C_BLACK#
 RETURN
 
 ' Load one bullet and spin the cylinder. Happens once per game.
@@ -86,9 +86,9 @@ RETURN
 [sub:shoot]
     pulls$ += 1
     IF pulls$ = bulletPos$ THEN
-        COLOR RED#, BLACK#
+        COLOR C_RED#, C_BLACK#
         PRINT " *** BANG! ***\n"
-        COLOR WHITE#, BLACK#
+        COLOR C_WHITE#, C_BLACK#
         PRINT " You're dead."
         PRINT " Condolences will be sent to your next of kin.\n"
         SLEEP 3000
@@ -101,9 +101,9 @@ RETURN
 RETURN
 
 [sub:survived]
-    COLOR GREEN#, BLACK#
+    COLOR C_GREEN#, C_BLACK#
     PRINT " *** YOU MADE IT! ***\n"
-    COLOR WHITE#, BLACK#
+    COLOR C_WHITE#, C_BLACK#
     PRINT FSTRING(" {{-MAX_PULLS#-}} empty chambers in a row. The bullet was in chamber {{-bulletPos$-}}.")
     PRINT " Nobody is foolish enough to pull the trigger again.\n"
     SLEEP 4000

@@ -114,9 +114,10 @@ public class FileManager(string rootPath)
             return false;
         }
     }
-    // List file namesbut no paths/directories in folder, sorted alphabetically.
-    // pattern uses Windows wildcards (* and ?), default "*".
-    // Missing folder or any error returns an empty list
+    /*  List file namesbut no paths/directories in folder, sorted alphabetically.
+        pattern uses Windows wildcards (* and ?), default "*".
+     Missing folder or any error returns an empty list
+    */
     public List<string> ListFiles(string path, string pattern = "*")
     {
         try
@@ -147,7 +148,7 @@ public class FileManager(string rootPath)
     }
 
     // Execute SHELL command and return output
-    // timeout: milliseconds to wait. 0 or omitted = 5000ms default
+    // timeout: 0 or omitted = 5000ms default
     public string ExecuteShellCommand(string command, int timeout = ShellCommandTimeout)
     {
         if (string.IsNullOrWhiteSpace(command))

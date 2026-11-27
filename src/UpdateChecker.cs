@@ -19,7 +19,12 @@ public static class UpdateChecker
     private const string ReleasesLatestUrl = "https://github.com/EkBass/BazzBasic/releases/latest";
 
     // Get the latest release tag from GitHub and compare it to the running version.
-    public static async Task<string> CheckAsync()
+    public static async Task<string> CheckAsync() => (await CheckForUpdateAsync()).Message;
+
+    // Same check with the outcome as data: UpdateAvailable = a newer release than the
+    // running version exists. The IDE autocheck uses this to stay quiet when there
+    // is nothing new to report.
+    public static async Task<(bool UpdateAvailable, string Message)> CheckForUpdateAsync()
     {
         try
         {
@@ -40,7 +45,7 @@ public static class UpdateChecker
             var tagPrefix = "/releases/tag/";
             int idx = finalUrl.IndexOf(tagPrefix, StringComparison.OrdinalIgnoreCase);
             if (idx < 0)
-                return "Could not parse release version from GitHub.";
+                return (false, "Could not parse release version from GitHub.");
 
             string latestTag = finalUrl[(idx + tagPrefix.Length)..].Trim().TrimEnd('/');
             string download = $"Download: {ReleasesLatestUrl}";
@@ -52,23 +57,23 @@ public static class UpdateChecker
             if (latest == null || current == null)
             {
                 string latestText = latestTag.TrimStart('v').Replace("BazzBasic_", "", StringComparison.OrdinalIgnoreCase).Trim();
-                return string.Equals(latestText, AppInfo.Version, StringComparison.OrdinalIgnoreCase)
-                    ? $"You are running the latest version ({AppInfo.Version})."
-                    : $"Latest release is {latestText} (you have {AppInfo.Version})\n{download}";
+                if (string.Equals(latestText, AppInfo.Version, StringComparison.OrdinalIgnoreCase))
+                    return (false, $"You are running the latest version ({AppInfo.Version}).");
+                return (true, $"Latest release is {latestText} (you have {AppInfo.Version})\n{download}");
             }
 
             int cmp = CompareVersions(latest.Value, current.Value);
             string latestStr = FormatVersion(latest.Value);
 
             if (cmp > 0)
-                return $"New version available: {latestStr} (you have {AppInfo.Version})\n{download}";
+                return (true, $"New version available: {latestStr} (you have {AppInfo.Version})\n{download}");
             if (cmp == 0)
-                return $"You are running the latest version ({AppInfo.Version}).";
-            return $"You are running {AppInfo.Version}, which is newer than the latest release ({latestStr}).";
+                return (false, $"You are running the latest version ({AppInfo.Version}).");
+            return (false, $"You are running {AppInfo.Version}, which is newer than the latest release ({latestStr}).");
         }
         catch (Exception ex)
         {
-            return $"Update check failed: {ex.Message}";
+            return (false, $"Update check failed: {ex.Message}");
         }
     }
 

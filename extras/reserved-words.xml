@@ -17,10 +17,10 @@
 		cls, color, curpos, getconsole, input, line input, locate, sleep, print, inkey, keydown, waitkey
 	</io>
 	<graphics>
-		b, bf, circle, drawshape, hideshape, line, loadimage, loadshape, moveshape, paint, point, pset, rgb, removeshape, rotateshape, scaleshape, screen, screenlock, showshape, vsync, fullscreen, loadsheet, loadfont, drawstring
+		b, bf, circle, drawshape, hideshape, line, loadimage, loadshape, moveshape, paint, point, pset, rgb, removeshape, rotateshape, scaleshape, screen, screenlock, savescreen, showshape, vsync, fullscreen, loadsheet, loadfont, drawstring
 	</graphics>
 	<network>
-		httpget, httppost, startlisten, getrequest, sendresponse, stoplisten
+		httpget, httppost, httperror, startlisten, getrequest, sendresponse, stoplisten
 	</network>
 	<json>
 		asjson, asarray, loadjson, savejson
@@ -34,13 +34,16 @@
 		fileread, fileexists, filewrite, fileappend, filedelete, filelist, shell, base64encode, base64decode, sha256
 	</file>
 	<built-in-math>
-		abs, atan, atan2, cint, cos, ceil, exp, floor, int, log, max, min, mod, pow, rnd, round, sgn, sin, sqr, tan, pi, rad, deg, hpi, fasttrig, fastsin, fastcos, fastrad, qpi, tau, between, inbetween, euler, au, distance, clamp, lerp
+		abs, atan, atan2, cint, cos, ceil, exp, floor, int, log, max, min, mod, pow, rnd, round, sgn, sin, sqr, tan, grav, grav_e, phi, pi, rad, deg, hpi, fasttrig, fastsin, fastcos, fastrad, qpi, tau, between, inbetween, euler, au, distance, clamp, lerp
 	</built-in-math>
+	<built-in-colors>
+		black, white, red, green, blue, yellow, cyan, magenta, gray, orange, transparent
+	</built-in-colors>
 	<built-in-string>
 		asc, chr, fstring, instr, invert, lcase, left, len, ltrim, mid, repeat, replace, right, rtrim, same, srand, split, str, trim, ucase, val
 	</built-in-string>
 	<input-mouse>
-		mousex, mousey, mouseleft, mouseright, mousemiddle, mousehide, mouseshow
+		mousex, mousey, mouseleft, mouseright, mousemiddle, mousewheel, mousehide, mouseshow
 	</input-mouse>
 	<input-gamepad>
 		gamepads, padbutton, padaxis, padname, padrumble

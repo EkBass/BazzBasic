@@ -13,8 +13,6 @@
     LET SCR_H#   = GRID# * CELL#
     LET STEPS_PER_FRAME# = 40           ' simulation speed
 
-    LET WHITE#   = RGB(255, 255, 255)
-    LET BLACK#   = RGB(0, 0, 0)
 
     ' Directions: 0 = north, 1 = east, 2 = south, 3 = west
     DIM dx$

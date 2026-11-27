@@ -492,6 +492,19 @@ public partial class Interpreter
         return Value.FromNumber((Graphics.Graphics.MouseButtons & 4) != 0 ? 1 : 0);
     }
 
+    // MOUSEWHEEL or MOUSEWHEEL() (T28): vertical wheel notches since the previous call, then 0.
+    // + = rolled away from the user (up), - = toward. Console mode returns 0 like MOUSEX.
+    private Value EvaluateMousewheelFunc()
+    {
+        _pos++;
+        // Optional empty parentheses, like TICKS() / GAMEPADS()
+        if (Expect(TokenType.TOK_LPAREN))
+            Require(TokenType.TOK_RPAREN, "MOUSEWHEEL takes no arguments - use MOUSEWHEEL or MOUSEWHEEL()");
+        if (_hasError) return Value.Zero;   // a failed call must not reset the notch count
+        if (!Graphics.Graphics.IsInitialized) return Value.Zero;
+        return Value.FromNumber(Graphics.Graphics.GetMouseWheel());
+    }
+
     private void ExecuteMouseHide()
     {
         _pos++;

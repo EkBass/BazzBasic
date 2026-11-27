@@ -32,13 +32,13 @@ END DEF
     LET MAX_FENCES# = 15
     LET MAX_ROBOTS# = 50
 
-    LET BLACK#  = 0
-    LET CYAN#   = 3
+    LET C_BLACK#  = 0
+    LET C_CYAN#   = 3
     LET DGRAY#  = 8
     LET LGREEN# = 10
     LET LRED#   = 12
-    LET YELLOW# = 14
-    LET WHITE#  = 15
+    LET C_YELLOW# = 14
+    LET C_WHITE#  = 15
 
     DIM grid$         ' 2D grid: grid$(row, col) holds " ", "X", "O", "-", "|"
     DIM robotX$       ' Robot X positions (1-indexed, 1..robotCount$)
@@ -92,15 +92,15 @@ END
     menuDone$ = FALSE
     WHILE NOT menuDone$
         CLS
-        COLOR YELLOW#, BLACK#
+        COLOR C_YELLOW#, C_BLACK#
         PRINT "\n  *** ROBOTS ***"
-        COLOR WHITE#, BLACK#
+        COLOR C_WHITE#, C_BLACK#
         PRINT "  Based on the classic by Lance Micklus (1978)\n"
-        COLOR CYAN#, BLACK#
+        COLOR C_CYAN#, C_BLACK#
         PRINT "  FENCES : "; fenceCount$
         PRINT "  ROBOTS : "; robotCount$
         PRINT ""
-        COLOR WHITE#, BLACK#
+        COLOR C_WHITE#, C_BLACK#
         PRINT "  [F]  Change fences  (1-"; MAX_FENCES#; ")"
         PRINT "  [R]  Change robots  (1-"; MAX_ROBOTS#; ")"
         PRINT "  [P]  Play!"
@@ -150,13 +150,13 @@ RETURN
     WEND
     PRINT ""
     IF playerDead$ THEN
-        COLOR LRED#, BLACK#
+        COLOR LRED#, C_BLACK#
         PRINT "  *** ZAPPED! You have been destroyed. ***"
     ELSE
-        COLOR LGREEN#, BLACK#
+        COLOR LGREEN#, C_BLACK#
         PRINT "  *** YOU WIN! All robots smashed! ***"
     END IF
-    COLOR WHITE#, BLACK#
+    COLOR C_WHITE#, C_BLACK#
     PRINT "\n  Press any key to return to menu..."
     WAITKEY()
 RETURN
@@ -239,7 +239,7 @@ RETURN
 ' --------------------------------------------------
 [sub:drawAll]
     CLS
-    COLOR DGRAY#, BLACK#
+    COLOR DGRAY#, C_BLACK#
     PRINT "+" + REPEAT("-", COLS#) + "+"
     FOR i$ = 0 TO ROWS# - 1
         row$ = "|"
@@ -249,9 +249,9 @@ RETURN
         PRINT row$ + "|"
     NEXT
     PRINT "+" + REPEAT("-", COLS#) + "+"
-    COLOR CYAN#, BLACK#
+    COLOR C_CYAN#, C_BLACK#
     PRINT "  Robots: "; liveRobots$; "   Arrows = move   ESC = quit"
-    COLOR WHITE#, BLACK#
+    COLOR C_WHITE#, C_BLACK#
 RETURN
 
 ' --------------------------------------------------

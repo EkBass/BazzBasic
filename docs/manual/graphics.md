@@ -320,13 +320,14 @@ CIRCLE (100, 100), 30, 12, 1            ' Red filled circle
 ```
 
 ### PAINT - Fill Area
-Fill an enclosed area with color (flood fill).
+Flood-fill starting at (x, y), like in QB/FreeBASIC: the contiguous area of the starting pixel's color is painted with `fillColor`, stopping at pixels of `borderColor`. The border color is optional — without it the fill color is used as the border, so the fill stops at any pixel already in the fill color.
 ```vb
-PAINT (x, y), fillColor, borderColor
+PAINT (x, y), fillColor[, borderColor]
 
 ' Draw and fill a box
 LINE (100, 100)-(200, 200), 15, B       ' White border
-PAINT (150, 150), 12, 15                ' Fill red inside white border
+PAINT (150, 150), 12, 15                ' Fill red inside the white border
+PAINT (300, 150), 10                    ' Fill green; border = fill color (10)
 ```
 
 ### RGB - Create Color Value

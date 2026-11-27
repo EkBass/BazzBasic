@@ -20,7 +20,7 @@ Special keys return values of 256 or more:
 
 Numpad Enter returns `KEY_ENTER#`, the same as the main Enter key.
 
-**INKEY reads one key at a time.** Each call takes the key out of the buffer, so a second `INKEY` in the same loop pass returns 0. Store the value once and compare the variable:
+**INKEY reads one key at a time.** Each call takes the key away, so a second `INKEY` in the same loop pass returns 0. Store the value once and compare the variable:
 ```vb
 ' WRONG - the second INKEY never sees the key
 IF INKEY = KEY_A# THEN speed$ = speed$ + 1
@@ -31,6 +31,8 @@ LET k$ = INKEY
 IF k$ = KEY_A# THEN speed$ = speed$ + 1
 IF k$ = KEY_S# THEN speed$ = speed$ - 1
 ```
+
+**INKEY is not the best way to read game controls.** It is fine for simple polling: "press any key", Esc to quit, menus in the console. In a graphics game loop, INKEY keeps only the last key pressed since the previous `INKEY` call. If another key is pressed before the next call, the earlier press is replaced and lost. A slow frame makes this more likely. Use `KEYDOWN` for controls and `WAITKEY` to wait for a key.
 
 ### KEYDOWN
 Read key states via key constants  
@@ -71,6 +73,26 @@ WEND
 END
 ```
 
+`KEYDOWN` is TRUE on every loop pass while the key is held. To react once per press (fire, jump, menu choice), remember the previous state:
+```vb
+' One action per press: holding SPACE counts only once
+SCREEN 12
+LET shots$ = 0
+LET fireNow$ = FALSE
+LET fireWas$ = FALSE
+WHILE INKEY <> KEY_ESC#
+    fireNow$ = KEYDOWN(KEY_SPACE#)
+    IF fireNow$ AND NOT fireWas$ THEN shots$ = shots$ + 1
+    fireWas$ = fireNow$
+
+    SCREENLOCK ON
+    LOCATE 1, 1
+    PRINT "SPACE=Fire  ESC=Quit   Shots: "; shots$; "   "
+    SCREENLOCK OFF
+WEND
+END
+```
+
 ### WAITKEY
 Halts execution until one of the specified keys is pressed. Returns the key value.
 
@@ -94,7 +116,7 @@ PRINT "Key value: "; k$
 |---------|-------|---------|---------|
 | Blocking | No | No | Yes |
 | Returns | Key value or 0 | TRUE/FALSE | Key value |
-| Use case | Game loops | Held keys | Menus, pauses |
+| Use case | Simple polling, Esc to quit | Game controls, held keys | Menus, pauses |
 
 ### Keyboard layouts and portable controls
 
@@ -161,6 +183,34 @@ Returns 1 if the specified mouse button is currently pressed, 0 otherwise.
 IF MOUSELEFT   THEN PRINT "Left clicked"
 IF MOUSERIGHT  THEN PRINT "Right clicked"
 IF MOUSEMIDDLE THEN PRINT "Middle clicked"
+```
+
+### MOUSEWHEEL
+**Note: Only available when graphics screen is open.** In console mode it returns 0.
+
+Returns how many notches the mouse wheel has been rolled since the previous `MOUSEWHEEL` call, then starts counting again from 0. *Added in v1.8.*
+
+- Positive = rolled away from you (up), negative = rolled toward you (down), 0 = no movement.
+- `MOUSEWHEEL` and `MOUSEWHEEL()` both work. `MOUSEWHEEL(1)` is an error.
+- Rolls made while the program waits in `SLEEP`, `WAITKEY` or `INPUT` are not lost.
+- The first call returns what was rolled since `SCREEN`. Call it once after setup if you want to start from 0. A new `SCREEN` starts from 0.
+- Touchpads and smooth-scrolling wheels work too: small movements add up to whole notches.
+- Only the vertical wheel is read. Sideways scrolling (tilt wheel) is not supported.
+
+Store the value in a variable: a second `MOUSEWHEEL` in the same loop pass returns 0.
+```vb
+' Roll the mouse wheel to zoom, ESC quits
+SCREEN 12
+LET zoom$ = 1
+LET w$ = 0
+WHILE INKEY <> KEY_ESC#
+    w$ = MOUSEWHEEL
+    IF w$ <> 0 THEN zoom$ = zoom$ * POW(1.25, w$)
+    LOCATE 1, 1
+    PRINT "Zoom: "; zoom$; "      "
+    SLEEP 16
+WEND
+END
 ```
 
 ### MOUSEHIDE & MOUSESHOW

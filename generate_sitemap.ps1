@@ -1,5 +1,6 @@
+# Run as: powershell -ExecutionPolicy Bypass -File generate_sitemap.ps1
 $base    = "https://ekbass.github.io/BazzBasic/"
-$root    = "C:\Users\ekvir\source\repos\BazzBasic\docs"
+$root    = Join-Path $PSScriptRoot "docs"
 $exclude = @('index.html', '_sidebar.md', 'README.md')
 
 # Juuren HTML-sivut (ei rekursiota: manual/index.html on docsifyn kuori)
@@ -11,8 +12,15 @@ $html = Get-ChildItem $root -File |
 $md = Get-ChildItem "$root\manual" -Recurse -File |
       Where-Object { $_.Extension -eq '.md' -and $exclude -notcontains $_.Name }
 
+# .txt-tiedostot (juuresta ja manuaalista)
+$txtRoot = Get-ChildItem $root -File |
+           Where-Object { $_.Extension -eq '.txt' -and $exclude -notcontains $_.Name }
+$txtManual = Get-ChildItem "$root\manual" -Recurse -File |
+             Where-Object { $_.Extension -eq '.txt' -and $exclude -notcontains $_.Name }
+$txt = @($txtRoot) + @($txtManual)
+
 $entries = @([pscustomobject]@{ Loc = $base; Mod = (Get-Item "$root\index.html").LastWriteTime })
-foreach ($f in @($html) + @($md)) {
+foreach ($f in @($html) + @($md) + @($txt)) {
     $rel = $f.FullName.Substring($root.Length + 1) -replace '\\', '/'
     $entries += [pscustomobject]@{ Loc = $base + $rel; Mod = $f.LastWriteTime }
 }

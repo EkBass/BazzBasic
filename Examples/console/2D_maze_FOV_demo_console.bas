@@ -15,11 +15,11 @@
     LET MAP_W#     = 31
 
     ' Console color palette
-    LET BLACK#  = 0
+    LET C_BLACK#  = 0
     LET LGRAY#  = 7
     LET DGRAY#  = 8
     LET LGREEN# = 10
-    LET YELLOW# = 14
+    LET C_YELLOW# = 14
 
     ' Player position
     LET px$ = 3
@@ -62,12 +62,12 @@
         GOSUB [sub:DrawFOV]
 
         ' 4) Draw player
-        COLOR LGREEN#, BLACK#
+        COLOR LGREEN#, C_BLACK#
         LOCATE py$ + 1, px$ + 1
         PRINT "@";
 
         ' 5) Status bar
-        COLOR DGRAY#, BLACK#
+        COLOR DGRAY#, C_BLACK#
         LOCATE MAP_H# + 2, 1
         PRINT "Arrows=Move  ESC=Quit  Pos:"; px$; ","; py$; "   ";
 
@@ -94,7 +94,7 @@
 
     WEND
 
-    COLOR LGRAY#, BLACK#
+    COLOR LGRAY#, C_BLACK#
     CLS
 END
 
@@ -140,12 +140,12 @@ RETURN
             ch$ = MID(m$(my$), mx$ + 1, 1)
             IF vis$(my$, mx$) = 1 THEN
                 IF ch$ = "#" THEN
-                    COLOR LGRAY#, BLACK#
+                    COLOR LGRAY#, C_BLACK#
                 ELSE
-                    COLOR YELLOW#, BLACK#
+                    COLOR C_YELLOW#, C_BLACK#
                 END IF
             ELSE
-                COLOR BLACK#, BLACK#
+                COLOR C_BLACK#, C_BLACK#
             END IF
             PRINT ch$;
         NEXT

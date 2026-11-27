@@ -72,7 +72,8 @@ With the release package nothing needs to be set: `BazzBasic.exe` is in the same
 | Help | none | Online Manual[1] | none |
 | Help | none | Beginner's Guide[2] | bazzbasic.exe -guide |
 | Help | none | Rosetta Code[3] | none |
-| Help | none | Check For Updates | bazzbasic.exe -checkupdate |
+| Help | none | Autocheck Updates on Startup[17] | none |
+| Help | none | Check For Updates[18] | bazzbasic.exe -checkupdate |
 
 **[1]** Opens the [online manual](https://ekbass.github.io/BazzBasic/manual/#/) in default browser.  
 **[2]** Opens [BazzBasic-Beginners-Guide/releases](https://github.com/EkBass/BazzBasic-Beginners-Guide/releases) in default browser.  
@@ -90,6 +91,8 @@ With the release package nothing needs to be set: `BazzBasic.exe` is in the same
 **[14]** Closes all tabs. For each tab with unsaved changes you are asked whether to save it. **Cancel** stops Close All and keeps the remaining tabs open. When all tabs are closed, a new empty Untitled tab is opened.  
 **[15]** When checked, a panel on the left lists the functions (`DEF FN`) and labels (`[label]`) of the file in the active tab. Click an item to jump to that line. The list updates shortly after you stop typing. Functions and labels from `INCLUDE` files are not listed. Drag the panel edge to change its width. The on/off choice and the width are saved to `%AppData%\BazzBasic\ide.json`.  
 **[16]** Chooses which `BazzBasic.exe` is used by Run Program and the Compile commands. Leave the field empty (**Clear**) to let the IDE find it automatically: first in the IDE's own folder, then in the folders listed in the `PATH` environment variable. A path you set always comes first. The dialog shows which file is currently used and where it was found. If the interpreter cannot be found, Run and Compile tell you and offer to open this dialog. The setting is saved to `%AppData%\BazzBasic\ide.json`.
+**[17]** When checked, the IDE checks GitHub for a newer BazzBasic release when it starts, at most once a day. It stays quiet unless a new version is available; then a message shows the new version and the download link. The on/off choice and the time of the last check are saved to `%AppData%\BazzBasic\ide.json`.  
+**[18]** Checks GitHub for a newer release now and always shows the result, even when you are already running the latest version. A manual check also counts as the day's check for Autocheck Updates on Startup.
 
 ## Closing the IDE
 

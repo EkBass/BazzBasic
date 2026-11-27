@@ -19,23 +19,21 @@ using BazzBasic.Lexer;
 using BazzBasic.Interpreter;
 using BazzBasic.Preprocessor;
 
-// Win32 API: number of processes attached to this console.
-// 1 = only us, i.e. started by double-click and the window closes when we exit.
+// Win32 API
 [DllImport("kernel32.dll")]
 static extern uint GetConsoleProcessList(uint[] processList, uint processCount);
 
-// IDE exe that "BazzBasic.exe" without arguments starts (must match IDE AssemblyName)
+// IDE "BazzBasic.exe" without arguments starts
 const string IDE_EXE_NAME = "BazzBasic-IDE.exe";
 
-// Nahimic audio middleware on this system breaks WASAPI device enumeration.
-// DirectSound bypasses it reliably.
+// DirectSound
 Environment.SetEnvironmentVariable("SDL_AUDIODRIVER", "directsound");
 
-// Unicode console I/O. Wrapped: there may be no console (e.g. output redirected oddly).
+// Unicode console I/O.
 try { Console.OutputEncoding = Encoding.UTF8; } catch { }
 try { Console.InputEncoding  = Encoding.UTF8; } catch { }
 
-// Marker for embedded BASIC code
+// Marker for embedde BASIC code
 const string EMBEDDED_MARKER = "---BAZZBASIC---";
 
 // First, check if this exe has embedded BASIC code
@@ -61,6 +59,7 @@ if (embeddedCode != null)
 // Check for -exe packaging command
 if (args.Length >= 2 && args[0].ToLower() == "-exe")
 {
+    Console.WriteLine("Packaging to standalone exe...");
     string sourceFile = args[1];
     return PackageExe(sourceFile);
 }
@@ -68,6 +67,7 @@ if (args.Length >= 2 && args[0].ToLower() == "-exe")
 // Check for -lib library compilation command
 if (args.Length >= 2 && args[0].ToLower() == "-lib")
 {
+    Console.WriteLine("Generating library (.bb)...");
     string sourceFile = args[1];
     return CompileLibrary(sourceFile);
 }
@@ -217,17 +217,20 @@ static bool RunProgramCore(string source, string basePath, string? filename, str
         var preprocessor = new Preprocessor(basePath);
         string processedSource = preprocessor.Process(source, filename);
 
+        // Line map merged line -> (file, line) from the INCLUDE markers, for error messages (T27)
+        var sourceMap = SourceMap.Build(processedSource);
+
         // Tokenize
-        var lexer = new Lexer(processedSource);
+        var lexer = new Lexer(processedSource, sourceMap);
         var tokens = lexer.Tokenize();
 
         // Load .bb libraries (if any INCLUDE "*.bb" statements)
         // .bb are tokenized libraries, so this step adds their tokens into the main token list
-        var libraryLoader = new LibraryLoader(basePath);
+        var libraryLoader = new LibraryLoader(basePath, sourceMap);
         tokens = libraryLoader.ProcessLibraries(tokens);
 
         // Run
-        var interpreter = new Interpreter(tokens, basePath, userArgs);
+        var interpreter = new Interpreter(tokens, basePath, userArgs, sourceMap);
         interpreter.Run();
         return !interpreter.HasError;
     }

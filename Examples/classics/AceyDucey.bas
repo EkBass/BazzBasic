@@ -18,15 +18,15 @@ END DEF
 
 ' ── INIT ────────────────────────────────────
 [inits]
-    LET BLACK#  = 0
-    LET RED#    = 4
+    LET C_BLACK#  = 0
+    LET C_RED#    = 4
     LET DGRAY#  = 8
     LET LGRAY#  = 7
     LET LGREEN# = 10
     LET LCYAN#  = 11
     LET LRED#   = 12
-    LET YELLOW# = 14
-    LET WHITE#  = 15
+    LET C_YELLOW# = 14
+    LET C_WHITE#  = 15
 
     DIM deck$
 
@@ -52,7 +52,7 @@ END DEF
         GOSUB [sub:shuffleDeck]
     END IF
 
-    COLOR WHITE#, BLACK#
+    COLOR C_WHITE#, C_BLACK#
     PRINT "\n-----------------------------"
     PRINT "Money: $"; money$
     PRINT "-----------------------------"
@@ -68,26 +68,26 @@ END DEF
         card2$ = temp$
     END IF
 
-    COLOR YELLOW#, BLACK#
+    COLOR C_YELLOW#, C_BLACK#
     PRINT "\nCards: "; FN CardName$(card1$); " and "; FN CardName$(card2$)
 
     IF card1$ = card2$ THEN
-        COLOR LGRAY#, BLACK#
+        COLOR LGRAY#, C_BLACK#
         PRINT "Same card, new deal!"
         GOTO [mainLoop]
     END IF
 
-    COLOR WHITE#, BLACK#
+    COLOR C_WHITE#, C_BLACK#
     INPUT "\nYour bet (0 = pass): ", bet$
 
     IF bet$ = 0 THEN
-        COLOR DGRAY#, BLACK#
+        COLOR DGRAY#, C_BLACK#
         PRINT "Chicken! New deal..."
         GOTO [mainLoop]
     END IF
 
     IF NOT BETWEEN(bet$, 1, money$) THEN
-        COLOR LRED#, BLACK#
+        COLOR LRED#, C_BLACK#
         PRINT "Bet must be between 1 and $"; money$
         GOTO [mainLoop]
     END IF
@@ -95,15 +95,15 @@ END DEF
     card3$ = deck$(deckPos$)
     deckPos$ = deckPos$ + 1
 
-    COLOR LCYAN#, BLACK#
+    COLOR LCYAN#, C_BLACK#
     PRINT "Third card: "; FN CardName$(card3$)
 
     IF card3$ > card1$ AND card3$ < card2$ THEN
-        COLOR LGREEN#, BLACK#
+        COLOR LGREEN#, C_BLACK#
         PRINT "*** You win $"; bet$; "! ***"
         money$ = money$ + bet$
     ELSE
-        COLOR LRED#, BLACK#
+        COLOR LRED#, C_BLACK#
         PRINT "You lost $"; bet$
         money$ = money$ - bet$
     END IF
@@ -112,12 +112,12 @@ GOTO [mainLoop]
 
 ' ── SUBROUTINES ─────────────────────────────
 [sub:broke]
-    COLOR RED#, BLACK#
+    COLOR C_RED#, C_BLACK#
     PRINT "\n================================"
     PRINT "  OUT OF MONEY! GAME OVER!"
     PRINT "================================"
 
-    COLOR WHITE#, BLACK#
+    COLOR C_WHITE#, C_BLACK#
     PRINT "\nNew game? (y/n): "
     key$ = WAITKEY(KEY_Y#, KEY_N#)
     IF key$ = KEY_Y# THEN
@@ -130,14 +130,14 @@ GOTO [mainLoop]
 END
 
 [sub:initGame]
-    COLOR YELLOW#, BLACK#
+    COLOR C_YELLOW#, C_BLACK#
     CLS
     PRINT " "; REPEAT("*", 28)
     PRINT " *  ACEY DUCEY              *"
     PRINT " *  BazzBasic Edition       *"
     PRINT " "; REPEAT("*", 28)
 
-    COLOR LGRAY#, BLACK#
+    COLOR LGRAY#, C_BLACK#
     PRINT "\n Bet whether the third card falls between the first two."
     PRINT "\n Ace is high (14)."
 
@@ -169,6 +169,6 @@ RETURN
     NEXT
 
     deckPos$ = 0
-    COLOR DGRAY#, BLACK#
+    COLOR DGRAY#, C_BLACK#
     PRINT "Deck shuffled."
 RETURN

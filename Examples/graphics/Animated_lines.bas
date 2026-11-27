@@ -18,7 +18,6 @@
     LET DS#          = 0.02
     LET DH#          = 0.015
     LET SIXPI#       = 6 * PI#
-    LET BLACK#       = RGB(0, 0, 0)
     LET HEADING_MIN# = 4 * PI# / 3
     LET HEADING_MAX# = 10 * PI# / 3
 

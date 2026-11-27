@@ -12,10 +12,6 @@
     LET SCREEN_W#  = 640
     LET SCREEN_H#  = 480
     LET SHAPE_SZ#  = 60
-    LET RED#       = RGB(255, 0, 0)
-    LET GREEN#     = RGB(0, 255, 0)
-    LET BLUE#      = RGB(0, 0, 255)
-    LET WHITE#     = RGB(255, 255, 255)
     LET angle$     = 0
     LET running$   = TRUE
 

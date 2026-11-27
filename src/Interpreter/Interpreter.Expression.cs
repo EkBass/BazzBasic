@@ -295,6 +295,12 @@ public partial class Interpreter
                 return EvaluateLerpFunc();
             case TokenType.TOK_INBETWEEN:
                 return EvaluateInBetweenFunc();
+			case TokenType.TOK_GRAV:
+				return EvaluateGravFunc();
+			case TokenType.TOK_GRAV_E:
+				return EvaluateGrav_EFunc();
+			case TokenType.TOK_PHI:
+				return EvaluatePhiFunc();
 
             // String functions
             // Before 1.0, adjust these alphabetically
@@ -387,6 +393,8 @@ public partial class Interpreter
                 return EvaluateMousemiddleFunc();
             case TokenType.TOK_MOUSERIGHT:
                 return EvaluateMouserightFunc();
+            case TokenType.TOK_MOUSEWHEEL:
+                return EvaluateMousewheelFunc();
             case TokenType.TOK_GAMEPADS:
                 return EvaluateGamepadsFunc();
             case TokenType.TOK_PADBUTTON:

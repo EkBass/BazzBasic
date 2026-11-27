@@ -56,14 +56,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- ExcludeFromSingleFile: the SDK 11 bundler drops these native dlls from the
+         single-file bundle (NETSDK1236) and they end up neither bundled nor loose.
+         Excluding them explicitly copies them next to the exe in publish\, which is
+         where DllImport("SDL2") finds them (compiled -exe programs are copies of this
+         exe and rely on the same side-by-side dlls). -->
     <Content Include="SDL2.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </Content>
     <Content Include="SDL2_mixer.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </Content>
     <Content Include="SDL2_ttf.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </Content>
     <Content Include="icon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

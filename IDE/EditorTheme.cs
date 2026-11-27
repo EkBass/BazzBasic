@@ -175,6 +175,12 @@ internal sealed class IdeSettings
     // View → Syntax Coloring. Off = editor text in one plain colour.
     public bool SyntaxColoring { get; set; } = true;
 
+    // Help → Autocheck Updates on Startup: check GitHub for a newer release when the
+    // IDE starts, at most once a day. LastUpdateCheck = when the last check ran
+    // (null = never checked); a manual Help → Check for Updates... counts too.
+    public bool AutoCheckUpdates { get; set; } = false;
+    public DateTime? LastUpdateCheck { get; set; }
+
     // Main window: normal (not maximized) position and size, plus maximized state.
     // null = never saved, use the default centered 1200x800 window.
     public int? WindowX { get; set; }

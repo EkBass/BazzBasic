@@ -73,6 +73,7 @@ public static class SDL
         SDL_QUIT = 0x100,
         SDL_KEYDOWN = 0x300,
         SDL_KEYUP = 0x301,
+        SDL_MOUSEWHEEL = 0x403,
     }
 
     public enum SDL_Keycode : int
@@ -247,6 +248,27 @@ public static class SDL
         public SDL_Keysym keysym;
     }
 
+    // SDL_MouseWheelEvent as in SDL 2.28 (bundled SDL2.dll = 2.28.5): 44 bytes, fits the 56-byte
+    // SDL_Event. y = whole notches, + away from the user; SDL itself carries sub-notch
+    // (high-resolution wheel) remainders over to the next event, so summing y loses nothing.
+    public const uint SDL_MOUSEWHEEL_FLIPPED = 1;
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct SDL_MouseWheelEvent
+    {
+        public SDL_EventType type;
+        public uint timestamp;
+        public uint windowID;
+        public uint which;
+        public int x;
+        public int y;
+        public uint direction;      // SDL_MOUSEWHEEL_NORMAL = 0, SDL_MOUSEWHEEL_FLIPPED = 1
+        public float preciseX;      // SDL 2.0.18+
+        public float preciseY;      // SDL 2.0.18+
+        public int mouseX;          // SDL 2.26+
+        public int mouseY;          // SDL 2.26+
+    }
+
     [StructLayout(LayoutKind.Explicit)]
     public struct SDL_Event
     {
@@ -254,6 +276,8 @@ public static class SDL
         public SDL_EventType type;
         [FieldOffset(0)]
         public SDL_KeyboardEvent key;
+        [FieldOffset(0)]
+        public SDL_MouseWheelEvent wheel;
         [FieldOffset(0)]
         private unsafe fixed byte padding[56];
     }

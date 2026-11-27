@@ -54,6 +54,7 @@ public partial class Interpreter
     private readonly List<Token> _tokens;
     private readonly Variables _variables;
     private readonly Dictionary<string, int> _labels;
+    private readonly SourceMap? _sourceMap;   // T27: error locations in INCLUDEd files / .bb libraries
     
     private int _pos;
     private bool _running;
@@ -97,9 +98,10 @@ public partial class Interpreter
     // Time
     private readonly Stopwatch _programTimer = Stopwatch.StartNew();
 
-    public Interpreter(List<Token> tokens, string basePath = "", string[]? args = null)
+    public Interpreter(List<Token> tokens, string basePath = "", string[]? args = null, SourceMap? sourceMap = null)
     {
         _tokens = tokens;
+        _sourceMap = sourceMap;   // set before ScanLabels() below: duplicate-label errors use it
         _variables = new Variables();
         _labels = new Dictionary<string, int>(StringComparer.Ordinal); // IgnoreCase);
         _builtinConstants = InitBuiltinConstants();
@@ -268,12 +270,28 @@ public partial class Interpreter
             ["PAD_RT#"] = 5,
 
             // Math constants with # suffix (PI# etc.) â€” backward-compatible aliases
-            ["PI#"]    = Math.PI,
-            ["HPI#"]   = Math.PI / 2.0,
-            ["QPI#"]   = Math.PI / 4.0,
-            ["TAU#"]   = Math.PI * 2.0,
-            ["EULER#"] = Math.E,
-            ["AU#"]    = 149597870700.0,   // IAU 2012 astronomical unit in metres (exact)
+            ["PI#"]		= Math.PI,
+            ["HPI#"]	= Math.PI / 2.0,
+            ["QPI#"]	= Math.PI / 4.0,
+            ["TAU#"]	= Math.PI * 2.0,
+            ["EULER#"]	= Math.E,
+            ["AU#"]		= 149597870700.0,		// IAU 2012 astronomical unit in metres (exact)
+			["GRAV#"]	= 6.67430e-11,			// Gravitational constant. This is close enough for gaming: m^3 kg^-1 s^-2
+			["GRAV_E#"]	= 9.80665,				// Standard double, good enough for this context: m/s^2
+			["PHI#"]	= 1.618033988749895, 	// standard double
+			
+			// Color constants as 32-bit ARGB integers (0xAARRGGBB)
+			["BLACK#"]       = 0xFF000000, // RGB(0, 0, 0)
+			["WHITE#"]       = 0xFFFFFFFF, // RGB(255, 255, 255)
+			["RED#"]         = 0xFFFF0000, // RGB(255, 0, 0)
+			["GREEN#"]       = 0xFF00FF00, // RGB(0, 255, 0)
+			["BLUE#"]        = 0xFF0000FF, // RGB(0, 0, 255)
+			["YELLOW#"]      = 0xFFFFFF00, // RGB(255, 255, 0)
+			["CYAN#"]        = 0xFF00FFFF, // RGB(0, 255, 255)
+			["MAGENTA#"]     = 0xFFFF00FF, // RGB(255, 0, 255)
+			["GRAY#"]        = 0xFF808080, // RGB(128, 128, 128)
+			["ORANGE#"]      = 0xFFFFA500, // RGB(255, 165, 0)
+			["TRANSPARENT#"] = 0x00000000  // RGBA(0, 0, 0, 0)
         };
     }
 
@@ -979,7 +997,16 @@ public partial class Interpreter
         if (_hasError) return;
 
         int line = _pos < _tokens.Count ? _tokens[_pos].Line : 0;
-        Console.WriteLine($"Error at line {line}: {message}");
+
+        // T27: an error inside an INCLUDEd file or a .bb library names that file and its own line;
+        // the main program keeps the old text with its own line number
+        string? file = null;
+        if (_sourceMap != null)
+            (file, line) = _sourceMap.Locate(_pos, line);
+
+        Console.WriteLine(file == null
+            ? $"Error at line {line}: {message}"
+            : $"Error in {file} line {line}: {message}");
         _running = false;
         _hasError = true;
     }

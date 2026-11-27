@@ -29,7 +29,6 @@ END DEF
 [inits]
     LET ORDER# = 8
     LET SIZE#   = POW(2, ORDER#)
-    LET WHITE#  = RGB(255, 255, 255)
     LET x$, y$
     LET wkv$
 

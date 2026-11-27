@@ -18,10 +18,10 @@
 '
 ' If it fails, check the provider's current API documentation first.
 ' Provider-specific settings are grouped at the top of this file.
-' You can also give this file together with the BazzBasic AI Guide
+' You can also give this file together with the BazzBasic SKILL.md
 ' to an AI of your choice and ask it to update the code.
 '
-' https://huggingface.co/datasets/EkBass/BazzBasic_AI_Guide
+' https://huggingface.co/datasets/EkBass/BazzBasic-SKILL
 
 [inits]
     DIM headers$

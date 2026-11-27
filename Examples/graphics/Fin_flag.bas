@@ -15,8 +15,8 @@
     LET BLOCK#  = 30
     LET WIDTH#  = BLOCK# * 18
     LET HEIGHT# = BLOCK# * 11
-    LET WHITE#  = 15
-    LET BLUE#   = 1
+    LET C_WHITE#  = 15
+    LET C_BLUE#   = 1
 
     SCREEN 0, WIDTH#, HEIGHT#, "Finnish flag with BazzBasic"
 
@@ -24,13 +24,13 @@
     SCREENLOCK ON
 
         ' all white background
-        LINE(0, 0) - (WIDTH#, HEIGHT#), WHITE#, bf
+        LINE(0, 0) - (WIDTH#, HEIGHT#), C_WHITE#, bf
 
         ' The horizontal line of the cross in the right place with the right proportions
-        LINE(0, BLOCK# * 4) - (WIDTH#, BLOCK# * 7), BLUE#, bf
+        LINE(0, BLOCK# * 4) - (WIDTH#, BLOCK# * 7), C_BLUE#, bf
 
         ' The vertical line of the cross in the right place with the right proportions
-        LINE(BLOCK# * 5, 0) - (BLOCK# * 8, HEIGHT#), BLUE#, bf
+        LINE(BLOCK# * 5, 0) - (BLOCK# * 8, HEIGHT#), C_BLUE#, bf
     SCREENLOCK OFF
     LET kwk$ = WAITKEY()
 END

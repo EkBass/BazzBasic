@@ -15,14 +15,14 @@
     LET CR#  = 100          ' circle radius
 
     ' Console color palette indices
-    LET BLACK#   = 0
-    LET RED#     = 4
+    LET C_BLACK#   = 0
+    LET C_RED#     = 4
     LET LGRAY#   = 7
     LET LGREEN#  = 10
-    LET CYAN#    = 11
+    LET C_CYAN#    = 11
     LET LRED#    = 12
-    LET YELLOW#  = 14
-    LET WHITE#   = 15
+    LET C_YELLOW#  = 14
+    LET C_WHITE#   = 15
 
     ' Color table: name + RGB components (parallel arrays)
     DIM cName$
@@ -61,11 +61,11 @@
         LINE (0,0)-(639,479), 0, BF
 
         LOCATE 8, 23
-        COLOR YELLOW#, BLACK#
+        COLOR C_YELLOW#, C_BLACK#
         PRINT "COLOR MEMORY GAME"
 
         LOCATE 10, 15
-        COLOR WHITE#, BLACK#
+        COLOR C_WHITE#, C_BLACK#
         PRINT "A colored circle appears on the screen."
         LOCATE 11, 15
         PRINT "You see it for 5 seconds only."
@@ -77,13 +77,13 @@
         PRINT "Type ALL colors seen so far, in order."
 
         LOCATE 18, 15
-        COLOR CYAN#, BLACK#
+        COLOR C_CYAN#, C_BLACK#
         PRINT "Colors: black, yellow, white,"
         LOCATE 19, 15
         PRINT "blue, grey, red, brown, green"
 
         LOCATE 22, 18
-        COLOR LGREEN#, BLACK#
+        COLOR LGREEN#, C_BLACK#
         PRINT "Press ENTER to start..."
     SCREENLOCK OFF
 
@@ -113,7 +113,7 @@
         nameText$ = cName$(ci$)
         nameCol$  = INT(40 - LEN(nameText$) / 2)
         LOCATE 42, nameCol$
-        COLOR WHITE#, BLACK#
+        COLOR C_WHITE#, C_BLACK#
         PRINT nameText$
     SCREENLOCK OFF
 
@@ -124,20 +124,20 @@
         LINE (0,0)-(639,479), 0, BF
 
         LOCATE 8, 20
-        COLOR YELLOW#, BLACK#
+        COLOR C_YELLOW#, C_BLACK#
         PRINT "Round "; round$
 
         LOCATE 11, 10
-        COLOR WHITE#, BLACK#
+        COLOR C_WHITE#, C_BLACK#
         PRINT "Type all "; round$; " colors in order, separated by spaces:"
 
         LOCATE 27, 5
-        COLOR LGRAY#, BLACK#
+        COLOR LGRAY#, C_BLACK#
         PRINT "black  yellow  white  blue  grey  red  brown  green"
     SCREENLOCK OFF
 
     LOCATE 15, 10
-    COLOR CYAN#, BLACK#
+    COLOR C_CYAN#, C_BLACK#
     LINE INPUT "> ", answer$
 
 	
@@ -168,10 +168,10 @@
         SCREENLOCK ON
             LINE (0,0)-(639,479), 0, BF
             LOCATE 13, 27
-            COLOR LGREEN#, BLACK#
+            COLOR LGREEN#, C_BLACK#
             PRINT "Correct!"
             LOCATE 15, 22
-            COLOR WHITE#, BLACK#
+            COLOR C_WHITE#, C_BLACK#
             PRINT round$; " colors in memory — adding one more!"
         SCREENLOCK OFF
         SLEEP 2000
@@ -185,19 +185,19 @@
         LINE (0,0)-(639,479), 0, BF
 
         LOCATE 7, 24
-        COLOR LRED#, BLACK#
+        COLOR LRED#, C_BLACK#
         PRINT "Wrong :("
 
         LOCATE 9, 22
-        COLOR WHITE#, BLACK#
+        COLOR C_WHITE#, C_BLACK#
         PRINT "Your score: "; score$
 
         LOCATE 12, 18
-        COLOR YELLOW#, BLACK#
+        COLOR C_YELLOW#, C_BLACK#
         PRINT "Correct order was:"
 
         LOCATE 14, 10
-        COLOR CYAN#, BLACK#
+        COLOR C_CYAN#, C_BLACK#
         FOR i$ = 0 TO round$ - 1
             PRINT cName$(seq$(i$));
             IF i$ < round$ - 1 THEN PRINT " ";
@@ -205,14 +205,14 @@
         PRINT ""
 
         LOCATE 17, 10
-        COLOR LGRAY#, BLACK#
+        COLOR LGRAY#, C_BLACK#
         PRINT "Your answer:"
         LOCATE 18, 10
-        COLOR LRED#, BLACK#
+        COLOR LRED#, C_BLACK#
         PRINT trimmed$
 
         LOCATE 21, 15
-        COLOR WHITE#, BLACK#
+        COLOR C_WHITE#, C_BLACK#
         PRINT "New game: ENTER     Quit: ESC"
     SCREENLOCK OFF
 

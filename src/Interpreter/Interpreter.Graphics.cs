@@ -169,6 +169,10 @@ public partial class Interpreter
         Graphics.Graphics.SetScreenLock(locked);
     }
 
+    // Read a color argument as a 32-bit int. ARGB constants (RED# = 0xFFFF0000) exceed
+    // int.MaxValue, so cast via long: a direct (int)double overflows to int.MinValue.
+    private int ReadColorInt() => (int)(long)EvaluateExpression().AsNumber();
+
     private void ExecutePset()
     {
         _pos++;
@@ -182,7 +186,7 @@ public partial class Interpreter
         if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_COMMA)
         {
             _pos++;
-            int color = (int)EvaluateExpression().AsNumber();
+            int color = ReadColorInt();
             
             Graphics.Graphics.ApplyColor(color);
         }
@@ -212,7 +216,7 @@ public partial class Interpreter
         if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_COMMA)
         {
             _pos++;
-            int color = (int)EvaluateExpression().AsNumber();
+            int color = ReadColorInt();
             
             Graphics.Graphics.ApplyColor(color);
             
@@ -261,7 +265,7 @@ public partial class Interpreter
         if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_COMMA)
         {
             _pos++;
-            int color = (int)EvaluateExpression().AsNumber();
+            int color = ReadColorInt();
             
             Graphics.Graphics.ApplyColor(color);
             
@@ -296,11 +300,18 @@ public partial class Interpreter
         Require(TokenType.TOK_RPAREN);
         
         Require(TokenType.TOK_COMMA);
-        int color = (int)EvaluateExpression().AsNumber();
+        int color = ReadColorInt();
         
-        Graphics.Graphics.ApplyColor(color);
+        // Optional border color, QB/FreeBASIC style: PAINT (x, y), fill[, border].
+        // Without it the fill color acts as the border (QB default).
+        int border = color;
+        if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_COMMA)
+        {
+            _pos++;
+            border = ReadColorInt();
+        }
         
-        Graphics.Graphics.SetPixel(x, y);
+        Graphics.Graphics.Paint(x, y, color, border);
         Graphics.Graphics.Present();
     }
 
@@ -338,13 +349,13 @@ public partial class Interpreter
     {
         _pos++;
         
-        int fg = (int)EvaluateExpression().AsNumber();
+        int fg = ReadColorInt();
         int bg = 0;
         
         if (_pos < _tokens.Count && _tokens[_pos].Type == TokenType.TOK_COMMA)
         {
             _pos++;
-            bg = (int)EvaluateExpression().AsNumber();
+            bg = ReadColorInt();
         }
         
         if (Graphics.Graphics.IsInitialized)
@@ -435,7 +446,7 @@ public partial class Interpreter
         Require(TokenType.TOK_COMMA);
         double height = EvaluateExpression().AsNumber();
         Require(TokenType.TOK_COMMA);
-        int color = (int)EvaluateExpression().AsNumber();
+        int color = ReadColorInt();
         Require(TokenType.TOK_RPAREN);
         
         if (!Graphics.Graphics.IsInitialized)
@@ -738,7 +749,7 @@ public partial class Interpreter
         Require(TokenType.TOK_COMMA);
         int y = (int)EvaluateExpression().AsNumber();
         Require(TokenType.TOK_COMMA);
-        int color = (int)EvaluateExpression().AsNumber();
+        int color = ReadColorInt();
 
         try
         {

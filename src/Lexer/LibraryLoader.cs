@@ -19,8 +19,16 @@ public class LibraryLoader
 {
     private readonly HashSet<string> _loadedLibraries = new(StringComparer.OrdinalIgnoreCase);
     private readonly string _basePath;
+    private readonly SourceMap? _sourceMap;   // T27: INCLUDEd-file locations + library token ranges
 
-    public LibraryLoader(string basePath = "") => _basePath = string.IsNullOrEmpty(basePath) ? Directory.GetCurrentDirectory() : basePath;
+    public LibraryLoader(string basePath = "", SourceMap? sourceMap = null)
+    {
+        _basePath = string.IsNullOrEmpty(basePath) ? Directory.GetCurrentDirectory() : basePath;
+        _sourceMap = sourceMap;
+    }
+
+    // "Line N" in the main program, "<file> line N" when the INCLUDE "x.bb" sits in an INCLUDEd .bas
+    private string Where(int line) => _sourceMap?.Describe(line) ?? $"Line {line}";
 
 
     // Process tokens: find .bb INCLUDE statements, load libraries, merge toke
@@ -43,6 +51,9 @@ public class LibraryLoader
                 {
                     // Load library
                     var libTokens = LoadLibrary(filename, tokens[i].Line);
+                    // T27 part B: libraries go first (merge below), so these indices are final
+                    if (libTokens.Count > 0)
+                        _sourceMap?.AddLibrary(libraryTokens.Count, libraryTokens.Count + libTokens.Count, filename);
                     libraryTokens.AddRange(libTokens);
                     
                     // Skip INCLUDE + filename + possible NEWLINE
@@ -77,7 +88,7 @@ public class LibraryLoader
         
         if (!System.IO.File.Exists(filePath))
         {
-            throw new Exception($"Line {includeLine}: Library not found: {filename}");
+            throw new Exception($"{Where(includeLine)}: Library not found: {filename}");
         }
 
         // Check for circular/duplicate loading
@@ -86,7 +97,7 @@ public class LibraryLoader
         {
             // Already loaded - skip silently tho I would like to remind the user about it... a little
             // Ok, lets be nice and throw a warning while skipping
-            Console.Error.WriteLine($"Warning: Line {includeLine}: Library '{filename}' already loaded, skipping.");
+            Console.Error.WriteLine($"Warning: {Where(includeLine)}: Library '{filename}' already loaded, skipping.");
             return new List<Token>();
         }
         _loadedLibraries.Add(fullPath);
@@ -104,7 +115,7 @@ public class LibraryLoader
         }
         catch (Exception ex)
         {
-            throw new Exception($"Line {includeLine}: Error loading library {filename}: {ex.Message}");
+            throw new Exception($"{Where(includeLine)}: Error loading library {filename}: {ex.Message}");
         }
     }
 

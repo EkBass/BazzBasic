@@ -17,7 +17,7 @@ using System.Text;
 
 namespace BazzBasic.Lexer;
 
-public class Lexer(string source)
+public class Lexer(string source, SourceMap? sourceMap = null)
 {
     // Keyword lookup table
     private static readonly Dictionary<string, TokenType> Keywords = new(StringComparer.OrdinalIgnoreCase)
@@ -153,7 +153,10 @@ public class Lexer(string source)
         ["DISTANCE"]        = TokenType.TOK_DISTANCE,
         ["CLAMP"]           = TokenType.TOK_CLAMP,
         ["LERP"]            = TokenType.TOK_LERP,
-        ["INBETWEEN"]        = TokenType.TOK_INBETWEEN,
+        ["INBETWEEN"]       = TokenType.TOK_INBETWEEN,
+		["GRAV"]			= TokenType.TOK_GRAV,
+		["GRAV_E"]			= TokenType.TOK_GRAV_E,
+		["PHI"]				= TokenType.TOK_PHI,
 
         // String functions
         ["ASC"]         = TokenType.TOK_ASC,
@@ -193,6 +196,7 @@ public class Lexer(string source)
         ["SHA256"]       = TokenType.TOK_SHA256,
         ["MOUSEHIDE"]    = TokenType.TOK_MOUSEHIDE,
         ["MOUSESHOW"]    = TokenType.TOK_MOUSESHOW,
+        ["MOUSEWHEEL"]   = TokenType.TOK_MOUSEWHEEL,
 
         // Gamepad
         ["GAMEPADS"]     = TokenType.TOK_GAMEPADS,
@@ -226,6 +230,7 @@ public class Lexer(string source)
     };
 
     private readonly string _source = source;
+    private readonly SourceMap? _sourceMap = sourceMap;   // T27: null for -lib (raw library source)
     private int _pos = 0;
     private int _line = 1;
 
@@ -427,7 +432,22 @@ public class Lexer(string source)
         }
 
         // Anything else used to vanish silently, so "PRINT 10 \ 3" printed 103.
-        throw new Exception($"Line {_line}: {DescribeUnexpectedChar(c)}");
+        throw new Exception($"{Where()}: {DescribeUnexpectedChar(c)}");
+    }
+
+    // Location for lexer errors: "Line N" in the main program (or with no map, -lib),
+    // "<file> line N" inside an INCLUDEd file (T27 / O13)
+    private string Where() => _sourceMap?.Describe(_line) ?? $"Line {_line}";
+
+    // A string literal or a label can run over line ends: count the '\n's it consumed so later
+    // tokens keep their real line (T27 / O15). NextToken's '\n' branch counts the others.
+    private void CountLines(int from, int to)
+    {
+        for (int k = from; k < to; k++)
+        {
+            if (_source[k] == '\n')
+                _line++;
+        }
     }
 
     // Text for the lexer error above. Printable ASCII is shown as is; anything
@@ -473,6 +493,7 @@ public class Lexer(string source)
     // Get value inside of [whatever]
     private Token ReadLabel()
     {
+        int line = _line;   // the label's own line
         _pos++; // Skip '['
         int start = _pos;
         
@@ -482,11 +503,12 @@ public class Lexer(string source)
         }
         
         string labelName = _source[start.._pos].Trim();
+        CountLines(start, _pos);   // an unclosed '[' runs over line ends
 
         if (_pos < _source.Length)
             _pos++; // Skip ']'
 
-        return new Token(TokenType.TOK_LABEL, labelName.ToUpperInvariant(), _line);
+        return new Token(TokenType.TOK_LABEL, labelName.ToUpperInvariant(), line);
     }
 
     // it is a number, not a letter
@@ -522,7 +544,9 @@ public class Lexer(string source)
     // It is not a number, it is a string
     private Token ReadString()
     {
+        int line = _line;   // the string's own (first) line
         _pos++; // Skip opening "
+        int start = _pos;
         var sb = new StringBuilder();
 
         while (_pos < _source.Length)
@@ -576,10 +600,12 @@ public class Lexer(string source)
             }
         }
 
+        CountLines(start, _pos);   // a string literal can span lines
+
         if (_pos < _source.Length)
             _pos++; // Skip closing "
 
-        return new Token(TokenType.TOK_STRING, sb.ToString(), _line);
+        return new Token(TokenType.TOK_STRING, sb.ToString(), line);
     }
 
     private Token ReadWord()
@@ -639,7 +665,7 @@ public class Lexer(string source)
         else
         {
             // ERROR: Not a keyword and missing $ or # suffix
-            throw new Exception($"Line {_line}: '{word}' is not a valid variable name (must end with $ or #) or keyword");
+            throw new Exception($"{Where()}: '{word}' is not a valid variable name (must end with $ or #) or keyword");
         }
     }
 

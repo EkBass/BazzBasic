@@ -9,10 +9,10 @@
 ' Originally from CREATIVE COMPUTING
 ' Morristown, New Jersey
 [inits]
-    LET BLACK#   = 0
-    LET RED#     = 4
-    LET CYAN#    = 11
-    LET WHITE#   = 15
+    LET C_BLACK#   = 0
+    LET C_RED#     = 4
+    LET C_CYAN#    = 11
+    LET C_WHITE#   = 15
     LET choice$  = 0
     LET playing$ = TRUE
     LET alive$   = TRUE
@@ -29,7 +29,7 @@
 END
 
 [sub:title]
-    COLOR CYAN#, BLACK#
+    COLOR C_CYAN#, C_BLACK#
     CLS
     PRINT " "; REPEAT("*", 21)
     PRINT " *"; REPEAT(" ", 19); "*"
@@ -37,7 +37,7 @@ END
     PRINT " *"; REPEAT(" ", 19); "*"
     PRINT " "; REPEAT("*", 21)
     PRINT "\n CREATIVE COMPUTING\n MORRISTOWN, NEW JERSEY\n"
-    COLOR WHITE#, BLACK#
+    COLOR C_WHITE#, C_BLACK#
 RETURN
 
 [sub:menu]
@@ -55,9 +55,9 @@ RETURN
 
 [sub:shoot]
     IF RND(6) = 0 THEN
-        COLOR RED#, BLACK#
+        COLOR C_RED#, C_BLACK#
         PRINT " *** BANG! ***\n"
-        COLOR WHITE#, BLACK#
+        COLOR C_WHITE#, C_BLACK#
         PRINT " You're dead."
         PRINT " Condolences will be sent to your next of kin.\n"
         SLEEP 3000

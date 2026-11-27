@@ -10,14 +10,14 @@
 ' Classic DOCTOR script - Rogerian therapist
 
 [inits]
-    LET BLACK#   = 0
-    LET GREEN#   = 2
-    LET CYAN#    = 11
-    LET YELLOW#  = 14
-    LET WHITE#   = 15
+    LET C_BLACK#   = 0
+    LET C_GREEN#   = 2
+    LET C_CYAN#    = 11
+    LET C_YELLOW#  = 14
+    LET C_WHITE#   = 15
     LET LGRAY#   = 7
     LET LGREEN#  = 10
-    LET MAGENTA# = 13
+    LET C_MAGENTA# = 13
 
     DIM responses$
     DIM generic$
@@ -46,28 +46,28 @@ END
 ' ============================================
 [title]
     CLS
-    COLOR YELLOW#, BLACK#
+    COLOR C_YELLOW#, C_BLACK#
     PRINT "\n "; REPEAT("*", 44)
     PRINT " *"; REPEAT(" ", 42); "*"
     PRINT " *            ";
-    COLOR WHITE#, BLACK#
+    COLOR C_WHITE#, C_BLACK#
     PRINT "E L I Z A";
-    COLOR YELLOW#, BLACK#
+    COLOR C_YELLOW#, C_BLACK#
     PRINT "                     *"
     PRINT " *"; REPEAT(" ", 42); "*"
     PRINT " *   Rogerian Psychotherapist Simulation    *"
     PRINT " *"; REPEAT(" ", 42); "*"
     PRINT " "; REPEAT("*", 44)
 
-    COLOR LGRAY#, BLACK#
+    COLOR LGRAY#, C_BLACK#
     PRINT "\n Original by Joseph Weizenbaum, MIT 1966\n"
     PRINT " BazzBasic Edition By EkBass\n"
 
-    COLOR CYAN#, BLACK#
+    COLOR C_CYAN#, C_BLACK#
     PRINT " Please tell me what's been troubling you."
     PRINT " Type 'bye' or 'quit' to end the session.\n"
 
-    COLOR WHITE#, BLACK#
+    COLOR C_WHITE#, C_BLACK#
     PRINT REPEAT("-", 50)
 RETURN
 
@@ -76,9 +76,9 @@ RETURN
 ' ============================================
 [mainLoop]
     [conversation]
-        COLOR LGREEN#, BLACK#
+        COLOR LGREEN#, C_BLACK#
         PRINT "\n You: ";
-        COLOR WHITE#, BLACK#
+        COLOR C_WHITE#, C_BLACK#
         INPUT "", userInput$
 
         userInput$  = TRIM(userInput$)
@@ -89,26 +89,26 @@ RETURN
         END IF
 
         IF LEN(userInput$) = 0 THEN
-            COLOR CYAN#, BLACK#
+            COLOR C_CYAN#, C_BLACK#
             PRINT "\n Eliza: Please, tell me something."
             GOTO [conversation]
         END IF
 
         GOSUB [findResponse]
 
-        COLOR CYAN#, BLACK#
+        COLOR C_CYAN#, C_BLACK#
         PRINT "\n Eliza: "; response$
 
     GOTO [conversation]
 
     [goodbye]
-        COLOR YELLOW#, BLACK#
+        COLOR C_YELLOW#, C_BLACK#
         PRINT "\n"; REPEAT("-", 50)
-        COLOR CYAN#, BLACK#
+        COLOR C_CYAN#, C_BLACK#
         PRINT "\n Eliza: Thank you for talking with me."
         PRINT "        I hope our session was helpful."
         PRINT "        Take care of yourself. Goodbye.\n"
-        COLOR WHITE#, BLACK#
+        COLOR C_WHITE#, C_BLACK#
 RETURN
 
 ' ============================================

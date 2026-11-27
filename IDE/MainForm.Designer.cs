@@ -84,6 +84,7 @@ partial class MainForm
     private ToolStripMenuItem   manualMenuItem = null!;
     private ToolStripMenuItem   guideMenuItem = null!;
     private ToolStripMenuItem   rosettaMenuItem = null!;
+    private ToolStripMenuItem   autoCheckUpdatesMenuItem = null!;
 
     private TabControl          tabControl = null!;
     
@@ -267,12 +268,13 @@ partial class MainForm
         }));
         helpMenu.DropDownItems.Add(rosettaMenuItem);
 
-        // Check for updates
-        var checkUpdateMenuItem = new ToolStripMenuItem("&Check for Updates...", null, async (s, e) =>
-        {
-            string result = await BazzBasic.UpdateChecker.CheckAsync();
-            MessageBox.Show(result, "BazzBasic Update Check", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        });
+        // Autocheck updates when the IDE starts, at most once a day (checkable toggle,
+        // state remembered in ide.json; handler wired in the MainForm constructor)
+        autoCheckUpdatesMenuItem = new ToolStripMenuItem("&Autocheck Updates on Startup") { CheckOnClick = true };
+        helpMenu.DropDownItems.Add(autoCheckUpdatesMenuItem);
+
+        // Check for updates now; always shows the result
+        var checkUpdateMenuItem = new ToolStripMenuItem("&Check for Updates...", null, (s, e) => CheckForUpdatesMenu());
         helpMenu.DropDownItems.Add(checkUpdateMenuItem);
 
 

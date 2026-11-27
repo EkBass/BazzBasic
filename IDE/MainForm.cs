@@ -68,6 +68,14 @@ public partial class MainForm : Form
                 ApplyEditorColors(tab.Editor);
         };
 
+        // Autocheck updates on startup (at most once a day), remembered between sessions
+        autoCheckUpdatesMenuItem.Checked = _settings.AutoCheckUpdates;
+        autoCheckUpdatesMenuItem.CheckedChanged += (s, e) =>
+        {
+            _settings.AutoCheckUpdates = autoCheckUpdatesMenuItem.Checked;
+            _settings.Save();
+        };
+
         // Reopen last session's files, or start with an empty tab
         if (!(_settings.RestoreSession && RestoreSession()))
             NewFile();
@@ -405,6 +413,9 @@ public partial class MainForm : Form
                 "BazzBasic IDE", MessageBoxButtons.OK, MessageBoxIcon.Information);
             _missingSessionFiles.Clear();
         }
+
+        // Autocheck updates if enabled: background check, at most once a day
+        AutoCheckUpdates();
     }
 
     protected override void OnFormClosing(FormClosingEventArgs e)
@@ -484,6 +495,40 @@ public partial class MainForm : Form
         _settings.WindowWidth = normal.Width;
         _settings.WindowHeight = normal.Height;
         _settings.WindowMaximized = WindowState == FormWindowState.Maximized;
+    }
+
+    #endregion
+
+    #region Update Check
+
+    // Help → Check for Updates...: runs the check and always shows the result.
+    // Also counts as the day's check, so the autocheck does not repeat it.
+    private async void CheckForUpdatesMenu()
+    {
+        string result = await BazzBasic.UpdateChecker.CheckAsync();
+        MarkUpdateChecked();
+        if (IsDisposed) return;
+        MessageBox.Show(this, result, "BazzBasic Update Check", MessageBoxButtons.OK, MessageBoxIcon.Information);
+    }
+
+    // Autocheck on startup (Help → Autocheck Updates on Startup): checks GitHub for a
+    // newer release at most once a day. Stays quiet unless there is a new version.
+    private async void AutoCheckUpdates()
+    {
+        if (!_settings.AutoCheckUpdates) return;
+        if (_settings.LastUpdateCheck is DateTime last && last.Date == DateTime.Today) return;
+
+        var (updateAvailable, message) = await BazzBasic.UpdateChecker.CheckForUpdateAsync();
+        MarkUpdateChecked();
+        if (updateAvailable && !IsDisposed)
+            MessageBox.Show(this, message, "BazzBasic Update Check", MessageBoxButtons.OK, MessageBoxIcon.Information);
+    }
+
+    // Remember in ide.json that a check ran today, so it happens only once a day
+    private void MarkUpdateChecked()
+    {
+        _settings.LastUpdateCheck = DateTime.Now;
+        _settings.Save();
     }
 
     #endregion
@@ -979,7 +1024,7 @@ public partial class MainForm : Form
         // Math & string functions, constants
         editor.SetKeywords(1,
             "abs atan atan2 between inbetween ceil cint clamp cos deg distance exp floor int lerp log max min mod pow rad rnd round sgn sin sqr tan " +
-            "pi hpi qpi tau euler fasttrig fastsin fastcos fastrad " +
+            "grav grav_e phi pi hpi qpi tau euler fasttrig fastsin fastcos fastrad " +
             "au " +
             "bbver bbbuild prg_root " +
             "asc chr instr invert lcase left len ltrim mid repeat replace right rtrim srand split str trim ucase val fstring same " +
@@ -998,8 +1043,9 @@ public partial class MainForm : Form
             "screen screenlock fullscreen vsync line circle pset point paint b bf " +
             "loadimage loadshape loadsheet loadfont drawstring savescreen " +
             "moveshape drawshape rotateshape scaleshape showshape hideshape removeshape " +
-            "mousex mousey mouseleft mouseright mousemiddle mousehide mouseshow " +
+            "mousex mousey mouseleft mouseright mousemiddle mousewheel mousehide mouseshow " +
             "gamepads padbutton padaxis padname padrumble " +
+			"black white red green blue yellow cyan magenta gray orange transparent " +
             "loadsound soundonce soundoncewait soundrepeat soundstop soundstopall");
 
         ApplyEditorColors(editor);

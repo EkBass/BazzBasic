@@ -11,12 +11,12 @@
 ' Never place a larger disk on a smaller one!
 
 [inits]
-    LET BLACK#    = 0
-    LET BLUE#     = 1
-    LET GREEN#    = 2
-    LET CYAN#     = 3
-    LET RED#      = 4
-    LET MAGENTA#  = 5
+    LET C_BLACK#    = 0
+    LET C_BLUE#     = 1
+    LET C_GREEN#    = 2
+    LET C_CYAN#     = 3
+    LET C_RED#      = 4
+    LET C_MAGENTA#  = 5
     LET BROWN#    = 6
     LET LGRAY#    = 7
     LET DGRAY#    = 8
@@ -25,8 +25,8 @@
     LET LCYAN#    = 11
     LET LRED#     = 12
     LET LMAGENTA# = 13
-    LET YELLOW#   = 14
-    LET WHITE#    = 15
+    LET C_YELLOW#   = 14
+    LET C_WHITE#    = 15
     LET maxDisks# = 7
 
     DIM tower$
@@ -65,44 +65,44 @@ END
 ' ============================================
 [title]
     CLS
-    COLOR YELLOW#, BLACK#
+    COLOR C_YELLOW#, C_BLACK#
     PRINT "\n "; REPEAT("*", 44)
     PRINT " *"; REPEAT(" ", 42); "*"
     PRINT " *"; REPEAT(" ", 14);
-    COLOR WHITE#, BLACK#
+    COLOR C_WHITE#, C_BLACK#
     PRINT "TOWERS OF HANOI";
-    COLOR YELLOW#, BLACK#
+    COLOR C_YELLOW#, C_BLACK#
     PRINT REPEAT(" ", 13); "*"
     PRINT " *"; REPEAT(" ", 42); "*"
     PRINT " "; REPEAT("*", 44)
 
-    COLOR RED#, BLACK#
+    COLOR C_RED#, C_BLACK#
     PRINT "\n CREATIVE COMPUTING  MORRISTOWN, NEW JERSEY\n"
-    COLOR LRED#, BLACK#
+    COLOR LRED#, C_BLACK#
     PRINT " BazzBasic Edition: github.com/EkBass/BazzBasic"
     PRINT REPEAT("=", 48); "\n\n"
 
-    COLOR CYAN#, BLACK#
+    COLOR C_CYAN#, C_BLACK#
     PRINT "           |             |             |"
-    COLOR LRED#, BLACK#
+    COLOR LRED#, C_BLACK#
     PRINT "          ===            |             |"
-    COLOR YELLOW#, BLACK#
+    COLOR C_YELLOW#, C_BLACK#
     PRINT "         =====           |             |"
-    COLOR LGREEN#, BLACK#
+    COLOR LGREEN#, C_BLACK#
     PRINT "        =======          |             |"
-    COLOR LGRAY#, BLACK#
+    COLOR LGRAY#, C_BLACK#
     PRINT "     =========================================\n"
 
-    COLOR WHITE#, BLACK#
+    COLOR C_WHITE#, C_BLACK#
     PRINT " RULES:"
     PRINT " - Move all disks from the LEFT tower to the RIGHT"
     PRINT " - Move only ONE disk at a time"
     PRINT " - NEVER place a larger disk on a smaller one\n"
 
-    COLOR YELLOW#, BLACK#
+    COLOR C_YELLOW#, C_BLACK#
     PRINT " Minimum moves needed: 2^n - 1 (where n = number of disks)\n"
 
-    COLOR WHITE#, BLACK#
+    COLOR C_WHITE#, C_BLACK#
     PRINT REPEAT("-", 50)
     PRINT " Press ENTER to start...";
     INPUT "", temp$
@@ -113,24 +113,24 @@ RETURN
 ' ============================================
 [setup]
     CLS
-    COLOR WHITE#, BLACK#
+    COLOR C_WHITE#, C_BLACK#
     PRINT "\n"; REPEAT("=", 50)
     PRINT " GAME SETUP"
     PRINT REPEAT("=", 50)
 
     [askDisks]
-    COLOR CYAN#, BLACK#
+    COLOR C_CYAN#, C_BLACK#
     PRINT "\n How many disks (1-7)? ";
     INPUT "", numDisks$
 
     IF numDisks$ < 1 OR numDisks$ > 7 THEN
-        COLOR LRED#, BLACK#
+        COLOR LRED#, C_BLACK#
         PRINT " Please enter a number between 1 and 7!"
         GOTO [askDisks]
     END IF
 
     IF numDisks$ <> INT(numDisks$) THEN
-        COLOR LRED#, BLACK#
+        COLOR LRED#, C_BLACK#
         PRINT " Whole numbers only!"
         GOTO [askDisks]
     END IF
@@ -151,10 +151,10 @@ RETURN
     won$          = 0
     optimalMoves$ = POW(2, numDisks$) - 1
 
-    COLOR LGREEN#, BLACK#
+    COLOR LGREEN#, C_BLACK#
     PRINT "\n Starting with "; numDisks$; " disks."
     PRINT " Optimal solution: "; optimalMoves$; " moves."
-    COLOR WHITE#, BLACK#
+    COLOR C_WHITE#, C_BLACK#
     PRINT "\n Press ENTER to begin...";
     INPUT "", temp$
 RETURN
@@ -170,17 +170,17 @@ RETURN
     GOSUB [checkWin]
     IF won$ = 1 THEN RETURN
 
-    COLOR WHITE#, BLACK#
+    COLOR C_WHITE#, C_BLACK#
     PRINT " Moves: "; moves$
     PRINT REPEAT("-", 50)
 
     [getSource]
-    COLOR LGREEN#, BLACK#
+    COLOR LGREEN#, C_BLACK#
     PRINT "\n Move from tower (1-3): ";
     INPUT "", fromTower$
 
     IF fromTower$ < 1 OR fromTower$ > 3 THEN
-        COLOR LRED#, BLACK#
+        COLOR LRED#, C_BLACK#
         PRINT " Invalid tower! Choose 1, 2, or 3."
         GOTO [getSource]
     END IF
@@ -190,7 +190,7 @@ RETURN
     srcTower$  = fromTower$
 
     IF srcRow$ = 0 THEN
-        COLOR LRED#, BLACK#
+        COLOR LRED#, C_BLACK#
         PRINT " That tower is empty!"
         GOTO [getSource]
     END IF
@@ -198,18 +198,18 @@ RETURN
     movingDisk$ = tower$(srcRow$, srcTower$)
 
     [getDest]
-    COLOR LCYAN#, BLACK#
+    COLOR LCYAN#, C_BLACK#
     PRINT " Move to tower (1-3): ";
     INPUT "", toTower$
 
     IF toTower$ < 1 OR toTower$ > 3 THEN
-        COLOR LRED#, BLACK#
+        COLOR LRED#, C_BLACK#
         PRINT " Invalid tower! Choose 1, 2, or 3."
         GOTO [getDest]
     END IF
 
     IF toTower$ = fromTower$ THEN
-        COLOR LRED#, BLACK#
+        COLOR LRED#, C_BLACK#
         PRINT " Same tower! Pick a different one."
         GOTO [getDest]
     END IF
@@ -221,7 +221,7 @@ RETURN
     IF destRow$ > 0 THEN
         destDisk$ = tower$(destRow$, toTower$)
         IF movingDisk$ > destDisk$ THEN
-            COLOR LRED#, BLACK#
+            COLOR LRED#, C_BLACK#
             PRINT "\n *** ILLEGAL MOVE! ***"
             PRINT " Cannot place a LARGER disk on a SMALLER one!"
             SLEEP 1500
@@ -285,31 +285,31 @@ RETURN
         CLS
         GOSUB [drawTowers]
 
-        COLOR YELLOW#, BLACK#
+        COLOR C_YELLOW#, C_BLACK#
         PRINT "\n "; REPEAT("*", 40)
 
         IF moves$ = optimalMoves$ THEN
-            COLOR LGREEN#, BLACK#
+            COLOR LGREEN#, C_BLACK#
             PRINT " ***  PERFECT! OPTIMAL SOLUTION!  ***"
         ELSE
-            COLOR LCYAN#, BLACK#
+            COLOR LCYAN#, C_BLACK#
             PRINT " ***  CONGRATULATIONS! YOU WON!  ***"
         END IF
 
-        COLOR YELLOW#, BLACK#
+        COLOR C_YELLOW#, C_BLACK#
         PRINT " "; REPEAT("*", 40)
 
-        COLOR WHITE#, BLACK#
+        COLOR C_WHITE#, C_BLACK#
         PRINT "\n You solved it in "; moves$; " moves."
         PRINT " Optimal solution: "; optimalMoves$; " moves."
 
         IF moves$ > optimalMoves$ THEN
             extra$ = moves$ - optimalMoves$
-            COLOR LGRAY#, BLACK#
+            COLOR LGRAY#, C_BLACK#
             PRINT " ("; extra$; " moves over optimal)"
         END IF
 
-        COLOR WHITE#, BLACK#
+        COLOR C_WHITE#, C_BLACK#
         PRINT "\n Play again? (Y/N): ";
         INPUT "", again$
 
@@ -324,7 +324,7 @@ RETURN
 ' DRAW TOWERS (ASCII Graphics)
 ' ============================================
 [drawTowers]
-    COLOR YELLOW#, BLACK#
+    COLOR C_YELLOW#, C_BLACK#
     PRINT "\n"; REPEAT("=", 50)
     PRINT REPEAT(" ", 12); "T O W E R S   O F   H A N O I"
     PRINT REPEAT("=", 50); "\n"
@@ -335,9 +335,9 @@ RETURN
 
             IF disk$ = 0 THEN
                 PRINT "       ";
-                COLOR BROWN#, BLACK#
+                COLOR BROWN#, C_BLACK#
                 PRINT "|";
-                COLOR WHITE#, BLACK#
+                COLOR C_WHITE#, C_BLACK#
                 PRINT "        ";
             ELSE
                 GOSUB [drawDiskAtCol]
@@ -346,10 +346,10 @@ RETURN
         PRINT ""
     NEXT
 
-    COLOR LGRAY#, BLACK#
+    COLOR LGRAY#, C_BLACK#
     PRINT " "; REPEAT("=", 47)
 
-    COLOR WHITE#, BLACK#
+    COLOR C_WHITE#, C_BLACK#
     PRINT "       [1]            [2]            [3]"
     PRINT ""
 RETURN
@@ -363,16 +363,16 @@ RETURN
 
     PRINT REPEAT(" ", padding$);
 
-    IF disk$ = 1 THEN COLOR LRED#,     BLACK#
-    IF disk$ = 2 THEN COLOR YELLOW#,   BLACK#
-    IF disk$ = 3 THEN COLOR LGREEN#,   BLACK#
-    IF disk$ = 4 THEN COLOR LCYAN#,    BLACK#
-    IF disk$ = 5 THEN COLOR LBLUE#,    BLACK#
-    IF disk$ = 6 THEN COLOR LMAGENTA#, BLACK#
-    IF disk$ = 7 THEN COLOR WHITE#,    BLACK#
+    IF disk$ = 1 THEN COLOR LRED#,     C_BLACK#
+    IF disk$ = 2 THEN COLOR C_YELLOW#,   C_BLACK#
+    IF disk$ = 3 THEN COLOR LGREEN#,   C_BLACK#
+    IF disk$ = 4 THEN COLOR LCYAN#,    C_BLACK#
+    IF disk$ = 5 THEN COLOR LBLUE#,    C_BLACK#
+    IF disk$ = 6 THEN COLOR LMAGENTA#, C_BLACK#
+    IF disk$ = 7 THEN COLOR C_WHITE#,    C_BLACK#
 
     PRINT REPEAT("=", diskWidth$);
 
-    COLOR WHITE#, BLACK#
+    COLOR C_WHITE#, C_BLACK#
     PRINT REPEAT(" ", padding$);
 RETURN

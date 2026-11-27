@@ -52,7 +52,7 @@
 
     ' Console palette
     LET LGRAY# = 7
-    LET WHITE# = 15
+    LET C_WHITE# = 15
 
     ' Map dimensions
     LET MAP_H# = 21
@@ -153,7 +153,7 @@
             lastFpsUpdate$ = currentTime$
         END IF
 
-        COLOR WHITE#, 0
+        COLOR C_WHITE#, 0
         LOCATE 1, 1
         PRINT "FPS: "; INT(fps$); "  "
 

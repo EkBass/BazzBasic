@@ -11,13 +11,7 @@
 [inits]
     SCREEN 0, 640, 480, "Drawing Primitives"
 
-    LET WHITE#  = RGB(255, 255, 255)
-    LET RED#    = RGB(220, 60, 60)
-    LET GREEN#  = RGB(90, 210, 110)
-    LET BLUE#   = RGB(70, 140, 230)
-    LET YELLOW# = RGB(240, 210, 60)
     LET PINK#   = RGB(230, 90, 200)
-    LET ORANGE# = RGB(255, 150, 40)
 
 [main]
     SCREENLOCK ON

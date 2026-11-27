@@ -20,7 +20,6 @@
     vx$(1) = 20  : vy$(1) = 460 : col$(1) = RGB(80, 255, 80)
     vx$(2) = 620 : vy$(2) = 460 : col$(2) = RGB(80, 160, 255)
 
-    LET WHITE# = RGB(255, 255, 255)
     LET x$ = RND(W#)
     LET y$ = RND(H#)
     LET v$ = 0

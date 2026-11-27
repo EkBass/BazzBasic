@@ -11,16 +11,16 @@
 ' Punches: (1) Full Swing, (2) Hook, (3) Uppercut, (4) Jab
 
 [inits]
-    LET BLACK#   = 0
-    LET RED#     = 4
-    LET GREEN#   = 2
-    LET YELLOW#  = 14
-    LET WHITE#   = 15
-    LET CYAN#    = 11
+    LET C_BLACK#   = 0
+    LET C_RED#     = 4
+    LET C_GREEN#   = 2
+    LET C_YELLOW#  = 14
+    LET C_WHITE#   = 15
+    LET C_CYAN#    = 11
     LET LGRAY#   = 7
     LET LRED#    = 12
     LET LGREEN#  = 10
-    LET MAGENTA# = 13
+    LET C_MAGENTA# = 13
 
     LET playerWins$    = 0
     LET opponentWins$  = 0
@@ -52,24 +52,24 @@ END
 ' ============================================
 [title]
     CLS
-    COLOR YELLOW#, BLACK#
+    COLOR C_YELLOW#, C_BLACK#
     PRINT "\n " + REPEAT("*", 40)
     PRINT " *"; REPEAT(" ", 38); "*"
     PRINT " *          ";
-    COLOR WHITE#, BLACK#
+    COLOR C_WHITE#, C_BLACK#
     PRINT "B O X I N G";
-    COLOR YELLOW#, BLACK#
+    COLOR C_YELLOW#, C_BLACK#
     PRINT "               *"
     PRINT " *"; REPEAT(" ", 38); "*"
     PRINT " *    OLYMPIC STYLE  -  3 ROUNDS       *"
     PRINT " *"; REPEAT(" ", 38); "*"
     PRINT " " + REPEAT("*", 40)
 
-    COLOR LGRAY#, BLACK#
+    COLOR LGRAY#, C_BLACK#
     PRINT "\n CREATIVE COMPUTING  MORRISTOWN, NEW JERSEY"
     PRINT " BazzBasic Edition\n"
 
-    COLOR CYAN#, BLACK#
+    COLOR C_CYAN#, C_BLACK#
     PRINT "        __O__"
     PRINT "       / . . \\"
     PRINT "      |   ^   |"
@@ -82,7 +82,7 @@ END
     PRINT "       _|   |_"
     PRINT "      |_|   |_|"
 
-    COLOR WHITE#, BLACK#
+    COLOR C_WHITE#, C_BLACK#
     PRINT "\n Press ENTER to start...";
     INPUT "", temp$
 RETURN
@@ -92,29 +92,29 @@ RETURN
 ' ============================================
 [setup]
     CLS
-    COLOR WHITE#, BLACK#
+    COLOR C_WHITE#, C_BLACK#
     PRINT "\n"; REPEAT("=", 50)
     PRINT " FIGHTER SETUP"
     PRINT REPEAT("=", 50)
 
-    COLOR CYAN#, BLACK#
+    COLOR C_CYAN#, C_BLACK#
     INPUT "\n What is your OPPONENT'S name? ", opponent$
     INPUT " What is YOUR fighter's name? ", player$
 
-    COLOR YELLOW#, BLACK#
+    COLOR C_YELLOW#, C_BLACK#
     PRINT "\n PUNCH TYPES:"
-    COLOR WHITE#, BLACK#
+    COLOR C_WHITE#, C_BLACK#
     PRINT "   (1) FULL SWING - High damage, easy to miss"
     PRINT "   (2) HOOK       - Good damage, balanced"
     PRINT "   (3) UPPERCUT   - Medium damage, tricky"
     PRINT "   (4) JAB        - Quick, lower damage"
 
-    COLOR LGREEN#, BLACK#
+    COLOR LGREEN#, C_BLACK#
     PRINT "\n Your fighter's BEST punch gives +2 bonus damage."
     PRINT " What is "; player$; "'s BEST punch (1-4)? ";
     INPUT playerBest$
 
-    COLOR LRED#, BLACK#
+    COLOR LRED#, C_BLACK#
     PRINT " Your fighter's VULNERABILITY means opponent hits harder."
     PRINT " What is "; player$; "'s VULNERABILITY (1-4)? ";
     INPUT playerWeak$
@@ -124,7 +124,7 @@ RETURN
     opponentWeak$ = INT(RND(4)) + 1
     IF opponentBest$ = opponentWeak$ THEN GOTO [genOpponent]
 
-    COLOR WHITE#, BLACK#
+    COLOR C_WHITE#, C_BLACK#
     PRINT "\n Press ENTER when ready to fight...";
     INPUT "", temp$
 RETURN
@@ -151,12 +151,12 @@ RETURN
     opponentDamage$ = 0
 
     CLS
-    COLOR YELLOW#, BLACK#
+    COLOR C_YELLOW#, C_BLACK#
     PRINT "\n"; REPEAT("=", 50)
     PRINT "              ROUND "; round$; " - FIGHT!"
     PRINT REPEAT("=", 50)
 
-    COLOR LGRAY#, BLACK#
+    COLOR LGRAY#, C_BLACK#
     PRINT " Score: "; player$; " "; playerWins$; " - "; opponentWins$; " "; opponent$
     PRINT REPEAT("-", 50)
 
@@ -178,20 +178,20 @@ RETURN
     NEXT exchange$
 
     PRINT "\n";
-    COLOR WHITE#, BLACK#
+    COLOR C_WHITE#, C_BLACK#
     PRINT REPEAT("-", 50)
 
     IF playerDamage$ > opponentDamage$ THEN
-        COLOR LGREEN#, BLACK#
+        COLOR LGREEN#, C_BLACK#
         PRINT " >>> "; player$; " WINS ROUND "; round$; "! <<<"
         playerWins$ = playerWins$ + 1
     ELSE
-        COLOR LRED#, BLACK#
+        COLOR LRED#, C_BLACK#
         PRINT " >>> "; opponent$; " WINS ROUND "; round$; "! <<<"
         opponentWins$ = opponentWins$ + 1
     END IF
 
-    COLOR WHITE#, BLACK#
+    COLOR C_WHITE#, C_BLACK#
     PRINT "\n Press ENTER for next round...";
     INPUT "", temp$
 RETURN
@@ -201,26 +201,26 @@ RETURN
 ' ============================================
 [showDamageMeters]
     PRINT ""
-    COLOR WHITE#, BLACK#
+    COLOR C_WHITE#, C_BLACK#
 
     PRINT " "; LEFT(player$ + REPEAT(" ", 12), 12); " [";
     bars$ = INT(playerDamage$ / 3)
     IF bars$ > 12 THEN bars$ = 12
-    COLOR LGREEN#, BLACK#
+    COLOR LGREEN#, C_BLACK#
     PRINT REPEAT("#", bars$);
-    COLOR LGRAY#, BLACK#
+    COLOR LGRAY#, C_BLACK#
     PRINT REPEAT(".", 12 - bars$);
-    COLOR WHITE#, BLACK#
+    COLOR C_WHITE#, C_BLACK#
     PRINT "] "; playerDamage$
 
     PRINT " "; LEFT(opponent$ + REPEAT(" ", 12), 12); " [";
     bars$ = INT(opponentDamage$ / 3)
     IF bars$ > 12 THEN bars$ = 12
-    COLOR LRED#, BLACK#
+    COLOR LRED#, C_BLACK#
     PRINT REPEAT("#", bars$);
-    COLOR LGRAY#, BLACK#
+    COLOR LGRAY#, C_BLACK#
     PRINT REPEAT(".", 12 - bars$);
-    COLOR WHITE#, BLACK#
+    COLOR C_WHITE#, C_BLACK#
     PRINT "] "; opponentDamage$
     PRINT ""
 RETURN
@@ -229,7 +229,7 @@ RETURN
 ' PLAYER ATTACKS
 ' ============================================
 [playerAttacks]
-    COLOR CYAN#, BLACK#
+    COLOR C_CYAN#, C_BLACK#
     PRINT " Your turn! ";
     INPUT "Punch (1-4): ", punch$
 
@@ -243,68 +243,68 @@ RETURN
     GOTO [playerJab]
 
 [playerFullSwing]
-    COLOR WHITE#, BLACK#
+    COLOR C_WHITE#, C_BLACK#
     PRINT " "; player$; " winds up a FULL SWING... ";
     IF opponentWeak$ = 1 THEN GOTO [fullSwingHit]
     chance$ = INT(RND(30)) + 1
     IF chance$ < 10 THEN GOTO [fullSwingHit]
-    COLOR LGRAY#, BLACK#
+    COLOR LGRAY#, C_BLACK#
     PRINT "MISSES!"
     RETURN
 
     [fullSwingHit]
-    COLOR LGREEN#, BLACK#
+    COLOR LGREEN#, C_BLACK#
     PRINT "CONNECTS! POW!!!"
     playerDamage$ = playerDamage$ + 15
 RETURN
 
 [playerHook]
-    COLOR WHITE#, BLACK#
+    COLOR C_WHITE#, C_BLACK#
     PRINT " "; player$; " throws a HOOK... ";
     IF opponentWeak$ = 2 THEN GOTO [hookHit]
     chance$ = INT(RND(2)) + 1
     IF chance$ = 1 THEN
-        COLOR LGRAY#, BLACK#
+        COLOR LGRAY#, C_BLACK#
         PRINT "BLOCKED!"
         RETURN
     END IF
 
     [hookHit]
-    COLOR LGREEN#, BLACK#
+    COLOR LGREEN#, C_BLACK#
     PRINT "CONNECTS!"
     playerDamage$ = playerDamage$ + 7
 RETURN
 
 [playerUppercut]
-    COLOR WHITE#, BLACK#
+    COLOR C_WHITE#, C_BLACK#
     PRINT " "; player$; " tries an UPPERCUT... ";
     IF opponentWeak$ = 3 THEN GOTO [uppercutHit]
     chance$ = INT(RND(100)) + 1
     IF chance$ > 50 THEN
-        COLOR LGRAY#, BLACK#
+        COLOR LGRAY#, C_BLACK#
         PRINT "BLOCKED! (Lucky block!)"
         RETURN
     END IF
 
     [uppercutHit]
-    COLOR LGREEN#, BLACK#
+    COLOR LGREEN#, C_BLACK#
     PRINT "CONNECTS!"
     playerDamage$ = playerDamage$ + 4
 RETURN
 
 [playerJab]
-    COLOR WHITE#, BLACK#
+    COLOR C_WHITE#, C_BLACK#
     PRINT " "; player$; " JABS at "; opponent$; "'s head... ";
     IF opponentWeak$ = 4 THEN GOTO [jabHit]
     chance$ = INT(RND(8)) + 1
     IF chance$ < 4 THEN
-        COLOR LGRAY#, BLACK#
+        COLOR LGRAY#, C_BLACK#
         PRINT "BLOCKED!"
         RETURN
     END IF
 
     [jabHit]
-    COLOR LGREEN#, BLACK#
+    COLOR LGREEN#, C_BLACK#
     PRINT "HIT!"
     playerDamage$ = playerDamage$ + 3
 RETURN
@@ -325,25 +325,25 @@ RETURN
     GOTO [oppJab]
 
 [oppFullSwing]
-    COLOR MAGENTA#, BLACK#
+    COLOR C_MAGENTA#, C_BLACK#
     PRINT " "; opponent$; " takes a FULL SWING... ";
     IF playerWeak$ = 1 THEN GOTO [oppFullSwingHit]
     chance$ = INT(RND(60)) + 1
     IF chance$ < 30 THEN GOTO [oppFullSwingHit]
-    COLOR LGRAY#, BLACK#
+    COLOR LGRAY#, C_BLACK#
     PRINT "BLOCKED!"
     RETURN
 
     [oppFullSwingHit]
-    COLOR LRED#, BLACK#
+    COLOR LRED#, C_BLACK#
     PRINT "POW! Right in the face!"
     opponentDamage$ = opponentDamage$ + 15
 RETURN
 
 [oppHook]
-    COLOR MAGENTA#, BLACK#
+    COLOR C_MAGENTA#, C_BLACK#
     PRINT " "; opponent$; " gets you in the JAW with a HOOK!";
-    COLOR LRED#, BLACK#
+    COLOR LRED#, C_BLACK#
     PRINT " OUCH!"
     opponentDamage$ = opponentDamage$ + 7
     PRINT "    ...AND AGAIN!"
@@ -351,36 +351,36 @@ RETURN
 RETURN
 
 [oppUppercut]
-    COLOR MAGENTA#, BLACK#
+    COLOR C_MAGENTA#, C_BLACK#
     PRINT " "; player$; " is attacked by an UPPERCUT... ";
     IF playerWeak$ = 3 THEN GOTO [oppUppercutHit]
     chance$ = INT(RND(200)) + 1
     IF chance$ > 75 THEN
-        COLOR LGREEN#, BLACK#
+        COLOR LGREEN#, C_BLACK#
         PRINT "BLOCKED! Counter-HOOK!"
         playerDamage$ = playerDamage$ + 5
         RETURN
     END IF
 
     [oppUppercutHit]
-    COLOR LRED#, BLACK#
+    COLOR LRED#, C_BLACK#
     PRINT "CONNECTS!"
     opponentDamage$ = opponentDamage$ + 8
 RETURN
 
 [oppJab]
-    COLOR MAGENTA#, BLACK#
+    COLOR C_MAGENTA#, C_BLACK#
     PRINT " "; opponent$; " JABS... ";
     IF playerWeak$ = 4 THEN GOTO [oppJabHit]
     chance$ = INT(RND(7)) + 1
     IF chance$ > 4 THEN
-        COLOR LGRAY#, BLACK#
+        COLOR LGRAY#, C_BLACK#
         PRINT "BLOCKED!"
         RETURN
     END IF
 
     [oppJabHit]
-    COLOR LRED#, BLACK#
+    COLOR LRED#, C_BLACK#
     PRINT "BLOOD SPILLS!!!"
     opponentDamage$ = opponentDamage$ + 5
 RETURN
@@ -389,47 +389,47 @@ RETURN
 ' K.O. AND VICTORY SCREENS
 ' ============================================
 [playerKO]
-    COLOR LRED#, BLACK#
+    COLOR LRED#, C_BLACK#
     PRINT "\n\n"; REPEAT("*", 50)
     PRINT "  "; opponent$; " IS KNOCKED COLD!"
     PRINT REPEAT("*", 50)
-    COLOR LGREEN#, BLACK#
+    COLOR LGREEN#, C_BLACK#
     PRINT "\n        *** "; player$; " IS THE WINNER! ***"
     PRINT "             K.O. VICTORY!"
     GOTO [gameEnd]
 
 [opponentKO]
-    COLOR LRED#, BLACK#
+    COLOR LRED#, C_BLACK#
     PRINT "\n\n"; REPEAT("*", 50)
     PRINT "  "; player$; " IS KNOCKED COLD!"
     PRINT REPEAT("*", 50)
-    COLOR MAGENTA#, BLACK#
+    COLOR C_MAGENTA#, C_BLACK#
     PRINT "\n        *** "; opponent$; " WINS BY K.O.! ***"
     GOTO [gameEnd]
 
 [playerChamp]
-    COLOR YELLOW#, BLACK#
+    COLOR C_YELLOW#, C_BLACK#
     PRINT "\n\n"; REPEAT("*", 50)
-    COLOR LGREEN#, BLACK#
+    COLOR LGREEN#, C_BLACK#
     PRINT "   "; player$; " WINS THE MATCH!"
     PRINT "      "; playerWins$; " - "; opponentWins$
-    COLOR YELLOW#, BLACK#
+    COLOR C_YELLOW#, C_BLACK#
     PRINT REPEAT("*", 50)
     PRINT "\n       *** CHAMPION! ***"
     GOTO [gameEnd]
 
 [opponentChamp]
-    COLOR YELLOW#, BLACK#
+    COLOR C_YELLOW#, C_BLACK#
     PRINT "\n\n"; REPEAT("*", 50)
-    COLOR LRED#, BLACK#
+    COLOR LRED#, C_BLACK#
     PRINT "   "; opponent$; " AMAZINGLY WINS!"
     PRINT "      "; opponentWins$; " - "; playerWins$
-    COLOR YELLOW#, BLACK#
+    COLOR C_YELLOW#, C_BLACK#
     PRINT REPEAT("*", 50)
     GOTO [gameEnd]
 
 [gameEnd]
-    COLOR WHITE#, BLACK#
+    COLOR C_WHITE#, C_BLACK#
     PRINT "\n\n And now goodbye from the Olympic Arena!\n"
 
     INPUT "\n Play again? (Y/N): ", again$

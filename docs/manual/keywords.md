@@ -209,6 +209,7 @@ Variables must end with `$`, constants with `#` — they cannot share names with
 | `MOUSELEFT` | 1 if left button pressed (graphics mode) |
 | `MOUSERIGHT` | 1 if right button pressed (graphics mode) |
 | `MOUSESHOW` | Show mouse cursor (graphics mode) |
+| `MOUSEWHEEL` | Wheel notches since the last call, + = up (graphics mode) |
 | `MOUSEX` | Mouse cursor X position (graphics mode) |
 | `MOUSEY` | Mouse cursor Y position (graphics mode) |
 | `WAITKEY` | Block until key pressed |

@@ -1,11 +1,7 @@
 ' ============================================
-' ROSETTA: https://rosettacode.org/wiki/Sleep
+' Sleep
+' https://rosettacode.org/wiki/Sleep
 ' BazzBasic: https://github.com/EkBass/BazzBasic
-' --------------------------------------------
-' DESCRIPTION: Asks the user for a number of seconds, prints a message, pauses for that long with SLEEP (which takes milliseconds) and then prints another message.
-' CATEGORY: system
-' TAGS: sleep, delay, input
-' MINVERSION: 1.5
 ' ============================================
 
 [main]

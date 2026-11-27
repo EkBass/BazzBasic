@@ -8,7 +8,10 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <NoWarn>IDE0130;NU1510</NoWarn>
+    <!-- NETSDK1236: SDK 11 warns that the single-file bundler excluded the win-x86
+         Scintilla/Lexilla natives. That exclusion is intended for a win-x64 build;
+         the win-x64 natives are bundled and extracted at startup. -->
+    <NoWarn>IDE0130;NU1510;NETSDK1236</NoWarn>
 
     <AssemblyName>BazzBasic-IDE</AssemblyName>
     <RootNamespace>BazzBasic.IDE</RootNamespace>

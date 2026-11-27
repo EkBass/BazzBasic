@@ -10,7 +10,6 @@
 
 [inits]
     LET MSG# = "Goodbye, World!"
-    LET WHITE# = RGB(255, 255, 255)
     LET wkv$ = 0
 
     SCREEN 0, 600, 480, MSG#

@@ -19,12 +19,14 @@ rem if not exist "%LIBS%" mkdir "%LIBS%"
 rem echo Kopioidaan SDL-kirjastot...
 rem copy /y "%~dp0SDL*.dll" "%LIBS%" >nul
 
-rem Copy the newest exes to the local install used by bb.bat (PATH) and the AI agents.
+rem Copy the newest exes to the local install folder (on PATH) for quick local runs and the AI agents.
 rem A failed copy (e.g. IDE open, exe locked) is only a warning, not a build failure.
 set LOCAL_BB=C:\Users\ekvir\BazzBasic
 echo === Copy to %LOCAL_BB% ===
 copy /y "%PUBLISH%\BazzBasic.exe" "%LOCAL_BB%\" >nul || echo   WARNING: BazzBasic.exe not copied ^(in use?^)
 copy /y "%PUBLISH%\BazzBasic-IDE.exe" "%LOCAL_BB%\" >nul || echo   WARNING: BazzBasic-IDE.exe not copied ^(in use?^)
+rem SDL dlls are ExcludeFromSingleFile, so they sit loose in publish\ next to the exe; keep the local install's copies in sync
+copy /y "%~dp0SDL2*.dll" "%LOCAL_BB%\" >nul || echo   WARNING: SDL dlls not copied
 
 echo.
 echo Build OK: %PUBLISH%

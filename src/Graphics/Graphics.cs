@@ -54,6 +54,10 @@ public static class Graphics
     private static int mouseX = 0;
     private static int mouseY = 0;
     private static uint mouseButtons = 0;
+
+    // Vertical wheel notches since the last GetMouseWheel() (T28 MOUSEWHEEL). Filled by BOTH
+    // SDL_PollEvent loops (ProcessEvents and the graphics INPUT loop in ReadLine).
+    private static int wheelAccum = 0;
     
     // Keyboard state
     private static int lastKeyPressed = 0;
@@ -166,6 +170,7 @@ public static class Graphics
         CreateCanvas();
         quitRequested = false;
         presentPending = false;
+        wheelAccum = 0;   // a new SCREEN does not inherit notches from the previous window
         
         initialized = true;
 
@@ -213,6 +218,7 @@ public static class Graphics
         
         SDL.SDL_Quit();
         initialized = false;
+        wheelAccum = 0;
 
         FontManager.Shutdown();
 
@@ -251,6 +257,73 @@ public static class Graphics
         // so read-modify-write loops (POINT then PSET) never re-read the canvas.
         if (cacheValid && x >= 0 && x < screenWidth && y >= 0 && y < screenHeight)
             pixelCache[y * screenWidth + x] = (currentR << 16) | (currentG << 8) | currentB;
+    }
+
+    // ========================================================================
+    // PAINT - flood fill from (x, y), QB/FreeBASIC style (fixed for 1.8):
+    // fills the contiguous region of the starting pixel's color and stops at
+    // borderColor pixels. The caller passes borderColor = fillColor when the
+    // border argument was omitted (QB default).
+    // ========================================================================
+    public static void Paint(int x, int y, int fillColor, int borderColor)
+    {
+        if (!initialized) return;
+        if (x < 0 || x >= screenWidth || y < 0 || y >= screenHeight) return;
+
+        int fill = ResolveColorPacked(fillColor);
+        int border = ResolveColorPacked(borderColor);
+
+        RefreshCache();
+        int target = pixelCache[y * screenWidth + x];
+        // Starting on the border, or the area already has the fill color:
+        // nothing to do (the second check also keeps the fill from looping).
+        if (target == border || target == fill) return;
+
+        ApplyColor(fillColor);   // current color for the run draws
+
+        // Scanline flood fill: each seed grows one horizontal run, then the
+        // rows above/below get one seed per contiguous run of the target color.
+        var seeds = new Stack<(int x, int y)>();
+        seeds.Push((x, y));
+        while (seeds.Count > 0)
+        {
+            var (sx, sy) = seeds.Pop();
+            if (sx < 0 || sx >= screenWidth || sy < 0 || sy >= screenHeight) continue;
+            if (pixelCache[sy * screenWidth + sx] != target) continue;
+
+            int xl = sx;
+            while (xl > 0 && pixelCache[sy * screenWidth + xl - 1] == target) xl--;
+            int xr = sx;
+            while (xr < screenWidth - 1 && pixelCache[sy * screenWidth + xr + 1] == target) xr++;
+
+            FillRun(xl, xr, sy, fill);
+
+            for (int row = sy - 1; row <= sy + 1; row += 2)
+            {
+                if (row < 0 || row >= screenHeight) continue;
+                int px = xl;
+                while (px <= xr)
+                {
+                    if (pixelCache[row * screenWidth + px] == target)
+                    {
+                        seeds.Push((px, row));
+                        while (px <= xr && pixelCache[row * screenWidth + px] == target) px++;
+                    }
+                    else px++;
+                }
+            }
+        }
+    }
+
+    // Fill one horizontal run with the current color and update the POINT
+    // cache write-through (like SetPixel): the cache stays valid, so no
+    // InvalidateCache() is needed here.
+    private static void FillRun(int x1, int x2, int y, int fillPacked)
+    {
+        _ = SDL.SDL_SetRenderDrawColor(renderer, currentR, currentG, currentB, currentA);
+        _ = SDL.SDL_RenderDrawLine(renderer, x1, y, x2, y);
+        for (int x = x1; x <= x2; x++)
+            pixelCache[y * screenWidth + x] = fillPacked;
     }
     
     // Draw a line from x1, y1 to x2, y2
@@ -607,6 +680,10 @@ public static class Graphics
                 // Store the last key press
                 lastKeyPressed = MapSDLKeyToBasic(e.key.keysym.sym);
             }
+            else if (e.type == SDL.SDL_EventType.SDL_MOUSEWHEEL)
+            {
+                AddWheel(e.wheel);
+            }
         }
         
         return true;
@@ -693,6 +770,28 @@ public static class Graphics
     
     // current mouse button state (bit flags: 1=left, 2=middle, 4=right)
     public static int MouseButtons => (int)mouseButtons;
+
+    // T28 MOUSEWHEEL: notches rolled since the previous call (+ away from the user / up,
+    // - toward), then 0. Graphics mode only; the interpreter returns 0 in console mode.
+    public static int GetMouseWheel()
+    {
+        if (!initialized) return 0;
+        ProcessEvents();
+        int notches = wheelAccum;
+        wheelAccum = 0;
+        return notches;
+    }
+
+    // Add one SDL_MOUSEWHEEL event. Use y (whole notches; one event can carry several), never
+    // count events. FLIPPED (natural scrolling, not used by SDL on Windows) reports the
+    // opposite sign - flip it back. int overflow needs 2^31 notches: not a practical concern.
+    private static void AddWheel(in SDL.SDL_MouseWheelEvent w)
+    {
+        int dy = w.y;
+        if (w.direction == SDL.SDL_MOUSEWHEEL_FLIPPED)
+            dy = -dy;
+        wheelAccum += dy;
+    }
     
     // Update mouse state from dsl2
     // Call this before reading mouse position/buttons
@@ -1004,6 +1103,10 @@ public static class Graphics
                     quitRequested = true;
                     inputActive = false;
                     break;
+                }
+                else if (e.type == SDL.SDL_EventType.SDL_MOUSEWHEEL)
+                {
+                    AddWheel(e.wheel);   // notches rolled during INPUT are kept for MOUSEWHEEL
                 }
                 else if (e.type == SDL.SDL_EventType.SDL_KEYDOWN)
                 {

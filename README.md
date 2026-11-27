@@ -81,7 +81,7 @@ See [Arrays & JSON](https://ekbass.github.io/BazzBasic/manual/#/arrays_and_json)
 - [Show & Tell discussion forum](https://github.com/EkBass/BazzBasic/discussions/categories/show-and-tell)
 - [BazzBasic Cookbook](https://bbcookbook.miraheze.org/wiki/Main_Page)
 - [BazzBasic Example codes](https://github.com/EkBass/BazzBasic/tree/main/Examples)
-- [BazzBasic AI-guide](https://huggingface.co/datasets/EkBass/BazzBasic_AI_Guide)
+- [BazzBasic SKILL.md](https://huggingface.co/datasets/EkBass/BazzBasic-SKILL)
 
 ## BazzBasic size
 Currently, BazzBasic requires about 70 megabytes + SDL2.dll

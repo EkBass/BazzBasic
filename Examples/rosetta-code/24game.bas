@@ -12,14 +12,14 @@
 
 [inits]
 	' Color constants
-	LET BLACK#   = 0
-	LET CYAN#    = 3
-	LET MAGENTA# = 5
+	LET C_BLACK#   = 0
+	LET C_CYAN#    = 3
+	LET C_MAGENTA# = 5
 	LET LGRAY#   = 7
 	LET LGREEN#  = 10
 	LET LRED#    = 12
-	LET YELLOW#  = 14
-	LET WHITE#   = 15
+	LET C_YELLOW#  = 14
+	LET C_WHITE#   = 15
 
 	' Shared arrays — declared once at top level
 	DIM digits$     ' the 4 given digits, indices 0-3
@@ -75,42 +75,42 @@ END
 ' ============================================
 [sub:title]
 	CLS
-	COLOR YELLOW#, BLACK#
+	COLOR C_YELLOW#, C_BLACK#
 	PRINT "\n "; REPEAT("*", 44)
 	PRINT " *"; REPEAT(" ", 42); "*"
 	PRINT " *           ";
-	COLOR WHITE#, BLACK#
+	COLOR C_WHITE#, C_BLACK#
 	PRINT "T H E   2 4   G A M E";
-	COLOR YELLOW#, BLACK#
+	COLOR C_YELLOW#, C_BLACK#
 	PRINT "           *"
 	PRINT " *"; REPEAT(" ", 42); "*"
 	PRINT " "; REPEAT("*", 44)
 
-	COLOR LGRAY#, BLACK#
+	COLOR LGRAY#, C_BLACK#
 	PRINT "\n Rosetta Code task: rosettacode.org/wiki/24_game"
 	PRINT " BazzBasic Edition\n"
 
-	COLOR CYAN#, BLACK#
+	COLOR C_CYAN#, C_BLACK#
 	PRINT " RULES:"
-	COLOR WHITE#, BLACK#
+	COLOR C_WHITE#, C_BLACK#
 	PRINT " - You are given four digits (1-9, repeats possible)"
 	PRINT " - Use  +  -  *  /  with all four digits to make 24"
 	PRINT " - Each digit must be used exactly once"
 	PRINT " - Multi-digit numbers are not allowed\n"
 
-	COLOR CYAN#, BLACK#
+	COLOR C_CYAN#, C_BLACK#
 	PRINT " INPUT: Reverse Polish Notation (RPN)"
-	COLOR WHITE#, BLACK#
+	COLOR C_WHITE#, C_BLACK#
 	PRINT " - Write operands first, then the operator"
 	PRINT " - Separate every token with spaces\n"
-	COLOR LGRAY#, BLACK#
+	COLOR LGRAY#, C_BLACK#
 	PRINT "   Infix               RPN                 Result"
 	PRINT "   (2 + 4) * 3         2 4 + 3 *           18"
 	PRINT "   8 * (3 - 2)         8 3 2 - *           8"
 	PRINT "   3*4 + 6/2           3 4 * 6 2 / +       15"
 	PRINT "   (1+2+3) * 4         1 2 + 3 + 4 *       24  <-- makes 24!\n"
 
-	COLOR WHITE#, BLACK#
+	COLOR C_WHITE#, C_BLACK#
 	PRINT REPEAT("-", 50)
 	PRINT " Press ENTER to start...";
 	WAITKEY(KEY_ENTER#)
@@ -251,29 +251,29 @@ RETURN
 ' DISPLAY THE FOUR DIGITS
 ' ============================================
 [sub:showDigits]
-	COLOR YELLOW#, BLACK#
+	COLOR C_YELLOW#, C_BLACK#
 	PRINT "\n "; REPEAT("=", 44)
 	PRINT "          YOUR FOUR DIGITS:"
-	COLOR WHITE#, BLACK#
+	COLOR C_WHITE#, C_BLACK#
 	PRINT "\n          ";
 	FOR i$ = 0 TO 3
-		COLOR YELLOW#, BLACK#
+		COLOR C_YELLOW#, C_BLACK#
 		PRINT "[ ";
-		COLOR WHITE#, BLACK#
+		COLOR C_WHITE#, C_BLACK#
 		PRINT digits$(i$);
-		COLOR YELLOW#, BLACK#
+		COLOR C_YELLOW#, C_BLACK#
 		PRINT " ]  ";
 	NEXT
 	PRINT ""
 
 	IF solvable$ = FALSE THEN
-		COLOR LRED#, BLACK#
+		COLOR LRED#, C_BLACK#
 		PRINT "\n          (no solution exists for these digits)"
 	END IF
 
-	COLOR YELLOW#, BLACK#
+	COLOR C_YELLOW#, C_BLACK#
 	PRINT "\n "; REPEAT("=", 44); "\n"
-	COLOR WHITE#, BLACK#
+	COLOR C_WHITE#, C_BLACK#
 RETURN
 
 ' ============================================
@@ -286,9 +286,9 @@ RETURN
 		CLS
 		GOSUB [sub:showDigits]
 
-		COLOR LGREEN#, BLACK#
+		COLOR LGREEN#, C_BLACK#
 		PRINT " RPN expression: ";
-		COLOR WHITE#, BLACK#
+		COLOR C_WHITE#, C_BLACK#
 		LINE INPUT "", expr$
 		expr$ = TRIM(expr$)
 		PRINT ""
@@ -296,35 +296,35 @@ RETURN
 		GOSUB [sub:evaluate]
 
 		IF evalValid$ = FALSE THEN
-			COLOR LRED#, BLACK#
+			COLOR LRED#, C_BLACK#
 			PRINT " ! "; evalError$
 
 		ELSEIF evalDigitsOk$ = FALSE THEN
-			COLOR LRED#, BLACK#
+			COLOR LRED#, C_BLACK#
 			PRINT " ! Wrong digits. You must use exactly: ";
-			COLOR WHITE#, BLACK#
+			COLOR C_WHITE#, C_BLACK#
 			FOR i$ = 0 TO 3
 				PRINT digits$(i$); " ";
 			NEXT
 			PRINT ""
 
 		ELSEIF ABS(evalResult$ - 24) < 0.0001 THEN
-			COLOR LGREEN#, BLACK#
+			COLOR LGREEN#, C_BLACK#
 			PRINT " Result = 24"
 			PRINT "\n *** Correct! You made 24! ***\n"
-			COLOR WHITE#, BLACK#
+			COLOR C_WHITE#, C_BLACK#
 			PRINT " Press ENTER for new digits...";
 			WAITKEY(KEY_ENTER#)
 			PRINT ""
 			keepPlaying$ = FALSE
 
 		ELSE
-			COLOR LGRAY#, BLACK#
+			COLOR LGRAY#, C_BLACK#
 			PRINT " Result = "; evalResult$; "  — not 24."
 		END IF
 
 		IF keepPlaying$ THEN
-			COLOR WHITE#, BLACK#
+			COLOR C_WHITE#, C_BLACK#
 			PRINT "\n [ENTER] try again    [N] new digits    [Q] quit"
 			PRINT " > ";
 			LINE INPUT "", choice$

@@ -9,21 +9,21 @@
 
 [inits]
     LET LCYAN#  = 11
-    LET BLUE#   = 1
+    LET C_BLUE#   = 1
     LET LBLUE#  = 9
-    LET WHITE#  = 15
-    LET BLACK#  = 0
+    LET C_WHITE#  = 15
+    LET C_BLACK#  = 0
 
 [main]
     CLS
 
     ' Write some colored text to read back
-    COLOR LCYAN#, BLUE#
+    COLOR LCYAN#, C_BLUE#
     PRINT "abcdefghi"
     PRINT "ABCDEFGHI"
-    COLOR BLUE#, LBLUE#
+    COLOR C_BLUE#, LBLUE#
     PRINT "987654321"
-    COLOR WHITE#, BLACK#
+    COLOR C_WHITE#, C_BLACK#
 
     ' Read back character, foreground and background
     PRINT "Row 2, col 5 char is: "; CHR(GETCONSOLE(2, 5, 0))  ' Output: E
